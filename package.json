@@ -1,0 +1,28 @@
+{
+  "name": "eslint-doc-generator",
+  "version": "0.0.0",
+  "description": "Automatic documentation generator for ESLint plugins and rules.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "echo \"Error: no lint specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bmish/eslint-doc-generator.git"
+  },
+  "keywords": [
+    "doc",
+    "docs",
+    "documentation",
+    "eslint",
+    "generator",
+    "plugin"
+  ],
+  "author": "Bryan Mishkin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bmish/eslint-doc-generator/issues"
+  },
+  "homepage": "https://github.com/bmish/eslint-doc-generator#readme"
+}
