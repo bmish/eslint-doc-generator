@@ -1,0 +1,20 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules
+
+# Test output:
+.nyc_output
+coverage/
+
+# ESLint
+.eslintcache
+
+# TypeScript output
+dist/
+
+# Mac
+.DS_Store

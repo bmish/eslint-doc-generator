@@ -2,15 +2,6 @@
   "name": "eslint-doc-generator",
   "version": "0.0.0",
   "description": "Automatic documentation generator for ESLint plugins and rules.",
-  "main": "index.js",
-  "scripts": {
-    "lint": "echo \"Error: no lint specified\" && exit 1",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bmish/eslint-doc-generator.git"
-  },
   "keywords": [
     "doc",
     "docs",
@@ -19,10 +10,36 @@
     "generator",
     "plugin"
   ],
-  "author": "Bryan Mishkin",
-  "license": "ISC",
+  "homepage": "https://github.com/bmish/eslint-doc-generator#readme",
   "bugs": {
     "url": "https://github.com/bmish/eslint-doc-generator/issues"
   },
-  "homepage": "https://github.com/bmish/eslint-doc-generator#readme"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bmish/eslint-doc-generator.git"
+  },
+  "license": "ISC",
+  "author": "Bryan Mishkin",
+  "type": "module",
+  "scripts": {
+    "lint": "npm-run-all --continue-on-error --aggregate-output --parallel \"lint:*\"",
+    "lint:docs": "markdownlint \"**/*.md\"",
+    "lint:js": "eslint --cache .",
+    "lint:package-json": "npmPkgJsonLint .",
+    "lint:package-json-sorting": "sort-package-json --check",
+    "lint:package-json-sorting:fix": "sort-package-json package.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "eslint": "^8.24.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-square": "^23.1.1",
+    "markdownlint-cli": "^0.32.2",
+    "npm-package-json-lint": "^6.3.0",
+    "npm-run-all": "^4.1.5",
+    "sort-package-json": "^2.0.0",
+    "typescript": "^4.8.4"
+  }
 }
