@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import prettier from 'prettier'; // eslint-disable-line node/no-extraneous-import -- prettier is included by eslint-plugin-square
 import { getAllNamedOptions, hasOptions } from './rule-options.js';
@@ -84,20 +84,26 @@ export async function generate(path: string) {
     .map(
       ([name, rule]): RuleDetails => ({
         name,
-        description: rule.meta.docs.description,
+        description: rule.meta.docs?.description,
         fixable: rule.meta.fixable
           ? ['code', 'whitespace'].includes(rule.meta.fixable)
           : false,
         hasSuggestions: rule.meta.hasSuggestions ?? false,
-        requiresTypeChecking: rule.meta.docs.requiresTypeChecking ?? false,
+        requiresTypeChecking: rule.meta.docs?.requiresTypeChecking ?? false,
         deprecated: rule.meta.deprecated ?? false,
         schema: rule.meta.schema,
       })
     );
 
   // Update rule doc for each rule.
-  for (const { name, description, schema } of details) {
+  for (const { name, description, schema, deprecated } of details) {
     const pathToDoc = join(pathTo.docs, 'rules', `${name}.md`);
+
+    if (deprecated && !existsSync(pathToDoc)) {
+      // Allow deprecated rules to forgo a rule doc file.
+      continue;
+    }
+
     const contents = readFileSync(pathToDoc).toString();
     const lines = contents.split('\n');
 

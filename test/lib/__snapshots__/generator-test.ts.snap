@@ -41,6 +41,17 @@ exports[`generator #generate adds extra column to rules table for TypeScript rul
 "
 `;
 
+exports[`generator #generate deprecated rule with no rule doc nor meta.docs updates the documentation 1`] = `
+"<!-- begin rules list -->
+
+| Rule                           | Description | ✅  | 🔧  | 💡  |
+| ------------------------------ | ----------- | --- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) |             | ❌  |     |     |
+
+<!-- end rules list -->
+"
+`;
+
 exports[`generator #generate deprecated rules updates the documentation 1`] = `
 "<!-- begin rules list -->
 
