@@ -19,7 +19,7 @@ Install it:
 npm run --save-dev eslint-doc-generator
 ```
 
-Add it as as script in `package.json` (included as a lint script to demonstrate how we can ensure it passes on CI along with other linting):
+Add it as as script in `package.json` (included as a lint script to demonstrate how we can ensure it passes and is up-to-date on CI):
 
 ```json
 {
@@ -33,18 +33,14 @@ Add it as as script in `package.json` (included as a lint script to demonstrate 
 }
 ```
 
-Add the rule list markers in your `README.md` rules section:
+Add the rule list marker comments in your `README.md` rules section:
 
 ```md
 <!-- begin rules list -->
-
-| Rule | Description | 💼  | 🔧  | 💡  |
-| ---- | ----------- | --- | --- | --- |
-
 <!-- end rules list -->
 ```
 
-The new title and notices will be added to the top of each rule doc, but you may need to manually remove the old ones.
+A new title and notices will be automatically added to the top of each rule doc (along with a marker comment if it doesn't exist yet). You may need to manually remove old notices.
 
 ## Usage
 
