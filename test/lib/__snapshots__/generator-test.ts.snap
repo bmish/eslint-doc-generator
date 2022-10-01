@@ -4,7 +4,30 @@ exports[`generator #generate Missing plugin package.json \`name\` field throws a
 
 exports[`generator #generate Missing plugin package.json throws an error 1`] = `"Could not find package.json of ESLint plugin."`;
 
-exports[`generator #generate README missing markers throws an error 1`] = `"README.md is missing rules list markers: <!-- begin rules list --><!-- end rules list -->"`;
+exports[`generator #generate README missing rule list markers and no rules section throws an error 1`] = `"README.md is missing rules list markers: <!-- begin rules list --><!-- end rules list -->"`;
+
+exports[`generator #generate README missing rule list markers but with rules section adds rule list markers to rule section 1`] = `
+"# eslint-plugin-test
+
+Foo.
+
+## Rules
+
+<!-- begin rules list -->
+
+| Rule                           | Description            | ✅  | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | --- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |     |     |
+
+<!-- end rules list -->
+
+Old rules list.
+
+## Other
+
+Bar.
+"
+`;
 
 exports[`generator #generate adds extra column to rules table for TypeScript rules updates the documentation 1`] = `
 "<!-- begin rules list -->
