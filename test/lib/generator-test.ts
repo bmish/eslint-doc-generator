@@ -331,6 +331,47 @@ describe('generator', function () {
       });
     });
 
+    describe('deprecated rule with no rule doc nor meta.docs', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: { deprecated: true, }, // No docs specified.
+                  create(context) {}
+                },
+              },
+              configs: {}
+            };`,
+
+          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('updates the documentation', async function () {
+        await generate('.');
+
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
     describe('uses prettier config from package.json', function () {
       beforeEach(function () {
         mockFs({
