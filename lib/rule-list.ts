@@ -98,8 +98,23 @@ export function updateRulesList(
   plugin: Plugin,
   pluginPrefix: string
 ): string {
-  const listStartIndex = markdown.indexOf(BEGIN_RULE_LIST_MARKER);
-  const listEndIndex = markdown.indexOf(END_RULE_LIST_MARKER);
+  let listStartIndex = markdown.indexOf(BEGIN_RULE_LIST_MARKER);
+  let listEndIndex = markdown.indexOf(END_RULE_LIST_MARKER);
+  const RULES_SECTION_HEADER = '## Rules\n';
+  const rulesSectionIndex = markdown.indexOf(RULES_SECTION_HEADER);
+
+  if (
+    listStartIndex === -1 &&
+    listEndIndex === -1 &&
+    rulesSectionIndex !== -1
+  ) {
+    // If the markers are missing, we'll try to find the rules section and insert the list there.
+    listStartIndex = rulesSectionIndex + RULES_SECTION_HEADER.length;
+    listEndIndex = rulesSectionIndex + RULES_SECTION_HEADER.length;
+  } else {
+    // Account for length of pre-existing marker.
+    listEndIndex += END_RULE_LIST_MARKER.length;
+  }
 
   if (listStartIndex === -1 || listEndIndex === -1) {
     throw new Error(
@@ -108,11 +123,21 @@ export function updateRulesList(
   }
 
   return [
+    // Doc before rule list marker.
     markdown.slice(0, Math.max(0, listStartIndex - 1)),
+
+    // New begin marker.
     BEGIN_RULE_LIST_MARKER,
     '',
+
+    // New rule list.
     generateRulesListMarkdown(details, plugin, pluginPrefix),
     '',
+
+    // New end marker.
+    END_RULE_LIST_MARKER,
+
+    // Doc after rule list marker.
     markdown.slice(Math.max(0, listEndIndex)),
   ].join('\n');
 }

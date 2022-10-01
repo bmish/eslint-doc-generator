@@ -465,7 +465,59 @@ describe('generator', function () {
       });
     });
 
-    describe('README missing markers', function () {
+    describe('README missing rule list markers but with rules section', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: { docs: { description: 'Description of no-foo.' }, },
+                  create(context) {}
+                },
+              },
+              configs: {}
+            };`,
+
+          'README.md': outdent`
+            # eslint-plugin-test
+
+            Foo.
+
+            ## Rules
+
+            Old rules list.
+
+            ## Other
+
+            Bar.
+          `,
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+      it('adds rule list markers to rule section', async function () {
+        await generate('.');
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('README missing rule list markers and no rules section', function () {
       beforeEach(function () {
         mockFs({
           'package.json': JSON.stringify({
@@ -484,9 +536,7 @@ describe('generator', function () {
               },
             };`,
 
-          'README.md': outdent`
-            # eslint-plugin-test
-          `,
+          'README.md': '# eslint-plugin-test',
 
           'docs/rules/no-foo.md': '',
 
