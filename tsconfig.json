@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "baseUrl": ".",
+    "declaration": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es2022"
+    ],
+    "module": "ES2020",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "dist",
+    "paths": {
+      "*": [
+        "types/*"
+      ]
+    },
+    "target": "es2021",
+    "types": [
+      "node",
+      "@types/jest"
+    ],
+    "typeRoots": ["./types"]
+  },
+  "include": [
+    "bin/**/*",
+    "lib/**/*"
+  ]
+}

@@ -1,0 +1,148 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generator #generate adds extra column to rules table for TypeScript rules updates the documentation 1`] = `
+"<!-- begin rules list -->
+
+| Rule                           | Description            | 💼  | 🔧  | 💡  | 💭  |
+| ------------------------------ | ---------------------- | --- | --- | --- | --- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. |     |     |     | 💭  |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |     |     |     |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate deprecated rules updates the documentation 1`] = `
+"<!-- begin rules list -->
+
+| Rule                           | Description  | 💼  | 🔧  | 💡  |
+| ------------------------------ | ------------ | --- | --- | --- |
+| [no-bar](docs/rules/no-bar.md) | Description. | ❌  |     |     |
+| [no-baz](docs/rules/no-baz.md) | Description. | ❌  |     |     |
+| [no-foo](docs/rules/no-foo.md) | Description. | ❌  |     |     |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate deprecated rules updates the documentation 2`] = `
+"# Description. (\`no-foo\`)
+
+❌ This rule is deprecated. It was replaced by [no-bar](no-bar.md).
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate deprecated rules updates the documentation 3`] = `
+"# Description. (\`no-bar\`)
+
+❌ This rule is deprecated.
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate deprecated rules updates the documentation 4`] = `
+"# Description. (\`no-baz\`)
+
+❌ This rule is deprecated.
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate successful updates the documentation 1`] = `
+"# eslint-plugin-test
+
+Description.
+
+## Rules
+
+<!-- begin rules list -->
+
+| Rule                           | Description            | 💼         | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | ---------- | --- | --- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | ![style][] | 🔧  |     |
+| [no-baz](docs/rules/no-baz.md) | Description of no-boz. |            |     |     |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅         | 🔧  | 💡  |
+
+<!-- end rules list -->
+
+more content.
+"
+`;
+
+exports[`generator #generate successful updates the documentation 2`] = `
+"# Description of no-foo. (\`no-foo\`)
+
+💼 This rule is enabled in the following configs: \`all\`, \`recommended\`.
+
+🔧 This rule is automatically fixable using the \`--fix\` [option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) on the command line.
+
+💡 This rule provides [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions) that can be applied manually.
+
+<!-- end rule header -->
+
+## Rule details
+
+details
+
+## Options
+
+optionToDoSomething1 - explanation
+optionToDoSomething2 - explanation
+Long line that SHOULD NOT get wrapped due to prettier proseWrap config. Long line that SHOULD NOT get wrapped due to prettier proseWrap config.
+"
+`;
+
+exports[`generator #generate successful updates the documentation 3`] = `
+"# Description of no-bar. (\`no-bar\`)
+
+💼 This rule is enabled in the following configs: \`all\`, \`style\`.
+
+🔧 This rule is automatically fixable using the \`--fix\` [option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) on the command line.
+
+<!-- end rule header -->
+
+## Rule details
+
+details
+"
+`;
+
+exports[`generator #generate successful updates the documentation 4`] = `
+"# Description of no-boz. (\`no-baz\`)
+
+<!-- end rule header -->
+
+## Rule details
+
+details
+"
+`;
+
+exports[`generator #generate uses prettier config from package.json updates the documentation 1`] = `
+"<!-- begin rules list -->
+
+| Rule                           | Description            | 💼  | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | --- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |     |     |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate uses prettier config from package.json updates the documentation 2`] = `
+"# Description of no-foo. (\`no-foo\`)
+
+💼 This rule is enabled in the following configs: \`all\`.
+
+<!-- end rule header -->
+
+## Rule details
+
+details Long line that SHOULD get wrapped due to prettier proseWrap config. Long
+line that SHOULD get wrapped due to prettier proseWrap config.
+"
+`;
