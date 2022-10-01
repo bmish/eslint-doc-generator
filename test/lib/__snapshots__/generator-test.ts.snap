@@ -3,7 +3,7 @@
 exports[`generator #generate adds extra column to rules table for TypeScript rules updates the documentation 1`] = `
 "<!-- begin rules list -->
 
-| Rule                           | Description            | 💼  | 🔧  | 💡  | 💭  |
+| Rule                           | Description            | ✅  | 🔧  | 💡  | 💭  |
 | ------------------------------ | ---------------------- | --- | --- | --- | --- |
 | [no-bar](docs/rules/no-bar.md) | Description of no-bar. |     |     |     | 💭  |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |     |     |     |
@@ -15,7 +15,7 @@ exports[`generator #generate adds extra column to rules table for TypeScript rul
 exports[`generator #generate deprecated rules updates the documentation 1`] = `
 "<!-- begin rules list -->
 
-| Rule                           | Description  | 💼  | 🔧  | 💡  |
+| Rule                           | Description  | ✅  | 🔧  | 💡  |
 | ------------------------------ | ------------ | --- | --- | --- |
 | [no-bar](docs/rules/no-bar.md) | Description. | ❌  |     |     |
 | [no-baz](docs/rules/no-baz.md) | Description. | ❌  |     |     |
@@ -125,7 +125,7 @@ details
 exports[`generator #generate uses prettier config from package.json updates the documentation 1`] = `
 "<!-- begin rules list -->
 
-| Rule                           | Description            | 💼  | 🔧  | 💡  |
+| Rule                           | Description            | ✅  | 🔧  | 💡  |
 | ------------------------------ | ---------------------- | --- | --- | --- |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |     |     |
 

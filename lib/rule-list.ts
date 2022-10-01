@@ -58,6 +58,13 @@ function buildRuleRow(
   return columns;
 }
 
+function hasCustomConfigs(plugin: Plugin) {
+  return Object.keys(plugin.configs || {}).some(
+    // Ignore the common configs.
+    (configName) => !['all', 'recommended'].includes(configName)
+  );
+}
+
 function generateRulesListMarkdown(
   details: RuleDetails[],
   plugin: Plugin,
@@ -70,7 +77,7 @@ function generateRulesListMarkdown(
   const listHeaderRow = [
     'Rule',
     'Description',
-    EMOJI_CONFIGS,
+    hasCustomConfigs(plugin) ? EMOJI_CONFIGS : EMOJI_CONFIG_RECOMMENDED, // If there are custom configs, use the general config emoji.
     EMOJI_FIXABLE,
     EMOJI_HAS_SUGGESTIONS,
   ];
