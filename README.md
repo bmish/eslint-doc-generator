@@ -2,6 +2,8 @@
 
 [![npm version][npm-image]][npm-url]
 
+Automatic documentation generator for ESLint plugins and rules.
+
 Generates the following documentation:
 
 - README rules table
@@ -16,7 +18,7 @@ Also performs some basic section consistency checks on rule docs (will eventuall
 Install it:
 
 ```sh
-npm run --save-dev eslint-doc-generator
+npm i --save-dev eslint-doc-generator
 ```
 
 Add it as as script in `package.json` (included as a lint script to demonstrate how we can ensure it passes and is up-to-date on CI):
