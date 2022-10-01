@@ -209,6 +209,60 @@ describe('generator', function () {
       });
     });
 
+    describe('rule doc without header marker but pre-existing header', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: { docs: { description: 'Description.' }, },
+                  create(context) {}
+                },
+              },
+              configs: {
+                recommended: {
+                  rules: {
+                    'test/no-foo': 'error',
+                  }
+                }
+              }
+            };`,
+
+          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+
+          'docs/rules/no-foo.md': outdent`
+            # Some pre-existing title.
+            Pre-existing notice about the rule being recommended.
+            ## Rule details
+            Details.
+          `,
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('updates the documentation', async function () {
+        await generate('.');
+
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
     describe('deprecated rules', function () {
       beforeEach(function () {
         mockFs({

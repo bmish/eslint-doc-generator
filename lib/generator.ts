@@ -33,6 +33,11 @@ function replaceOrCreateHeader(
 ) {
   const markerLineIndex = lines.indexOf(marker);
 
+  if (markerLineIndex === -1 && lines.length > 0 && lines[0].startsWith('# ')) {
+    // No marker present so delete any existing title before we add the new one.
+    lines.splice(0, 1);
+  }
+
   // Replace header section (or create at top if missing).
   lines.splice(0, markerLineIndex + 1, ...newHeaderLines);
 }
