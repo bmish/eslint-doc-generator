@@ -52,6 +52,26 @@ exports[`generator #generate deprecated rules updates the documentation 4`] = `
 "
 `;
 
+exports[`generator #generate only a \`recommended\` config updates the documentation 1`] = `
+"<!-- begin rules list -->
+
+| Rule                           | Description  | ✅  | 🔧  | 💡  |
+| ------------------------------ | ------------ | --- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description. | ✅  |     |     |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate only a \`recommended\` config updates the documentation 2`] = `
+"# Description. (\`no-foo\`)
+
+✅ This rule is enabled in the \`recommended\` config.
+
+<!-- end rule header -->
+"
+`;
+
 exports[`generator #generate successful updates the documentation 1`] = `
 "# eslint-plugin-test
 

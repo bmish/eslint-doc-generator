@@ -7,6 +7,7 @@ import {
   EMOJI_REQUIRES_TYPE_CHECKING,
   EMOJI_CONFIGS,
 } from './emojis.js';
+import { hasCustomConfigs } from './configs.js';
 import type { Plugin, RuleDetails } from './types.js';
 
 function getConfigurationColumnValueForRule(
@@ -56,13 +57,6 @@ function buildRuleRow(
     columns.push(rule.requiresTypeChecking ? EMOJI_REQUIRES_TYPE_CHECKING : '');
   }
   return columns;
-}
-
-function hasCustomConfigs(plugin: Plugin) {
-  return Object.keys(plugin.configs || {}).some(
-    // Ignore the common configs.
-    (configName) => !['all', 'recommended'].includes(configName)
-  );
 }
 
 function generateRulesListMarkdown(
