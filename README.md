@@ -2,9 +2,9 @@
 
 [![npm version][npm-image]][npm-url]
 
-Automatic documentation generator for ESLint plugins and rules.
+Automatic documentation generator for [ESLint](https://eslint.org/) plugins and rules.
 
-Generates the following documentation:
+Generates the following documentation based on ESLint and top [ESLint plugin](https://eslint.org/docs/latest/developer-guide/working-with-plugins) conventions:
 
 - README rules table
 - Rule doc titles and notices
@@ -35,16 +35,18 @@ Add it as as script in `package.json` (included as a lint script to demonstrate 
 }
 ```
 
-Add the rule list marker comments in your `README.md` rules section:
+Delete any old rules list from your `README.md`. A new one will be automatically added to your `## Rules` section (along with the following marker comments if they don't already exist):
 
 ```md
 <!-- begin rules list -->
 <!-- end rules list -->
 ```
 
-A new title and notices will be automatically added to the top of each rule doc (along with a marker comment if it doesn't exist yet). You may need to manually remove old notices.
+Delete any old recommended/fixable/etc notices from your rule docs. A new title and notices will be automatically added to the top of each rule doc (along with a marker comment if it doesn't exist yet).
 
 ## Usage
+
+Run the script from `package.json`:
 
 ```sh
 npm run update:eslint-docs
@@ -52,7 +54,7 @@ npm run update:eslint-docs
 
 ## Example
 
-Generated content in a rule doc:
+Generated content in a rule doc (everything above the marker comment):
 
 ```md
 # Disallow use of `foo` (`no-foo`)
@@ -67,10 +69,16 @@ Generated content in a rule doc:
 
 <!-- end rule header -->
 
+Description.
+
+## Examples
+
+Examples.
+
 ...
 ```
 
-Generated rules table in `README.md`:
+Generated rules table in `README.md` (everything between the marker comments):
 
 ```md
 # eslint-plugin-test
@@ -96,6 +104,8 @@ Generated rules table in `README.md`:
 ...
 ```
 
+Note the emoji legend you'll want to provide above the rules list.
+
 If you have any custom configs (besides `all`, `recommended`), you'll need to define a badge for them at the bottom of your `README.md`. Here's a badge for a custom `style` config that displays in blue:
 
 ```md
@@ -104,3 +114,8 @@ If you have any custom configs (besides `all`, `recommended`), you'll need to de
 
 [npm-image]: https://badge.fury.io/js/eslint-doc-generator.svg
 [npm-url]: https://www.npmjs.com/package/eslint-doc-generator
+
+## Related
+
+- [eslint-plugin-eslint-plugin](https://github.com/eslint-community/eslint-plugin-eslint-plugin) - Linter for ESLint plugins ([related list](https://eslint.org/docs/latest/developer-guide/working-with-plugins#linting))
+- [generator-eslint](https://github.com/eslint/generator-eslint) - Generates initial ESLint plugin and rule files but without the sophisticated documentation provided by eslint-doc-generator
