@@ -158,6 +158,57 @@ describe('generator', function () {
       });
     });
 
+    describe('only a `recommended` config', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: { docs: { description: 'Description.' }, },
+                  create(context) {}
+                },
+              },
+              configs: {
+                recommended: {
+                  rules: {
+                    'test/no-foo': 'error',
+                  }
+                }
+              }
+            };`,
+
+          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('updates the documentation', async function () {
+        await generate('.');
+
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
     describe('deprecated rules', function () {
       beforeEach(function () {
         mockFs({
