@@ -447,9 +447,7 @@ describe('generator', function () {
         jest.resetModules();
       });
       it('throws an error', async function () {
-        await expect(generate('.')).rejects.toThrow(
-          'README.md is missing rules list markers.'
-        );
+        await expect(generate('.')).rejects.toThrowErrorMatchingSnapshot();
       });
     });
 
@@ -583,9 +581,7 @@ describe('generator', function () {
         jest.resetModules();
       });
       it('throws an error', async function () {
-        await expect(generate('.')).rejects.toThrow(
-          'Could not find package.json of ESLint plugin.'
-        );
+        await expect(generate('.')).rejects.toThrowErrorMatchingSnapshot();
       });
     });
 
@@ -609,9 +605,7 @@ describe('generator', function () {
         jest.resetModules();
       });
       it('throws an error', async function () {
-        await expect(generate('.')).rejects.toThrow(
-          "Could not find `name` field in ESLint plugin's package.json."
-        );
+        await expect(generate('.')).rejects.toThrowErrorMatchingSnapshot();
       });
     });
   });

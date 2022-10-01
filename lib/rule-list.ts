@@ -102,7 +102,9 @@ export function updateRulesList(
   const listEndIndex = markdown.indexOf(END_RULE_LIST_MARKER);
 
   if (listStartIndex === -1 || listEndIndex === -1) {
-    throw new Error('README.md is missing rules list markers.');
+    throw new Error(
+      `README.md is missing rules list markers: ${BEGIN_RULE_LIST_MARKER}${END_RULE_LIST_MARKER}`
+    );
   }
 
   return [
