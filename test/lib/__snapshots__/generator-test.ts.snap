@@ -78,6 +78,21 @@ exports[`generator #generate only a \`recommended\` config updates the documenta
 "
 `;
 
+exports[`generator #generate rule doc without header marker but pre-existing header updates the documentation 1`] = `
+"# Description. (\`no-foo\`)
+
+✅ This rule is enabled in the \`recommended\` config.
+
+<!-- end rule header -->
+
+Pre-existing notice about the rule being recommended.
+
+## Rule details
+
+Details.
+"
+`;
+
 exports[`generator #generate successful updates the documentation 1`] = `
 "# eslint-plugin-test
 
