@@ -1,4 +1,10 @@
 import { END_RULE_HEADER_MARKER } from './markers.js';
+import {
+  EMOJI_DEPRECATED,
+  EMOJI_FIXABLE,
+  EMOJI_HAS_SUGGESTIONS,
+  EMOJI_CONFIGS,
+} from './emojis.js';
 import type { RuleModule, Plugin } from './types.js';
 
 enum MESSAGE_TYPE {
@@ -9,12 +15,10 @@ enum MESSAGE_TYPE {
 }
 
 const MESSAGES = {
-  [MESSAGE_TYPE.CONFIGS]: '💼 This rule is enabled in the following configs:', // TODO: include link to configs in the plugin's README.
-  [MESSAGE_TYPE.DEPRECATED]: '❌ This rule is deprecated.',
-  [MESSAGE_TYPE.FIXABLE]:
-    '🔧 This rule is automatically fixable using the `--fix` [option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) on the command line.',
-  [MESSAGE_TYPE.HAS_SUGGESTIONS]:
-    '💡 This rule provides [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions) that can be applied manually.',
+  [MESSAGE_TYPE.CONFIGS]: `${EMOJI_CONFIGS} This rule is enabled in the following configs:`, // TODO: include link to configs in the plugin's README.
+  [MESSAGE_TYPE.DEPRECATED]: `${EMOJI_DEPRECATED} This rule is deprecated.`,
+  [MESSAGE_TYPE.FIXABLE]: `${EMOJI_FIXABLE} This rule is automatically fixable using the \`--fix\` [option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) on the command line.`,
+  [MESSAGE_TYPE.HAS_SUGGESTIONS]: `${EMOJI_HAS_SUGGESTIONS} This rule provides [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions) that can be applied manually.`,
 };
 
 /**

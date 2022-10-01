@@ -1,4 +1,12 @@
 import { BEGIN_RULE_LIST_MARKER, END_RULE_LIST_MARKER } from './markers.js';
+import {
+  EMOJI_CONFIG_RECOMMENDED,
+  EMOJI_DEPRECATED,
+  EMOJI_FIXABLE,
+  EMOJI_HAS_SUGGESTIONS,
+  EMOJI_REQUIRES_TYPE_CHECKING,
+  EMOJI_CONFIGS,
+} from './emojis.js';
 import type { Plugin, RuleDetails } from './types.js';
 
 function getConfigurationColumnValueForRule(
@@ -13,15 +21,19 @@ function getConfigurationColumnValueForRule(
       continue;
     }
     if (`${pluginPrefix}/${rule.name}` in plugin.configs[configName].rules) {
-      // ✅ is the emoji commonly used by `recommended` configs.
+      // Use the standard `recommended` emoji for that config.
       // For other config names, the user can manually define a badge image.
-      badges.push(configName === 'recommended' ? '✅' : `![${configName}][]`);
+      badges.push(
+        configName === 'recommended'
+          ? EMOJI_CONFIG_RECOMMENDED
+          : `![${configName}][]`
+      );
     }
   }
 
   if (rule.deprecated) {
     // While not technically a config, we'll show the deprecation emoji in the config column to save space.
-    badges.push('❌');
+    badges.push(EMOJI_DEPRECATED);
   }
 
   return badges.join(' ');
@@ -37,11 +49,11 @@ function buildRuleRow(
     `[${rule.name}](docs/rules/${rule.name}.md)`,
     rule.description,
     getConfigurationColumnValueForRule(rule, plugin, pluginPrefix),
-    rule.fixable ? '🔧' : '',
-    rule.hasSuggestions ? '💡' : '',
+    rule.fixable ? EMOJI_FIXABLE : '',
+    rule.hasSuggestions ? EMOJI_HAS_SUGGESTIONS : '',
   ];
   if (includeTypesColumn) {
-    columns.push(rule.requiresTypeChecking ? '💭' : '');
+    columns.push(rule.requiresTypeChecking ? EMOJI_REQUIRES_TYPE_CHECKING : '');
   }
   return columns;
 }
@@ -55,9 +67,15 @@ function generateRulesListMarkdown(
   const includeTypesColumn = details.some(
     (detail: RuleDetails) => detail.requiresTypeChecking
   );
-  const listHeaderRow = ['Rule', 'Description', '💼', '🔧', '💡'];
+  const listHeaderRow = [
+    'Rule',
+    'Description',
+    EMOJI_CONFIGS,
+    EMOJI_FIXABLE,
+    EMOJI_HAS_SUGGESTIONS,
+  ];
   if (includeTypesColumn) {
-    listHeaderRow.push('💭');
+    listHeaderRow.push(EMOJI_REQUIRES_TYPE_CHECKING);
   }
   const listSpacerRow = Array.from({ length: listHeaderRow.length }).fill('-');
   return [
