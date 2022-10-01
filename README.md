@@ -85,18 +85,20 @@ Generated rules table in `README.md`:
 
 <!-- begin rules list -->
 
-| Rule                                                           | Description                                       | 💼            | 🔧  | 💡  | 💭  |
-| -------------------------------------------------------------- | ------------------------------------------------- | ------------- | --- | --- | --- |
-| [max-nested-describe](docs/rules/max-nested-describe.md)       | Enforces a maximum depth to nested describe calls |               |     |     |     |
-| [no-alias-methods](docs/rules/no-alias-methods.md)             | Disallow alias methods                            | ✅ ![style][] | 🔧  |     |     |
-| [no-commented-out-tests](docs/rules/no-commented-out-tests.md) | Disallow commented out tests                      | ✅            |     |     |     |
+| Rule                                                           | Description                                       | ✅  | 🔧  | 💡  | 💭  |
+| -------------------------------------------------------------- | ------------------------------------------------- | --- | --- | --- | --- |
+| [max-nested-describe](docs/rules/max-nested-describe.md)       | Enforces a maximum depth to nested describe calls |     |     |     |     |
+| [no-alias-methods](docs/rules/no-alias-methods.md)             | Disallow alias methods                            | ✅  | 🔧  |     |     |
+| [no-commented-out-tests](docs/rules/no-commented-out-tests.md) | Disallow commented out tests                      | ✅  |     |     |     |
 
 <!-- end rules list -->
 
 ...
+```
 
-<!-- define the badge for any custom configs (besides `recommended`, `all`) here -->
+If you have any custom configs (besides `all`, `recommended`), you'll need to define a badge for them at the bottom of your `README.md`. Here's a badge for a custom `style` config that displays in blue:
 
+```md
 [style]: https://img.shields.io/badge/-style-blue.svg
 ```
 
