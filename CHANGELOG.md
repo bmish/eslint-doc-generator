@@ -1,4 +1,14 @@
 
+
+## v0.1.1 (2022-10-01)
+
+#### :bug: Bug Fix
+* [#5](https://github.com/bmish/eslint-doc-generator/pull/5) Add missing Node shebang to binary ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.1.0 (2022-10-01)
 
 #### :rocket: Enhancement
