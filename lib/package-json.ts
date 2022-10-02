@@ -39,5 +39,7 @@ export function getPluginPrefix(path: string): string {
       "Could not find `name` field in ESLint plugin's package.json."
     );
   }
-  return pluginPackageJson.name.replace('eslint-plugin-', ''); // TODO: also need to support scoped plugins.
+  return pluginPackageJson.name.endsWith('/eslint-plugin')
+    ? pluginPackageJson.name.split('/')[0] // Scoped plugin name like @my-scope/eslint-plugin.
+    : pluginPackageJson.name.replace('eslint-plugin-', ''); // Unscoped name like eslint-plugin-foo.
 }

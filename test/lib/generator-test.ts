@@ -799,5 +799,47 @@ describe('generator', function () {
         await expect(generate('.')).rejects.toThrowErrorMatchingSnapshot();
       });
     });
+
+    describe('Scoped plugin name', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: '@my-scope/eslint-plugin',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: { docs: { description: 'disallow foo.' }, },
+                  create(context) {}
+                },
+              },
+              configs: {
+                'recommended': { rules: { '@my-scope/no-foo': 'error', } }
+              }
+            };`,
+
+          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+      it('determines the correct plugin prefix', async function () {
+        await generate('.');
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
   });
 });

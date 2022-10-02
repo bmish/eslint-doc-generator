@@ -36,6 +36,15 @@ exports[`generator #generate Rule description needs to be formatted capitalizes 
 "
 `;
 
+exports[`generator #generate Scoped plugin name determines the correct plugin prefix 1`] = `
+"# Disallow foo (\`@my-scope/no-foo\`)
+
+✅ This rule is enabled in the \`recommended\` config.
+
+<!-- end rule header -->
+"
+`;
+
 exports[`generator #generate adds extra column to rules table for TypeScript rules updates the documentation 1`] = `
 "<!-- begin rules list -->
 
