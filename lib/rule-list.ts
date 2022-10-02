@@ -8,6 +8,7 @@ import {
   EMOJI_CONFIGS,
 } from './emojis.js';
 import { hasCustomConfigs } from './configs.js';
+import { findSectionHeader } from './markdown.js';
 import type { Plugin, RuleDetails } from './types.js';
 
 function getConfigurationColumnValueForRule(
@@ -92,31 +93,6 @@ function generateRulesListMarkdown(
     .join('\n');
 }
 
-/**
- * Find the section most likely to be the top-level rules list.
- */
-export function findRulesSectionHeader(markdown: string): string | undefined {
-  // Get all the matching strings.
-  const rulesSectionPotentialMatches = [
-    ...markdown.matchAll(/##.* rules.*\n/gi),
-  ].map((match) => match[0]);
-
-  if (rulesSectionPotentialMatches.length === 0) {
-    // No rules section found.
-    return undefined;
-  }
-
-  if (rulesSectionPotentialMatches.length === 1) {
-    // If there's only one match, we can assume it's the rules section.
-    return rulesSectionPotentialMatches[0];
-  }
-
-  // Otherwise assume the shortest match is the correct one.
-  return rulesSectionPotentialMatches.sort(
-    (a: string, b: string) => a.length - b.length
-  )[0];
-}
-
 export function updateRulesList(
   details: RuleDetails[],
   markdown: string,
@@ -127,7 +103,7 @@ export function updateRulesList(
   let listEndIndex = markdown.indexOf(END_RULE_LIST_MARKER);
 
   // Find the best possible section to insert the rules list into if the markers are missing.
-  const rulesSectionHeader = findRulesSectionHeader(markdown);
+  const rulesSectionHeader = findSectionHeader(markdown, 'rules');
   const rulesSectionIndex = rulesSectionHeader
     ? markdown.indexOf(rulesSectionHeader)
     : -1;

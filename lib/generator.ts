@@ -1,43 +1,12 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
-import prettier from 'prettier'; // eslint-disable-line node/no-extraneous-import -- prettier is included by eslint-plugin-square
 import { getAllNamedOptions, hasOptions } from './rule-options.js';
 import { loadPlugin, getPluginPrefix } from './package-json.js';
 import { updateRulesList } from './rule-list.js';
 import { generateRuleHeaderLines } from './rule-notices.js';
 import { END_RULE_HEADER_MARKER } from './markers.js';
+import { format, replaceOrCreateHeader } from './markdown.js';
 import type { RuleModule, RuleDetails } from './types.js';
-
-async function format(str: string, filePath: string): Promise<string> {
-  const options = await prettier.resolveConfig(filePath);
-  return prettier.format(str, {
-    ...options,
-    parser: 'markdown',
-  });
-}
-
-/**
- * Replace the header of a doc up to and including the specified marker.
- * Insert at beginning if header doesn't exist.
- * @param lines - lines of doc
- * @param newHeaderLines - lines of new header including marker
- * @param marker - marker to indicate end of header
- */
-function replaceOrCreateHeader(
-  lines: string[],
-  newHeaderLines: string[],
-  marker: string
-) {
-  const markerLineIndex = lines.indexOf(marker);
-
-  if (markerLineIndex === -1 && lines.length > 0 && lines[0].startsWith('# ')) {
-    // No marker present so delete any existing title before we add the new one.
-    lines.splice(0, 1);
-  }
-
-  // Replace header section (or create at top if missing).
-  lines.splice(0, markerLineIndex + 1, ...newHeaderLines);
-}
 
 /**
  * Ensure a rule doc contains (or doesn't contain) some particular content.
