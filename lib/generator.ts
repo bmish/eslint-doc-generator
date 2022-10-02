@@ -5,7 +5,11 @@ import { loadPlugin, getPluginPrefix } from './package-json.js';
 import { updateRulesList } from './rule-list.js';
 import { generateRuleHeaderLines } from './rule-notices.js';
 import { END_RULE_HEADER_MARKER } from './markers.js';
-import { format, replaceOrCreateHeader } from './markdown.js';
+import {
+  findSectionHeader,
+  format,
+  replaceOrCreateHeader,
+} from './markdown.js';
 import type { RuleModule, RuleDetails } from './types.js';
 
 /**
@@ -25,8 +29,28 @@ function expectContent(
   if (contents.includes(content) !== expected) {
     console.error(
       `\`${ruleName}\` rule doc should ${
+        /* istanbul ignore next -- TODO: test !expected or remove parameter */
         expected ? '' : 'not '
       }have included: ${content}`
+    );
+    process.exitCode = 1;
+  }
+}
+
+function expectSectionHeader(
+  ruleName: string,
+  contents: string,
+  possibleHeaders: string[],
+  expected: boolean
+) {
+  const found = possibleHeaders.some((header) =>
+    findSectionHeader(contents, header)
+  );
+  if (found !== expected) {
+    console.error(
+      `\`${ruleName}\` rule doc should ${expected ? '' : 'not '}have included ${
+        expected ? 'one' : 'any'
+      } of these headers: ${possibleHeaders.join(', ')}`
     );
     process.exitCode = 1;
   }
@@ -87,8 +111,13 @@ export async function generate(path: string) {
 
     // Check for potential issues with the rule doc.
 
-    // "Options" section.
-    expectContent(name, contents, '## Options', hasOptions(schema));
+    // Options section.
+    expectSectionHeader(
+      name,
+      contents,
+      ['Options', 'Config'],
+      hasOptions(schema)
+    );
     for (const namedOption of getAllNamedOptions(schema)) {
       expectContent(name, contents, namedOption, true); // Each rule option is mentioned.
     }

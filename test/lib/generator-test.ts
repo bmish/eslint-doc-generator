@@ -602,7 +602,7 @@ describe('generator', function () {
       });
     });
 
-    describe('Rule doc has options section but no options', function () {
+    describe('Rule doc has options section but rule has no options', function () {
       beforeEach(function () {
         mockFs({
           'package.json': JSON.stringify({
@@ -630,7 +630,7 @@ describe('generator', function () {
 
           'README.md': '<!-- begin rules list --><!-- end rules list -->',
 
-          'docs/rules/no-foo.md': '## Options', // empty
+          'docs/rules/no-foo.md': '## Options\n', // empty
 
           // Needed for some of the test infrastructure to work.
           node_modules: mockFs.load(
@@ -647,7 +647,54 @@ describe('generator', function () {
         await generate('.');
         expect(consoleErrorStub.callCount).toBe(1);
         expect(consoleErrorStub.firstCall.args).toStrictEqual([
-          '`no-foo` rule doc should not have included: ## Options',
+          '`no-foo` rule doc should not have included any of these headers: Options, Config',
+        ]);
+        consoleErrorStub.restore();
+      });
+    });
+
+    describe('Rule doc missing options section', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: {
+                    docs: { description: 'Description of no-foo.', },
+                    schema: [{ type: 'object', },]
+                  },
+                  create(context) {},
+                },
+              },
+            };`,
+
+          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+
+          'docs/rules/no-foo.md': '', // empty
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+      it('prints an error', async function () {
+        const consoleErrorStub = sinon.stub(console, 'error');
+        await generate('.');
+        expect(consoleErrorStub.callCount).toBe(1);
+        expect(consoleErrorStub.firstCall.args).toStrictEqual([
+          '`no-foo` rule doc should have included one of these headers: Options, Config',
         ]);
         consoleErrorStub.restore();
       });
@@ -735,7 +782,7 @@ describe('generator', function () {
 
           'README.md': '<!-- begin rules list --><!-- end rules list -->',
 
-          'docs/rules/no-foo.md': '## Options', // empty
+          'docs/rules/no-foo.md': '## Options\n', // empty
 
           // Needed for some of the test infrastructure to work.
           node_modules: mockFs.load(
