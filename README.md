@@ -9,9 +9,9 @@ Generates the following documentation based on ESLint and top [ESLint plugin](ht
 - README rules table
 - Rule doc titles and notices
 
-Also performs some basic section consistency checks on rule docs (will eventually be configurable):
+Also performs some basic section consistency checks on rule docs:
 
-- Contains an `## Options` section and mentions each named option (for rules with options)
+- Contains an `## Options` / `## Config` section and mentions each named option (for rules with options)
 
 ## Setup
 
@@ -57,7 +57,7 @@ npm run update:eslint-docs
 Generated content in a rule doc (everything above the marker comment):
 
 ```md
-# Disallow use of `foo` (`no-foo`)
+# Disallow use of `foo` (`test/no-foo`)
 
 💼 This rule is enabled in the following configs: `all`, `recommended`.
 
@@ -104,7 +104,7 @@ Generated rules table in `README.md` (everything between the marker comments):
 ...
 ```
 
-Note the emoji legend you'll want to provide above the rules list.
+Note the emoji legend that you'll want to provide above the rules list.
 
 If you have any custom configs (besides `all`, `recommended`), you'll need to define a badge for them at the bottom of your `README.md`. Here's a badge for a custom `style` config that displays in blue:
 
@@ -114,6 +114,12 @@ If you have any custom configs (besides `all`, `recommended`), you'll need to de
 
 [npm-image]: https://badge.fury.io/js/eslint-doc-generator.svg
 [npm-url]: https://www.npmjs.com/package/eslint-doc-generator
+
+## Upcoming features
+
+- Custom config emojis ([#34](https://github.com/bmish/eslint-doc-generator/issues/34))
+- Auto-generated emoji legend for rules list ([#20](https://github.com/bmish/eslint-doc-generator/issues/20))
+- Configurable rule doc section consistency checks ([#36](https://github.com/bmish/eslint-doc-generator/issues/36))
 
 ## Related
 
