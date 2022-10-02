@@ -1,6 +1,6 @@
 # eslint-doc-generator
 
-[![npm version][npm-image]][npm-url]
+[![npm version][npm-image]][npm-url] [![CI][ci-image]][ci-url]
 
 Automatic documentation generator for [ESLint](https://eslint.org/) plugins and rules.
 
@@ -114,6 +114,8 @@ If you have any custom configs (besides `all`, `recommended`), you'll need to de
 
 [npm-image]: https://badge.fury.io/js/eslint-doc-generator.svg
 [npm-url]: https://www.npmjs.com/package/eslint-doc-generator
+[ci-image]: https://github.com/bmish/eslint-doc-generator/workflows/CI/badge.svg
+[ci-url]: https://github.com/bmish/eslint-doc-generator/actions/workflows/ci.yml
 
 ## Related
 
