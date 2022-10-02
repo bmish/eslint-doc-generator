@@ -1,6 +1,23 @@
 
 
 
+
+## v0.3.0 (2022-10-02)
+
+#### :bug: Bug Fix
+* [#47](https://github.com/bmish/eslint-doc-generator/pull/47) Throw exception when plugin does not export a `rules` object ([@bmish](https://github.com/bmish))
+* [#45](https://github.com/bmish/eslint-doc-generator/pull/45) Handle various possible names for options section when checking for its presence in rule doc ([@bmish](https://github.com/bmish))
+* [#43](https://github.com/bmish/eslint-doc-generator/pull/43) Improved detection for README rules section when marker comments are missing ([@bmish](https://github.com/bmish))
+* [#42](https://github.com/bmish/eslint-doc-generator/pull/42) Allow plugin to omit configs ([@bmish](https://github.com/bmish))
+* [#41](https://github.com/bmish/eslint-doc-generator/pull/41) Handle scoped plugin names ([@bmish](https://github.com/bmish))
+* [#40](https://github.com/bmish/eslint-doc-generator/pull/40) Description in rule doc title should begin with a capital letter and omit a trailing period ([@bmish](https://github.com/bmish))
+* [#39](https://github.com/bmish/eslint-doc-generator/pull/39) Add plugin prefix to rule name in rule doc title ([@bmish](https://github.com/bmish))
+* [#28](https://github.com/bmish/eslint-doc-generator/pull/28) Use prettier's own config resolution when formatting docs ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.2.0 (2022-10-01)
 
 #### :rocket: Enhancement
