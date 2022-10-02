@@ -4,6 +4,24 @@ exports[`generator #generate Missing plugin package.json \`name\` field throws a
 
 exports[`generator #generate Missing plugin package.json throws an error 1`] = `"Could not find package.json of ESLint plugin."`;
 
+exports[`generator #generate No configs found does not crash 1`] = `
+"<!-- begin rules list -->
+
+| Rule                           | Description   | ✅  | 🔧  | 💡  |
+| ------------------------------ | ------------- | --- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | disallow foo. |     |     |     |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate No configs found does not crash 2`] = `
+"# Disallow foo (\`test/no-foo\`)
+
+<!-- end rule header -->
+"
+`;
+
 exports[`generator #generate README missing rule list markers and no rules section throws an error 1`] = `"README.md is missing rules list markers: <!-- begin rules list --><!-- end rules list -->"`;
 
 exports[`generator #generate README missing rule list markers but with rules section adds rule list markers to rule section 1`] = `

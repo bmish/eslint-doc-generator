@@ -16,7 +16,7 @@ function getConfigurationColumnValueForRule(
   pluginPrefix: string
 ): string {
   const badges: string[] = [];
-  for (const configName of Object.keys(plugin.configs)) {
+  for (const configName of Object.keys(plugin.configs || {})) {
     if (configName === 'all') {
       // Ignore any config named `all` as it's not helpful to include it for every rule.
       continue;
