@@ -5,6 +5,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
 import { jest } from '@jest/globals';
+import prettier from 'prettier'; // eslint-disable-line node/no-extraneous-import -- prettier is included by eslint-plugin-square
 import * as sinon from 'sinon';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -374,6 +375,9 @@ describe('generator', function () {
 
     describe('uses prettier config from package.json', function () {
       beforeEach(function () {
+        // We have to clear the prettier cache between tests for this to work.
+        prettier.clearConfigCache();
+
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
@@ -491,6 +495,8 @@ describe('generator', function () {
 
           'index.js': 'export default { rules: {} };',
 
+          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+
           // Needed for some of the test infrastructure to work.
           node_modules: mockFs.load(
             resolve(__dirname, '..', '..', 'node_modules')
@@ -502,7 +508,7 @@ describe('generator', function () {
         jest.resetModules();
       });
       it('defaults to index.js entry point', async function () {
-        await expect(() => generate('.')).not.toThrow();
+        await expect(generate('.')).resolves.toBeUndefined();
       });
     });
 

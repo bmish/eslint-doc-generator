@@ -2,19 +2,16 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import prettier from 'prettier'; // eslint-disable-line node/no-extraneous-import -- prettier is included by eslint-plugin-square
 import { getAllNamedOptions, hasOptions } from './rule-options.js';
-import {
-  loadPlugin,
-  getPluginPrefix,
-  getPluginPrettierConfig,
-} from './package-json.js';
+import { loadPlugin, getPluginPrefix } from './package-json.js';
 import { updateRulesList } from './rule-list.js';
 import { generateRuleHeaderLines } from './rule-notices.js';
 import { END_RULE_HEADER_MARKER } from './markers.js';
 import type { RuleModule, RuleDetails } from './types.js';
 
-function format(str: string, pluginPath: string): string {
+async function format(str: string, filePath: string): Promise<string> {
+  const options = await prettier.resolveConfig(filePath);
   return prettier.format(str, {
-    ...getPluginPrettierConfig(pluginPath),
+    ...options,
     parser: 'markdown',
   });
 }
@@ -117,7 +114,7 @@ export async function generate(path: string) {
 
     replaceOrCreateHeader(lines, newHeaderLines, END_RULE_HEADER_MARKER);
 
-    writeFileSync(pathToDoc, format(lines.join('\n'), path));
+    writeFileSync(pathToDoc, await format(lines.join('\n'), pathToDoc));
 
     // Check for potential issues with the rule doc.
 
@@ -131,5 +128,5 @@ export async function generate(path: string) {
   // Update the rules list in the README.
   let readme = readFileSync(pathTo.readme, 'utf8');
   readme = updateRulesList(details, readme, plugin, pluginPrefix);
-  writeFileSync(pathTo.readme, format(readme, path), 'utf8');
+  writeFileSync(pathTo.readme, await format(readme, pathTo.readme), 'utf8');
 }
