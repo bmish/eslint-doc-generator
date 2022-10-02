@@ -29,6 +29,9 @@ export async function loadPlugin(path: string): Promise<Plugin> {
     pluginPackageJson.main?.endsWith('/') ? 'index.js' : ''
   );
   const { default: plugin } = await import(pluginEntryPoint);
+  if (!plugin.rules) {
+    throw new Error('Could not find exported `rules` object in ESLint plugin.');
+  }
   return plugin;
 }
 

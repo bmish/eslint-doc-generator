@@ -830,7 +830,7 @@ describe('generator', function () {
             main: 'index.js',
           }),
 
-          'index.js': '',
+          'index.js': 'export default { rules: {} }',
 
           // Needed for some of the test infrastructure to work.
           node_modules: mockFs.load(
@@ -926,6 +926,36 @@ describe('generator', function () {
         await generate('.');
         expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('No exported rules object found', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': 'export default {};',
+
+          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+      it('throws an error', async function () {
+        await expect(generate('.')).rejects.toThrowErrorMatchingSnapshot();
       });
     });
   });
