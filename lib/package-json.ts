@@ -41,16 +41,3 @@ export function getPluginPrefix(path: string): string {
   }
   return pluginPackageJson.name.replace('eslint-plugin-', ''); // TODO: also need to support scoped plugins.
 }
-
-export function getPluginPrettierConfig(path: string): Record<string, unknown> {
-  const pluginPackageJson = loadPackageJson(path);
-  if (
-    typeof pluginPackageJson.prettier === 'object' &&
-    pluginPackageJson.prettier !== null &&
-    !Array.isArray(pluginPackageJson.prettier)
-  ) {
-    return pluginPackageJson.prettier;
-  }
-  // TODO: also check other possible prettier config files.
-  return {};
-}
