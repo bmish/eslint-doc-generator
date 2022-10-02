@@ -22,6 +22,8 @@ exports[`generator #generate No configs found does not crash 2`] = `
 "
 `;
 
+exports[`generator #generate No exported rules object found throws an error 1`] = `"Could not find exported \`rules\` object in ESLint plugin."`;
+
 exports[`generator #generate README missing rule list markers and no rules section throws an error 1`] = `"README.md is missing rules list markers: <!-- begin rules list --><!-- end rules list -->"`;
 
 exports[`generator #generate README missing rule list markers but with rules section adds rule list markers to rule section 1`] = `
