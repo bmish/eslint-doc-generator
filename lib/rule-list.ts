@@ -92,6 +92,31 @@ function generateRulesListMarkdown(
     .join('\n');
 }
 
+/**
+ * Find the section most likely to be the top-level rules list.
+ */
+export function findRulesSectionHeader(markdown: string): string | undefined {
+  // Get all the matching strings.
+  const rulesSectionPotentialMatches = [
+    ...markdown.matchAll(/##.* rules.*\n/gi),
+  ].map((match) => match[0]);
+
+  if (rulesSectionPotentialMatches.length === 0) {
+    // No rules section found.
+    return undefined;
+  }
+
+  if (rulesSectionPotentialMatches.length === 1) {
+    // If there's only one match, we can assume it's the rules section.
+    return rulesSectionPotentialMatches[0];
+  }
+
+  // Otherwise assume the shortest match is the correct one.
+  return rulesSectionPotentialMatches.sort(
+    (a: string, b: string) => a.length - b.length
+  )[0];
+}
+
 export function updateRulesList(
   details: RuleDetails[],
   markdown: string,
@@ -100,17 +125,22 @@ export function updateRulesList(
 ): string {
   let listStartIndex = markdown.indexOf(BEGIN_RULE_LIST_MARKER);
   let listEndIndex = markdown.indexOf(END_RULE_LIST_MARKER);
-  const RULES_SECTION_HEADER = '## Rules\n';
-  const rulesSectionIndex = markdown.indexOf(RULES_SECTION_HEADER);
+
+  // Find the best possible section to insert the rules list into if the markers are missing.
+  const rulesSectionHeader = findRulesSectionHeader(markdown);
+  const rulesSectionIndex = rulesSectionHeader
+    ? markdown.indexOf(rulesSectionHeader)
+    : -1;
 
   if (
     listStartIndex === -1 &&
     listEndIndex === -1 &&
+    rulesSectionHeader &&
     rulesSectionIndex !== -1
   ) {
     // If the markers are missing, we'll try to find the rules section and insert the list there.
-    listStartIndex = rulesSectionIndex + RULES_SECTION_HEADER.length;
-    listEndIndex = rulesSectionIndex + RULES_SECTION_HEADER.length;
+    listStartIndex = rulesSectionIndex + rulesSectionHeader.length;
+    listEndIndex = rulesSectionIndex + rulesSectionHeader.length;
   } else {
     // Account for length of pre-existing marker.
     listEndIndex += END_RULE_LIST_MARKER.length;
