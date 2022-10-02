@@ -66,7 +66,7 @@ exports[`generator #generate deprecated rules updates the documentation 1`] = `
 `;
 
 exports[`generator #generate deprecated rules updates the documentation 2`] = `
-"# Description. (\`no-foo\`)
+"# Description. (\`test/no-foo\`)
 
 ❌ This rule is deprecated. It was replaced by [no-bar](no-bar.md).
 
@@ -75,7 +75,7 @@ exports[`generator #generate deprecated rules updates the documentation 2`] = `
 `;
 
 exports[`generator #generate deprecated rules updates the documentation 3`] = `
-"# Description. (\`no-bar\`)
+"# Description. (\`test/no-bar\`)
 
 ❌ This rule is deprecated.
 
@@ -84,7 +84,7 @@ exports[`generator #generate deprecated rules updates the documentation 3`] = `
 `;
 
 exports[`generator #generate deprecated rules updates the documentation 4`] = `
-"# Description. (\`no-baz\`)
+"# Description. (\`test/no-baz\`)
 
 ❌ This rule is deprecated.
 
@@ -104,7 +104,7 @@ exports[`generator #generate only a \`recommended\` config updates the documenta
 `;
 
 exports[`generator #generate only a \`recommended\` config updates the documentation 2`] = `
-"# Description. (\`no-foo\`)
+"# Description. (\`test/no-foo\`)
 
 ✅ This rule is enabled in the \`recommended\` config.
 
@@ -113,7 +113,7 @@ exports[`generator #generate only a \`recommended\` config updates the documenta
 `;
 
 exports[`generator #generate rule doc without header marker but pre-existing header updates the documentation 1`] = `
-"# Description. (\`no-foo\`)
+"# Description. (\`test/no-foo\`)
 
 ✅ This rule is enabled in the \`recommended\` config.
 
@@ -149,7 +149,7 @@ more content.
 `;
 
 exports[`generator #generate successful updates the documentation 2`] = `
-"# Description of no-foo. (\`no-foo\`)
+"# Description of no-foo. (\`test/no-foo\`)
 
 💼 This rule is enabled in the following configs: \`all\`, \`recommended\`.
 
@@ -172,7 +172,7 @@ Long line that SHOULD NOT get wrapped due to prettier proseWrap config. Long lin
 `;
 
 exports[`generator #generate successful updates the documentation 3`] = `
-"# Description of no-bar. (\`no-bar\`)
+"# Description of no-bar. (\`test/no-bar\`)
 
 💼 This rule is enabled in the following configs: \`all\`, \`style\`.
 
@@ -187,7 +187,7 @@ details
 `;
 
 exports[`generator #generate successful updates the documentation 4`] = `
-"# Description of no-boz. (\`no-baz\`)
+"# Description of no-boz. (\`test/no-baz\`)
 
 <!-- end rule header -->
 
@@ -209,7 +209,7 @@ exports[`generator #generate uses prettier config from package.json updates the 
 `;
 
 exports[`generator #generate uses prettier config from package.json updates the documentation 2`] = `
-"# Description of no-foo. (\`no-foo\`)
+"# Description of no-foo. (\`test/no-foo\`)
 
 💼 This rule is enabled in the following configs: \`all\`.
 
