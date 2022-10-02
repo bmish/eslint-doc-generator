@@ -653,6 +653,46 @@ describe('generator', function () {
       });
     });
 
+    describe('Rule description needs to be formatted', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: { docs: { description: 'disallow foo.' }, },
+                  create(context) {}
+                },
+              },
+              configs: {}
+            };`,
+
+          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+      it('capitalizes the first letter and removes the trailing period from the description', async function () {
+        await generate('.');
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
     describe('Rule doc does not mention an option', function () {
       beforeEach(function () {
         mockFs({

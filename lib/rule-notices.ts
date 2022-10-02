@@ -104,6 +104,16 @@ function getRuleNoticeLines(
   return lines;
 }
 
+function toSentenceCase(str: string) {
+  return str.replace(/^\w/, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase();
+  });
+}
+
+function removeTrailingPeriod(str: string) {
+  return str.replace(/\.$/, '');
+}
+
 /**
  * Generate a rule doc header for a particular rule.
  * @param description - rule description
@@ -116,8 +126,11 @@ export function generateRuleHeaderLines(
   plugin: Plugin,
   pluginPrefix: string
 ): string[] {
+  const descriptionFormatted = removeTrailingPeriod(
+    toSentenceCase(description)
+  );
   return [
-    `# ${description} (\`${pluginPrefix}/${name}\`)`,
+    `# ${descriptionFormatted} (\`${pluginPrefix}/${name}\`)`,
     ...getRuleNoticeLines(name, plugin, pluginPrefix),
     END_RULE_HEADER_MARKER,
   ];
