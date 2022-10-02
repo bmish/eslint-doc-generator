@@ -11,8 +11,7 @@ exports[`generator #generate No configs found does not crash 1`] = `
 | ------------------------------ | ------------- | --- | --- | --- |
 | [no-foo](docs/rules/no-foo.md) | disallow foo. |     |     |     |
 
-<!-- end rules list -->
-"
+<!-- end rules list -->"
 `;
 
 exports[`generator #generate No configs found does not crash 2`] = `
@@ -32,7 +31,6 @@ exports[`generator #generate README missing rule list markers but with rules sec
 Foo.
 
 ## Rules
-
 <!-- begin rules list -->
 
 | Rule                           | Description            | ✅  | 🔧  | 💡  |
@@ -45,8 +43,7 @@ Old rules list.
 
 ## Other
 
-Bar.
-"
+Bar."
 `;
 
 exports[`generator #generate Rule description needs to be formatted capitalizes the first letter and removes the trailing period from the description 1`] = `
@@ -73,8 +70,7 @@ exports[`generator #generate adds extra column to rules table for TypeScript rul
 | [no-bar](docs/rules/no-bar.md) | Description of no-bar. |     |     |     | 💭  |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |     |     |     |
 
-<!-- end rules list -->
-"
+<!-- end rules list -->"
 `;
 
 exports[`generator #generate deprecated rule with no rule doc nor meta.docs updates the documentation 1`] = `
@@ -84,8 +80,7 @@ exports[`generator #generate deprecated rule with no rule doc nor meta.docs upda
 | ------------------------------ | ----------- | --- | --- | --- |
 | [no-foo](docs/rules/no-foo.md) |             | ❌  |     |     |
 
-<!-- end rules list -->
-"
+<!-- end rules list -->"
 `;
 
 exports[`generator #generate deprecated rules updates the documentation 1`] = `
@@ -97,8 +92,7 @@ exports[`generator #generate deprecated rules updates the documentation 1`] = `
 | [no-baz](docs/rules/no-baz.md) | Description. | ❌  |     |     |
 | [no-foo](docs/rules/no-foo.md) | Description. | ❌  |     |     |
 
-<!-- end rules list -->
-"
+<!-- end rules list -->"
 `;
 
 exports[`generator #generate deprecated rules updates the documentation 2`] = `
@@ -128,6 +122,92 @@ exports[`generator #generate deprecated rules updates the documentation 4`] = `
 "
 `;
 
+exports[`generator #generate no existing comment markers - minimal doc content generates the documentation 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+| Rule                           | Description            | ✅  | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | --- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     | 🔧  |     |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate no existing comment markers - minimal doc content generates the documentation 2`] = `
+"# Description of no-foo (\`test/no-foo\`)
+
+🔧 This rule is automatically fixable using the \`--fix\` [option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) on the command line.
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate no existing comment markers - with no blank lines in existing content generates the documentation 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+| Rule                           | Description            | ✅  | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | --- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     | 🔧  |     |
+
+<!-- end rules list -->
+Existing rules section content."
+`;
+
+exports[`generator #generate no existing comment markers - with no blank lines in existing content generates the documentation 2`] = `
+"# Description of no-foo (\`test/no-foo\`)
+
+🔧 This rule is automatically fixable using the \`--fix\` [option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) on the command line.
+
+<!-- end rule header -->
+Existing rule doc content."
+`;
+
+exports[`generator #generate no existing comment markers - with one blank line around existing content generates the documentation 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+| Rule                           | Description            | ✅  | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | --- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     | 🔧  |     |
+
+<!-- end rules list -->
+
+Existing rules section content."
+`;
+
+exports[`generator #generate no existing comment markers - with one blank line around existing content generates the documentation 2`] = `
+"# Description of no-foo (\`test/no-foo\`)
+
+🔧 This rule is automatically fixable using the \`--fix\` [option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) on the command line.
+
+<!-- end rule header -->
+
+Existing rule doc content."
+`;
+
+exports[`generator #generate no prettier config generates the documentation 1`] = `
+"<!-- begin rules list -->
+
+| Rule                           | Description            | ✅  | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | --- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     | 🔧  |     |
+
+<!-- end rules list -->"
+`;
+
+exports[`generator #generate no prettier config generates the documentation 2`] = `
+"# Description of no-foo (\`test/no-foo\`)
+
+🔧 This rule is automatically fixable using the \`--fix\` [option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) on the command line.
+
+<!-- end rule header -->
+## Rule details
+details
+Long line that SHOULD NOT get wrapped by prettier since it's outside the header. Long line that SHOULD NOT get wrapped by prettier since it's outside the header.""
+`;
+
 exports[`generator #generate only a \`recommended\` config updates the documentation 1`] = `
 "<!-- begin rules list -->
 
@@ -135,8 +215,7 @@ exports[`generator #generate only a \`recommended\` config updates the documenta
 | ------------------------------ | ------------ | --- | --- | --- |
 | [no-foo](docs/rules/no-foo.md) | Description. | ✅  |     |     |
 
-<!-- end rules list -->
-"
+<!-- end rules list -->"
 `;
 
 exports[`generator #generate only a \`recommended\` config updates the documentation 2`] = `
@@ -154,22 +233,15 @@ exports[`generator #generate rule doc without header marker but pre-existing hea
 ✅ This rule is enabled in the \`recommended\` config.
 
 <!-- end rule header -->
-
 Pre-existing notice about the rule being recommended.
-
 ## Rule details
-
-Details.
-"
+Details."
 `;
 
 exports[`generator #generate successful updates the documentation 1`] = `
 "# eslint-plugin-test
-
 Description.
-
 ## Rules
-
 <!-- begin rules list -->
 
 | Rule                           | Description            | 💼         | 🔧  | 💡  |
@@ -179,9 +251,7 @@ Description.
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅         | 🔧  | 💡  |
 
 <!-- end rules list -->
-
-more content.
-"
+more content."
 `;
 
 exports[`generator #generate successful updates the documentation 2`] = `
@@ -194,17 +264,11 @@ exports[`generator #generate successful updates the documentation 2`] = `
 💡 This rule provides [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions) that can be applied manually.
 
 <!-- end rule header -->
-
 ## Rule details
-
 details
-
 ## Options
-
 optionToDoSomething1 - explanation
-optionToDoSomething2 - explanation
-Long line that SHOULD NOT get wrapped due to prettier proseWrap config. Long line that SHOULD NOT get wrapped due to prettier proseWrap config.
-"
+optionToDoSomething2 - explanation"
 `;
 
 exports[`generator #generate successful updates the documentation 3`] = `
@@ -215,45 +279,87 @@ exports[`generator #generate successful updates the documentation 3`] = `
 🔧 This rule is automatically fixable using the \`--fix\` [option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) on the command line.
 
 <!-- end rule header -->
-
 ## Rule details
-
-details
-"
+details"
 `;
 
 exports[`generator #generate successful updates the documentation 4`] = `
 "# Description of no-boz (\`test/no-baz\`)
 
 <!-- end rule header -->
-
 ## Rule details
-
-details
-"
+details"
 `;
 
-exports[`generator #generate uses prettier config from package.json updates the documentation 1`] = `
+exports[`generator #generate uses prettier config from package.json should wrap prose in rule doc header to just 20 chars 1`] = `
 "<!-- begin rules list -->
 
 | Rule                           | Description            | ✅  | 🔧  | 💡  |
 | ------------------------------ | ---------------------- | --- | --- | --- |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |     |     |
 
-<!-- end rules list -->
-"
+<!-- end rules list -->"
 `;
 
-exports[`generator #generate uses prettier config from package.json updates the documentation 2`] = `
+exports[`generator #generate uses prettier config from package.json should wrap prose in rule doc header to just 20 chars 2`] = `
 "# Description of no-foo (\`test/no-foo\`)
 
-💼 This rule is enabled in the following configs: \`all\`.
+💼 This rule is
+enabled in the
+following configs:
+\`all\`.
+
+<!-- end rule header -->
+## Rule details
+details
+Long line that SHOULD NOT get wrapped by prettier since it's outside the header. Long line that SHOULD NOT get wrapped by prettier since it's outside the header."
+`;
+
+exports[`generator #generate with no blank lines around comment markers generates the documentation 1`] = `
+"# Rules
+
+No blank line after this.
+<!-- begin rules list -->
+
+| Rule                           | Description            | ✅  | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | --- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     | 🔧  |     |
+
+<!-- end rules list -->
+No blank line before this."
+`;
+
+exports[`generator #generate with no blank lines around comment markers generates the documentation 2`] = `
+"# Description of no-foo (\`test/no-foo\`)
+
+🔧 This rule is automatically fixable using the \`--fix\` [option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) on the command line.
+
+<!-- end rule header -->
+No blank line before this."
+`;
+
+exports[`generator #generate with one blank line around comment markers generates the documentation 1`] = `
+"# Rules
+
+One blank line after this.
+
+<!-- begin rules list -->
+
+| Rule                           | Description            | ✅  | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | --- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     | 🔧  |     |
+
+<!-- end rules list -->
+
+One blank line before this."
+`;
+
+exports[`generator #generate with one blank line around comment markers generates the documentation 2`] = `
+"# Description of no-foo (\`test/no-foo\`)
+
+🔧 This rule is automatically fixable using the \`--fix\` [option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) on the command line.
 
 <!-- end rule header -->
 
-## Rule details
-
-details Long line that SHOULD get wrapped due to prettier proseWrap config. Long
-line that SHOULD get wrapped due to prettier proseWrap config.
-"
+One blank line before this."
 `;

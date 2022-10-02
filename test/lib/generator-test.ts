@@ -14,6 +14,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 describe('generator', function () {
   describe('#generate', function () {
+    beforeEach(function () {
+      // We have to clear the prettier cache between tests for this to work.
+      prettier.clearConfigCache();
+    });
+
     describe('successful', function () {
       beforeEach(function () {
         mockFs({
@@ -124,7 +129,6 @@ describe('generator', function () {
             ## Options
             optionToDoSomething1 - explanation
             optionToDoSomething2 - explanation
-            Long line that SHOULD NOT get wrapped due to prettier proseWrap config. Long line that SHOULD NOT get wrapped due to prettier proseWrap config.
           `, // rule doc with incorrect header content
           'docs/rules/no-bar.md': outdent`
             <!-- end rule header -->
@@ -373,64 +377,6 @@ describe('generator', function () {
       });
     });
 
-    describe('uses prettier config from package.json', function () {
-      beforeEach(function () {
-        // We have to clear the prettier cache between tests for this to work.
-        prettier.clearConfigCache();
-
-        mockFs({
-          'package.json': JSON.stringify({
-            name: 'eslint-plugin-test',
-            main: 'lib/', // Test that we can handle directory.
-            prettier: { proseWrap: 'always' },
-          }),
-
-          'lib/index.js': `
-            export default {
-              rules: {
-                'no-foo': {
-                  meta: { docs: { description: 'Description of no-foo.' }, },
-                  create(context) {}
-                },
-              },
-              configs: {
-                all: {
-                  rules: {
-                    'test/no-foo': 'error',
-                  }
-                },
-              }
-            };`,
-
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
-
-          'docs/rules/no-foo.md': outdent`
-            ## Rule details
-            details
-            Long line that SHOULD get wrapped due to prettier proseWrap config. Long line that SHOULD get wrapped due to prettier proseWrap config.
-          `,
-
-          // Needed for some of the test infrastructure to work.
-          node_modules: mockFs.load(
-            resolve(__dirname, '..', '..', 'node_modules')
-          ),
-        });
-      });
-
-      afterEach(function () {
-        mockFs.restore();
-        jest.resetModules();
-      });
-
-      it('updates the documentation', async function () {
-        await generate('.');
-
-        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-
-        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
-      });
-    });
-
     describe('adds extra column to rules table for TypeScript rules', function () {
       beforeEach(function () {
         mockFs({
@@ -508,6 +454,34 @@ describe('generator', function () {
         jest.resetModules();
       });
       it('defaults to index.js entry point', async function () {
+        await expect(generate('.')).resolves.toBeUndefined();
+      });
+    });
+
+    describe('Package.json `main` field points to directory', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            type: 'module',
+            main: 'lib/',
+          }),
+
+          'lib/index.js': 'export default { rules: {} };',
+
+          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+      it('finds index.js entry point', async function () {
         await expect(generate('.')).resolves.toBeUndefined();
       });
     });
@@ -956,6 +930,367 @@ describe('generator', function () {
       });
       it('throws an error', async function () {
         await expect(generate('.')).rejects.toThrowErrorMatchingSnapshot();
+      });
+    });
+
+    beforeEach(function () {
+      // We have to clear the prettier cache between tests for this to work.
+      prettier.clearConfigCache();
+    });
+
+    describe('no prettier config', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            type: 'module',
+          }),
+
+          'index.js': `
+                    export default {
+                      rules: {
+                        'no-foo': {
+                          meta: { docs: { description: 'Description of no-foo.' }, fixable: 'code' },
+                          create(context) {}
+                        },
+                      },
+                    };`,
+
+          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+
+          'docs/rules/no-foo.md': outdent`
+            ## Rule details
+            details
+            Long line that SHOULD NOT get wrapped by prettier since it's outside the header. Long line that SHOULD NOT get wrapped by prettier since it's outside the header."
+          `,
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('generates the documentation', async function () {
+        await generate('.');
+
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('uses prettier config from package.json', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            type: 'module',
+            prettier: { proseWrap: 'always', printWidth: 20 },
+          }),
+
+          'index.js': `
+                export default {
+                  rules: {
+                    'no-foo': {
+                      meta: { docs: { description: 'Description of no-foo.' }, },
+                      create(context) {}
+                    },
+                  },
+                  configs: {
+                    all: {
+                      rules: {
+                        'test/no-foo': 'error',
+                      }
+                    },
+                  }
+                };`,
+
+          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+
+          'docs/rules/no-foo.md': outdent`
+            ## Rule details
+            details
+            Long line that SHOULD NOT get wrapped by prettier since it's outside the header. Long line that SHOULD NOT get wrapped by prettier since it's outside the header.
+          `,
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('should wrap prose in rule doc header to just 20 chars', async function () {
+        await generate('.');
+
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('with one blank line around comment markers', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            type: 'module',
+          }),
+
+          'index.js': `
+                    export default {
+                      rules: {
+                        'no-foo': {
+                          meta: { docs: { description: 'Description of no-foo.' }, fixable: 'code' },
+                          create(context) {}
+                        },
+                      },
+                    };`,
+
+          'README.md': outdent`
+            # Rules
+
+            One blank line after this.
+
+            <!-- begin rules list -->
+
+
+            <!-- end rules list -->
+
+            One blank line before this.
+          `,
+
+          'docs/rules/no-foo.md': outdent`
+            <!-- end rule header -->
+
+            One blank line before this.
+          `,
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('generates the documentation', async function () {
+        await generate('.');
+
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('with no blank lines around comment markers', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            type: 'module',
+          }),
+
+          'index.js': `
+                    export default {
+                      rules: {
+                        'no-foo': {
+                          meta: { docs: { description: 'Description of no-foo.' }, fixable: 'code' },
+                          create(context) {}
+                        },
+                      },
+                    };`,
+
+          'README.md': outdent`
+            # Rules
+
+            No blank line after this.
+            <!-- begin rules list -->
+            <!-- end rules list -->
+            No blank line before this.
+          `,
+
+          'docs/rules/no-foo.md': outdent`
+            <!-- end rule header -->
+            No blank line before this.
+          `,
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('generates the documentation', async function () {
+        await generate('.');
+
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('no existing comment markers - with no blank lines in existing content', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            type: 'module',
+          }),
+
+          'index.js': `
+                    export default {
+                      rules: {
+                        'no-foo': {
+                          meta: { docs: { description: 'Description of no-foo.' }, fixable: 'code' },
+                          create(context) {}
+                        },
+                      },
+                    };`,
+
+          'README.md': outdent`
+            ## Rules
+            Existing rules section content.
+          `,
+
+          'docs/rules/no-foo.md': outdent`
+            # no-foo
+            Existing rule doc content.
+          `,
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('generates the documentation', async function () {
+        await generate('.');
+
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('no existing comment markers - with one blank line around existing content', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            type: 'module',
+          }),
+
+          'index.js': `
+                    export default {
+                      rules: {
+                        'no-foo': {
+                          meta: { docs: { description: 'Description of no-foo.' }, fixable: 'code' },
+                          create(context) {}
+                        },
+                      },
+                    };`,
+
+          'README.md': outdent`
+            ## Rules
+
+            Existing rules section content.
+          `,
+
+          'docs/rules/no-foo.md': outdent`
+            # no-foo
+
+            Existing rule doc content.
+          `,
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('generates the documentation', async function () {
+        await generate('.');
+
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('no existing comment markers - minimal doc content', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            type: 'module',
+          }),
+
+          'index.js': `
+                    export default {
+                      rules: {
+                        'no-foo': {
+                          meta: { docs: { description: 'Description of no-foo.' }, fixable: 'code' },
+                          create(context) {}
+                        },
+                      },
+                    };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('generates the documentation', async function () {
+        await generate('.');
+
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
       });
     });
   });

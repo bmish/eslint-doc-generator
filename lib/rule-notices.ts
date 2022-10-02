@@ -118,14 +118,14 @@ function removeTrailingPeriod(str: string) {
  * Generate a rule doc header for a particular rule.
  * @param description - rule description
  * @param name - rule name
- * @returns {string[]} - lines for new header including marker
+ * @returns {string} - new header including marker
  */
 export function generateRuleHeaderLines(
   description: string,
   name: string,
   plugin: Plugin,
   pluginPrefix: string
-): string[] {
+): string {
   const descriptionFormatted = removeTrailingPeriod(
     toSentenceCase(description)
   );
@@ -133,5 +133,5 @@ export function generateRuleHeaderLines(
     `# ${descriptionFormatted} (\`${pluginPrefix}/${name}\`)`,
     ...getRuleNoticeLines(name, plugin, pluginPrefix),
     END_RULE_HEADER_MARKER,
-  ];
+  ].join('\n');
 }
