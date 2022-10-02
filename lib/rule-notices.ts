@@ -117,7 +117,7 @@ export function generateRuleHeaderLines(
   pluginPrefix: string
 ): string[] {
   return [
-    `# ${description} (\`${name}\`)`,
+    `# ${description} (\`${pluginPrefix}/${name}\`)`,
     ...getRuleNoticeLines(name, plugin, pluginPrefix),
     END_RULE_HEADER_MARKER,
   ];
