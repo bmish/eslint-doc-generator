@@ -933,6 +933,47 @@ describe('generator', function () {
       });
     });
 
+    describe('CJS (non-ESM)', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.cjs',
+            type: 'commonjs', // ts-jest doesn't seem to respect this `type`, so we have to use .cjs extension.
+          }),
+
+          'index.cjs': `module.exports = {
+            rules: {
+              'no-foo': {
+                meta: { docs: { description: 'disallow foo.' }, },
+                create(context) {}
+              },
+            },
+          };`,
+
+          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+      it('generates the documentation', async function () {
+        await generate('.');
+
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
     beforeEach(function () {
       // We have to clear the prettier cache between tests for this to work.
       prettier.clearConfigCache();
