@@ -28,7 +28,7 @@ Add it as as script in `package.json` (included as a lint script to demonstrate 
   "scripts": {
     "lint": "npm-run-all \"lint:*\"",
     "lint:docs": "markdownlint \"**/*.md\"",
-    "lint:eslint-docs": "npm-run-all update:docs && git diff --exit-code",
+    "lint:eslint-docs": "npm-run-all update:eslint-docs && git diff --exit-code",
     "lint:js": "eslint .",
     "update:eslint-docs": "eslint-doc-generator"
   }
