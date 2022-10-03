@@ -13,15 +13,18 @@ export async function format(str: string, filePath: string): Promise<string> {
 /**
  * Replace the header of a doc up to and including the specified marker.
  * Insert at beginning if header doesn't exist.
- * @param lines - lines of doc
- * @param newHeaderLines - lines of new header including marker
+ * @param markdown - doc content
+ * @param newHeader - new header including marker
  * @param marker - marker to indicate end of header
  */
-export function replaceOrCreateHeader(
-  lines: string[],
-  newHeaderLines: string[],
-  marker: string
+export async function replaceOrCreateHeader(
+  markdown: string,
+  newHeader: string,
+  marker: string,
+  pathToDoc: string
 ) {
+  const lines = markdown.split('\n');
+
   const markerLineIndex = lines.indexOf(marker);
 
   if (markerLineIndex === -1 && lines.length > 0 && lines[0].startsWith('# ')) {
@@ -29,8 +32,10 @@ export function replaceOrCreateHeader(
     lines.splice(0, 1);
   }
 
-  // Replace header section (or create at top if missing).
-  lines.splice(0, markerLineIndex + 1, ...newHeaderLines);
+  return (
+    (await format(newHeader, pathToDoc)) +
+    lines.slice(markerLineIndex + 1).join('\n')
+  );
 }
 
 /**

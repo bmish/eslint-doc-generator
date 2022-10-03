@@ -5,11 +5,7 @@ import { loadPlugin, getPluginPrefix } from './package-json.js';
 import { updateRulesList } from './rule-list.js';
 import { generateRuleHeaderLines } from './rule-notices.js';
 import { END_RULE_HEADER_MARKER } from './markers.js';
-import {
-  findSectionHeader,
-  format,
-  replaceOrCreateHeader,
-} from './markdown.js';
+import { findSectionHeader, replaceOrCreateHeader } from './markdown.js';
 import type { RuleModule, RuleDetails } from './types.js';
 
 /**
@@ -94,9 +90,6 @@ export async function generate(path: string) {
       continue;
     }
 
-    const contents = readFileSync(pathToDoc).toString();
-    const lines = contents.split('\n');
-
     // Regenerate the header (title/notices) of each rule doc.
     const newHeaderLines = generateRuleHeaderLines(
       description,
@@ -105,9 +98,15 @@ export async function generate(path: string) {
       pluginPrefix
     );
 
-    replaceOrCreateHeader(lines, newHeaderLines, END_RULE_HEADER_MARKER);
+    const contents = readFileSync(pathToDoc).toString();
+    const contentsNew = await replaceOrCreateHeader(
+      contents,
+      newHeaderLines,
+      END_RULE_HEADER_MARKER,
+      pathToDoc
+    );
 
-    writeFileSync(pathToDoc, await format(lines.join('\n'), pathToDoc));
+    writeFileSync(pathToDoc, contentsNew);
 
     // Check for potential issues with the rule doc.
 
@@ -124,7 +123,12 @@ export async function generate(path: string) {
   }
 
   // Update the rules list in the README.
-  let readme = readFileSync(pathTo.readme, 'utf8');
-  readme = updateRulesList(details, readme, plugin, pluginPrefix);
-  writeFileSync(pathTo.readme, await format(readme, pathTo.readme), 'utf8');
+  const readme = await updateRulesList(
+    details,
+    readFileSync(pathTo.readme, 'utf8'),
+    plugin,
+    pluginPrefix,
+    pathTo.readme
+  );
+  writeFileSync(pathTo.readme, readme, 'utf8');
 }

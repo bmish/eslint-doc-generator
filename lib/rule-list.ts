@@ -8,7 +8,7 @@ import {
   EMOJI_CONFIGS,
 } from './emojis.js';
 import { hasCustomConfigs } from './configs.js';
-import { findSectionHeader } from './markdown.js';
+import { findSectionHeader, format } from './markdown.js';
 import type { Plugin, RuleDetails } from './types.js';
 
 function getConfigurationColumnValueForRule(
@@ -93,12 +93,13 @@ function generateRulesListMarkdown(
     .join('\n');
 }
 
-export function updateRulesList(
+export async function updateRulesList(
   details: RuleDetails[],
   markdown: string,
   plugin: Plugin,
-  pluginPrefix: string
-): string {
+  pluginPrefix: string,
+  pathToReadme: string
+): Promise<string> {
   let listStartIndex = markdown.indexOf(BEGIN_RULE_LIST_MARKER);
   let listEndIndex = markdown.indexOf(END_RULE_LIST_MARKER);
 
@@ -116,7 +117,7 @@ export function updateRulesList(
   ) {
     // If the markers are missing, we'll try to find the rules section and insert the list there.
     listStartIndex = rulesSectionIndex + rulesSectionHeader.length;
-    listEndIndex = rulesSectionIndex + rulesSectionHeader.length;
+    listEndIndex = rulesSectionIndex + rulesSectionHeader.length - 1;
   } else {
     // Account for length of pre-existing marker.
     listEndIndex += END_RULE_LIST_MARKER.length;
@@ -128,22 +129,14 @@ export function updateRulesList(
     );
   }
 
-  return [
-    // Doc before rule list marker.
-    markdown.slice(0, Math.max(0, listStartIndex - 1)),
+  const preList = markdown.slice(0, Math.max(0, listStartIndex));
+  const postList = markdown.slice(Math.max(0, listEndIndex));
 
-    // New begin marker.
-    BEGIN_RULE_LIST_MARKER,
-    '',
-
-    // New rule list.
+  // New rule list.
+  const list = await format(
     generateRulesListMarkdown(details, plugin, pluginPrefix),
-    '',
+    pathToReadme
+  );
 
-    // New end marker.
-    END_RULE_LIST_MARKER,
-
-    // Doc after rule list marker.
-    markdown.slice(Math.max(0, listEndIndex)),
-  ].join('\n');
+  return `${preList}${BEGIN_RULE_LIST_MARKER}\n\n${list}\n${END_RULE_LIST_MARKER}${postList}`;
 }

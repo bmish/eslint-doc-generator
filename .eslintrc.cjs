@@ -19,6 +19,14 @@ module.exports = {
     },
   },
   rules: {
+    // TODO: these import rules are running extremely slowly (several seconds each) so disable for now.
+    'import/default': 'off',
+    'import/namespace': 'off',
+    'import/no-cycle': 'off',
+    'import/no-deprecated': 'off',
+    'import/no-named-as-default': 'off',
+    'import/no-named-as-default-member': 'off',
+
     'import/extensions': ['error', 'always'],
     'node/no-missing-import': 'off', // Disabled due to a bug: https://github.com/mysticatea/eslint-plugin-node/issues/342
     'unicorn/no-array-reduce': 'off',
