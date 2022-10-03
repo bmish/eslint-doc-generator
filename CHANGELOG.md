@@ -2,6 +2,16 @@
 
 
 
+
+## v0.3.1 (2022-10-03)
+
+#### :bug: Bug Fix
+* [#48](https://github.com/bmish/eslint-doc-generator/pull/48) Only apply prettier formatting to managed doc content ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.3.0 (2022-10-02)
 
 #### :bug: Bug Fix
