@@ -3,6 +3,19 @@
 
 
 
+
+## v0.3.2 (2022-10-04)
+
+#### :bug: Bug Fix
+* [#59](https://github.com/bmish/eslint-doc-generator/pull/59) Resolve `extends` in ESLint configs ([@bmish](https://github.com/bmish))
+
+#### :house: Internal
+* [#50](https://github.com/bmish/eslint-doc-generator/pull/50) Add test for CJS plugin file ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.3.1 (2022-10-03)
 
 #### :bug: Bug Fix
