@@ -6,6 +6,7 @@ import { updateRulesList } from './rule-list.js';
 import { generateRuleHeaderLines } from './rule-notices.js';
 import { END_RULE_HEADER_MARKER } from './markers.js';
 import { findSectionHeader, replaceOrCreateHeader } from './markdown.js';
+import { resolveConfigsToRules } from './config-resolution.js';
 import type { RuleModule, RuleDetails } from './types.js';
 
 /**
@@ -55,6 +56,7 @@ function expectSectionHeader(
 export async function generate(path: string) {
   const plugin = await loadPlugin(path);
   const pluginPrefix = getPluginPrefix(path);
+  const configsToRules = await resolveConfigsToRules(plugin);
 
   const pathTo = {
     readme: resolve(path, 'README.md'),
@@ -95,6 +97,7 @@ export async function generate(path: string) {
       description,
       name,
       plugin,
+      configsToRules,
       pluginPrefix
     );
 
@@ -127,6 +130,7 @@ export async function generate(path: string) {
     details,
     readFileSync(pathTo.readme, 'utf8'),
     plugin,
+    configsToRules,
     pluginPrefix,
     pathTo.readme
   );

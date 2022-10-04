@@ -4,9 +4,18 @@ export type RuleModule = TSESLint.RuleModule<string, unknown[]> & {
   meta: Required<Pick<TSESLint.RuleMetaData<string>, 'docs'>>;
 };
 
+export type Rules = Record<string, string | number>;
+
+export type Config = {
+  extends: string[];
+  rules: Rules;
+};
+
+export type ConfigsToRules = Record<string, Rules>;
+
 export type Plugin = {
   rules: Record<string, RuleModule>;
-  configs: Record<string, { rules: Record<string, string | number> }>;
+  configs: Record<string, Config>;
 };
 
 export interface RuleDetails {

@@ -1334,5 +1334,73 @@ describe('generator', function () {
         expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
       });
     });
+
+    describe('config that extends another config', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.cjs',
+            type: 'commonjs',
+          }),
+
+          'index.cjs': `
+            module.exports = {
+              rules: {
+                'no-foo': {
+                  meta: { docs: { description: 'Description of no-foo.' }, },
+                  create(context) {}
+                },
+                'no-bar': {
+                  meta: { docs: { description: 'Description of no-bar.' }, },
+                  create(context) {}
+                },
+              },
+              configs: {
+                recommended: {
+                  extends: [require.resolve('./base-config')],
+                }
+              }
+            };`,
+
+          // Multi-level nested config with `rules` and `extends`.
+          'base-config.cjs': `
+            module.exports = {
+              extends: [require.resolve("./base-base-config")],
+              rules: { "test/no-foo": "error" }
+            };`,
+
+          // Multi-level nested config with no `rules`.
+          'base-base-config.cjs':
+            'module.exports = { extends: [require.resolve("./base-base-base-config")] };',
+
+          // Multi-level nested config with no further `extends`.
+          'base-base-base-config.cjs':
+            'module.exports = { rules: { "test/no-bar": "error" } };',
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+          'docs/rules/no-bar.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('generates the documentation', async function () {
+        await generate('.');
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
+      });
+    });
   });
 });

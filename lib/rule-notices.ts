@@ -7,7 +7,7 @@ import {
   EMOJI_CONFIG_RECOMMENDED,
 } from './emojis.js';
 import { getConfigsForRule, configNamesToList } from './configs.js';
-import type { RuleModule, Plugin } from './types.js';
+import type { RuleModule, Plugin, ConfigsToRules } from './types.js';
 
 enum MESSAGE_TYPE {
   CONFIGS = 'configs',
@@ -60,12 +60,17 @@ function getNoticesForRule(rule: RuleModule, configsEnabled: string[]) {
 function getRuleNoticeLines(
   ruleName: string,
   plugin: Plugin,
+  configsToRules: ConfigsToRules,
   pluginPrefix: string
 ) {
   const lines: string[] = [];
 
   const rule = plugin.rules[ruleName];
-  const configsEnabled = getConfigsForRule(ruleName, plugin, pluginPrefix);
+  const configsEnabled = getConfigsForRule(
+    ruleName,
+    configsToRules,
+    pluginPrefix
+  );
   const notices = getNoticesForRule(rule, configsEnabled);
   let messageType: keyof typeof notices;
 
@@ -124,6 +129,7 @@ export function generateRuleHeaderLines(
   description: string,
   name: string,
   plugin: Plugin,
+  configsToRules: ConfigsToRules,
   pluginPrefix: string
 ): string {
   const descriptionFormatted = removeTrailingPeriod(
@@ -131,7 +137,7 @@ export function generateRuleHeaderLines(
   );
   return [
     `# ${descriptionFormatted} (\`${pluginPrefix}/${name}\`)`,
-    ...getRuleNoticeLines(name, plugin, pluginPrefix),
+    ...getRuleNoticeLines(name, plugin, configsToRules, pluginPrefix),
     END_RULE_HEADER_MARKER,
   ].join('\n');
 }

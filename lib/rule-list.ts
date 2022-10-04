@@ -7,30 +7,29 @@ import {
   EMOJI_REQUIRES_TYPE_CHECKING,
   EMOJI_CONFIGS,
 } from './emojis.js';
-import { hasCustomConfigs } from './configs.js';
+import { hasCustomConfigs, getConfigsForRule } from './configs.js';
 import { findSectionHeader, format } from './markdown.js';
-import type { Plugin, RuleDetails } from './types.js';
+import type { Plugin, RuleDetails, ConfigsToRules } from './types.js';
 
 function getConfigurationColumnValueForRule(
   rule: RuleDetails,
-  plugin: Plugin,
+  configsToRules: ConfigsToRules,
   pluginPrefix: string
 ): string {
   const badges: string[] = [];
-  for (const configName of Object.keys(plugin.configs || {})) {
+  const configs = getConfigsForRule(rule.name, configsToRules, pluginPrefix);
+  for (const configName of configs) {
     if (configName === 'all') {
       // Ignore any config named `all` as it's not helpful to include it for every rule.
       continue;
     }
-    if (`${pluginPrefix}/${rule.name}` in plugin.configs[configName].rules) {
-      // Use the standard `recommended` emoji for that config.
-      // For other config names, the user can manually define a badge image.
-      badges.push(
-        configName === 'recommended'
-          ? EMOJI_CONFIG_RECOMMENDED
-          : `![${configName}][]`
-      );
-    }
+    // Use the standard `recommended` emoji for that config.
+    // For other config names, the user can manually define a badge image.
+    badges.push(
+      configName === 'recommended'
+        ? EMOJI_CONFIG_RECOMMENDED
+        : `![${configName}][]`
+    );
   }
 
   if (rule.deprecated) {
@@ -43,14 +42,14 @@ function getConfigurationColumnValueForRule(
 
 function buildRuleRow(
   rule: RuleDetails,
-  plugin: Plugin,
+  configsToRules: ConfigsToRules,
   pluginPrefix: string,
   includeTypesColumn: boolean
 ): string[] {
   const columns = [
     `[${rule.name}](docs/rules/${rule.name}.md)`,
     rule.description,
-    getConfigurationColumnValueForRule(rule, plugin, pluginPrefix),
+    getConfigurationColumnValueForRule(rule, configsToRules, pluginPrefix),
     rule.fixable ? EMOJI_FIXABLE : '',
     rule.hasSuggestions ? EMOJI_HAS_SUGGESTIONS : '',
   ];
@@ -63,6 +62,7 @@ function buildRuleRow(
 function generateRulesListMarkdown(
   details: RuleDetails[],
   plugin: Plugin,
+  configsToRules: ConfigsToRules,
   pluginPrefix: string
 ): string {
   // Since such rules are rare, we'll only include the types column if at least one rule requires type checking.
@@ -86,7 +86,7 @@ function generateRulesListMarkdown(
     ...details
       .sort(({ name: a }, { name: b }) => a.localeCompare(b))
       .map((rule: RuleDetails) =>
-        buildRuleRow(rule, plugin, pluginPrefix, includeTypesColumn)
+        buildRuleRow(rule, configsToRules, pluginPrefix, includeTypesColumn)
       ),
   ]
     .map((column) => [...column, ' '].join('|'))
@@ -97,6 +97,7 @@ export async function updateRulesList(
   details: RuleDetails[],
   markdown: string,
   plugin: Plugin,
+  configsToRules: ConfigsToRules,
   pluginPrefix: string,
   pathToReadme: string
 ): Promise<string> {
@@ -134,7 +135,7 @@ export async function updateRulesList(
 
   // New rule list.
   const list = await format(
-    generateRulesListMarkdown(details, plugin, pluginPrefix),
+    generateRulesListMarkdown(details, plugin, configsToRules, pluginPrefix),
     pathToReadme
   );
 
