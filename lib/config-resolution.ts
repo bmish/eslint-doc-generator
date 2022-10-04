@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs';
 import type { Plugin, Config, Rules, ConfigsToRules } from './types.js';
 
 /**
@@ -22,6 +23,14 @@ async function resolveConfigRules(config: Config): Promise<Rules> {
   }
   const rules = { ...config.rules };
   for (const extend of config.extends) {
+    if (
+      ['plugin:', 'eslint:'].some((prefix) => extend.startsWith(prefix)) ||
+      !existsSync(extend)
+    ) {
+      // Ignore external configs.
+      continue;
+    }
+
     const { default: config } = await import(extend);
     const nestedRules = await resolveConfigRules(config);
     Object.assign(rules, nestedRules);

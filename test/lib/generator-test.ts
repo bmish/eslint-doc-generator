@@ -1358,7 +1358,13 @@ describe('generator', function () {
               },
               configs: {
                 recommended: {
-                  extends: [require.resolve('./base-config')],
+                  extends: [
+                    require.resolve('./base-config'),
+                    // Should ignore these since they're external:
+                    'eslint:recommended',
+                    'plugin:some-plugin/recommended',
+                    'prettier',
+                  ],
                 }
               }
             };`,
