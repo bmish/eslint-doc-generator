@@ -4,6 +4,16 @@
 
 
 
+
+## v0.3.3 (2022-10-04)
+
+#### :bug: Bug Fix
+* [#60](https://github.com/bmish/eslint-doc-generator/pull/60) Ignore external configs during ESLint config resolution ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.3.2 (2022-10-04)
 
 #### :bug: Bug Fix
