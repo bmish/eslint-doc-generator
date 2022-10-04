@@ -1,5 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`generator #generate CJS (non-ESM) generates the documentation 1`] = `
+"<!-- begin rules list -->
+
+| Rule                           | Description   | ✅  | 🔧  | 💡  |
+| ------------------------------ | ------------- | --- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | disallow foo. |     |     |     |
+
+<!-- end rules list -->"
+`;
+
+exports[`generator #generate CJS (non-ESM) generates the documentation 2`] = `
+"# Disallow foo (\`test/no-foo\`)
+
+<!-- end rule header -->
+"
+`;
+
 exports[`generator #generate Missing plugin package.json \`name\` field throws an error 1`] = `"Could not find \`name\` field in ESLint plugin's package.json."`;
 
 exports[`generator #generate Missing plugin package.json throws an error 1`] = `"Could not find package.json of ESLint plugin."`;
