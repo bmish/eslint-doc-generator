@@ -90,6 +90,37 @@ exports[`generator #generate adds extra column to rules table for TypeScript rul
 <!-- end rules list -->"
 `;
 
+exports[`generator #generate config that extends another config generates the documentation 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+| Rule                           | Description            | ✅  | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | --- | --- | --- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | ✅  |     |     |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |     |     |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate config that extends another config generates the documentation 2`] = `
+"# Description of no-foo (\`test/no-foo\`)
+
+✅ This rule is enabled in the \`recommended\` config.
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate config that extends another config generates the documentation 3`] = `
+"# Description of no-bar (\`test/no-bar\`)
+
+✅ This rule is enabled in the \`recommended\` config.
+
+<!-- end rule header -->
+"
+`;
+
 exports[`generator #generate deprecated rule with no rule doc nor meta.docs updates the documentation 1`] = `
 "<!-- begin rules list -->
 
