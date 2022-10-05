@@ -97,6 +97,8 @@ exports[`generator #generate config that extends another config generates the do
 | Rule                           | Description            | ✅  | 🔧  | 💡  |
 | ------------------------------ | ---------------------- | --- | --- | --- |
 | [no-bar](docs/rules/no-bar.md) | Description of no-bar. | ✅  |     |     |
+| [no-baz](docs/rules/no-baz.md) | Description of no-baz. | ✅  |     |     |
+| [no-biz](docs/rules/no-biz.md) | Description of no-biz. | ✅  |     |     |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |     |     |
 
 <!-- end rules list -->
@@ -114,6 +116,45 @@ exports[`generator #generate config that extends another config generates the do
 
 exports[`generator #generate config that extends another config generates the documentation 3`] = `
 "# Description of no-bar (\`test/no-bar\`)
+
+✅ This rule is enabled in the \`recommended\` config.
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate config that extends another config generates the documentation 4`] = `
+"# Description of no-baz (\`test/no-baz\`)
+
+✅ This rule is enabled in the \`recommended\` config.
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate config that extends another config generates the documentation 5`] = `
+"# Description of no-biz (\`test/no-biz\`)
+
+✅ This rule is enabled in the \`recommended\` config.
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate config with overrides generates the documentation 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+| Rule                           | Description            | ✅  | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | --- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |     |     |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate config with overrides generates the documentation 2`] = `
+"# Description of no-foo (\`test/no-foo\`)
 
 ✅ This rule is enabled in the \`recommended\` config.
 
