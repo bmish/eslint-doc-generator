@@ -1,4 +1,5 @@
 import { existsSync } from 'node:fs';
+import { importAbs } from './import.js';
 import type { Plugin, Config, Rules, ConfigsToRules } from './types.js';
 
 /**
@@ -31,7 +32,7 @@ async function resolveConfigRules(config: Config): Promise<Rules> {
       continue;
     }
 
-    const { default: config } = await import(extend);
+    const { default: config } = await importAbs(extend);
     const nestedRules = await resolveConfigRules(config);
     Object.assign(rules, nestedRules);
   }
