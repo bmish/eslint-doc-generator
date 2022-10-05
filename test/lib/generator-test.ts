@@ -1355,6 +1355,14 @@ describe('generator', function () {
                   meta: { docs: { description: 'Description of no-bar.' }, },
                   create(context) {}
                 },
+                'no-baz': {
+                  meta: { docs: { description: 'Description of no-baz.' }, },
+                  create(context) {}
+                },
+                'no-biz': {
+                  meta: { docs: { description: 'Description of no-biz.' }, },
+                  create(context) {}
+                },
               },
               configs: {
                 recommended: {
@@ -1373,7 +1381,12 @@ describe('generator', function () {
           'base-config.cjs': `
             module.exports = {
               extends: [require.resolve("./base-base-config")],
-              rules: { "test/no-foo": "error" }
+              rules: { "test/no-foo": "error" },
+              overrides: [{
+                extends: [require.resolve("./override-config")],
+                files: ["*.js"],
+                rules: { "test/no-baz": "error" },
+              }]
             };`,
 
           // Multi-level nested config with no `rules`.
@@ -1384,10 +1397,16 @@ describe('generator', function () {
           'base-base-base-config.cjs':
             'module.exports = { rules: { "test/no-bar": "error" } };',
 
+          // Config extended from an override.
+          'override-config.cjs':
+            'module.exports = { rules: { "test/no-biz": "error" } };',
+
           'README.md': '## Rules\n',
 
           'docs/rules/no-foo.md': '',
           'docs/rules/no-bar.md': '',
+          'docs/rules/no-baz.md': '',
+          'docs/rules/no-biz.md': '',
 
           // Needed for some of the test infrastructure to work.
           node_modules: mockFs.load(
@@ -1406,6 +1425,60 @@ describe('generator', function () {
         expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-baz.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-biz.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('config with overrides', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: { docs: { description: 'Description of no-foo.' }, },
+                  create(context) {}
+                },
+              },
+              configs: {
+                recommended: {
+                  overrides: [{
+                    files: ['**/foo.js'],
+                    rules: {
+                      'test/no-foo': 'error',
+                    }
+                  }]
+                },
+              }
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('generates the documentation', async function () {
+        await generate('.');
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
       });
     });
   });

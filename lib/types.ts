@@ -7,15 +7,16 @@ export type RuleModule = TSESLint.RuleModule<string, unknown[]> & {
 export type Rules = Record<string, string | number>;
 
 export type Config = {
-  extends: string[];
-  rules: Rules;
+  extends?: string[];
+  rules?: Rules;
+  overrides?: { rules?: Rules; extends?: [] }[];
 };
 
 export type ConfigsToRules = Record<string, Rules>;
 
 export type Plugin = {
   rules: Record<string, RuleModule>;
-  configs: Record<string, Config>;
+  configs?: Record<string, Config>;
 };
 
 export interface RuleDetails {

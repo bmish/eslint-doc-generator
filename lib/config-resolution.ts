@@ -19,11 +19,22 @@ export async function resolveConfigsToRules(
  * Recursively gather all the rules from a config that may extend other configs.
  */
 async function resolveConfigRules(config: Config): Promise<Rules> {
-  if (!config.extends) {
-    return config.rules;
-  }
   const rules = { ...config.rules };
-  for (const extend of config.extends) {
+  for (const override of config.overrides || []) {
+    Object.assign(rules, override.rules);
+    const extendedRulesFromOverride = await resolveConfigExtends(
+      override.extends || []
+    );
+    Object.assign(rules, extendedRulesFromOverride);
+  }
+  const extendedRules = await resolveConfigExtends(config.extends || []);
+  Object.assign(rules, extendedRules);
+  return rules;
+}
+
+async function resolveConfigExtends(extendItems: string[]): Promise<Rules> {
+  const rules: Rules = {};
+  for (const extend of extendItems) {
     if (
       ['plugin:', 'eslint:'].some((prefix) => extend.startsWith(prefix)) ||
       !existsSync(extend)
@@ -33,8 +44,8 @@ async function resolveConfigRules(config: Config): Promise<Rules> {
     }
 
     const { default: config } = await importAbs(extend);
-    const nestedRules = await resolveConfigRules(config);
-    Object.assign(rules, nestedRules);
+    const extendedRules = await resolveConfigRules(config);
+    Object.assign(rules, extendedRules);
   }
   return rules;
 }
