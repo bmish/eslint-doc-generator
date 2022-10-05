@@ -1,5 +1,6 @@
 import { join } from 'node:path';
 import { existsSync, readFileSync } from 'node:fs';
+import { importAbs } from './import.js';
 import type { Plugin } from './types.js';
 import type { PackageJson } from 'type-fest';
 
@@ -28,7 +29,7 @@ export async function loadPlugin(path: string): Promise<Plugin> {
     pluginPackageJson.main ?? 'index.js', // This is NPM's default value for this field.
     pluginPackageJson.main?.endsWith('/') ? 'index.js' : ''
   );
-  const { default: plugin } = await import(pluginEntryPoint);
+  const { default: plugin } = await importAbs(pluginEntryPoint);
   if (!plugin.rules) {
     throw new Error('Could not find exported `rules` object in ESLint plugin.');
   }
