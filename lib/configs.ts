@@ -7,6 +7,8 @@ export function hasCustomConfigs(plugin: Plugin) {
   );
 }
 
+const SEVERITY_ENABLED = new Set([2, 'error']);
+
 /**
  * Get config names that a given rule belongs to.
  */
@@ -20,7 +22,13 @@ export function getConfigsForRule(
   for (const configName in configsToRules) {
     const rules = configsToRules[configName];
     const value = rules[`${pluginPrefix}/${ruleName}`];
-    const isEnabled = [2, 'error'].includes(value);
+    const isEnabled =
+      ((typeof value === 'string' || typeof value === 'number') &&
+        SEVERITY_ENABLED.has(value)) ||
+      (typeof value === 'object' &&
+        Array.isArray(value) &&
+        value.length > 0 &&
+        SEVERITY_ENABLED.has(value[0]));
 
     if (isEnabled) {
       configNames.push(configName);

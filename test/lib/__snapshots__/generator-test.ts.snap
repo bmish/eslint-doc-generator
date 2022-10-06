@@ -316,6 +316,27 @@ exports[`generator #generate only a \`recommended\` config updates the documenta
 "
 `;
 
+exports[`generator #generate rule config with options generates the documentation 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+| Rule                           | Description            | ✅  | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | --- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |     |     |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate rule config with options generates the documentation 2`] = `
+"# Description of no-foo (\`test/no-foo\`)
+
+✅ This rule is enabled in the \`recommended\` config.
+
+<!-- end rule header -->
+"
+`;
+
 exports[`generator #generate rule doc without header marker but pre-existing header updates the documentation 1`] = `
 "# Description (\`test/no-foo\`)
 
@@ -325,6 +346,33 @@ exports[`generator #generate rule doc without header marker but pre-existing hea
 Pre-existing notice about the rule being recommended.
 ## Rule details
 Details."
+`;
+
+exports[`generator #generate rules that are disabled generates the documentation 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+| Rule                           | Description            | ✅  | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | --- | --- | --- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. |     |     |     |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |     |     |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate rules that are disabled generates the documentation 2`] = `
+"# Description of no-foo (\`test/no-foo\`)
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate rules that are disabled generates the documentation 3`] = `
+"# Description of no-bar (\`test/no-bar\`)
+
+<!-- end rule header -->
+"
 `;
 
 exports[`generator #generate successful updates the documentation 1`] = `
