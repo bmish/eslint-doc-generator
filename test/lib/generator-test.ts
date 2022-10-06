@@ -1389,9 +1389,9 @@ describe('generator', function () {
               }]
             };`,
 
-          // Multi-level nested config with no `rules`.
+          // Multi-level nested config with no `rules` and string (non-array) version of `extends`.
           'base-base-config.cjs':
-            'module.exports = { extends: [require.resolve("./base-base-base-config")] };',
+            'module.exports = { extends: require.resolve("./base-base-base-config") };',
 
           // Multi-level nested config with no further `extends`.
           'base-base-base-config.cjs':
@@ -1585,6 +1585,94 @@ describe('generator', function () {
         expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('rule without a description', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: { },
+                  create(context) {},
+                },
+              },
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('generates the documentation', async function () {
+        await generate('.');
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('deprecated function-style rule', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': function create () {}
+              },
+              configs: {
+                recommended: {
+                  rules: {
+                    'test/no-foo': 'error',
+                  }
+                },
+              }
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('generates the documentation', async function () {
+        await generate('.');
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
       });
     });
   });

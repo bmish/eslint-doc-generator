@@ -162,6 +162,25 @@ exports[`generator #generate config with overrides generates the documentation 2
 "
 `;
 
+exports[`generator #generate deprecated function-style rule generates the documentation 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+| Rule                           | Description | ✅  | 🔧  | 💡  |
+| ------------------------------ | ----------- | --- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) |             | ✅  |     |     |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate deprecated function-style rule generates the documentation 2`] = `
+"# \`test/no-foo\`
+
+<!-- end rule header -->
+"
+`;
+
 exports[`generator #generate deprecated rule with no rule doc nor meta.docs updates the documentation 1`] = `
 "<!-- begin rules list -->
 
@@ -346,6 +365,25 @@ exports[`generator #generate rule doc without header marker but pre-existing hea
 Pre-existing notice about the rule being recommended.
 ## Rule details
 Details."
+`;
+
+exports[`generator #generate rule without a description generates the documentation 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+| Rule                           | Description | ✅  | 🔧  | 💡  |
+| ------------------------------ | ----------- | --- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) |             |     |     |     |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate rule without a description generates the documentation 2`] = `
+"# \`test/no-foo\`
+
+<!-- end rule header -->
+"
 `;
 
 exports[`generator #generate rules that are disabled generates the documentation 1`] = `

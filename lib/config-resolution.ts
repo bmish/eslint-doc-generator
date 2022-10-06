@@ -32,9 +32,13 @@ async function resolveConfigRules(config: Config): Promise<Rules> {
   return rules;
 }
 
-async function resolveConfigExtends(extendItems: string[]): Promise<Rules> {
+async function resolveConfigExtends(
+  extendItems: string[] | string
+): Promise<Rules> {
   const rules: Rules = {};
-  for (const extend of extendItems) {
+  for (const extend of Array.isArray(extendItems)
+    ? extendItems
+    : [extendItems]) {
     if (
       ['plugin:', 'eslint:'].some((prefix) => extend.startsWith(prefix)) ||
       !existsSync(extend)
