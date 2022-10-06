@@ -6,6 +6,17 @@
 
 
 
+
+## v0.3.5 (2022-10-06)
+
+#### :bug: Bug Fix
+* [#67](https://github.com/bmish/eslint-doc-generator/pull/67) Handle rules enabled with options ([@bmish](https://github.com/bmish))
+* [#65](https://github.com/bmish/eslint-doc-generator/pull/65) Handle config overrides ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.3.4 (2022-10-05)
 
 #### :bug: Bug Fix
