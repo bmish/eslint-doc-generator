@@ -7,6 +7,16 @@
 
 
 
+
+## v0.4.0 (2022-10-07)
+
+#### :bug: Bug Fix
+* [#70](https://github.com/bmish/eslint-doc-generator/pull/70) Handle string `extends` from ESLint config, deprecated/function-style rules, missing rule descriptions (and use actual ESLint types to detect issues like these) ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.3.5 (2022-10-06)
 
 #### :bug: Bug Fix
