@@ -48,7 +48,7 @@ function buildRuleRow(
 ): string[] {
   const columns = [
     `[${rule.name}](docs/rules/${rule.name}.md)`,
-    rule.description,
+    rule.description || '',
     getConfigurationColumnValueForRule(rule, configsToRules, pluginPrefix),
     rule.fixable ? EMOJI_FIXABLE : '',
     rule.hasSuggestions ? EMOJI_HAS_SUGGESTIONS : '',

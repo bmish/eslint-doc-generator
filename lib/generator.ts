@@ -7,7 +7,7 @@ import { generateRuleHeaderLines } from './rule-notices.js';
 import { END_RULE_HEADER_MARKER } from './markers.js';
 import { findSectionHeader, replaceOrCreateHeader } from './markdown.js';
 import { resolveConfigsToRules } from './config-resolution.js';
-import type { RuleModule, RuleDetails } from './types.js';
+import type { RuleDetails } from './types.js';
 
 /**
  * Ensure a rule doc contains (or doesn't contain) some particular content.
@@ -64,24 +64,38 @@ export async function generate(path: string) {
     docs: resolve(path, 'docs'),
   };
 
+  if (!plugin.rules) {
+    throw new Error('Could not find exported `rules` object in ESLint plugin.');
+  }
+
   // Gather details about rules.
-  const details: RuleDetails[] = Object.entries(plugin.rules)
-    .filter((nameAndRule): nameAndRule is [string, Required<RuleModule>] =>
-      Boolean(nameAndRule[1].meta)
-    )
-    .map(
-      ([name, rule]): RuleDetails => ({
-        name,
-        description: rule.meta.docs?.description,
-        fixable: rule.meta.fixable
-          ? ['code', 'whitespace'].includes(rule.meta.fixable)
-          : false,
-        hasSuggestions: rule.meta.hasSuggestions ?? false,
-        requiresTypeChecking: rule.meta.docs?.requiresTypeChecking ?? false,
-        deprecated: rule.meta.deprecated ?? false,
-        schema: rule.meta.schema,
-      })
-    );
+  const details: RuleDetails[] = Object.entries(plugin.rules).map(
+    ([name, rule]): RuleDetails => {
+      return typeof rule === 'object'
+        ? // Object-style rule.
+          {
+            name,
+            description: rule.meta.docs?.description,
+            fixable: rule.meta.fixable
+              ? ['code', 'whitespace'].includes(rule.meta.fixable)
+              : false,
+            hasSuggestions: rule.meta.hasSuggestions ?? false,
+            requiresTypeChecking: rule.meta.docs?.requiresTypeChecking ?? false,
+            deprecated: rule.meta.deprecated ?? false,
+            schema: rule.meta.schema,
+          }
+        : // Deprecated function-style rule (does not support most of these features).
+          {
+            name,
+            description: undefined,
+            fixable: false,
+            hasSuggestions: false,
+            requiresTypeChecking: false,
+            deprecated: false, // TODO: figure out how to access `deprecated` property that can be exported from function-style rules.
+            schema: [], // TODO: figure out how to access `schema` property that can be exported from function-style rules.
+          };
+    }
+  );
 
   // Update rule doc for each rule.
   for (const { name, description, schema, deprecated } of details) {

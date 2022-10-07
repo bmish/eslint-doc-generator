@@ -65,7 +65,19 @@ function getRuleNoticeLines(
 ) {
   const lines: string[] = [];
 
-  const rule = plugin.rules[ruleName];
+  const rule = plugin.rules?.[ruleName];
+  /* istanbul ignore next */
+  if (!rule) {
+    // This is only to please TypeScript. We should always have a rule when this function is called.
+    throw new Error('Rule not found');
+  }
+
+  if (typeof rule !== 'object') {
+    // We don't support the deprecated, function-style rule format as there's not much information we can extract from it.
+    // https://eslint.org/docs/latest/developer-guide/working-with-rules-deprecated
+    return [];
+  }
+
   const configsEnabled = getConfigsForRule(
     ruleName,
     configsToRules,
@@ -94,7 +106,9 @@ function getRuleNoticeLines(
     } else if (messageType === MESSAGE_TYPE.DEPRECATED) {
       // This notice should include links to the replacement rule(s) if available.
       const message =
-        Array.isArray(rule.meta.replacedBy) && rule.meta.replacedBy.length > 0
+        typeof rule === 'object' &&
+        Array.isArray(rule.meta.replacedBy) &&
+        rule.meta.replacedBy.length > 0
           ? `${MESSAGES[messageType]} It was replaced by ${ruleNamesToList(
               rule.meta.replacedBy
             )}.`
@@ -126,17 +140,19 @@ function removeTrailingPeriod(str: string) {
  * @returns {string} - new header including marker
  */
 export function generateRuleHeaderLines(
-  description: string,
+  description: string | undefined,
   name: string,
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string
 ): string {
-  const descriptionFormatted = removeTrailingPeriod(
-    toSentenceCase(description)
-  );
+  const descriptionFormatted = description
+    ? removeTrailingPeriod(toSentenceCase(description))
+    : undefined;
   return [
-    `# ${descriptionFormatted} (\`${pluginPrefix}/${name}\`)`,
+    descriptionFormatted
+      ? `# ${descriptionFormatted} (\`${pluginPrefix}/${name}\`)`
+      : `# \`${pluginPrefix}/${name}\``,
     ...getRuleNoticeLines(name, plugin, configsToRules, pluginPrefix),
     END_RULE_HEADER_MARKER,
   ].join('\n');
