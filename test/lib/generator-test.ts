@@ -896,7 +896,7 @@ describe('generator', function () {
         mockFs.restore();
         jest.resetModules();
       });
-      it('does not crash', async function () {
+      it('omits the config column', async function () {
         await generate('.');
         expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
