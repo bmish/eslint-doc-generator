@@ -60,7 +60,6 @@ export async function generate(path: string) {
 
   const pathTo = {
     readme: resolve(path, 'README.md'),
-    rules: resolve(path, 'src', 'rules'),
     docs: resolve(path, 'docs'),
   };
 

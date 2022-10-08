@@ -36,36 +36,48 @@ function getConfigurationColumnValueForRule(
 }
 
 function buildRuleRow(
+  columnsEnabled: Record<COLUMN_TYPE, boolean>,
   rule: RuleDetails,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   includeTypesColumn: boolean
 ): string[] {
   const columns: string[] = [];
-  columns.push(
-    `[${rule.name}](docs/rules/${rule.name}.md)`,
-    rule.description || ''
-  );
-  if (hasAnyConfigs(configsToRules)) {
+  if (columnsEnabled[COLUMN_TYPE.NAME]) {
+    columns.push(`[${rule.name}](docs/rules/${rule.name}.md)`);
+  }
+  if (columnsEnabled[COLUMN_TYPE.DESCRIPTION]) {
+    columns.push(rule.description || '');
+  }
+  if (
+    (columnsEnabled[COLUMN_TYPE.CONFIGS] ||
+      columnsEnabled[COLUMN_TYPE.CONFIG_RECOMMENDED]) &&
+    hasAnyConfigs(configsToRules)
+  ) {
     columns.push(
       getConfigurationColumnValueForRule(rule, configsToRules, pluginPrefix)
     );
   }
-  columns.push(
-    rule.fixable ? EMOJI_FIXABLE : '',
-    rule.hasSuggestions ? EMOJI_HAS_SUGGESTIONS : ''
-  );
-  if (includeTypesColumn) {
+  if (columnsEnabled[COLUMN_TYPE.FIXABLE]) {
+    columns.push(rule.fixable ? EMOJI_FIXABLE : '');
+  }
+  if (columnsEnabled[COLUMN_TYPE.HAS_SUGGESTIONS]) {
+    columns.push(rule.hasSuggestions ? EMOJI_HAS_SUGGESTIONS : '');
+  }
+  if (
+    columnsEnabled[COLUMN_TYPE.REQUIRES_TYPE_CHECKING] &&
+    includeTypesColumn
+  ) {
     columns.push(rule.requiresTypeChecking ? EMOJI_REQUIRES_TYPE_CHECKING : '');
   }
-  if (rule.deprecated) {
+  if (columnsEnabled[COLUMN_TYPE.DEPRECATED] && rule.deprecated) {
     columns.push(EMOJI_DEPRECATED);
   }
   return columns;
 }
 
 function generateRulesListMarkdown(
-  columns: COLUMN_TYPE[],
+  columns: Record<COLUMN_TYPE, boolean>,
   details: RuleDetails[],
   configsToRules: ConfigsToRules,
   pluginPrefix: string
@@ -74,7 +86,14 @@ function generateRulesListMarkdown(
   const includeTypesColumn = details.some(
     (detail: RuleDetails) => detail.requiresTypeChecking
   );
-  const listHeaderRow = columns.map((column) => COLUMN_HEADER[column]);
+  const listHeaderRow = (
+    Object.entries(columns) as [COLUMN_TYPE, boolean][]
+  ).flatMap(([columnType, enabled]) => {
+    if (!enabled) {
+      return [];
+    }
+    return [COLUMN_HEADER[columnType]];
+  });
   const listSpacerRow = Array.from({ length: listHeaderRow.length }).fill('-');
   return [
     listHeaderRow,
@@ -82,7 +101,13 @@ function generateRulesListMarkdown(
     ...details
       .sort(({ name: a }, { name: b }) => a.localeCompare(b))
       .map((rule: RuleDetails) =>
-        buildRuleRow(rule, configsToRules, pluginPrefix, includeTypesColumn)
+        buildRuleRow(
+          columns,
+          rule,
+          configsToRules,
+          pluginPrefix,
+          includeTypesColumn
+        )
       ),
   ]
     .map((column) => [...column, ' '].join('|'))

@@ -16,8 +16,8 @@ export enum COLUMN_TYPE {
   DESCRIPTION = 'description',
   FIXABLE = 'fixable',
   HAS_SUGGESTIONS = 'hasSuggestions',
+  NAME = 'rules',
   REQUIRES_TYPE_CHECKING = 'requiresTypeChecking',
-  RULE = 'rules',
 }
 
 export const COLUMN_HEADER = {
@@ -27,33 +27,37 @@ export const COLUMN_HEADER = {
   [COLUMN_TYPE.DESCRIPTION]: 'Description',
   [COLUMN_TYPE.FIXABLE]: EMOJI_FIXABLE,
   [COLUMN_TYPE.HAS_SUGGESTIONS]: EMOJI_HAS_SUGGESTIONS,
+  [COLUMN_TYPE.NAME]: 'Rule',
   [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: EMOJI_REQUIRES_TYPE_CHECKING,
-  [COLUMN_TYPE.RULE]: 'Rule',
 };
 
 /**
  * Decide what columns to display for the rules list.
+ * Only display columns for which there is at least one rule that has a value for that column.
  */
 export function getColumns(
   details: RuleDetails[],
   plugin: Plugin,
   configsToRules: ConfigsToRules
 ) {
-  const columns: COLUMN_TYPE[] = [];
-
-  columns.push(COLUMN_TYPE.RULE, COLUMN_TYPE.DESCRIPTION);
-  if (hasCustomConfigs(plugin)) {
-    columns.push(COLUMN_TYPE.CONFIGS); // If there are custom configs, use the general config emoji.
-  } else if (hasAnyConfigs(configsToRules)) {
-    columns.push(COLUMN_TYPE.CONFIG_RECOMMENDED); // If there are no custom configs, but there are configs, use the recommended config emoji.
-  }
-  columns.push(COLUMN_TYPE.FIXABLE, COLUMN_TYPE.HAS_SUGGESTIONS);
-  if (details.some((detail: RuleDetails) => detail.requiresTypeChecking)) {
-    columns.push(COLUMN_TYPE.REQUIRES_TYPE_CHECKING);
-  }
-  if (details.some((detail) => detail.deprecated)) {
-    columns.push(COLUMN_TYPE.DEPRECATED);
-  }
+  const columns: {
+    [key in COLUMN_TYPE]: boolean;
+  } = {
+    // Object keys in display order.
+    [COLUMN_TYPE.NAME]: true,
+    [COLUMN_TYPE.DESCRIPTION]: details.some((detail) => detail.description),
+    [COLUMN_TYPE.CONFIGS]: hasCustomConfigs(plugin), // If there are custom configs, use the general config emoji.
+    [COLUMN_TYPE.CONFIG_RECOMMENDED]:
+      !hasCustomConfigs(plugin) && hasAnyConfigs(configsToRules), // If there are no custom configs, but there are configs, use the recommended config emoji.
+    [COLUMN_TYPE.FIXABLE]: details.some((detail) => detail.fixable),
+    [COLUMN_TYPE.HAS_SUGGESTIONS]: details.some(
+      (detail) => detail.hasSuggestions
+    ),
+    [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: details.some(
+      (detail) => detail.requiresTypeChecking
+    ),
+    [COLUMN_TYPE.DEPRECATED]: details.some((detail) => detail.deprecated),
+  };
 
   return columns;
 }
