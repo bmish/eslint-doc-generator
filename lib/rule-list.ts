@@ -5,14 +5,11 @@ import {
   EMOJI_FIXABLE,
   EMOJI_HAS_SUGGESTIONS,
   EMOJI_REQUIRES_TYPE_CHECKING,
-  EMOJI_CONFIGS,
 } from './emojis.js';
-import {
-  hasCustomConfigs,
-  getConfigsForRule,
-  hasAnyConfigs,
-} from './configs.js';
+import { getConfigsForRule, hasAnyConfigs } from './configs.js';
+import { COLUMN_TYPE, getColumns, COLUMN_HEADER } from './rule-list-columns.js';
 import { findSectionHeader, format } from './markdown.js';
+import { generateLegend } from './legend.js';
 import type { Plugin, RuleDetails, ConfigsToRules } from './types.js';
 
 function getConfigurationColumnValueForRule(
@@ -68,8 +65,8 @@ function buildRuleRow(
 }
 
 function generateRulesListMarkdown(
+  columns: COLUMN_TYPE[],
   details: RuleDetails[],
-  plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string
 ): string {
@@ -77,22 +74,7 @@ function generateRulesListMarkdown(
   const includeTypesColumn = details.some(
     (detail: RuleDetails) => detail.requiresTypeChecking
   );
-
-  const listHeaderRow: string[] = [];
-  listHeaderRow.push('Rule', 'Description');
-  if (hasCustomConfigs(plugin)) {
-    listHeaderRow.push(EMOJI_CONFIGS); // If there are custom configs, use the general config emoji.
-  } else if (hasAnyConfigs(configsToRules)) {
-    listHeaderRow.push(EMOJI_CONFIG_RECOMMENDED); // If there are no custom configs, but there are configs, use the recommended config emoji.
-  }
-  listHeaderRow.push(EMOJI_FIXABLE, EMOJI_HAS_SUGGESTIONS);
-  if (includeTypesColumn) {
-    listHeaderRow.push(EMOJI_REQUIRES_TYPE_CHECKING);
-  }
-  if (details.some((detail) => detail.deprecated)) {
-    listHeaderRow.push(EMOJI_DEPRECATED);
-  }
-
+  const listHeaderRow = columns.map((column) => COLUMN_HEADER[column]);
   const listSpacerRow = Array.from({ length: listHeaderRow.length }).fill('-');
   return [
     listHeaderRow,
@@ -147,11 +129,17 @@ export async function updateRulesList(
   const preList = markdown.slice(0, Math.max(0, listStartIndex));
   const postList = markdown.slice(Math.max(0, listEndIndex));
 
+  // Determine columns to include in the rules list.
+  const columns = getColumns(details, plugin, configsToRules);
+
+  // New legend.
+  const legend = await format(generateLegend(columns), pathToReadme);
+
   // New rule list.
   const list = await format(
-    generateRulesListMarkdown(details, plugin, configsToRules, pluginPrefix),
+    generateRulesListMarkdown(columns, details, configsToRules, pluginPrefix),
     pathToReadme
   );
 
-  return `${preList}${BEGIN_RULE_LIST_MARKER}\n\n${list}\n${END_RULE_LIST_MARKER}${postList}`;
+  return `${preList}${BEGIN_RULE_LIST_MARKER}\n\n${legend}\n${list}\n${END_RULE_LIST_MARKER}${postList}`;
 }
