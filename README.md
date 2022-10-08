@@ -6,7 +6,7 @@ Automatic documentation generator for [ESLint](https://eslint.org/) plugins and 
 
 Generates the following documentation based on ESLint and top [ESLint plugin](https://eslint.org/docs/latest/developer-guide/working-with-plugins) conventions:
 
-- README rules table
+- `README.md` rules table
 - Rule doc titles and notices
 
 Also performs some basic section consistency checks on rule docs:
@@ -21,14 +21,14 @@ Install it:
 npm i --save-dev eslint-doc-generator
 ```
 
-Add it as as script in `package.json` (included as a lint script to demonstrate how we can ensure it passes and is up-to-date on CI):
+Add it as as script in `package.json` (included as a lint script to demonstrate how we can ensure it passes and is up-to-date in CI):
 
 ```json
 {
   "scripts": {
     "lint": "npm-run-all \"lint:*\"",
     "lint:docs": "markdownlint \"**/*.md\"",
-    "lint:eslint-docs": "npm-run-all update:eslint-docs && git diff --exit-code",
+    "lint:eslint-docs": "npm run update:eslint-docs && git diff --exit-code",
     "lint:js": "eslint .",
     "update:eslint-docs": "eslint-doc-generator"
   }
@@ -42,7 +42,7 @@ Delete any old rules list from your `README.md`. A new one will be automatically
 <!-- end rules list -->
 ```
 
-Delete any old recommended/fixable/etc notices from your rule docs. A new title and notices will be automatically added to the top of each rule doc (along with a marker comment if it doesn't exist yet).
+Delete any old recommended/fixable/etc. notices from your rule docs. A new title and notices will be automatically added to the top of each rule doc (along with a marker comment if it doesn't exist yet).
 
 ## Usage
 
