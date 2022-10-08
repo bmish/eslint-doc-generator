@@ -8,6 +8,25 @@
 
 
 
+
+## v0.5.0 (2022-10-08)
+
+#### :rocket: Enhancement
+* [#75](https://github.com/bmish/eslint-doc-generator/pull/75) Automatically generate legend for rules list ([@bmish](https://github.com/bmish))
+* [#76](https://github.com/bmish/eslint-doc-generator/pull/76) Hide empty columns from rules list ([@bmish](https://github.com/bmish))
+* [#73](https://github.com/bmish/eslint-doc-generator/pull/73) Hide config column from rules list when no configs present and move deprecations to a separate column ([@bmish](https://github.com/bmish))
+
+#### :bug: Bug Fix
+* [#72](https://github.com/bmish/eslint-doc-generator/pull/72) Improve section header detection ([@bmish](https://github.com/bmish))
+
+#### :memo: Documentation
+* [#74](https://github.com/bmish/eslint-doc-generator/pull/74) Tweak README ([@ddzz](https://github.com/ddzz))
+
+#### Committers: 2
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+- Darius Dzien ([@ddzz](https://github.com/ddzz))
+
+
 ## v0.4.0 (2022-10-07)
 
 #### :bug: Bug Fix
