@@ -1588,7 +1588,7 @@ describe('generator', function () {
       });
     });
 
-    describe('rule without a description', function () {
+    describe('no rules with description', function () {
       beforeEach(function () {
         mockFs({
           'package.json': JSON.stringify({
@@ -1627,6 +1627,54 @@ describe('generator', function () {
         await generate('.');
         expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('one rule missing description', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: { docs: { description: 'Description for no-foo.'} },
+                  create(context) {},
+                },
+                'no-bar': {
+                  meta: { },
+                  create(context) {},
+                },
+              },
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+          'docs/rules/no-bar.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('generates the documentation', async function () {
+        await generate('.');
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
       });
     });
 

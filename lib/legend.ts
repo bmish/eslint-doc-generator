@@ -17,13 +17,21 @@ const MESSAGES = {
   [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: `${EMOJI_REQUIRES_TYPE_CHECKING} Requires type information.`,
 };
 
-export function generateLegend(columns: COLUMN_TYPE[]) {
-  return columns
-    .flatMap((column) => {
-      if (column === COLUMN_TYPE.RULE || column === COLUMN_TYPE.DESCRIPTION) {
-        return []; // No need for a legend for these columns.
+export function generateLegend(columns: Record<COLUMN_TYPE, boolean>) {
+  return (Object.entries(columns) as [COLUMN_TYPE, boolean][])
+    .flatMap(([columnType, enabled]) => {
+      if (!enabled) {
+        // This column is turned off.
+        return [];
       }
-      return [MESSAGES[column]];
+      if (
+        columnType === COLUMN_TYPE.NAME ||
+        columnType === COLUMN_TYPE.DESCRIPTION
+      ) {
+        // No need for a legend for these columns.
+        return [];
+      }
+      return [MESSAGES[columnType]];
     })
     .join('\\\n'); // Back slash ensures these end up displayed on separate lines.
 }

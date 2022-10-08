@@ -3,12 +3,10 @@
 exports[`generator #generate CJS (non-ESM) generates the documentation 1`] = `
 "<!-- begin rules list -->
 
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
-| Rule                           | Description   | 🔧  | 💡  |
-| ------------------------------ | ------------- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | disallow foo. |     |     |
+| Rule                           | Description   |
+| ------------------------------ | ------------- |
+| [no-foo](docs/rules/no-foo.md) | disallow foo. |
 
 <!-- end rules list -->"
 `;
@@ -27,12 +25,10 @@ exports[`generator #generate Missing plugin package.json throws an error 1`] = `
 exports[`generator #generate No configs found omits the config column 1`] = `
 "<!-- begin rules list -->
 
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
-| Rule                           | Description   | 🔧  | 💡  |
-| ------------------------------ | ------------- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | disallow foo. |     |     |
+| Rule                           | Description   |
+| ------------------------------ | ------------- |
+| [no-foo](docs/rules/no-foo.md) | disallow foo. |
 
 <!-- end rules list -->"
 `;
@@ -56,12 +52,10 @@ Foo.
 ## Rules
 <!-- begin rules list -->
 
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
-| Rule                           | Description            | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |     |
+| Rule                           | Description            |
+| ------------------------------ | ---------------------- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |
 
 <!-- end rules list -->
 
@@ -92,14 +86,12 @@ exports[`generator #generate adds extra column to rules table for TypeScript rul
 "<!-- begin rules list -->
 
 ✅ Enabled in the \`recommended\` configuration.\\
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).\\
 💭 Requires type information.
 
-| Rule                           | Description            | ✅  | 🔧  | 💡  | 💭  |
-| ------------------------------ | ---------------------- | --- | --- | --- | --- |
-| [no-bar](docs/rules/no-bar.md) | Description of no-bar. |     |     |     | 💭  |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |     |     |     |
+| Rule                           | Description            | ✅  | 💭  |
+| ------------------------------ | ---------------------- | --- | --- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. |     | 💭  |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |     |
 
 <!-- end rules list -->"
 `;
@@ -108,16 +100,14 @@ exports[`generator #generate config that extends another config generates the do
 "## Rules
 <!-- begin rules list -->
 
-✅ Enabled in the \`recommended\` configuration.\\
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+✅ Enabled in the \`recommended\` configuration.
 
-| Rule                           | Description            | ✅  | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | --- | --- | --- |
-| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | ✅  |     |     |
-| [no-baz](docs/rules/no-baz.md) | Description of no-baz. | ✅  |     |     |
-| [no-biz](docs/rules/no-biz.md) | Description of no-biz. | ✅  |     |     |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |     |     |
+| Rule                           | Description            | ✅  |
+| ------------------------------ | ---------------------- | --- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | ✅  |
+| [no-baz](docs/rules/no-baz.md) | Description of no-baz. | ✅  |
+| [no-biz](docs/rules/no-biz.md) | Description of no-biz. | ✅  |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
 
 <!-- end rules list -->
 "
@@ -163,13 +153,11 @@ exports[`generator #generate config with overrides generates the documentation 1
 "## Rules
 <!-- begin rules list -->
 
-✅ Enabled in the \`recommended\` configuration.\\
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+✅ Enabled in the \`recommended\` configuration.
 
-| Rule                           | Description            | ✅  | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | --- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |     |     |
+| Rule                           | Description            | ✅  |
+| ------------------------------ | ---------------------- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
 
 <!-- end rules list -->
 "
@@ -188,13 +176,11 @@ exports[`generator #generate deprecated function-style rule generates the docume
 "## Rules
 <!-- begin rules list -->
 
-✅ Enabled in the \`recommended\` configuration.\\
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+✅ Enabled in the \`recommended\` configuration.
 
-| Rule                           | Description | ✅  | 🔧  | 💡  |
-| ------------------------------ | ----------- | --- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) |             | ✅  |     |     |
+| Rule                           | ✅  |
+| ------------------------------ | --- |
+| [no-foo](docs/rules/no-foo.md) | ✅  |
 
 <!-- end rules list -->
 "
@@ -210,13 +196,11 @@ exports[`generator #generate deprecated function-style rule generates the docume
 exports[`generator #generate deprecated rule with no rule doc nor meta.docs updates the documentation 1`] = `
 "<!-- begin rules list -->
 
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).\\
 ❌ Deprecated.
 
-| Rule                           | Description | 🔧  | 💡  | ❌  |
-| ------------------------------ | ----------- | --- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) |             |     |     | ❌  |
+| Rule                           | ❌  |
+| ------------------------------ | --- |
+| [no-foo](docs/rules/no-foo.md) | ❌  |
 
 <!-- end rules list -->"
 `;
@@ -224,15 +208,13 @@ exports[`generator #generate deprecated rule with no rule doc nor meta.docs upda
 exports[`generator #generate deprecated rules updates the documentation 1`] = `
 "<!-- begin rules list -->
 
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).\\
 ❌ Deprecated.
 
-| Rule                           | Description  | 🔧  | 💡  | ❌  |
-| ------------------------------ | ------------ | --- | --- | --- |
-| [no-bar](docs/rules/no-bar.md) | Description. |     |     | ❌  |
-| [no-baz](docs/rules/no-baz.md) | Description. |     |     | ❌  |
-| [no-foo](docs/rules/no-foo.md) | Description. |     |     | ❌  |
+| Rule                           | Description  | ❌  |
+| ------------------------------ | ------------ | --- |
+| [no-bar](docs/rules/no-bar.md) | Description. | ❌  |
+| [no-baz](docs/rules/no-baz.md) | Description. | ❌  |
+| [no-foo](docs/rules/no-foo.md) | Description. | ❌  |
 
 <!-- end rules list -->"
 `;
@@ -268,12 +250,11 @@ exports[`generator #generate no existing comment markers - minimal doc content g
 "## Rules
 <!-- begin rules list -->
 
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).
 
-| Rule                           | Description            | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |     |
+| Rule                           | Description            | 🔧  |
+| ------------------------------ | ---------------------- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |
 
 <!-- end rules list -->
 "
@@ -292,12 +273,11 @@ exports[`generator #generate no existing comment markers - with no blank lines i
 "## Rules
 <!-- begin rules list -->
 
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).
 
-| Rule                           | Description            | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |     |
+| Rule                           | Description            | 🔧  |
+| ------------------------------ | ---------------------- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |
 
 <!-- end rules list -->
 Existing rules section content."
@@ -316,12 +296,11 @@ exports[`generator #generate no existing comment markers - with one blank line a
 "## Rules
 <!-- begin rules list -->
 
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).
 
-| Rule                           | Description            | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |     |
+| Rule                           | Description            | 🔧  |
+| ------------------------------ | ---------------------- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |
 
 <!-- end rules list -->
 
@@ -341,12 +320,11 @@ Existing rule doc content."
 exports[`generator #generate no prettier config generates the documentation 1`] = `
 "<!-- begin rules list -->
 
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).
 
-| Rule                           | Description            | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |     |
+| Rule                           | Description            | 🔧  |
+| ------------------------------ | ---------------------- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |
 
 <!-- end rules list -->"
 `;
@@ -362,16 +340,62 @@ details
 Long line that SHOULD NOT get wrapped by prettier since it's outside the header. Long line that SHOULD NOT get wrapped by prettier since it's outside the header.""
 `;
 
+exports[`generator #generate no rules with description generates the documentation 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+
+| Rule                           |
+| ------------------------------ |
+| [no-foo](docs/rules/no-foo.md) |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate no rules with description generates the documentation 2`] = `
+"# \`test/no-foo\`
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate one rule missing description generates the documentation 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+
+| Rule                           | Description             |
+| ------------------------------ | ----------------------- |
+| [no-bar](docs/rules/no-bar.md) |                         |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate one rule missing description generates the documentation 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate one rule missing description generates the documentation 3`] = `
+"# \`test/no-bar\`
+
+<!-- end rule header -->
+"
+`;
+
 exports[`generator #generate only a \`recommended\` config updates the documentation 1`] = `
 "<!-- begin rules list -->
 
-✅ Enabled in the \`recommended\` configuration.\\
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+✅ Enabled in the \`recommended\` configuration.
 
-| Rule                           | Description  | ✅  | 🔧  | 💡  |
-| ------------------------------ | ------------ | --- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | Description. | ✅  |     |     |
+| Rule                           | Description  | ✅  |
+| ------------------------------ | ------------ | --- |
+| [no-foo](docs/rules/no-foo.md) | Description. | ✅  |
 
 <!-- end rules list -->"
 `;
@@ -389,13 +413,11 @@ exports[`generator #generate rule config with options generates the documentatio
 "## Rules
 <!-- begin rules list -->
 
-✅ Enabled in the \`recommended\` configuration.\\
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+✅ Enabled in the \`recommended\` configuration.
 
-| Rule                           | Description            | ✅  | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | --- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |     |     |
+| Rule                           | Description            | ✅  |
+| ------------------------------ | ---------------------- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
 
 <!-- end rules list -->
 "
@@ -421,40 +443,16 @@ Pre-existing notice about the rule being recommended.
 Details."
 `;
 
-exports[`generator #generate rule without a description generates the documentation 1`] = `
-"## Rules
-<!-- begin rules list -->
-
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
-
-| Rule                           | Description | 🔧  | 💡  |
-| ------------------------------ | ----------- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) |             |     |     |
-
-<!-- end rules list -->
-"
-`;
-
-exports[`generator #generate rule without a description generates the documentation 2`] = `
-"# \`test/no-foo\`
-
-<!-- end rule header -->
-"
-`;
-
 exports[`generator #generate rules that are disabled generates the documentation 1`] = `
 "## Rules
 <!-- begin rules list -->
 
-✅ Enabled in the \`recommended\` configuration.\\
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+✅ Enabled in the \`recommended\` configuration.
 
-| Rule                           | Description            | ✅  | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | --- | --- | --- |
-| [no-bar](docs/rules/no-bar.md) | Description of no-bar. |     |     |     |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |     |     |
+| Rule                           | Description            | ✅  |
+| ------------------------------ | ---------------------- | --- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. |     |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |
 
 <!-- end rules list -->
 "
@@ -536,14 +534,11 @@ exports[`generator #generate uses prettier config from package.json should wrap 
 
 ✅ Enabled in the
 \`recommended\`
-configuration.\\
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor
-[suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+configuration.
 
-| Rule                           | Description            | ✅  | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | --- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |     |     |
+| Rule                           | Description            | ✅  |
+| ------------------------------ | ---------------------- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |
 
 <!-- end rules list -->"
 `;
@@ -568,12 +563,11 @@ exports[`generator #generate with no blank lines around comment markers generate
 No blank line after this.
 <!-- begin rules list -->
 
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).
 
-| Rule                           | Description            | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |     |
+| Rule                           | Description            | 🔧  |
+| ------------------------------ | ---------------------- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |
 
 <!-- end rules list -->
 No blank line before this."
@@ -595,12 +589,11 @@ One blank line after this.
 
 <!-- begin rules list -->
 
-🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
-💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).
 
-| Rule                           | Description            | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |     |
+| Rule                           | Description            | 🔧  |
+| ------------------------------ | ---------------------- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |
 
 <!-- end rules list -->
 
