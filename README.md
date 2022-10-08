@@ -85,13 +85,14 @@ Generated rules table in `README.md` (everything between the marker comments):
 
 ## Rules
 
-✅: Enabled in the `recommended` configuration.\
-🔧: Fixable with [`eslint --fix`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\
-💡: Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).\
-💭: Requires type information.\
-❌: This rule is deprecated.
-
 <!-- begin rules list -->
+
+✅ Enabled in the `recommended` configuration.\
+💼 Configurations enabled in.\
+🔧 Fixable with [`eslint --fix`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\
+💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).\
+💭 Requires type information.\
+❌ Deprecated.
 
 | Rule                                                           | Description                                       | ✅  | 🔧  | 💡  | 💭  |
 | -------------------------------------------------------------- | ------------------------------------------------- | --- | --- | --- | --- |
@@ -104,7 +105,7 @@ Generated rules table in `README.md` (everything between the marker comments):
 ...
 ```
 
-Note the emoji legend that you'll want to provide above the rules list.
+The table will hide columns that don't apply to any rules, and the legend will include only the symbols that are used in the table.
 
 If you have any custom configs (besides `all`, `recommended`), you'll need to define a badge for them at the bottom of your `README.md`. Here's a badge for a custom `style` config that displays in blue:
 
@@ -118,7 +119,6 @@ If you have any custom configs (besides `all`, `recommended`), you'll need to de
 ## Upcoming features
 
 - Custom config emojis ([#34](https://github.com/bmish/eslint-doc-generator/issues/34))
-- Auto-generated emoji legend for rules list ([#20](https://github.com/bmish/eslint-doc-generator/issues/20))
 - Configurable rule doc section consistency checks ([#36](https://github.com/bmish/eslint-doc-generator/issues/36))
 
 ## Related
