@@ -46,7 +46,7 @@ export function findSectionHeader(
   str: string
 ): string | undefined {
   // Get all the matching strings.
-  const regexp = new RegExp(`##.* ${str}.*\n`, 'gi');
+  const regexp = new RegExp(`## .*${str}.*\n`, 'gi');
   const sectionPotentialMatches = [...markdown.matchAll(regexp)].map(
     (match) => match[0]
   );

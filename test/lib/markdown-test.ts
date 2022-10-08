@@ -4,17 +4,23 @@ import { findSectionHeader } from '../../lib/markdown.js';
 describe('markdown', function () {
   describe('#findSectionHeader', function () {
     it('handles standard section title', function () {
-      expect(findSectionHeader('## Rules\n', 'rules')).toBe('## Rules\n');
+      const title = '## Rules\n';
+      expect(findSectionHeader(title, 'rules')).toBe(title);
     });
 
     it('handles section title with leading emoji', function () {
-      expect(findSectionHeader('## 🍟 Rules\n', 'rules')).toBe('## 🍟 Rules\n');
+      const title = '## 🍟 Rules\n';
+      expect(findSectionHeader(title, 'rules')).toBe(title);
+    });
+
+    it('handles section title with html', function () {
+      const title = "## <a name='Rules'></a>Rules\n";
+      expect(findSectionHeader(title, 'rules')).toBe(title);
     });
 
     it('handles sentential section title', function () {
-      expect(findSectionHeader('## List of supported rules\n', 'rules')).toBe(
-        '## List of supported rules\n'
-      );
+      const title = '## List of supported rules\n';
+      expect(findSectionHeader(title, 'rules')).toBe(title);
     });
 
     it('handles doc with multiple sections', function () {
