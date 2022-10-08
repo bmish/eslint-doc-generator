@@ -7,6 +7,10 @@ export function hasCustomConfigs(plugin: Plugin) {
   );
 }
 
+export function hasAnyConfigs(configsToRules: ConfigsToRules) {
+  return Object.keys(configsToRules).length > 0;
+}
+
 const SEVERITY_ENABLED = new Set([2, 'error']);
 
 /**

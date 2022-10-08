@@ -7,7 +7,11 @@ import {
   EMOJI_REQUIRES_TYPE_CHECKING,
   EMOJI_CONFIGS,
 } from './emojis.js';
-import { hasCustomConfigs, getConfigsForRule } from './configs.js';
+import {
+  hasCustomConfigs,
+  getConfigsForRule,
+  hasAnyConfigs,
+} from './configs.js';
 import { findSectionHeader, format } from './markdown.js';
 import type { Plugin, RuleDetails, ConfigsToRules } from './types.js';
 
@@ -31,12 +35,6 @@ function getConfigurationColumnValueForRule(
         : `![${configName}][]`
     );
   }
-
-  if (rule.deprecated) {
-    // While not technically a config, we'll show the deprecation emoji in the config column to save space.
-    badges.push(EMOJI_DEPRECATED);
-  }
-
   return badges.join(' ');
 }
 
@@ -46,15 +44,25 @@ function buildRuleRow(
   pluginPrefix: string,
   includeTypesColumn: boolean
 ): string[] {
-  const columns = [
+  const columns: string[] = [];
+  columns.push(
     `[${rule.name}](docs/rules/${rule.name}.md)`,
-    rule.description || '',
-    getConfigurationColumnValueForRule(rule, configsToRules, pluginPrefix),
+    rule.description || ''
+  );
+  if (hasAnyConfigs(configsToRules)) {
+    columns.push(
+      getConfigurationColumnValueForRule(rule, configsToRules, pluginPrefix)
+    );
+  }
+  columns.push(
     rule.fixable ? EMOJI_FIXABLE : '',
-    rule.hasSuggestions ? EMOJI_HAS_SUGGESTIONS : '',
-  ];
+    rule.hasSuggestions ? EMOJI_HAS_SUGGESTIONS : ''
+  );
   if (includeTypesColumn) {
     columns.push(rule.requiresTypeChecking ? EMOJI_REQUIRES_TYPE_CHECKING : '');
+  }
+  if (rule.deprecated) {
+    columns.push(EMOJI_DEPRECATED);
   }
   return columns;
 }
@@ -69,16 +77,22 @@ function generateRulesListMarkdown(
   const includeTypesColumn = details.some(
     (detail: RuleDetails) => detail.requiresTypeChecking
   );
-  const listHeaderRow = [
-    'Rule',
-    'Description',
-    hasCustomConfigs(plugin) ? EMOJI_CONFIGS : EMOJI_CONFIG_RECOMMENDED, // If there are custom configs, use the general config emoji.
-    EMOJI_FIXABLE,
-    EMOJI_HAS_SUGGESTIONS,
-  ];
+
+  const listHeaderRow: string[] = [];
+  listHeaderRow.push('Rule', 'Description');
+  if (hasCustomConfigs(plugin)) {
+    listHeaderRow.push(EMOJI_CONFIGS); // If there are custom configs, use the general config emoji.
+  } else if (hasAnyConfigs(configsToRules)) {
+    listHeaderRow.push(EMOJI_CONFIG_RECOMMENDED); // If there are no custom configs, but there are configs, use the recommended config emoji.
+  }
+  listHeaderRow.push(EMOJI_FIXABLE, EMOJI_HAS_SUGGESTIONS);
   if (includeTypesColumn) {
     listHeaderRow.push(EMOJI_REQUIRES_TYPE_CHECKING);
   }
+  if (details.some((detail) => detail.deprecated)) {
+    listHeaderRow.push(EMOJI_DEPRECATED);
+  }
+
   const listSpacerRow = Array.from({ length: listHeaderRow.length }).fill('-');
   return [
     listHeaderRow,

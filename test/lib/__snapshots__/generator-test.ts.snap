@@ -3,9 +3,9 @@
 exports[`generator #generate CJS (non-ESM) generates the documentation 1`] = `
 "<!-- begin rules list -->
 
-| Rule                           | Description   | ✅  | 🔧  | 💡  |
-| ------------------------------ | ------------- | --- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | disallow foo. |     |     |     |
+| Rule                           | Description   | 🔧  | 💡  |
+| ------------------------------ | ------------- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | disallow foo. |     |     |
 
 <!-- end rules list -->"
 `;
@@ -21,17 +21,17 @@ exports[`generator #generate Missing plugin package.json \`name\` field throws a
 
 exports[`generator #generate Missing plugin package.json throws an error 1`] = `"Could not find package.json of ESLint plugin."`;
 
-exports[`generator #generate No configs found does not crash 1`] = `
+exports[`generator #generate No configs found omits the config column 1`] = `
 "<!-- begin rules list -->
 
-| Rule                           | Description   | ✅  | 🔧  | 💡  |
-| ------------------------------ | ------------- | --- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | disallow foo. |     |     |     |
+| Rule                           | Description   | 🔧  | 💡  |
+| ------------------------------ | ------------- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | disallow foo. |     |     |
 
 <!-- end rules list -->"
 `;
 
-exports[`generator #generate No configs found does not crash 2`] = `
+exports[`generator #generate No configs found omits the config column 2`] = `
 "# Disallow foo (\`test/no-foo\`)
 
 <!-- end rule header -->
@@ -50,9 +50,9 @@ Foo.
 ## Rules
 <!-- begin rules list -->
 
-| Rule                           | Description            | ✅  | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | --- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |     |     |
+| Rule                           | Description            | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |     |
 
 <!-- end rules list -->
 
@@ -184,9 +184,9 @@ exports[`generator #generate deprecated function-style rule generates the docume
 exports[`generator #generate deprecated rule with no rule doc nor meta.docs updates the documentation 1`] = `
 "<!-- begin rules list -->
 
-| Rule                           | Description | ✅  | 🔧  | 💡  |
+| Rule                           | Description | 🔧  | 💡  | ❌  |
 | ------------------------------ | ----------- | --- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) |             | ❌  |     |     |
+| [no-foo](docs/rules/no-foo.md) |             |     |     | ❌  |
 
 <!-- end rules list -->"
 `;
@@ -194,11 +194,11 @@ exports[`generator #generate deprecated rule with no rule doc nor meta.docs upda
 exports[`generator #generate deprecated rules updates the documentation 1`] = `
 "<!-- begin rules list -->
 
-| Rule                           | Description  | ✅  | 🔧  | 💡  |
+| Rule                           | Description  | 🔧  | 💡  | ❌  |
 | ------------------------------ | ------------ | --- | --- | --- |
-| [no-bar](docs/rules/no-bar.md) | Description. | ❌  |     |     |
-| [no-baz](docs/rules/no-baz.md) | Description. | ❌  |     |     |
-| [no-foo](docs/rules/no-foo.md) | Description. | ❌  |     |     |
+| [no-bar](docs/rules/no-bar.md) | Description. |     |     | ❌  |
+| [no-baz](docs/rules/no-baz.md) | Description. |     |     | ❌  |
+| [no-foo](docs/rules/no-foo.md) | Description. |     |     | ❌  |
 
 <!-- end rules list -->"
 `;
@@ -234,9 +234,9 @@ exports[`generator #generate no existing comment markers - minimal doc content g
 "## Rules
 <!-- begin rules list -->
 
-| Rule                           | Description            | ✅  | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | --- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     | 🔧  |     |
+| Rule                           | Description            | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |     |
 
 <!-- end rules list -->
 "
@@ -255,9 +255,9 @@ exports[`generator #generate no existing comment markers - with no blank lines i
 "## Rules
 <!-- begin rules list -->
 
-| Rule                           | Description            | ✅  | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | --- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     | 🔧  |     |
+| Rule                           | Description            | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |     |
 
 <!-- end rules list -->
 Existing rules section content."
@@ -276,9 +276,9 @@ exports[`generator #generate no existing comment markers - with one blank line a
 "## Rules
 <!-- begin rules list -->
 
-| Rule                           | Description            | ✅  | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | --- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     | 🔧  |     |
+| Rule                           | Description            | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |     |
 
 <!-- end rules list -->
 
@@ -298,9 +298,9 @@ Existing rule doc content."
 exports[`generator #generate no prettier config generates the documentation 1`] = `
 "<!-- begin rules list -->
 
-| Rule                           | Description            | ✅  | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | --- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     | 🔧  |     |
+| Rule                           | Description            | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |     |
 
 <!-- end rules list -->"
 `;
@@ -371,9 +371,9 @@ exports[`generator #generate rule without a description generates the documentat
 "## Rules
 <!-- begin rules list -->
 
-| Rule                           | Description | ✅  | 🔧  | 💡  |
-| ------------------------------ | ----------- | --- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) |             |     |     |     |
+| Rule                           | Description | 🔧  | 💡  |
+| ------------------------------ | ----------- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) |             |     |     |
 
 <!-- end rules list -->
 "
@@ -496,9 +496,9 @@ exports[`generator #generate with no blank lines around comment markers generate
 No blank line after this.
 <!-- begin rules list -->
 
-| Rule                           | Description            | ✅  | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | --- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     | 🔧  |     |
+| Rule                           | Description            | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |     |
 
 <!-- end rules list -->
 No blank line before this."
@@ -520,9 +520,9 @@ One blank line after this.
 
 <!-- begin rules list -->
 
-| Rule                           | Description            | ✅  | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | --- | --- | --- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     | 🔧  |     |
+| Rule                           | Description            | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | --- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |     |
 
 <!-- end rules list -->
 
