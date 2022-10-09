@@ -120,7 +120,8 @@ export async function updateRulesList(
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
-  pathToReadme: string
+  pathToReadme: string,
+  urlConfigs?: string
 ): Promise<string> {
   let listStartIndex = markdown.indexOf(BEGIN_RULE_LIST_MARKER);
   let listEndIndex = markdown.indexOf(END_RULE_LIST_MARKER);
@@ -158,7 +159,10 @@ export async function updateRulesList(
   const columns = getColumns(details, plugin, configsToRules);
 
   // New legend.
-  const legend = await format(generateLegend(columns), pathToReadme);
+  const legend = await format(
+    generateLegend(columns, urlConfigs),
+    pathToReadme
+  );
 
   // New rule list.
   const list = await format(

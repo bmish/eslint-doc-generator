@@ -17,13 +17,20 @@ enum MESSAGE_TYPE {
   HAS_SUGGESTIONS = 'hasSuggestions',
 }
 
-const MESSAGES = {
-  [MESSAGE_TYPE.CONFIGS]: `${EMOJI_CONFIGS} This rule is enabled in the following configs:`, // TODO: include link to configs in the plugin's README.
-  [MESSAGE_TYPE.CONFIG_RECOMMENDED]: `${EMOJI_CONFIG_RECOMMENDED} This rule is enabled in the \`recommended\` config.`, // TODO: include link to configs in the plugin's README.
-  [MESSAGE_TYPE.DEPRECATED]: `${EMOJI_DEPRECATED} This rule is deprecated.`,
-  [MESSAGE_TYPE.FIXABLE]: `${EMOJI_FIXABLE} This rule is automatically fixable using the \`--fix\` [option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) on the command line.`,
-  [MESSAGE_TYPE.HAS_SUGGESTIONS]: `${EMOJI_HAS_SUGGESTIONS} This rule provides [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions) that can be applied manually.`,
-};
+function getMessages(urlConfigs?: string) {
+  const configsLinkOrWord = urlConfigs ? `[configs](${urlConfigs})` : 'configs';
+  const configLinkOrWord = urlConfigs ? `[config](${urlConfigs})` : 'config';
+  const MESSAGES: {
+    [key in MESSAGE_TYPE]: string;
+  } = {
+    [MESSAGE_TYPE.CONFIGS]: `${EMOJI_CONFIGS} This rule is enabled in the following ${configsLinkOrWord}:`,
+    [MESSAGE_TYPE.CONFIG_RECOMMENDED]: `${EMOJI_CONFIG_RECOMMENDED} This rule is enabled in the \`recommended\` ${configLinkOrWord}.`,
+    [MESSAGE_TYPE.DEPRECATED]: `${EMOJI_DEPRECATED} This rule is deprecated.`,
+    [MESSAGE_TYPE.FIXABLE]: `${EMOJI_FIXABLE} This rule is automatically fixable using the \`--fix\` [option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) on the command line.`,
+    [MESSAGE_TYPE.HAS_SUGGESTIONS]: `${EMOJI_HAS_SUGGESTIONS} This rule provides [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions) that can be applied manually.`,
+  };
+  return MESSAGES;
+}
 
 /**
  * Convert list of rule names to string list of links.
@@ -61,7 +68,8 @@ function getRuleNoticeLines(
   ruleName: string,
   plugin: Plugin,
   configsToRules: ConfigsToRules,
-  pluginPrefix: string
+  pluginPrefix: string,
+  urlConfigs?: string
 ) {
   const lines: string[] = [];
 
@@ -96,6 +104,7 @@ function getRuleNoticeLines(
 
     lines.push(''); // Blank line first.
 
+    const MESSAGES = getMessages(urlConfigs);
     if (messageType === MESSAGE_TYPE.CONFIGS) {
       // This notice should have a list of the rule's configs.
       const message = `${MESSAGES[MESSAGE_TYPE.CONFIGS]} ${configNamesToList(
@@ -144,7 +153,8 @@ export function generateRuleHeaderLines(
   name: string,
   plugin: Plugin,
   configsToRules: ConfigsToRules,
-  pluginPrefix: string
+  pluginPrefix: string,
+  urlConfigs?: string
 ): string {
   const descriptionFormatted = description
     ? removeTrailingPeriod(toSentenceCase(description))
@@ -153,7 +163,13 @@ export function generateRuleHeaderLines(
     descriptionFormatted
       ? `# ${descriptionFormatted} (\`${pluginPrefix}/${name}\`)`
       : `# \`${pluginPrefix}/${name}\``,
-    ...getRuleNoticeLines(name, plugin, configsToRules, pluginPrefix),
+    ...getRuleNoticeLines(
+      name,
+      plugin,
+      configsToRules,
+      pluginPrefix,
+      urlConfigs
+    ),
     END_RULE_HEADER_MARKER,
   ].join('\n');
 }

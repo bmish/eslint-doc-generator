@@ -25,8 +25,12 @@ export function run() {
     .addArgument(
       new Argument('[path]', 'path to ESLint plugin root').default('.')
     )
-    .action(async function (path) {
-      await generate(path);
+    .option(
+      '--url-configs <url>',
+      '(optional) Link to documentation about the ESLint configurations exported by the plugin.'
+    )
+    .action(async function (path, options: { urlConfigs?: string }) {
+      await generate(path, { urlConfigs: options.urlConfigs });
     })
     .parse(process.argv);
 
