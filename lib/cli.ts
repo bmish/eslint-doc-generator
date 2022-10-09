@@ -22,6 +22,11 @@ function getCurrentPackageVersion(): string {
   return packageJson.version;
 }
 
+// Used for collecting repeated CLI options into an array.
+function collect(value: string, previous: string[]) {
+  return [...previous, value];
+}
+
 export function run() {
   const program = new Command();
 
@@ -29,6 +34,18 @@ export function run() {
     .version(getCurrentPackageVersion())
     .addArgument(
       new Argument('[path]', 'path to ESLint plugin root').default('.')
+    )
+    .option(
+      '--rule-doc-section-include <section>',
+      '(optional) Required section in each rule doc (option can be repeated).',
+      collect,
+      []
+    )
+    .option(
+      '--rule-doc-section-exclude <section>',
+      '(optional) Disallowed section in each rule doc (option can be repeated).',
+      collect,
+      []
     )
     .addOption(
       new Option(
@@ -44,9 +61,16 @@ export function run() {
     )
     .action(async function (
       path,
-      options: { ruleDocTitleFormat: RuleDocTitleFormat; urlConfigs?: string }
+      options: {
+        ruleDocSectionInclude: string[];
+        ruleDocSectionExclude: string[];
+        ruleDocTitleFormat: RuleDocTitleFormat;
+        urlConfigs?: string;
+      }
     ) {
       await generate(path, {
+        ruleDocSectionInclude: options.ruleDocSectionInclude,
+        ruleDocSectionExclude: options.ruleDocSectionExclude,
         ruleDocTitleFormat: options.ruleDocTitleFormat,
         urlConfigs: options.urlConfigs,
       });
