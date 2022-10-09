@@ -9,6 +9,23 @@
 
 
 
+
+## v0.6.0 (2022-10-09)
+
+#### :rocket: Enhancement
+* [#84](https://github.com/bmish/eslint-doc-generator/pull/84) Add `--rule-doc-section-include` and `--rule-doc-section-exclude` options ([@bmish](https://github.com/bmish))
+* [#83](https://github.com/bmish/eslint-doc-generator/pull/83) Add `--rule-doc-title-format` option ([@bmish](https://github.com/bmish))
+* [#82](https://github.com/bmish/eslint-doc-generator/pull/82) Add `--url-configs` option ([@bmish](https://github.com/bmish))
+
+#### :bug: Bug Fix
+* [#87](https://github.com/bmish/eslint-doc-generator/pull/87) Handle when prettier is not installed ([@bmish](https://github.com/bmish))
+* [#81](https://github.com/bmish/eslint-doc-generator/pull/81) Throw error when missing README.md ([@bmish](https://github.com/bmish))
+* [#80](https://github.com/bmish/eslint-doc-generator/pull/80) Throw error when missing rule doc ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.5.0 (2022-10-08)
 
 #### :rocket: Enhancement
