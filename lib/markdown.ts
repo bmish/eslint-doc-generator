@@ -1,13 +1,25 @@
 // General helpers for dealing with markdown files / content.
 
-import prettier from 'prettier'; // eslint-disable-line node/no-extraneous-import -- prettier is included by eslint-plugin-square
+function removeTrailingNewline(str: string) {
+  return str.replace(/\s+$/, '');
+}
 
 export async function format(str: string, filePath: string): Promise<string> {
-  const options = await prettier.resolveConfig(filePath);
-  return prettier.format(str, {
-    ...options,
-    parser: 'markdown',
-  });
+  try {
+    const { default: prettier } = await import('prettier');
+    const options = await prettier.resolveConfig(filePath);
+    // Trim the ending newline that prettier may add.
+    return removeTrailingNewline(
+      prettier.format(str, {
+        ...options,
+        parser: 'markdown',
+      })
+    );
+  } catch {
+    // Skip prettier formatting if not installed.
+    /* istanbul ignore next -- TODO: Figure out how to test when prettier is not installed. */
+    return str;
+  }
 }
 
 /**
@@ -32,10 +44,9 @@ export async function replaceOrCreateHeader(
     lines.splice(0, 1);
   }
 
-  return (
-    (await format(newHeader, pathToDoc)) +
-    lines.slice(markerLineIndex + 1).join('\n')
-  );
+  return `${await format(newHeader, pathToDoc)}\n${lines
+    .slice(markerLineIndex + 1)
+    .join('\n')}`;
 }
 
 /**

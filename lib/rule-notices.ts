@@ -201,6 +201,7 @@ export function generateRuleHeaderLines(
       pluginPrefix,
       urlConfigs
     ),
+    '',
     END_RULE_HEADER_MARKER,
   ].join('\n');
 }
