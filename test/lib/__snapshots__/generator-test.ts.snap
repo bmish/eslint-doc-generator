@@ -4,7 +4,7 @@ exports[`generator #generate CJS (non-ESM) generates the documentation 1`] = `
 "<!-- begin rules list -->
 
 | Name                           | Description   |
-| ------------------------------ | ------------- |
+| :----------------------------- | :------------ |
 | [no-foo](docs/rules/no-foo.md) | disallow foo. |
 
 <!-- end rules list -->"
@@ -25,7 +25,7 @@ exports[`generator #generate No configs found omits the config column 1`] = `
 "<!-- begin rules list -->
 
 | Name                           | Description   |
-| ------------------------------ | ------------- |
+| :----------------------------- | :------------ |
 | [no-foo](docs/rules/no-foo.md) | disallow foo. |
 
 <!-- end rules list -->"
@@ -51,7 +51,7 @@ Foo.
 <!-- begin rules list -->
 
 | Name                           | Description            |
-| ------------------------------ | ---------------------- |
+| :----------------------------- | :--------------------- |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. |
 
 <!-- end rules list -->
@@ -86,7 +86,7 @@ exports[`generator #generate adds extra column to rules table for TypeScript rul
 💭 Requires type information.
 
 | Name                           | Description            | 💼       | 💭  |
-| ------------------------------ | ---------------------- | -------- | --- |
+| :----------------------------- | :--------------------- | :------- | :-- |
 | [no-bar](docs/rules/no-bar.md) | Description of no-bar. |          | 💭  |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ![all][] |     |
 
@@ -100,7 +100,7 @@ exports[`generator #generate config that extends another config generates the do
 ✅ Enabled in the \`recommended\` configuration.
 
 | Name                           | Description            | ✅  |
-| ------------------------------ | ---------------------- | --- |
+| :----------------------------- | :--------------------- | :-- |
 | [no-bar](docs/rules/no-bar.md) | Description of no-bar. | ✅  |
 | [no-baz](docs/rules/no-baz.md) | Description of no-baz. | ✅  |
 | [no-biz](docs/rules/no-biz.md) | Description of no-biz. | ✅  |
@@ -153,7 +153,7 @@ exports[`generator #generate config with overrides generates the documentation 1
 ✅ Enabled in the \`recommended\` configuration.
 
 | Name                           | Description            | ✅  |
-| ------------------------------ | ---------------------- | --- |
+| :----------------------------- | :--------------------- | :-- |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
 
 <!-- end rules list -->
@@ -176,7 +176,7 @@ exports[`generator #generate deprecated function-style rule generates the docume
 ✅ Enabled in the \`recommended\` configuration.
 
 | Name                           | ✅  |
-| ------------------------------ | --- |
+| :----------------------------- | :-- |
 | [no-foo](docs/rules/no-foo.md) | ✅  |
 
 <!-- end rules list -->
@@ -194,7 +194,7 @@ exports[`generator #generate deprecated rule with no rule doc but --ignore-depre
 "<!-- begin rules list -->
 
 | Name |
-| ---- |
+| :--- |
 
 <!-- end rules list -->"
 `;
@@ -205,7 +205,7 @@ exports[`generator #generate deprecated rules updates the documentation 1`] = `
 ❌ Deprecated.
 
 | Name                           | Description  | ❌  |
-| ------------------------------ | ------------ | --- |
+| :----------------------------- | :----------- | :-- |
 | [no-bar](docs/rules/no-bar.md) | Description. | ❌  |
 | [no-baz](docs/rules/no-baz.md) | Description. | ❌  |
 | [no-foo](docs/rules/no-foo.md) | Description. | ❌  |
@@ -247,7 +247,7 @@ exports[`generator #generate no existing comment markers - minimal doc content g
 🔧 Automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).
 
 | Name                           | Description            | 🔧  |
-| ------------------------------ | ---------------------- | --- |
+| :----------------------------- | :--------------------- | :-- |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |
 
 <!-- end rules list -->
@@ -270,7 +270,7 @@ exports[`generator #generate no existing comment markers - with no blank lines i
 🔧 Automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).
 
 | Name                           | Description            | 🔧  |
-| ------------------------------ | ---------------------- | --- |
+| :----------------------------- | :--------------------- | :-- |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |
 
 <!-- end rules list -->
@@ -293,7 +293,7 @@ exports[`generator #generate no existing comment markers - with one blank line a
 🔧 Automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).
 
 | Name                           | Description            | 🔧  |
-| ------------------------------ | ---------------------- | --- |
+| :----------------------------- | :--------------------- | :-- |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |
 
 <!-- end rules list -->
@@ -317,7 +317,7 @@ exports[`generator #generate no prettier config generates the documentation 1`] 
 🔧 Automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).
 
 | Name                           | Description            | 🔧  |
-| ------------------------------ | ---------------------- | --- |
+| :----------------------------- | :--------------------- | :-- |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |
 
 <!-- end rules list -->"
@@ -339,7 +339,7 @@ exports[`generator #generate no rules with description generates the documentati
 <!-- begin rules list -->
 
 | Name                           |
-| ------------------------------ |
+| :----------------------------- |
 | [no-foo](docs/rules/no-foo.md) |
 
 <!-- end rules list -->
@@ -358,7 +358,7 @@ exports[`generator #generate one rule missing description generates the document
 <!-- begin rules list -->
 
 | Name                           | Description             |
-| ------------------------------ | ----------------------- |
+| :----------------------------- | :---------------------- |
 | [no-bar](docs/rules/no-bar.md) |                         |
 | [no-foo](docs/rules/no-foo.md) | Description for no-foo. |
 
@@ -386,7 +386,7 @@ exports[`generator #generate only a \`recommended\` config updates the documenta
 ✅ Enabled in the \`recommended\` configuration.
 
 | Name                           | Description  | ✅  |
-| ------------------------------ | ------------ | --- |
+| :----------------------------- | :----------- | :-- |
 | [no-foo](docs/rules/no-foo.md) | Description. | ✅  |
 
 <!-- end rules list -->"
@@ -408,7 +408,7 @@ exports[`generator #generate rule config with options generates the documentatio
 ✅ Enabled in the \`recommended\` configuration.
 
 | Name                           | Description            | ✅  |
-| ------------------------------ | ---------------------- | --- |
+| :----------------------------- | :--------------------- | :-- |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
 
 <!-- end rules list -->
@@ -442,7 +442,7 @@ exports[`generator #generate rules that are disabled generates the documentation
 ✅ Enabled in the \`recommended\` configuration.
 
 | Name                           | Description            | ✅  |
-| ------------------------------ | ---------------------- | --- |
+| :----------------------------- | :--------------------- | :-- |
 | [no-bar](docs/rules/no-bar.md) | Description of no-bar. |     |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |
 
@@ -475,7 +475,7 @@ Description.
 💡 Manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
 | Name                           | Description            | 💼                  | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | ------------------- | --- | --- |
+| :----------------------------- | :--------------------- | :------------------ | :-- | :-- |
 | [no-bar](docs/rules/no-bar.md) | Description of no-bar. | ![all][] ![style][] | 🔧  |     |
 | [no-baz](docs/rules/no-baz.md) | Description of no-boz. |                     |     |     |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ![all][] ✅         | 🔧  | 💡  |
@@ -528,7 +528,7 @@ exports[`generator #generate uses prettier config from package.json should wrap 
 enabled in.
 
 | Name                           | Description            | 💼       |
-| ------------------------------ | ---------------------- | -------- |
+| :----------------------------- | :--------------------- | :------- |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ![all][] |
 
 <!-- end rules list -->"
@@ -590,7 +590,7 @@ exports[`generator #generate with \`--url-configs\` option includes the config l
 💼 [Configurations](http://example.com/configs) enabled in.
 
 | Name                           | Description             | 💼                |
-| ------------------------------ | ----------------------- | ----------------- |
+| :----------------------------- | :---------------------- | :---------------- |
 | [no-bar](docs/rules/no-bar.md) | Description for no-bar. | ![customConfig][] |
 | [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅                |
 
@@ -623,7 +623,7 @@ exports[`generator #generate with \`--url-configs\` option with only recommended
 ✅ Enabled in the \`recommended\` [configuration](http://example.com/configs).
 
 | Name                           | Description             | ✅  |
-| ------------------------------ | ----------------------- | --- |
+| :----------------------------- | :---------------------- | :-- |
 | [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅  |
 
 <!-- end rules list -->
@@ -646,7 +646,7 @@ exports[`generator #generate with --ignore-config hides the ignored config 1`] =
 ✅ Enabled in the \`recommended\` configuration.
 
 | Name                           | Description             | ✅  |
-| ------------------------------ | ----------------------- | --- |
+| :----------------------------- | :---------------------- | :-- |
 | [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅  |
 
 <!-- end rules list -->
@@ -671,7 +671,7 @@ No blank line after this.
 🔧 Automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).
 
 | Name                           | Description            | 🔧  |
-| ------------------------------ | ---------------------- | --- |
+| :----------------------------- | :--------------------- | :-- |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |
 
 <!-- end rules list -->
@@ -697,7 +697,7 @@ One blank line after this.
 🔧 Automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).
 
 | Name                           | Description            | 🔧  |
-| ------------------------------ | ---------------------- | --- |
+| :----------------------------- | :--------------------- | :-- |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |
 
 <!-- end rules list -->

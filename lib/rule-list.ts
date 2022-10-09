@@ -102,7 +102,9 @@ function generateRulesListMarkdown(
     }
     return [COLUMN_HEADER[columnType]];
   });
-  const listSpacerRow = Array.from({ length: listHeaderRow.length }).fill('-');
+  const listSpacerRow = Array.from({ length: listHeaderRow.length }).fill(
+    ':--'
+  ); // Left-align header with colon.
   return [
     listHeaderRow,
     listSpacerRow,
