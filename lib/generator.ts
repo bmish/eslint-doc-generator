@@ -144,6 +144,12 @@ export async function generate(path: string) {
     }
   }
 
+  if (!existsSync(pathTo.readme)) {
+    throw new Error(
+      `Could not find README: ${relative(getPluginRoot(path), pathTo.readme)}`
+    );
+  }
+
   // Update the rules list in the README.
   const readme = await updateRulesList(
     details,
