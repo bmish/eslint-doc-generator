@@ -164,14 +164,16 @@ function makeTitle(
   }
 
   switch (ruleDocTitleFormatWithFallback) {
-    case 'desc-parens-prefix-name':
-      return `# ${descriptionFormatted} (\`${pluginPrefix}/${name}\`)`;
+    case 'desc':
+      return `# ${descriptionFormatted}`;
     case 'desc-parens-name':
       return `# ${descriptionFormatted} (\`${name}\`)`;
-    case 'prefix-name':
-      return `# \`${pluginPrefix}/${name}\``;
+    case 'desc-parens-prefix-name':
+      return `# ${descriptionFormatted} (\`${pluginPrefix}/${name}\`)`;
     case 'name':
       return `# \`${name}\``;
+    case 'prefix-name':
+      return `# \`${pluginPrefix}/${name}\``;
     /* istanbul ignore next -- this shouldn't happen */
     default:
       throw new Error(
