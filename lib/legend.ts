@@ -23,8 +23,8 @@ function getMessages(urlConfigs?: string) {
     [COLUMN_TYPE.CONFIGS]: `${EMOJI_CONFIGS} ${configsLinkOrWord} enabled in.`,
     [COLUMN_TYPE.CONFIG_RECOMMENDED]: `${EMOJI_CONFIG_RECOMMENDED} Enabled in the \`recommended\` ${configLinkOrWord}.`,
     [COLUMN_TYPE.DEPRECATED]: `${EMOJI_DEPRECATED} Deprecated.`,
-    [COLUMN_TYPE.FIXABLE]: `${EMOJI_FIXABLE} Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).`,
-    [COLUMN_TYPE.HAS_SUGGESTIONS]: `${EMOJI_HAS_SUGGESTIONS} Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`,
+    [COLUMN_TYPE.FIXABLE]: `${EMOJI_FIXABLE} Automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).`,
+    [COLUMN_TYPE.HAS_SUGGESTIONS]: `${EMOJI_HAS_SUGGESTIONS} Manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`,
     [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: `${EMOJI_REQUIRES_TYPE_CHECKING} Requires type information.`,
   };
   return MESSAGES;
