@@ -557,6 +557,41 @@ details
 Long line that SHOULD NOT get wrapped by prettier since it's outside the header. Long line that SHOULD NOT get wrapped by prettier since it's outside the header."
 `;
 
+exports[`generator #generate with \`--rule-doc-title-format\` option = desc-parens-name uses the right rule doc title format 1`] = `
+"# Description for no-foo (\`no-foo\`)
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate with \`--rule-doc-title-format\` option = desc-parens-prefix-name uses the right rule doc title format, with fallback when missing description 1`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate with \`--rule-doc-title-format\` option = desc-parens-prefix-name uses the right rule doc title format, with fallback when missing description 2`] = `
+"# \`test/no-bar\`
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate with \`--rule-doc-title-format\` option = name uses the right rule doc title format 1`] = `
+"# \`no-foo\`
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate with \`--rule-doc-title-format\` option = prefix-name uses the right rule doc title format 1`] = `
+"# \`test/no-foo\`
+
+<!-- end rule header -->
+"
+`;
+
 exports[`generator #generate with \`--url-configs\` option includes the config link 1`] = `
 "## Rules
 <!-- begin rules list -->

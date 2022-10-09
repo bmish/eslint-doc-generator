@@ -7,6 +7,7 @@ import { generateRuleHeaderLines } from './rule-notices.js';
 import { END_RULE_HEADER_MARKER } from './markers.js';
 import { findSectionHeader, replaceOrCreateHeader } from './markdown.js';
 import { resolveConfigsToRules } from './config-resolution.js';
+import { RuleDocTitleFormat } from './rule-doc-title-format.js';
 import type { RuleDetails } from './types.js';
 
 /**
@@ -55,7 +56,7 @@ function expectSectionHeader(
 
 export async function generate(
   path: string,
-  options?: { urlConfigs?: string }
+  options?: { ruleDocTitleFormat?: RuleDocTitleFormat; urlConfigs?: string }
 ) {
   const plugin = await loadPlugin(path);
   const pluginPrefix = getPluginPrefix(path);
@@ -121,6 +122,7 @@ export async function generate(
       plugin,
       configsToRules,
       pluginPrefix,
+      options?.ruleDocTitleFormat,
       options?.urlConfigs
     );
 
