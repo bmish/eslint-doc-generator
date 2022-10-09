@@ -11,6 +11,21 @@
 
 
 
+
+## v0.8.0 (2022-10-09)
+
+#### :rocket: Enhancement
+* [#104](https://github.com/bmish/eslint-doc-generator/pull/104) Add `desc` format to `--rule-doc-title-format` option ([@bmish](https://github.com/bmish))
+
+#### :bug: Bug Fix
+* [#103](https://github.com/bmish/eslint-doc-generator/pull/103) Left-align rule list column headers ([@bmish](https://github.com/bmish))
+* [#102](https://github.com/bmish/eslint-doc-generator/pull/102) Use `Name` instead of `Rule` for rule list column header ([@bmish](https://github.com/bmish))
+* [#101](https://github.com/bmish/eslint-doc-generator/pull/101) Improve notice/legend wording consistency and conciseness ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.7.0 (2022-10-09)
 
 #### :rocket: Enhancement
