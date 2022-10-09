@@ -36,7 +36,7 @@ export function run() {
       new Argument('[path]', 'path to ESLint plugin root').default('.')
     )
     .option(
-      '--ignore-config',
+      '--ignore-config <config>',
       '(optional) Config to ignore from being displayed (often used for an `all` config) (option can be repeated).',
       collect,
       []
