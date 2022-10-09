@@ -10,6 +10,17 @@
 
 
 
+
+## v0.7.0 (2022-10-09)
+
+#### :rocket: Enhancement
+* [#93](https://github.com/bmish/eslint-doc-generator/pull/93) Add `--ignore-config` option ([@bmish](https://github.com/bmish))
+* [#92](https://github.com/bmish/eslint-doc-generator/pull/92) Add `--ignore-deprecated-rules` option ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.6.0 (2022-10-09)
 
 #### :rocket: Enhancement
