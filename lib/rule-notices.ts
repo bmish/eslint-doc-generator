@@ -8,6 +8,10 @@ import {
 } from './emojis.js';
 import { getConfigsForRule, configNamesToList } from './configs.js';
 import type { RuleModule, Plugin, ConfigsToRules } from './types.js';
+import {
+  RuleDocTitleFormat,
+  RULE_DOC_TITLE_FORMAT_DEFAULT,
+} from './rule-doc-title-format.js';
 
 enum MESSAGE_TYPE {
   CONFIGS = 'configs',
@@ -142,10 +146,41 @@ function removeTrailingPeriod(str: string) {
   return str.replace(/\.$/, '');
 }
 
+function makeTitle(
+  name: string,
+  description: string | undefined,
+  pluginPrefix: string,
+  ruleDocTitleFormat?: RuleDocTitleFormat
+) {
+  const descriptionFormatted = description
+    ? removeTrailingPeriod(toSentenceCase(description))
+    : undefined;
+
+  let ruleDocTitleFormatWithFallback: RuleDocTitleFormat =
+    ruleDocTitleFormat ?? RULE_DOC_TITLE_FORMAT_DEFAULT;
+  if (ruleDocTitleFormatWithFallback.includes('desc') && !description) {
+    ruleDocTitleFormatWithFallback = 'prefix-name'; // Fallback if rule missing description.
+  }
+
+  switch (ruleDocTitleFormatWithFallback) {
+    case 'desc-parens-prefix-name':
+      return `# ${descriptionFormatted} (\`${pluginPrefix}/${name}\`)`;
+    case 'desc-parens-name':
+      return `# ${descriptionFormatted} (\`${name}\`)`;
+    case 'prefix-name':
+      return `# \`${pluginPrefix}/${name}\``;
+    case 'name':
+      return `# \`${name}\``;
+    /* istanbul ignore next -- this shouldn't happen */
+    default:
+      throw new Error(
+        `Unhandled rule doc title format: ${ruleDocTitleFormatWithFallback}`
+      );
+  }
+}
+
 /**
  * Generate a rule doc header for a particular rule.
- * @param description - rule description
- * @param name - rule name
  * @returns {string} - new header including marker
  */
 export function generateRuleHeaderLines(
@@ -154,15 +189,11 @@ export function generateRuleHeaderLines(
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
+  ruleDocTitleFormat?: RuleDocTitleFormat,
   urlConfigs?: string
 ): string {
-  const descriptionFormatted = description
-    ? removeTrailingPeriod(toSentenceCase(description))
-    : undefined;
   return [
-    descriptionFormatted
-      ? `# ${descriptionFormatted} (\`${pluginPrefix}/${name}\`)`
-      : `# \`${pluginPrefix}/${name}\``,
+    makeTitle(name, description, pluginPrefix, ruleDocTitleFormat),
     ...getRuleNoticeLines(
       name,
       plugin,
