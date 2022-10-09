@@ -418,6 +418,46 @@ describe('generator', function () {
       });
     });
 
+    describe('missing README', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: { },
+                  create(context) {}
+                },
+              },
+            };`,
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('throws an error', async function () {
+        await expect(generate('.')).rejects.toThrow(
+          'Could not find README: README.md'
+        );
+      });
+    });
+
     describe('adds extra column to rules table for TypeScript rules', function () {
       beforeEach(function () {
         mockFs({
