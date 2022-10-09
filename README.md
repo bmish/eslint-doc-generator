@@ -95,7 +95,7 @@ Generated rules table in `README.md` (everything between the marker comments):
 ❌ Deprecated.
 
 | Rule                                                           | Description                                       | ✅  | 🔧  | 💡  | 💭  |
-| -------------------------------------------------------------- | ------------------------------------------------- | --- | --- | --- | --- |
+| :------------------------------------------------------------- | :------------------------------------------------ | :-- | :-- | :-- | :-- |
 | [max-nested-describe](docs/rules/max-nested-describe.md)       | Enforces a maximum depth to nested describe calls |     |     |     |     |
 | [no-alias-methods](docs/rules/no-alias-methods.md)             | Disallow alias methods                            | ✅  | 🔧  |     |     |
 | [no-commented-out-tests](docs/rules/no-commented-out-tests.md) | Disallow commented out tests                      | ✅  |     |     |     |
@@ -119,7 +119,7 @@ If you have any custom configs (besides `all`, `recommended`), you'll need to de
 ## Configuration options
 
 | Name | Description |
-| --- | --- |
+| :-- | :-- |
 | `--ignore-config` | (optional) Config to ignore from being displayed (often used for an `all` config) (option can be repeated). |
 | `--ignore-deprecated-rules` | (optional) Whether to ignore deprecated rules from being checked, displayed, or updated (default: `false`). |
 | `--rule-doc-section-include` | (optional) Required section in each rule doc (option can be repeated). |
