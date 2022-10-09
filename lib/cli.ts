@@ -36,6 +36,12 @@ export function run() {
       new Argument('[path]', 'path to ESLint plugin root').default('.')
     )
     .option(
+      '--ignore-config',
+      '(optional) Config to ignore from being displayed (often used for an `all` config) (option can be repeated).',
+      collect,
+      []
+    )
+    .option(
       '--ignore-deprecated-rules',
       '(optional) Whether to ignore deprecated rules from being checked, displayed, or updated.',
       false
@@ -67,6 +73,7 @@ export function run() {
     .action(async function (
       path,
       options: {
+        ignoreConfig: string[];
         ignoreDeprecatedRules?: boolean;
         ruleDocSectionInclude: string[];
         ruleDocSectionExclude: string[];
@@ -75,6 +82,7 @@ export function run() {
       }
     ) {
       await generate(path, {
+        ignoreConfig: options.ignoreConfig,
         ignoreDeprecatedRules: options.ignoreDeprecatedRules,
         ruleDocSectionInclude: options.ruleDocSectionInclude,
         ruleDocSectionExclude: options.ruleDocSectionExclude,

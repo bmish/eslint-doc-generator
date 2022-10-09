@@ -73,6 +73,7 @@ function getRuleNoticeLines(
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
+  ignoreConfig?: string[],
   urlConfigs?: string
 ) {
   const lines: string[] = [];
@@ -94,7 +95,7 @@ function getRuleNoticeLines(
     ruleName,
     configsToRules,
     pluginPrefix
-  );
+  ).filter((config) => !ignoreConfig?.includes(config));
   const notices = getNoticesForRule(rule, configsEnabled);
   let messageType: keyof typeof notices;
 
@@ -189,6 +190,7 @@ export function generateRuleHeaderLines(
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
+  ignoreConfig?: string[],
   ruleDocTitleFormat?: RuleDocTitleFormat,
   urlConfigs?: string
 ): string {
@@ -199,6 +201,7 @@ export function generateRuleHeaderLines(
       plugin,
       configsToRules,
       pluginPrefix,
+      ignoreConfig,
       urlConfigs
     ),
     '',

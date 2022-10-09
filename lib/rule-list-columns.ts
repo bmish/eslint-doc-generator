@@ -40,7 +40,8 @@ export const COLUMN_HEADER: {
 export function getColumns(
   details: RuleDetails[],
   plugin: Plugin,
-  configsToRules: ConfigsToRules
+  configsToRules: ConfigsToRules,
+  ignoreConfig?: string[]
 ) {
   const columns: {
     [key in COLUMN_TYPE]: boolean;
@@ -48,9 +49,9 @@ export function getColumns(
     // Object keys in display order.
     [COLUMN_TYPE.NAME]: true,
     [COLUMN_TYPE.DESCRIPTION]: details.some((detail) => detail.description),
-    [COLUMN_TYPE.CONFIGS]: hasCustomConfigs(plugin), // If there are custom configs, use the general config emoji.
+    [COLUMN_TYPE.CONFIGS]: hasCustomConfigs(plugin, ignoreConfig), // If there are custom configs, use the general config emoji.
     [COLUMN_TYPE.CONFIG_RECOMMENDED]:
-      !hasCustomConfigs(plugin) && hasAnyConfigs(configsToRules), // If there are no custom configs, but there are configs, use the recommended config emoji.
+      !hasCustomConfigs(plugin, ignoreConfig) && hasAnyConfigs(configsToRules), // If there are no custom configs, but there are configs, use the recommended config emoji.
     [COLUMN_TYPE.FIXABLE]: details.some((detail) => detail.fixable),
     [COLUMN_TYPE.HAS_SUGGESTIONS]: details.some(
       (detail) => detail.hasSuggestions
