@@ -336,7 +336,7 @@ describe('generator', function () {
       });
     });
 
-    describe('deprecated rule with no rule doc nor meta.docs', function () {
+    describe('deprecated rule with no rule doc but --ignore-deprecated-rules', function () {
       beforeEach(function () {
         mockFs({
           'package.json': JSON.stringify({
@@ -349,7 +349,7 @@ describe('generator', function () {
             export default {
               rules: {
                 'no-foo': {
-                  meta: { deprecated: true, }, // No docs specified.
+                  meta: { deprecated: true, },
                   create(context) {}
                 },
               },
@@ -370,8 +370,8 @@ describe('generator', function () {
         jest.resetModules();
       });
 
-      it('updates the documentation', async function () {
-        await generate('.');
+      it('omits the rule from the README and does not try to update its non-existent rule doc', async function () {
+        await generate('.', { ignoreDeprecatedRules: true });
 
         expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
       });

@@ -36,6 +36,11 @@ export function run() {
       new Argument('[path]', 'path to ESLint plugin root').default('.')
     )
     .option(
+      '--ignore-deprecated-rules',
+      '(optional) Whether to ignore deprecated rules from being checked, displayed, or updated.',
+      false
+    )
+    .option(
       '--rule-doc-section-include <section>',
       '(optional) Required section in each rule doc (option can be repeated).',
       collect,
@@ -62,6 +67,7 @@ export function run() {
     .action(async function (
       path,
       options: {
+        ignoreDeprecatedRules?: boolean;
         ruleDocSectionInclude: string[];
         ruleDocSectionExclude: string[];
         ruleDocTitleFormat: RuleDocTitleFormat;
@@ -69,6 +75,7 @@ export function run() {
       }
     ) {
       await generate(path, {
+        ignoreDeprecatedRules: options.ignoreDeprecatedRules,
         ruleDocSectionInclude: options.ruleDocSectionInclude,
         ruleDocSectionExclude: options.ruleDocSectionExclude,
         ruleDocTitleFormat: options.ruleDocTitleFormat,
