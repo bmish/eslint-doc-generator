@@ -68,6 +68,7 @@ function expectSectionHeader(
 export async function generate(
   path: string,
   options?: {
+    ignoreDeprecatedRules?: boolean;
     ruleDocSectionInclude?: string[];
     ruleDocSectionExclude?: string[];
     ruleDocTitleFormat?: RuleDocTitleFormat;
@@ -88,8 +89,8 @@ export async function generate(
   }
 
   // Gather details about rules.
-  const details: RuleDetails[] = Object.entries(plugin.rules).map(
-    ([name, rule]): RuleDetails => {
+  const details: RuleDetails[] = Object.entries(plugin.rules)
+    .map(([name, rule]): RuleDetails => {
       return typeof rule === 'object'
         ? // Object-style rule.
           {
@@ -113,22 +114,20 @@ export async function generate(
             deprecated: false, // TODO: figure out how to access `deprecated` property that can be exported from function-style rules.
             schema: [], // TODO: figure out how to access `schema` property that can be exported from function-style rules.
           };
-    }
-  );
+    })
+    .filter(
+      // Filter out deprecated rules from being checked, displayed, or updated if the option is set.
+      (details) => !options?.ignoreDeprecatedRules || !details.deprecated
+    );
 
   // Update rule doc for each rule.
-  for (const { name, description, schema, deprecated } of details) {
+  for (const { name, description, schema } of details) {
     const pathToDoc = join(pathTo.docs, 'rules', `${name}.md`);
 
     if (!existsSync(pathToDoc)) {
-      if (deprecated) {
-        // Allow deprecated rules to forgo a rule doc file.
-        continue;
-      } else {
-        throw new Error(
-          `Could not find rule doc: ${relative(getPluginRoot(path), pathToDoc)}`
-        );
-      }
+      throw new Error(
+        `Could not find rule doc: ${relative(getPluginRoot(path), pathToDoc)}`
+      );
     }
 
     // Regenerate the header (title/notices) of each rule doc.

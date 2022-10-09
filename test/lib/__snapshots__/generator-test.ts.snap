@@ -190,14 +190,11 @@ exports[`generator #generate deprecated function-style rule generates the docume
 "
 `;
 
-exports[`generator #generate deprecated rule with no rule doc nor meta.docs updates the documentation 1`] = `
+exports[`generator #generate deprecated rule with no rule doc but --ignore-deprecated-rules omits the rule from the README and does not try to update its non-existent rule doc 1`] = `
 "<!-- begin rules list -->
 
-❌ Deprecated.
-
-| Rule                           | ❌  |
-| ------------------------------ | --- |
-| [no-foo](docs/rules/no-foo.md) | ❌  |
+| Rule |
+| ---- |
 
 <!-- end rules list -->"
 `;

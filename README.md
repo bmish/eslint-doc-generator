@@ -120,6 +120,7 @@ If you have any custom configs (besides `all`, `recommended`), you'll need to de
 
 | Name | Description |
 | --- | --- |
+| `--ignore-deprecated-rules` | (optional) Whether to ignore deprecated rules from being checked, displayed, or updated (default: `false`). |
 | `--rule-doc-section-include` | (optional) Required section in each rule doc (option can be repeated). |
 | `--rule-doc-section-exclude` | (optional) Disallowed section in each rule doc (option can be repeated). |
 | `--rule-doc-title-format` | (optional) The format to use for rule doc titles. Choices: `desc-parens-prefix-name` (default), `desc-parens-name`, `prefix-name`, `name`. |
