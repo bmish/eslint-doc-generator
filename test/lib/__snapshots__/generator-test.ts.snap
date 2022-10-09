@@ -557,6 +557,62 @@ details
 Long line that SHOULD NOT get wrapped by prettier since it's outside the header. Long line that SHOULD NOT get wrapped by prettier since it's outside the header."
 `;
 
+exports[`generator #generate with \`--url-configs\` option includes the config link 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+💼 [Configurations](http://example.com/configs) enabled in.
+
+| Rule                           | Description             | 💼                |
+| ------------------------------ | ----------------------- | ----------------- |
+| [no-bar](docs/rules/no-bar.md) | Description for no-bar. | ![customConfig][] |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅                |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate with \`--url-configs\` option includes the config link 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+✅ This rule is enabled in the \`recommended\` [config](http://example.com/configs).
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate with \`--url-configs\` option includes the config link 3`] = `
+"# Description for no-bar (\`test/no-bar\`)
+
+💼 This rule is enabled in the following [configs](http://example.com/configs): \`customConfig\`.
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate with \`--url-configs\` option with only recommended config includes the config link 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+✅ Enabled in the \`recommended\` [configuration](http://example.com/configs).
+
+| Rule                           | Description             | ✅  |
+| ------------------------------ | ----------------------- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅  |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate with \`--url-configs\` option with only recommended config includes the config link 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+✅ This rule is enabled in the \`recommended\` [config](http://example.com/configs).
+
+<!-- end rule header -->
+"
+`;
+
 exports[`generator #generate with no blank lines around comment markers generates the documentation 1`] = `
 "# Rules
 

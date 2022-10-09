@@ -116,6 +116,12 @@ If you have any custom configs (besides `all`, `recommended`), you'll need to de
 [npm-image]: https://badge.fury.io/js/eslint-doc-generator.svg
 [npm-url]: https://www.npmjs.com/package/eslint-doc-generator
 
+## Configuration options
+
+| Name | Description |
+| --- | --- |
+| `--url-configs` | (optional) Link to documentation about the ESLint configurations exported by the plugin. |
+
 ## Upcoming features
 
 - Custom config emojis ([#34](https://github.com/bmish/eslint-doc-generator/issues/34))

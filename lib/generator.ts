@@ -53,7 +53,10 @@ function expectSectionHeader(
   }
 }
 
-export async function generate(path: string) {
+export async function generate(
+  path: string,
+  options?: { urlConfigs?: string }
+) {
   const plugin = await loadPlugin(path);
   const pluginPrefix = getPluginPrefix(path);
   const configsToRules = await resolveConfigsToRules(plugin);
@@ -117,7 +120,8 @@ export async function generate(path: string) {
       name,
       plugin,
       configsToRules,
-      pluginPrefix
+      pluginPrefix,
+      options?.urlConfigs
     );
 
     const contents = readFileSync(pathToDoc).toString();
@@ -157,7 +161,8 @@ export async function generate(path: string) {
     plugin,
     configsToRules,
     pluginPrefix,
-    pathTo.readme
+    pathTo.readme,
+    options?.urlConfigs
   );
   writeFileSync(pathTo.readme, readme, 'utf8');
 }
