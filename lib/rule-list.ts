@@ -159,16 +159,17 @@ export async function updateRulesList(
   const columns = getColumns(details, plugin, configsToRules);
 
   // New legend.
-  const legend = await format(
-    generateLegend(columns, urlConfigs),
-    pathToReadme
-  );
+  const legend = generateLegend(columns, urlConfigs);
 
   // New rule list.
-  const list = await format(
-    generateRulesListMarkdown(columns, details, configsToRules, pluginPrefix),
-    pathToReadme
+  const list = generateRulesListMarkdown(
+    columns,
+    details,
+    configsToRules,
+    pluginPrefix
   );
 
-  return `${preList}${BEGIN_RULE_LIST_MARKER}\n\n${legend}\n${list}\n${END_RULE_LIST_MARKER}${postList}`;
+  const newContent = await format(`${legend}\n\n${list}`, pathToReadme);
+
+  return `${preList}${BEGIN_RULE_LIST_MARKER}\n\n${newContent}\n\n${END_RULE_LIST_MARKER}${postList}`;
 }

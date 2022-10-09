@@ -3,7 +3,6 @@
 exports[`generator #generate CJS (non-ESM) generates the documentation 1`] = `
 "<!-- begin rules list -->
 
-
 | Rule                           | Description   |
 | ------------------------------ | ------------- |
 | [no-foo](docs/rules/no-foo.md) | disallow foo. |
@@ -24,7 +23,6 @@ exports[`generator #generate Missing plugin package.json throws an error 1`] = `
 
 exports[`generator #generate No configs found omits the config column 1`] = `
 "<!-- begin rules list -->
-
 
 | Rule                           | Description   |
 | ------------------------------ | ------------- |
@@ -51,7 +49,6 @@ Foo.
 
 ## Rules
 <!-- begin rules list -->
-
 
 | Rule                           | Description            |
 | ------------------------------ | ---------------------- |
@@ -344,7 +341,6 @@ exports[`generator #generate no rules with description generates the documentati
 "## Rules
 <!-- begin rules list -->
 
-
 | Rule                           |
 | ------------------------------ |
 | [no-foo](docs/rules/no-foo.md) |
@@ -363,7 +359,6 @@ exports[`generator #generate no rules with description generates the documentati
 exports[`generator #generate one rule missing description generates the documentation 1`] = `
 "## Rules
 <!-- begin rules list -->
-
 
 | Rule                           | Description             |
 | ------------------------------ | ----------------------- |

@@ -5,7 +5,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
 import { jest } from '@jest/globals';
-import prettier from 'prettier'; // eslint-disable-line node/no-extraneous-import -- prettier is included by eslint-plugin-square
+import prettier from 'prettier';
 import * as sinon from 'sinon';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

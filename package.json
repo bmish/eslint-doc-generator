@@ -74,7 +74,8 @@
     "typescript": "^4.8.4"
   },
   "peerDependencies": {
-    "eslint": ">= 7"
+    "eslint": ">= 7",
+    "prettier": ">= 2"
   },
   "engines": {
     "node": "^14.18.0 || ^16.0.0 || >=18.0.0"
