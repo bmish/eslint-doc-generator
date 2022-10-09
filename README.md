@@ -128,7 +128,6 @@ If you have any custom configs (besides `all`, `recommended`), you'll need to de
 ## Upcoming features
 
 - Custom config emojis ([#34](https://github.com/bmish/eslint-doc-generator/issues/34))
-- Configurable rule doc section consistency checks ([#36](https://github.com/bmish/eslint-doc-generator/issues/36))
 
 ## Related
 
