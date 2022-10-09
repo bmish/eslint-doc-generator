@@ -1,9 +1,10 @@
 import type { Plugin, ConfigsToRules } from './types.js';
 
-export function hasCustomConfigs(plugin: Plugin) {
+export function hasCustomConfigs(plugin: Plugin, ignoreConfig?: string[]) {
   return Object.keys(plugin.configs || {}).some(
-    // Ignore the common configs.
-    (configName) => !['all', 'recommended'].includes(configName)
+    // Consider a config custom if not-recommended and not ignored.
+    (configName) =>
+      configName !== 'recommended' && !ignoreConfig?.includes(configName)
   );
 }
 

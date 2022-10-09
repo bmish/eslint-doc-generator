@@ -68,6 +68,7 @@ function expectSectionHeader(
 export async function generate(
   path: string,
   options?: {
+    ignoreConfig?: string[];
     ignoreDeprecatedRules?: boolean;
     ruleDocSectionInclude?: string[];
     ruleDocSectionExclude?: string[];
@@ -137,6 +138,7 @@ export async function generate(
       plugin,
       configsToRules,
       pluginPrefix,
+      options?.ignoreConfig,
       options?.ruleDocTitleFormat,
       options?.urlConfigs
     );
@@ -189,6 +191,7 @@ export async function generate(
     configsToRules,
     pluginPrefix,
     pathTo.readme,
+    options?.ignoreConfig,
     options?.urlConfigs
   );
   writeFileSync(pathTo.readme, readme, 'utf8');

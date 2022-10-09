@@ -15,13 +15,14 @@ import type { Plugin, RuleDetails, ConfigsToRules } from './types.js';
 function getConfigurationColumnValueForRule(
   rule: RuleDetails,
   configsToRules: ConfigsToRules,
-  pluginPrefix: string
+  pluginPrefix: string,
+  ignoreConfig?: string[]
 ): string {
   const badges: string[] = [];
   const configs = getConfigsForRule(rule.name, configsToRules, pluginPrefix);
   for (const configName of configs) {
-    if (configName === 'all') {
-      // Ignore any config named `all` as it's not helpful to include it for every rule.
+    if (ignoreConfig?.includes(configName)) {
+      // Ignore config.
       continue;
     }
     // Use the standard `recommended` emoji for that config.
@@ -40,7 +41,8 @@ function buildRuleRow(
   rule: RuleDetails,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
-  includeTypesColumn: boolean
+  includeTypesColumn: boolean,
+  ignoreConfig?: string[]
 ): string[] {
   const columns: string[] = [];
   if (columnsEnabled[COLUMN_TYPE.NAME]) {
@@ -55,7 +57,12 @@ function buildRuleRow(
     hasAnyConfigs(configsToRules)
   ) {
     columns.push(
-      getConfigurationColumnValueForRule(rule, configsToRules, pluginPrefix)
+      getConfigurationColumnValueForRule(
+        rule,
+        configsToRules,
+        pluginPrefix,
+        ignoreConfig
+      )
     );
   }
   if (columnsEnabled[COLUMN_TYPE.FIXABLE]) {
@@ -80,7 +87,8 @@ function generateRulesListMarkdown(
   columns: Record<COLUMN_TYPE, boolean>,
   details: RuleDetails[],
   configsToRules: ConfigsToRules,
-  pluginPrefix: string
+  pluginPrefix: string,
+  ignoreConfig?: string[]
 ): string {
   // Since such rules are rare, we'll only include the types column if at least one rule requires type checking.
   const includeTypesColumn = details.some(
@@ -106,7 +114,8 @@ function generateRulesListMarkdown(
           rule,
           configsToRules,
           pluginPrefix,
-          includeTypesColumn
+          includeTypesColumn,
+          ignoreConfig
         )
       ),
   ]
@@ -121,6 +130,7 @@ export async function updateRulesList(
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   pathToReadme: string,
+  ignoreConfig?: string[],
   urlConfigs?: string
 ): Promise<string> {
   let listStartIndex = markdown.indexOf(BEGIN_RULE_LIST_MARKER);
@@ -156,7 +166,7 @@ export async function updateRulesList(
   const postList = markdown.slice(Math.max(0, listEndIndex));
 
   // Determine columns to include in the rules list.
-  const columns = getColumns(details, plugin, configsToRules);
+  const columns = getColumns(details, plugin, configsToRules, ignoreConfig);
 
   // New legend.
   const legend = generateLegend(columns, urlConfigs);
@@ -166,7 +176,8 @@ export async function updateRulesList(
     columns,
     details,
     configsToRules,
-    pluginPrefix
+    pluginPrefix,
+    ignoreConfig
   );
 
   const newContent = await format(`${legend}\n\n${list}`, pathToReadme);

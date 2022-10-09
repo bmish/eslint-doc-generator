@@ -82,13 +82,13 @@ exports[`generator #generate Scoped plugin name determines the correct plugin pr
 exports[`generator #generate adds extra column to rules table for TypeScript rules updates the documentation 1`] = `
 "<!-- begin rules list -->
 
-✅ Enabled in the \`recommended\` configuration.\\
+💼 Configurations enabled in.\\
 💭 Requires type information.
 
-| Rule                           | Description            | ✅  | 💭  |
-| ------------------------------ | ---------------------- | --- | --- |
-| [no-bar](docs/rules/no-bar.md) | Description of no-bar. |     | 💭  |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |     |
+| Rule                           | Description            | 💼       | 💭  |
+| ------------------------------ | ---------------------- | -------- | --- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. |          | 💭  |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ![all][] |     |
 
 <!-- end rules list -->"
 `;
@@ -474,11 +474,11 @@ Description.
 🔧 Fixable with [\`eslint --fix\`](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
 💡 Provides editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
-| Rule                           | Description            | 💼         | 🔧  | 💡  |
-| ------------------------------ | ---------------------- | ---------- | --- | --- |
-| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | ![style][] | 🔧  |     |
-| [no-baz](docs/rules/no-baz.md) | Description of no-boz. |            |     |     |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅         | 🔧  | 💡  |
+| Rule                           | Description            | 💼                  | 🔧  | 💡  |
+| ------------------------------ | ---------------------- | ------------------- | --- | --- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | ![all][] ![style][] | 🔧  |     |
+| [no-baz](docs/rules/no-baz.md) | Description of no-boz. |                     |     |     |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ![all][] ✅         | 🔧  | 💡  |
 
 <!-- end rules list -->
 more content."
@@ -524,13 +524,12 @@ details"
 exports[`generator #generate uses prettier config from package.json should wrap prose in rule doc header to just 20 chars 1`] = `
 "<!-- begin rules list -->
 
-✅ Enabled in the
-\`recommended\`
-configuration.
+💼 Configurations
+enabled in.
 
-| Rule                           | Description            | ✅  |
-| ------------------------------ | ---------------------- | --- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |
+| Rule                           | Description            | 💼       |
+| ------------------------------ | ---------------------- | -------- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ![all][] |
 
 <!-- end rules list -->"
 `;
@@ -635,6 +634,29 @@ exports[`generator #generate with \`--url-configs\` option with only recommended
 "# Description for no-foo (\`test/no-foo\`)
 
 ✅ This rule is enabled in the \`recommended\` [config](http://example.com/configs).
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate with --ignore-config hides the ignored config 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+✅ Enabled in the \`recommended\` configuration.
+
+| Rule                           | Description             | ✅  |
+| ------------------------------ | ----------------------- | --- |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅  |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate with --ignore-config hides the ignored config 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+✅ This rule is enabled in the \`recommended\` config.
 
 <!-- end rule header -->
 "
