@@ -45,18 +45,34 @@ function expectSectionHeader(
     findSectionHeader(contents, header)
   );
   if (found !== expected) {
-    console.error(
-      `\`${ruleName}\` rule doc should ${expected ? '' : 'not '}have included ${
-        expected ? 'one' : 'any'
-      } of these headers: ${possibleHeaders.join(', ')}`
-    );
+    if (possibleHeaders.length > 1) {
+      console.error(
+        `\`${ruleName}\` rule doc should ${
+          expected ? '' : 'not '
+        }have included ${
+          expected ? 'one' : 'any'
+        } of these headers: ${possibleHeaders.join(', ')}`
+      );
+    } else {
+      console.error(
+        `\`${ruleName}\` rule doc should ${
+          expected ? '' : 'not '
+        }have included the header: ${possibleHeaders.join(', ')}`
+      );
+    }
+
     process.exitCode = 1;
   }
 }
 
 export async function generate(
   path: string,
-  options?: { ruleDocTitleFormat?: RuleDocTitleFormat; urlConfigs?: string }
+  options?: {
+    ruleDocSectionInclude?: string[];
+    ruleDocSectionExclude?: string[];
+    ruleDocTitleFormat?: RuleDocTitleFormat;
+    urlConfigs?: string;
+  }
 ) {
   const plugin = await loadPlugin(path);
   const pluginPrefix = getPluginPrefix(path);
@@ -137,6 +153,16 @@ export async function generate(
     writeFileSync(pathToDoc, contentsNew);
 
     // Check for potential issues with the rule doc.
+
+    // Check for required sections.
+    for (const section of options?.ruleDocSectionInclude || []) {
+      expectSectionHeader(name, contents, [section], true);
+    }
+
+    // Check for disallowed sections.
+    for (const section of options?.ruleDocSectionExclude || []) {
+      expectSectionHeader(name, contents, [section], false);
+    }
 
     // Options section.
     expectSectionHeader(
