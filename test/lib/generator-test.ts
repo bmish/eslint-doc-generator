@@ -1,7 +1,7 @@
 import { generate } from '../../lib/generator.js';
 import mockFs from 'mock-fs';
 import { outdent } from 'outdent';
-import { dirname, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
 import { jest } from '@jest/globals';
@@ -374,6 +374,47 @@ describe('generator', function () {
         await generate('.');
 
         expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('missing rule doc', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: { },
+                  create(context) {}
+                },
+              },
+            };`,
+
+          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('throws an error', async function () {
+        // Use join to handle both Windows and Unix paths.
+        await expect(generate('.')).rejects.toThrow(
+          `Could not find rule doc: ${join('docs', 'rules', 'no-foo.md')}`
+        );
       });
     });
 

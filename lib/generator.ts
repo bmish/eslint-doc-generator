@@ -1,7 +1,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { join, resolve, relative } from 'node:path';
 import { getAllNamedOptions, hasOptions } from './rule-options.js';
-import { loadPlugin, getPluginPrefix } from './package-json.js';
+import { loadPlugin, getPluginPrefix, getPluginRoot } from './package-json.js';
 import { updateRulesList } from './rule-list.js';
 import { generateRuleHeaderLines } from './rule-notices.js';
 import { END_RULE_HEADER_MARKER } from './markers.js';
@@ -100,9 +100,15 @@ export async function generate(path: string) {
   for (const { name, description, schema, deprecated } of details) {
     const pathToDoc = join(pathTo.docs, 'rules', `${name}.md`);
 
-    if (deprecated && !existsSync(pathToDoc)) {
-      // Allow deprecated rules to forgo a rule doc file.
-      continue;
+    if (!existsSync(pathToDoc)) {
+      if (deprecated) {
+        // Allow deprecated rules to forgo a rule doc file.
+        continue;
+      } else {
+        throw new Error(
+          `Could not find rule doc: ${relative(getPluginRoot(path), pathToDoc)}`
+        );
+      }
     }
 
     // Regenerate the header (title/notices) of each rule doc.

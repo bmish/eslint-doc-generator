@@ -4,7 +4,7 @@ import { importAbs } from './import.js';
 import type { Plugin } from './types.js';
 import type { PackageJson } from 'type-fest';
 
-function getPluginRoot(path: string) {
+export function getPluginRoot(path: string) {
   return join(process.cwd(), path);
 }
 
