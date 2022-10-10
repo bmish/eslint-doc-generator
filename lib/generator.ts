@@ -73,6 +73,7 @@ function expectSectionHeader(
 export async function generate(
   path: string,
   options?: {
+    check?: boolean;
     ignoreConfig?: string[];
     ignoreDeprecatedRules?: boolean;
     ruleDocSectionExclude?: string[];
@@ -151,7 +152,19 @@ export async function generate(
       pathToDoc
     );
 
-    writeFileSync(pathToDoc, contentsNew);
+    if (options?.check) {
+      if (contentsNew !== contents) {
+        console.error(
+          `Please run eslint-doc-generator. A rule doc is out-of-date: ${relative(
+            getPluginRoot(path),
+            pathToDoc
+          )}`
+        );
+        process.exitCode = 1;
+      }
+    } else {
+      writeFileSync(pathToDoc, contentsNew);
+    }
 
     // Check for potential issues with the rule doc.
 
@@ -184,9 +197,10 @@ export async function generate(
   }
 
   // Update the rules list in the README.
-  const readme = await updateRulesList(
+  const readmeContents = readFileSync(pathToReadme, 'utf8');
+  const readmeContentsNew = await updateRulesList(
     details,
-    readFileSync(pathToReadme, 'utf8'),
+    readmeContents,
     plugin,
     configsToRules,
     pluginPrefix,
@@ -195,5 +209,18 @@ export async function generate(
     options?.ignoreConfig,
     options?.urlConfigs
   );
-  writeFileSync(pathToReadme, readme, 'utf8');
+
+  if (options?.check) {
+    if (readmeContentsNew !== readmeContents) {
+      console.error(
+        `Please run eslint-doc-generator. ${relative(
+          getPluginRoot(path),
+          pathToReadme
+        )} is out-of-date.`
+      );
+      process.exitCode = 1;
+    }
+  } else {
+    writeFileSync(pathToReadme, readmeContentsNew, 'utf8');
+  }
 }

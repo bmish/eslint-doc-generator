@@ -656,6 +656,13 @@ exports[`generator #generate with \`--url-configs\` option with only recommended
 "
 `;
 
+exports[`generator #generate with --check prints the issues, exits with failure, and does not write changes 1`] = `
+"## Rules
+"
+`;
+
+exports[`generator #generate with --check prints the issues, exits with failure, and does not write changes 2`] = `""`;
+
 exports[`generator #generate with --ignore-config hides the ignored config 1`] = `
 "## Rules
 <!-- begin rules list -->
