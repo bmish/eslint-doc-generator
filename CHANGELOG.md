@@ -12,6 +12,16 @@
 
 
 
+
+## v0.8.1 (2022-10-10)
+
+#### :bug: Bug Fix
+* [#106](https://github.com/bmish/eslint-doc-generator/pull/106) Handle lowercase `readme.md` ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.8.0 (2022-10-09)
 
 #### :rocket: Enhancement
