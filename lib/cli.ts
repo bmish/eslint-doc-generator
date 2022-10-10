@@ -41,6 +41,12 @@ export function run() {
       false
     )
     .option(
+      '--config-emoji <config-emoji>',
+      '(optional) Custom emoji to use for a config. Defaults to `recommended,✅`. Configs for which no emoji is specified will expect a corresponding badge to be specified in `README.md` instead. Option can be repeated.',
+      collect,
+      []
+    )
+    .option(
       '--ignore-config <config>',
       '(optional) Config to ignore from being displayed (often used for an `all` config) (option can be repeated).',
       collect,
@@ -79,6 +85,7 @@ export function run() {
       path,
       options: {
         check?: boolean;
+        configEmoji?: string[];
         ignoreConfig: string[];
         ignoreDeprecatedRules?: boolean;
         ruleDocSectionExclude: string[];
@@ -89,6 +96,7 @@ export function run() {
     ) {
       await generate(path, {
         check: options.check,
+        configEmoji: options.configEmoji,
         ignoreConfig: options.ignoreConfig,
         ignoreDeprecatedRules: options.ignoreDeprecatedRules,
         ruleDocSectionExclude: options.ruleDocSectionExclude,

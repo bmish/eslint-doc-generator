@@ -481,6 +481,7 @@ Description.
 <!-- begin rules list -->
 
 💼 Configurations enabled in.\\
+✅ Enabled in the \`recommended\` configuration.\\
 🔧 Automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
 💡 Manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
@@ -497,7 +498,7 @@ more content."
 exports[`generator #generate successful updates the documentation 2`] = `
 "# Description of no-foo (\`test/no-foo\`)
 
-💼 This rule is enabled in the following configs: \`all\`, \`recommended\`.
+💼 This rule is enabled in the following configs: \`all\`, ✅ \`recommended\`.
 
 🔧 This rule is automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
@@ -548,9 +549,8 @@ exports[`generator #generate uses prettier config from package.json should wrap 
 "# Description of no-foo (\`test/no-foo\`)
 
 💼 This rule is
-enabled in the
-following configs:
-\`all\`.
+enabled in the \`all\`
+config.
 
 <!-- end rule header -->
 ## Rule details
@@ -604,7 +604,8 @@ exports[`generator #generate with \`--url-configs\` option includes the config l
 "## Rules
 <!-- begin rules list -->
 
-💼 [Configurations](http://example.com/configs) enabled in.
+💼 [Configurations](http://example.com/configs) enabled in.\\
+✅ Enabled in the \`recommended\` [configuration](http://example.com/configs).
 
 | Name                           | Description             | 💼                |
 | :----------------------------- | :---------------------- | :---------------- |
@@ -627,7 +628,7 @@ exports[`generator #generate with \`--url-configs\` option includes the config l
 exports[`generator #generate with \`--url-configs\` option includes the config link 3`] = `
 "# Description for no-bar (\`test/no-bar\`)
 
-💼 This rule is enabled in the following [configs](http://example.com/configs): \`customConfig\`.
+💼 This rule is enabled in the \`customConfig\` [config](http://example.com/configs).
 
 <!-- end rule header -->
 "
@@ -662,6 +663,51 @@ exports[`generator #generate with --check prints the issues, exits with failure,
 `;
 
 exports[`generator #generate with --check prints the issues, exits with failure, and does not write changes 2`] = `""`;
+
+exports[`generator #generate with --config-emoji shows the correct emojis 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+💼 Configurations enabled in.\\
+🔥 Enabled in the \`recommended\` configuration.\\
+🎨 Enabled in the \`stylistic\` configuration.
+
+| Name                           | Description             | 💼                         |
+| :----------------------------- | :---------------------- | :------------------------- |
+| [no-bar](docs/rules/no-bar.md) | Description for no-bar. | 🔥 🎨                      |
+| [no-baz](docs/rules/no-baz.md) | Description for no-boz. | ![configWithoutEmoji][] 🎨 |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | 🔥                         |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate with --config-emoji shows the correct emojis 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+🔥 This rule is enabled in the \`recommended\` config.
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate with --config-emoji shows the correct emojis 3`] = `
+"# Description for no-bar (\`test/no-bar\`)
+
+💼 This rule is enabled in the following configs: 🔥 \`recommended\`, 🎨 \`stylistic\`.
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate with --config-emoji shows the correct emojis 4`] = `
+"# Description for no-boz (\`test/no-baz\`)
+
+💼 This rule is enabled in the following configs: \`configWithoutEmoji\`, 🎨 \`stylistic\`.
+
+<!-- end rule header -->
+"
+`;
 
 exports[`generator #generate with --ignore-config hides the ignored config 1`] = `
 "## Rules

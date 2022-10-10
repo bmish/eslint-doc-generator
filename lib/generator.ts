@@ -13,6 +13,7 @@ import { END_RULE_HEADER_MARKER } from './markers.js';
 import { findSectionHeader, replaceOrCreateHeader } from './markdown.js';
 import { resolveConfigsToRules } from './config-resolution.js';
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
+import { parseConfigEmojiOptions } from './configs.js';
 import type { RuleDetails } from './types.js';
 
 /**
@@ -74,6 +75,7 @@ export async function generate(
   path: string,
   options?: {
     check?: boolean;
+    configEmoji?: string[];
     ignoreConfig?: string[];
     ignoreDeprecatedRules?: boolean;
     ruleDocSectionExclude?: string[];
@@ -122,6 +124,10 @@ export async function generate(
       (details) => !options?.ignoreDeprecatedRules || !details.deprecated
     );
 
+  // Options.
+  const configEmojis = parseConfigEmojiOptions(plugin, options?.configEmoji);
+  const ignoreConfig = options?.ignoreConfig ?? [];
+
   // Update rule doc for each rule.
   for (const { name, description, schema } of details) {
     const pathToDoc = join(resolve(path, 'docs'), 'rules', `${name}.md`);
@@ -139,7 +145,8 @@ export async function generate(
       plugin,
       configsToRules,
       pluginPrefix,
-      options?.ignoreConfig,
+      configEmojis,
+      ignoreConfig,
       options?.ruleDocTitleFormat,
       options?.urlConfigs
     );
@@ -206,7 +213,8 @@ export async function generate(
     pluginPrefix,
     pathToReadme,
     path,
-    options?.ignoreConfig,
+    configEmojis,
+    ignoreConfig,
     options?.urlConfigs
   );
 

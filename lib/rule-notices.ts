@@ -4,10 +4,14 @@ import {
   EMOJI_FIXABLE,
   EMOJI_HAS_SUGGESTIONS,
   EMOJI_CONFIGS,
-  EMOJI_CONFIG_RECOMMENDED,
 } from './emojis.js';
-import { getConfigsForRule, configNamesToList } from './configs.js';
-import type { RuleModule, Plugin, ConfigsToRules } from './types.js';
+import { getConfigsForRule } from './configs.js';
+import type {
+  RuleModule,
+  Plugin,
+  ConfigsToRules,
+  ConfigEmojis,
+} from './types.js';
 import {
   RuleDocTitleFormat,
   RULE_DOC_TITLE_FORMAT_DEFAULT,
@@ -15,26 +19,84 @@ import {
 
 enum MESSAGE_TYPE {
   CONFIGS = 'configs',
-  CONFIG_RECOMMENDED = 'configRecommended',
   DEPRECATED = 'deprecated',
   FIXABLE = 'fixable',
   HAS_SUGGESTIONS = 'hasSuggestions',
 }
 
-function getMessages(urlConfigs?: string) {
-  const configsLinkOrWord = urlConfigs ? `[configs](${urlConfigs})` : 'configs';
-  const configLinkOrWord = urlConfigs ? `[config](${urlConfigs})` : 'config';
-  const MESSAGES: {
-    [key in MESSAGE_TYPE]: string;
-  } = {
-    [MESSAGE_TYPE.CONFIGS]: `${EMOJI_CONFIGS} This rule is enabled in the following ${configsLinkOrWord}:`,
-    [MESSAGE_TYPE.CONFIG_RECOMMENDED]: `${EMOJI_CONFIG_RECOMMENDED} This rule is enabled in the \`recommended\` ${configLinkOrWord}.`,
-    [MESSAGE_TYPE.DEPRECATED]: `${EMOJI_DEPRECATED} This rule is deprecated.`,
-    [MESSAGE_TYPE.FIXABLE]: `${EMOJI_FIXABLE} This rule is automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).`,
-    [MESSAGE_TYPE.HAS_SUGGESTIONS]: `${EMOJI_HAS_SUGGESTIONS} This rule is manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`,
-  };
-  return MESSAGES;
-}
+/**
+ * An object containing the text for each notice type (as a string or function to generate the string).
+ */
+const RULE_NOTICES: {
+  [key in MESSAGE_TYPE]:
+    | string
+    | ((data: {
+        configsEnabled: string[];
+        configEmojis: ConfigEmojis;
+        urlConfigs?: string;
+        replacedBy: readonly string[] | undefined;
+      }) => string);
+} = {
+  // Configs notice varies based on whether the rule is enabled in one or more configs.
+  [MESSAGE_TYPE.CONFIGS]: ({
+    configsEnabled,
+    configEmojis,
+    urlConfigs,
+  }: {
+    configsEnabled?: string[];
+    configEmojis: ConfigEmojis;
+    urlConfigs?: string;
+  }) => {
+    // Add link to configs documentation if provided.
+    const configsLinkOrWord = urlConfigs
+      ? `[configs](${urlConfigs})`
+      : 'configs';
+    const configLinkOrWord = urlConfigs ? `[config](${urlConfigs})` : 'config';
+
+    /* istanbul ignore next -- this shouldn't happen */
+    if (!configsEnabled || configsEnabled.length === 0) {
+      throw new Error(
+        'Should not be trying to display config notice for rule not enabled in any configs.'
+      );
+    }
+
+    if (configsEnabled.length > 1) {
+      // Rule is enabled in multiple configs.
+      const configs = configsEnabled
+        .map((configEnabled) => {
+          const emoji = configEmojis?.find(
+            (configEmoji) => configEmoji.config === configEnabled
+          )?.emoji;
+          return `${emoji ? `${emoji} ` : ''}\`${configEnabled}\``;
+        })
+        .join(', ');
+      return `${EMOJI_CONFIGS} This rule is enabled in the following ${configsLinkOrWord}: ${configs}.`;
+    } else {
+      // Rule only enabled in one config.
+      const emoji =
+        configEmojis?.find(
+          (configEmoji) => configEmoji.config === configsEnabled?.[0]
+        )?.emoji ?? EMOJI_CONFIGS;
+      return `${emoji} This rule is enabled in the \`${configsEnabled?.[0]}\` ${configLinkOrWord}.`;
+    }
+  },
+
+  // Deprecated notice has optional "replaced by" rules list.
+  [MESSAGE_TYPE.DEPRECATED]: ({
+    replacedBy,
+  }: {
+    replacedBy?: readonly string[] | undefined;
+  }) =>
+    `${EMOJI_DEPRECATED} This rule is deprecated.${
+      replacedBy && replacedBy.length > 0
+        ? ` It was replaced by ${ruleNamesToList(replacedBy)}.`
+        : ''
+    }`,
+
+  // Simple strings.
+  [MESSAGE_TYPE.FIXABLE]: `${EMOJI_FIXABLE} This rule is automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).`,
+  [MESSAGE_TYPE.HAS_SUGGESTIONS]: `${EMOJI_HAS_SUGGESTIONS} This rule is manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`,
+};
 
 /**
  * Convert list of rule names to string list of links.
@@ -52,11 +114,7 @@ function getNoticesForRule(rule: RuleModule, configsEnabled: string[]) {
   const notices: {
     [key in MESSAGE_TYPE]: boolean;
   } = {
-    [MESSAGE_TYPE.CONFIGS]:
-      configsEnabled.length > 1 ||
-      (configsEnabled.length === 1 && configsEnabled[0] !== 'recommended'),
-    [MESSAGE_TYPE.CONFIG_RECOMMENDED]:
-      configsEnabled.length === 1 && configsEnabled[0] === 'recommended',
+    [MESSAGE_TYPE.CONFIGS]: configsEnabled.length > 0,
     [MESSAGE_TYPE.DEPRECATED]: rule.meta.deprecated || false,
     [MESSAGE_TYPE.FIXABLE]: Boolean(rule.meta.fixable),
     [MESSAGE_TYPE.HAS_SUGGESTIONS]: rule.meta.hasSuggestions || false,
@@ -73,7 +131,8 @@ function getRuleNoticeLines(
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
-  ignoreConfig?: string[],
+  configEmojis: ConfigEmojis,
+  ignoreConfig: string[],
   urlConfigs?: string
 ) {
   const lines: string[] = [];
@@ -109,29 +168,17 @@ function getRuleNoticeLines(
 
     lines.push(''); // Blank line first.
 
-    const MESSAGES = getMessages(urlConfigs);
-    if (messageType === MESSAGE_TYPE.CONFIGS) {
-      // This notice should have a list of the rule's configs.
-      const message = `${MESSAGES[MESSAGE_TYPE.CONFIGS]} ${configNamesToList(
-        configsEnabled
-      )}.`;
-
-      lines.push(message);
-    } else if (messageType === MESSAGE_TYPE.DEPRECATED) {
-      // This notice should include links to the replacement rule(s) if available.
-      const message =
-        typeof rule === 'object' &&
-        Array.isArray(rule.meta.replacedBy) &&
-        rule.meta.replacedBy.length > 0
-          ? `${MESSAGES[messageType]} It was replaced by ${ruleNamesToList(
-              rule.meta.replacedBy
-            )}.`
-          : MESSAGES[messageType];
-
-      lines.push(message);
-    } else {
-      lines.push(MESSAGES[messageType]);
-    }
+    const ruleNoticeStrOrFn = RULE_NOTICES[messageType];
+    lines.push(
+      typeof ruleNoticeStrOrFn === 'function'
+        ? ruleNoticeStrOrFn({
+            configsEnabled,
+            configEmojis,
+            urlConfigs,
+            replacedBy: rule.meta.replacedBy,
+          })
+        : ruleNoticeStrOrFn
+    );
   }
 
   return lines;
@@ -192,7 +239,8 @@ export function generateRuleHeaderLines(
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
-  ignoreConfig?: string[],
+  configEmojis: ConfigEmojis,
+  ignoreConfig: string[],
   ruleDocTitleFormat?: RuleDocTitleFormat,
   urlConfigs?: string
 ): string {
@@ -203,6 +251,7 @@ export function generateRuleHeaderLines(
       plugin,
       configsToRules,
       pluginPrefix,
+      configEmojis,
       ignoreConfig,
       urlConfigs
     ),
