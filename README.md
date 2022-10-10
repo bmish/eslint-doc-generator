@@ -94,7 +94,7 @@ Generated rules table in `README.md` (everything between the marker comments):
 💭 Requires type information.\
 ❌ Deprecated.
 
-| Rule                                                           | Description                                       | ✅  | 🔧  | 💡  | 💭  |
+| Name                                                           | Description                                       | ✅  | 🔧  | 💡  | 💭  |
 | :------------------------------------------------------------- | :------------------------------------------------ | :-- | :-- | :-- | :-- |
 | [max-nested-describe](docs/rules/max-nested-describe.md)       | Enforces a maximum depth to nested describe calls |     |     |     |     |
 | [no-alias-methods](docs/rules/no-alias-methods.md)             | Disallow alias methods                            | ✅  | 🔧  |     |     |
