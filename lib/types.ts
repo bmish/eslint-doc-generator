@@ -23,3 +23,8 @@ export interface RuleDetails {
   deprecated: boolean;
   schema: JSONSchema.JSONSchema4;
 }
+
+/**
+ * Some configs may have an emoji defined.
+ */
+export type ConfigEmojis = { config: string; emoji: string }[];

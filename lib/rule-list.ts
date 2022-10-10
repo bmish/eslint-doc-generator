@@ -1,6 +1,5 @@
 import { BEGIN_RULE_LIST_MARKER, END_RULE_LIST_MARKER } from './markers.js';
 import {
-  EMOJI_CONFIG_RECOMMENDED,
   EMOJI_DEPRECATED,
   EMOJI_FIXABLE,
   EMOJI_HAS_SUGGESTIONS,
@@ -12,13 +11,19 @@ import { findSectionHeader, format } from './markdown.js';
 import { getPluginRoot } from './package-json.js';
 import { generateLegend } from './legend.js';
 import { relative } from 'node:path';
-import type { Plugin, RuleDetails, ConfigsToRules } from './types.js';
+import type {
+  Plugin,
+  RuleDetails,
+  ConfigsToRules,
+  ConfigEmojis,
+} from './types.js';
 
 function getConfigurationColumnValueForRule(
   rule: RuleDetails,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
-  ignoreConfig?: string[]
+  configEmojis: ConfigEmojis,
+  ignoreConfig: string[]
 ): string {
   const badges: string[] = [];
   const configs = getConfigsForRule(rule.name, configsToRules, pluginPrefix);
@@ -27,13 +32,11 @@ function getConfigurationColumnValueForRule(
       // Ignore config.
       continue;
     }
-    // Use the standard `recommended` emoji for that config.
-    // For other config names, the user can manually define a badge image.
-    badges.push(
-      configName === 'recommended'
-        ? EMOJI_CONFIG_RECOMMENDED
-        : `![${configName}][]`
-    );
+    // Find the emoji for the config or otherwise use a badge that can be defined in markdown.
+    const emoji = configEmojis?.find(
+      (configEmoji) => configEmoji.config === configName
+    )?.emoji;
+    badges.push(emoji ?? `![${configName}][]`);
   }
   return badges.join(' ');
 }
@@ -44,7 +47,8 @@ function buildRuleRow(
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   includeTypesColumn: boolean,
-  ignoreConfig?: string[]
+  configEmojis: ConfigEmojis,
+  ignoreConfig: string[]
 ): string[] {
   const columns: string[] = [];
   if (columnsEnabled[COLUMN_TYPE.NAME]) {
@@ -53,16 +57,13 @@ function buildRuleRow(
   if (columnsEnabled[COLUMN_TYPE.DESCRIPTION]) {
     columns.push(rule.description || '');
   }
-  if (
-    (columnsEnabled[COLUMN_TYPE.CONFIGS] ||
-      columnsEnabled[COLUMN_TYPE.CONFIG_RECOMMENDED]) &&
-    hasAnyConfigs(configsToRules)
-  ) {
+  if (columnsEnabled[COLUMN_TYPE.CONFIGS] && hasAnyConfigs(configsToRules)) {
     columns.push(
       getConfigurationColumnValueForRule(
         rule,
         configsToRules,
         pluginPrefix,
+        configEmojis,
         ignoreConfig
       )
     );
@@ -90,7 +91,8 @@ function generateRulesListMarkdown(
   details: RuleDetails[],
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
-  ignoreConfig?: string[]
+  configEmojis: ConfigEmojis,
+  ignoreConfig: string[]
 ): string {
   // Since such rules are rare, we'll only include the types column if at least one rule requires type checking.
   const includeTypesColumn = details.some(
@@ -102,7 +104,16 @@ function generateRulesListMarkdown(
     if (!enabled) {
       return [];
     }
-    return [COLUMN_HEADER[columnType]];
+    const headerStrOrFn = COLUMN_HEADER[columnType];
+    return [
+      typeof headerStrOrFn === 'function'
+        ? headerStrOrFn({
+            configNames: Object.keys(configsToRules),
+            configEmojis,
+            ignoreConfig,
+          })
+        : headerStrOrFn,
+    ];
   });
   const listSpacerRow = Array.from({ length: listHeaderRow.length }).fill(
     ':--'
@@ -119,6 +130,7 @@ function generateRulesListMarkdown(
           configsToRules,
           pluginPrefix,
           includeTypesColumn,
+          configEmojis,
           ignoreConfig
         )
       ),
@@ -135,7 +147,8 @@ export async function updateRulesList(
   pluginPrefix: string,
   pathToReadme: string,
   pathToPlugin: string,
-  ignoreConfig?: string[],
+  configEmojis: ConfigEmojis,
+  ignoreConfig: string[],
   urlConfigs?: string
 ): Promise<string> {
   let listStartIndex = markdown.indexOf(BEGIN_RULE_LIST_MARKER);
@@ -174,10 +187,16 @@ export async function updateRulesList(
   const postList = markdown.slice(Math.max(0, listEndIndex));
 
   // Determine columns to include in the rules list.
-  const columns = getColumns(details, plugin, configsToRules, ignoreConfig);
+  const columns = getColumns(details, configsToRules, ignoreConfig);
 
   // New legend.
-  const legend = generateLegend(columns, urlConfigs);
+  const legend = generateLegend(
+    columns,
+    plugin,
+    configEmojis,
+    ignoreConfig,
+    urlConfigs
+  );
 
   // New rule list.
   const list = generateRulesListMarkdown(
@@ -185,6 +204,7 @@ export async function updateRulesList(
     details,
     configsToRules,
     pluginPrefix,
+    configEmojis,
     ignoreConfig
   );
 

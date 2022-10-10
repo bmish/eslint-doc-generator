@@ -1,12 +1,5 @@
-import type { Plugin, ConfigsToRules } from './types.js';
-
-export function hasCustomConfigs(plugin: Plugin, ignoreConfig?: string[]) {
-  return Object.keys(plugin.configs || {}).some(
-    // Consider a config custom if not-recommended and not ignored.
-    (configName) =>
-      configName !== 'recommended' && !ignoreConfig?.includes(configName)
-  );
-}
+import { EMOJI_CONFIG_RECOMMENDED } from './emojis.js';
+import type { Plugin, ConfigsToRules, ConfigEmojis } from './types.js';
 
 export function hasAnyConfigs(configsToRules: ConfigsToRules) {
   return Object.keys(configsToRules).length > 0;
@@ -44,8 +37,37 @@ export function getConfigsForRule(
 }
 
 /**
- * Convert list of configs to string list of formatted names.
+ * Parse the options, check for errors, and set defaults.
  */
-export function configNamesToList(configNames: readonly string[]) {
-  return `\`${configNames.join('`, `')}\``;
+export function parseConfigEmojiOptions(
+  plugin: Plugin,
+  configEmoji?: string[]
+): ConfigEmojis {
+  const configEmojis =
+    configEmoji?.map((configEmojiItem) => {
+      const [config, emoji] = configEmojiItem.split(',');
+      if (!config || !emoji) {
+        throw new Error(
+          `Invalid configEmoji option: ${configEmojiItem}. Expected format: config,emoji`
+        );
+      }
+      if (plugin.configs?.[config] === undefined) {
+        throw new Error(
+          `Invalid configEmoji option: ${config} config not found.`
+        );
+      }
+      return { config, emoji };
+    }) || [];
+
+  // Add default emoji for the common `recommended` config.
+  if (
+    !configEmojis.some((configEmoji) => configEmoji.config === 'recommended')
+  ) {
+    configEmojis.push({
+      config: 'recommended',
+      emoji: EMOJI_CONFIG_RECOMMENDED,
+    });
+  }
+
+  return configEmojis;
 }

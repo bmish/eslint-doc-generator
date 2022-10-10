@@ -59,7 +59,7 @@ Generated content in a rule doc (everything above the marker comment):
 ```md
 # Disallow use of `foo` (`test/no-foo`)
 
-💼 This rule is enabled in the following configs: `all`, `recommended`.
+💼 This rule is enabled in the following configs: `all`, ✅ `recommended`.
 
 🔧 This rule is automatically fixable by the `--fix` [CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
@@ -107,25 +107,36 @@ Generated rules table in `README.md` (everything between the marker comments):
 
 The table will hide columns that don't apply to any rules, and the legend will include only the symbols that are used in the table.
 
-If you have any custom configs (besides `all`, `recommended`), you'll need to define a badge for them at the bottom of your `README.md`. Here's a badge for a custom `style` config that displays in blue:
+## Badge
+
+If you have any custom configs (besides `recommended`), you'll need to either define emojis for them with `--config-emoji`, or define badges for them at the bottom of your `README.md`.
+
+Here's a badge for a custom `style` config that displays in blue:
 
 ```md
 [style]: https://img.shields.io/badge/-style-blue.svg
 ```
 
-Custom config emojis will also be an option soon ([#34](https://github.com/bmish/eslint-doc-generator/issues/34)).
+And how it looks:
+
+![style][]
+
+[style]: https://img.shields.io/badge/-style-blue.svg
 
 ## Configuration options
 
 | Name | Description |
 | :-- | :-- |
 | `--check` | Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. |
-| `--ignore-config` | (optional) Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. |
-| `--ignore-deprecated-rules` | (optional) Whether to ignore deprecated rules from being checked, displayed, or updated (default: `false`). |
-| `--rule-doc-section-exclude` | (optional) Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. |
-| `--rule-doc-section-include` | (optional) Required section in each rule doc. Exit with failure if missing. Option can be repeated. |
-| `--rule-doc-title-format` | (optional) The format to use for rule doc titles. Defaults to `desc-parens-prefix-name`. See choices in below table. |
-| `--url-configs` | (optional) Link to documentation about the ESLint configurations exported by the plugin. |
+| `--config-emoji` | Custom emoji to use for a config. Defaults to `recommended,✅`. Configs for which no emoji is specified will expect a corresponding [badge](#badge) to be specified in `README.md` instead. Option can be repeated. |
+| `--ignore-config` | Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. |
+| `--ignore-deprecated-rules` | Whether to ignore deprecated rules from being checked, displayed, or updated (default: `false`). |
+| `--rule-doc-section-exclude` | Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. |
+| `--rule-doc-section-include` | Required section in each rule doc. Exit with failure if missing. Option can be repeated. |
+| `--rule-doc-title-format` | The format to use for rule doc titles. Defaults to `desc-parens-prefix-name`. See choices in below [table](#--rule-doc-title-format). |
+| `--url-configs` | Link to documentation about the ESLint configurations exported by the plugin. |
+
+All options are optional.
 
 ### `--rule-doc-title-format`
 
