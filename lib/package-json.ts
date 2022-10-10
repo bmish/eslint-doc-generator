@@ -1,5 +1,5 @@
-import { join } from 'node:path';
-import { existsSync, readFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { importAbs } from './import.js';
 import type { Plugin } from './types.js';
 import type { PackageJson } from 'type-fest';
@@ -43,4 +43,23 @@ export function getPluginPrefix(path: string): string {
   return pluginPackageJson.name.endsWith('/eslint-plugin')
     ? pluginPackageJson.name.split('/')[0] // Scoped plugin name like @my-scope/eslint-plugin.
     : pluginPackageJson.name.replace('eslint-plugin-', ''); // Unscoped name like eslint-plugin-foo.
+}
+
+/**
+ * Resolve the path to a file but with the exact filename-casing present on disk.
+ */
+export function getPathWithExactFileNameCasing(
+  dir: string,
+  fileNameToSearch: string
+) {
+  const filenames = readdirSync(dir, { withFileTypes: true });
+  for (const dirent of filenames) {
+    if (
+      dirent.isFile() &&
+      dirent.name.toLowerCase() === fileNameToSearch.toLowerCase()
+    ) {
+      return resolve(dir, dirent.name);
+    }
+  }
+  return undefined; // eslint-disable-line unicorn/no-useless-undefined
 }

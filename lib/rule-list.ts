@@ -9,7 +9,9 @@ import {
 import { getConfigsForRule, hasAnyConfigs } from './configs.js';
 import { COLUMN_TYPE, getColumns, COLUMN_HEADER } from './rule-list-columns.js';
 import { findSectionHeader, format } from './markdown.js';
+import { getPluginRoot } from './package-json.js';
 import { generateLegend } from './legend.js';
+import { relative } from 'node:path';
 import type { Plugin, RuleDetails, ConfigsToRules } from './types.js';
 
 function getConfigurationColumnValueForRule(
@@ -132,6 +134,7 @@ export async function updateRulesList(
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   pathToReadme: string,
+  pathToPlugin: string,
   ignoreConfig?: string[],
   urlConfigs?: string
 ): Promise<string> {
@@ -160,7 +163,10 @@ export async function updateRulesList(
 
   if (listStartIndex === -1 || listEndIndex === -1) {
     throw new Error(
-      `README.md is missing rules list markers: ${BEGIN_RULE_LIST_MARKER}${END_RULE_LIST_MARKER}`
+      `${relative(
+        getPluginRoot(pathToPlugin),
+        pathToReadme
+      )} is missing rules list markers: ${BEGIN_RULE_LIST_MARKER}${END_RULE_LIST_MARKER}`
     );
   }
 

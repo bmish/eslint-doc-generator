@@ -240,6 +240,16 @@ exports[`generator #generate deprecated rules updates the documentation 4`] = `
 "
 `;
 
+exports[`generator #generate lowercase README file generates the documentation 1`] = `
+"<!-- begin rules list -->
+
+| Name                           |
+| :----------------------------- |
+| [no-foo](docs/rules/no-foo.md) |
+
+<!-- end rules list -->"
+`;
+
 exports[`generator #generate no existing comment markers - minimal doc content generates the documentation 1`] = `
 "## Rules
 <!-- begin rules list -->

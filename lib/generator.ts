@@ -1,7 +1,12 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { join, resolve, relative } from 'node:path';
+import { join, relative, resolve } from 'node:path';
 import { getAllNamedOptions, hasOptions } from './rule-options.js';
-import { loadPlugin, getPluginPrefix, getPluginRoot } from './package-json.js';
+import {
+  loadPlugin,
+  getPluginPrefix,
+  getPluginRoot,
+  getPathWithExactFileNameCasing,
+} from './package-json.js';
 import { updateRulesList } from './rule-list.js';
 import { generateRuleHeaderLines } from './rule-notices.js';
 import { END_RULE_HEADER_MARKER } from './markers.js';
@@ -80,11 +85,6 @@ export async function generate(
   const pluginPrefix = getPluginPrefix(path);
   const configsToRules = await resolveConfigsToRules(plugin);
 
-  const pathTo = {
-    readme: resolve(path, 'README.md'),
-    docs: resolve(path, 'docs'),
-  };
-
   if (!plugin.rules) {
     throw new Error('Could not find exported `rules` object in ESLint plugin.');
   }
@@ -123,7 +123,7 @@ export async function generate(
 
   // Update rule doc for each rule.
   for (const { name, description, schema } of details) {
-    const pathToDoc = join(pathTo.docs, 'rules', `${name}.md`);
+    const pathToDoc = join(resolve(path, 'docs'), 'rules', `${name}.md`);
 
     if (!existsSync(pathToDoc)) {
       throw new Error(
@@ -177,22 +177,23 @@ export async function generate(
     }
   }
 
-  if (!existsSync(pathTo.readme)) {
-    throw new Error(
-      `Could not find README: ${relative(getPluginRoot(path), pathTo.readme)}`
-    );
+  // Find the README.
+  const pathToReadme = getPathWithExactFileNameCasing(path, 'README.md');
+  if (!pathToReadme || !existsSync(pathToReadme)) {
+    throw new Error('Could not find README.md in ESLint plugin root.');
   }
 
   // Update the rules list in the README.
   const readme = await updateRulesList(
     details,
-    readFileSync(pathTo.readme, 'utf8'),
+    readFileSync(pathToReadme, 'utf8'),
     plugin,
     configsToRules,
     pluginPrefix,
-    pathTo.readme,
+    pathToReadme,
+    path,
     options?.ignoreConfig,
     options?.urlConfigs
   );
-  writeFileSync(pathTo.readme, readme, 'utf8');
+  writeFileSync(pathToReadme, readme, 'utf8');
 }
