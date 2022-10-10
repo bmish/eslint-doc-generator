@@ -47,14 +47,14 @@ export function run() {
       false
     )
     .option(
-      '--rule-doc-section-include <section>',
-      '(optional) Required section in each rule doc (option can be repeated).',
+      '--rule-doc-section-exclude <section>',
+      '(optional) Disallowed section in each rule doc (option can be repeated).',
       collect,
       []
     )
     .option(
-      '--rule-doc-section-exclude <section>',
-      '(optional) Disallowed section in each rule doc (option can be repeated).',
+      '--rule-doc-section-include <section>',
+      '(optional) Required section in each rule doc (option can be repeated).',
       collect,
       []
     )
@@ -75,8 +75,8 @@ export function run() {
       options: {
         ignoreConfig: string[];
         ignoreDeprecatedRules?: boolean;
-        ruleDocSectionInclude: string[];
         ruleDocSectionExclude: string[];
+        ruleDocSectionInclude: string[];
         ruleDocTitleFormat: RuleDocTitleFormat;
         urlConfigs?: string;
       }
@@ -84,8 +84,8 @@ export function run() {
       await generate(path, {
         ignoreConfig: options.ignoreConfig,
         ignoreDeprecatedRules: options.ignoreDeprecatedRules,
-        ruleDocSectionInclude: options.ruleDocSectionInclude,
         ruleDocSectionExclude: options.ruleDocSectionExclude,
+        ruleDocSectionInclude: options.ruleDocSectionInclude,
         ruleDocTitleFormat: options.ruleDocTitleFormat,
         urlConfigs: options.urlConfigs,
       });
