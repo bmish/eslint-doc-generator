@@ -36,6 +36,11 @@ export function run() {
       new Argument('[path]', 'path to ESLint plugin root').default('.')
     )
     .option(
+      '--check',
+      '(optional) Whether to check for and fail if there is a diff. No output will be written. Typically used during CI.',
+      false
+    )
+    .option(
       '--ignore-config <config>',
       '(optional) Config to ignore from being displayed (often used for an `all` config) (option can be repeated).',
       collect,
@@ -73,6 +78,7 @@ export function run() {
     .action(async function (
       path,
       options: {
+        check?: boolean;
         ignoreConfig: string[];
         ignoreDeprecatedRules?: boolean;
         ruleDocSectionExclude: string[];
@@ -82,6 +88,7 @@ export function run() {
       }
     ) {
       await generate(path, {
+        check: options.check,
         ignoreConfig: options.ignoreConfig,
         ignoreDeprecatedRules: options.ignoreDeprecatedRules,
         ruleDocSectionExclude: options.ruleDocSectionExclude,

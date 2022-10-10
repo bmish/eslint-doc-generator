@@ -2288,5 +2288,59 @@ describe('generator', function () {
         expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
       });
     });
+
+    describe('with --check', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
+              },
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('prints the issues, exits with failure, and does not write changes', async function () {
+        const consoleErrorStub = sinon.stub(console, 'error');
+        await generate('.', { check: true });
+        expect(consoleErrorStub.callCount).toBe(2);
+        // Use join to handle both Windows and Unix paths.
+        expect(consoleErrorStub.firstCall.args).toStrictEqual([
+          `Please run eslint-doc-generator. A rule doc is out-of-date: ${join(
+            'docs',
+            'rules',
+            'no-foo.md'
+          )}`,
+        ]);
+        expect(consoleErrorStub.secondCall.args).toStrictEqual([
+          'Please run eslint-doc-generator. README.md is out-of-date.',
+        ]);
+        consoleErrorStub.restore();
+
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
   });
 });

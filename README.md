@@ -21,14 +21,14 @@ Install it:
 npm i --save-dev eslint-doc-generator
 ```
 
-Add it as as script in `package.json` (included as a lint script to demonstrate how we can ensure it passes and is up-to-date in CI):
+Add scripts to `package.json` (both a lint script to ensure everything is up-to-date in CI and an update script) (add any config options in the `update:eslint-docs` script):
 
 ```json
 {
   "scripts": {
     "lint": "npm-run-all \"lint:*\"",
     "lint:docs": "markdownlint \"**/*.md\"",
-    "lint:eslint-docs": "npm-run-all update:eslint-docs && git diff --exit-code",
+    "lint:eslint-docs": "npm-run-all \"update:eslint-docs --check\"",
     "lint:js": "eslint .",
     "update:eslint-docs": "eslint-doc-generator"
   }
@@ -119,6 +119,7 @@ Custom config emojis will also be an option soon ([#34](https://github.com/bmish
 
 | Name | Description |
 | :-- | :-- |
+| `--check` | Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. |
 | `--ignore-config` | (optional) Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. |
 | `--ignore-deprecated-rules` | (optional) Whether to ignore deprecated rules from being checked, displayed, or updated (default: `false`). |
 | `--rule-doc-section-exclude` | (optional) Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. |
