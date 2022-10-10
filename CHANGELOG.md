@@ -13,6 +13,20 @@
 
 
 
+
+## v0.9.0 (2022-10-10)
+
+#### :rocket: Enhancement
+* [#116](https://github.com/bmish/eslint-doc-generator/pull/116) Add `--config-emoji` option ([@bmish](https://github.com/bmish))
+* [#109](https://github.com/bmish/eslint-doc-generator/pull/109) Add `--check` option ([@bmish](https://github.com/bmish))
+
+#### :memo: Documentation
+* [#108](https://github.com/bmish/eslint-doc-generator/pull/108) Improve README especially about config options ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.8.1 (2022-10-10)
 
 #### :bug: Bug Fix
