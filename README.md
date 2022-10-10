@@ -46,7 +46,7 @@ Delete any old recommended/fixable/etc. notices from your rule docs. A new title
 
 ## Usage
 
-Run the script from `package.json`:
+Run the script from `package.json` to start out or any time you add a rule or update rule metadata in your plugin:
 
 ```sh
 npm run update:eslint-docs
@@ -113,25 +113,35 @@ If you have any custom configs (besides `all`, `recommended`), you'll need to de
 [style]: https://img.shields.io/badge/-style-blue.svg
 ```
 
-[npm-image]: https://badge.fury.io/js/eslint-doc-generator.svg
-[npm-url]: https://www.npmjs.com/package/eslint-doc-generator
+Custom config emojis will also be an option soon ([#34](https://github.com/bmish/eslint-doc-generator/issues/34)).
 
 ## Configuration options
 
 | Name | Description |
 | :-- | :-- |
-| `--ignore-config` | (optional) Config to ignore from being displayed (often used for an `all` config) (option can be repeated). |
+| `--ignore-config` | (optional) Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. |
 | `--ignore-deprecated-rules` | (optional) Whether to ignore deprecated rules from being checked, displayed, or updated (default: `false`). |
-| `--rule-doc-section-include` | (optional) Required section in each rule doc (option can be repeated). |
-| `--rule-doc-section-exclude` | (optional) Disallowed section in each rule doc (option can be repeated). |
-| `--rule-doc-title-format` | (optional) The format to use for rule doc titles. Choices: `desc-parens-prefix-name` (default), `desc`, `desc-parens-name`, `name`, `prefix-name`. |
+| `--rule-doc-section-exclude` | (optional) Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. |
+| `--rule-doc-section-include` | (optional) Required section in each rule doc. Exit with failure if missing. Option can be repeated. |
+| `--rule-doc-title-format` | (optional) The format to use for rule doc titles. Defaults to `desc-parens-prefix-name`. See choices in below table. |
 | `--url-configs` | (optional) Link to documentation about the ESLint configurations exported by the plugin. |
 
-## Upcoming features
+### `--rule-doc-title-format`
 
-- Custom config emojis ([#34](https://github.com/bmish/eslint-doc-generator/issues/34))
+Where `no-foo` is the rule name, `Do not use foo` is the rule description, and `eslint-plugin-test` is the plugin name.
+
+| Value | Example |
+| :-- | :-- |
+| `desc` | `# Do not use foo` |
+| `desc-parens-name` | `# Do not use foo (no-foo)` |
+| `desc-parens-prefix-name` (default) | `# Do not use foo (test/no-foo)` |
+| `name` | `# no-foo` |
+`prefix-name` | `# test/no-foo` |
 
 ## Related
 
 - [eslint-plugin-eslint-plugin](https://github.com/eslint-community/eslint-plugin-eslint-plugin) - Linter for ESLint plugins ([related list](https://eslint.org/docs/latest/developer-guide/working-with-plugins#linting))
 - [generator-eslint](https://github.com/eslint/generator-eslint) - Generates initial ESLint plugin and rule files but without the sophisticated documentation provided by eslint-doc-generator
+
+[npm-image]: https://badge.fury.io/js/eslint-doc-generator.svg
+[npm-url]: https://www.npmjs.com/package/eslint-doc-generator

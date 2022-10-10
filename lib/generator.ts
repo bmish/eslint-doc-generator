@@ -75,8 +75,8 @@ export async function generate(
   options?: {
     ignoreConfig?: string[];
     ignoreDeprecatedRules?: boolean;
-    ruleDocSectionInclude?: string[];
     ruleDocSectionExclude?: string[];
+    ruleDocSectionInclude?: string[];
     ruleDocTitleFormat?: RuleDocTitleFormat;
     urlConfigs?: string;
   }
