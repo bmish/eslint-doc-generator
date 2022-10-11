@@ -76,7 +76,7 @@ const LEGENDS: {
   // Simple strings.
   [COLUMN_TYPE.DEPRECATED]: `${EMOJI_DEPRECATED} Deprecated.`,
   [COLUMN_TYPE.DESCRIPTION]: undefined, // No legend for this column.
-  [COLUMN_TYPE.FIXABLE]: `${EMOJI_FIXABLE} Automatically fixable by [the \`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).`,
+  [COLUMN_TYPE.FIXABLE]: `${EMOJI_FIXABLE} Automatically fixable by [the \`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).`,
   [COLUMN_TYPE.HAS_SUGGESTIONS]: `${EMOJI_HAS_SUGGESTIONS} Manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`,
   [COLUMN_TYPE.NAME]: undefined, // No legend for this column.
   [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: `${EMOJI_REQUIRES_TYPE_CHECKING} Requires type information.`,
