@@ -94,7 +94,7 @@ const RULE_NOTICES: {
     }`,
 
   // Simple strings.
-  [MESSAGE_TYPE.FIXABLE]: `${EMOJI_FIXABLE} This rule is automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).`,
+  [MESSAGE_TYPE.FIXABLE]: `${EMOJI_FIXABLE} This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).`,
   [MESSAGE_TYPE.HAS_SUGGESTIONS]: `${EMOJI_HAS_SUGGESTIONS} This rule is manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`,
 };
 

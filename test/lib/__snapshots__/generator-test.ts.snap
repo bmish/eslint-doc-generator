@@ -254,7 +254,7 @@ exports[`generator #generate no existing comment markers - minimal doc content g
 "## Rules
 <!-- begin rules list -->
 
-🔧 Automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).
+🔧 Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
 | Name                           | Description            | 🔧  |
 | :----------------------------- | :--------------------- | :-- |
@@ -267,7 +267,7 @@ exports[`generator #generate no existing comment markers - minimal doc content g
 exports[`generator #generate no existing comment markers - minimal doc content generates the documentation 2`] = `
 "# Description of no-foo (\`test/no-foo\`)
 
-🔧 This rule is automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
 <!-- end rule header -->
 "
@@ -277,7 +277,7 @@ exports[`generator #generate no existing comment markers - with no blank lines i
 "## Rules
 <!-- begin rules list -->
 
-🔧 Automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).
+🔧 Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
 | Name                           | Description            | 🔧  |
 | :----------------------------- | :--------------------- | :-- |
@@ -290,7 +290,7 @@ Existing rules section content."
 exports[`generator #generate no existing comment markers - with no blank lines in existing content generates the documentation 2`] = `
 "# Description of no-foo (\`test/no-foo\`)
 
-🔧 This rule is automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
 <!-- end rule header -->
 Existing rule doc content."
@@ -300,7 +300,7 @@ exports[`generator #generate no existing comment markers - with one blank line a
 "## Rules
 <!-- begin rules list -->
 
-🔧 Automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).
+🔧 Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
 | Name                           | Description            | 🔧  |
 | :----------------------------- | :--------------------- | :-- |
@@ -314,7 +314,7 @@ Existing rules section content."
 exports[`generator #generate no existing comment markers - with one blank line around existing content generates the documentation 2`] = `
 "# Description of no-foo (\`test/no-foo\`)
 
-🔧 This rule is automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
 <!-- end rule header -->
 
@@ -324,7 +324,7 @@ Existing rule doc content."
 exports[`generator #generate no prettier config generates the documentation 1`] = `
 "<!-- begin rules list -->
 
-🔧 Automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).
+🔧 Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
 | Name                           | Description            | 🔧  |
 | :----------------------------- | :--------------------- | :-- |
@@ -336,7 +336,7 @@ exports[`generator #generate no prettier config generates the documentation 1`] 
 exports[`generator #generate no prettier config generates the documentation 2`] = `
 "# Description of no-foo (\`test/no-foo\`)
 
-🔧 This rule is automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
 <!-- end rule header -->
 ## Rule details
@@ -482,7 +482,7 @@ Description.
 
 💼 Configurations enabled in.\\
 ✅ Enabled in the \`recommended\` configuration.\\
-🔧 Automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).\\
+🔧 Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\\
 💡 Manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
 | Name                           | Description            | 💼                  | 🔧  | 💡  |
@@ -500,7 +500,7 @@ exports[`generator #generate successful updates the documentation 2`] = `
 
 💼 This rule is enabled in the following configs: \`all\`, ✅ \`recommended\`.
 
-🔧 This rule is automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
 💡 This rule is manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
@@ -517,7 +517,7 @@ exports[`generator #generate successful updates the documentation 3`] = `
 
 💼 This rule is enabled in the following configs: \`all\`, \`style\`.
 
-🔧 This rule is automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
 <!-- end rule header -->
 ## Rule details
@@ -738,7 +738,7 @@ exports[`generator #generate with no blank lines around comment markers generate
 No blank line after this.
 <!-- begin rules list -->
 
-🔧 Automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).
+🔧 Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
 | Name                           | Description            | 🔧  |
 | :----------------------------- | :--------------------- | :-- |
@@ -751,7 +751,7 @@ No blank line before this."
 exports[`generator #generate with no blank lines around comment markers generates the documentation 2`] = `
 "# Description of no-foo (\`test/no-foo\`)
 
-🔧 This rule is automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
 <!-- end rule header -->
 No blank line before this."
@@ -764,7 +764,7 @@ One blank line after this.
 
 <!-- begin rules list -->
 
-🔧 Automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/user-guide/command-line-interface#fixing-problems).
+🔧 Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
 | Name                           | Description            | 🔧  |
 | :----------------------------- | :--------------------- | :-- |
@@ -778,7 +778,7 @@ One blank line before this."
 exports[`generator #generate with one blank line around comment markers generates the documentation 2`] = `
 "# Description of no-foo (\`test/no-foo\`)
 
-🔧 This rule is automatically fixable by the \`--fix\` [CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
 <!-- end rule header -->
 
