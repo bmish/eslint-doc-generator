@@ -495,7 +495,7 @@ describe('generator', function () {
       });
     });
 
-    describe('adds extra column to rules table for TypeScript rules', function () {
+    describe('shows column and notice for requiresTypeChecking', function () {
       beforeEach(function () {
         mockFs({
           'package.json': JSON.stringify({
@@ -546,6 +546,8 @@ describe('generator', function () {
         await generate('.');
 
         expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
       });
     });
 
