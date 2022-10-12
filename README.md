@@ -61,7 +61,7 @@ Generated content in a rule doc (everything above the marker comment):
 
 💼 This rule is enabled in the following configs: `all`, ✅ `recommended`.
 
-🔧 This rule is automatically fixable by [the `--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
 💡 This rule is manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
@@ -89,7 +89,7 @@ Generated rules table in `README.md` (everything between the marker comments):
 
 ✅ Enabled in the `recommended` configuration.\
 💼 Configurations enabled in.\
-🔧 Automatically fixable by [the `--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\
+🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\
 💡 Manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).\
 💭 Requires type information.\
 ❌ Deprecated.
