@@ -67,6 +67,8 @@ Generated content in a rule doc (everything above the marker comment) (intention
 
 💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
+💭 This rule requires type information.
+
 ❌ This rule is deprecated. It was replaced by [prefer-bar](prefer-bar.md).
 
 <!-- end rule header -->
