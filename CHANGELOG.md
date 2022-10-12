@@ -14,6 +14,27 @@
 
 
 
+
+## v0.10.0 (2022-10-12)
+
+#### :rocket: Enhancement
+* [#126](https://github.com/bmish/eslint-doc-generator/pull/126) Add rule doc notice when type-checking is required ([@bmish](https://github.com/bmish))
+
+#### :bug: Bug Fix
+* [#125](https://github.com/bmish/eslint-doc-generator/pull/125) Tweak suggestions documentation link ([@bmish](https://github.com/bmish))
+* [#118](https://github.com/bmish/eslint-doc-generator/pull/118) Tweak fixable documentation link ([@MichaelDeBoey](https://github.com/MichaelDeBoey))
+
+#### :memo: Documentation
+* [#119](https://github.com/bmish/eslint-doc-generator/pull/119) Tweak readme examples ([@bmish](https://github.com/bmish))
+
+#### :house: Internal
+* [#127](https://github.com/bmish/eslint-doc-generator/pull/127) Refactor to ensure a rule doc notice is defined for each rule list column ([@bmish](https://github.com/bmish))
+
+#### Committers: 2
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+- Michaël De Boey ([@MichaelDeBoey](https://github.com/MichaelDeBoey))
+
+
 ## v0.9.0 (2022-10-10)
 
 #### :rocket: Enhancement
