@@ -54,18 +54,20 @@ npm run update:eslint-docs
 
 ## Example
 
-Generated content in a rule doc (everything above the marker comment):
+Generated content in a rule doc (everything above the marker comment) (intentionally showing all possible notices):
 
 ```md
-# Disallow use of `foo` (`test/no-foo`)
+# Disallow using foo (`test/no-foo`)
 
-💼 This rule is enabled in the following configs: `all`, ✅ `recommended`.
+✅ This rule is enabled in the `recommended` config.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `stylistic`.
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
 💡 This rule is manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
-❌ This rule is deprecated. It was replaced by [some-new-rule](some-new-rule.md).
+❌ This rule is deprecated. It was replaced by [prefer-bar](prefer-bar.md).
 
 <!-- end rule header -->
 
@@ -87,18 +89,19 @@ Generated rules table in `README.md` (everything between the marker comments):
 
 <!-- begin rules list -->
 
-✅ Enabled in the `recommended` configuration.\
 💼 Configurations enabled in.\
+✅ Enabled in the `recommended` configuration.\
+🎨 Enabled in the `stylistic` configuration.\
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\
 💡 Manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).\
 💭 Requires type information.\
 ❌ Deprecated.
 
-| Name                                                           | Description                                       | ✅  | 🔧  | 💡  | 💭  |
-| :------------------------------------------------------------- | :------------------------------------------------ | :-- | :-- | :-- | :-- |
-| [max-nested-describe](docs/rules/max-nested-describe.md)       | Enforces a maximum depth to nested describe calls |     |     |     |     |
-| [no-alias-methods](docs/rules/no-alias-methods.md)             | Disallow alias methods                            | ✅  | 🔧  |     |     |
-| [no-commented-out-tests](docs/rules/no-commented-out-tests.md) | Disallow commented out tests                      | ✅  |     |     |     |
+| Name                                     | Description        | 💼    | 🔧  | 💡  | 💭  | ❌  |
+| :--------------------------------------- | :----------------- | :---- | :-- | :-- | :-- | :-- |
+| [no-foo](docs/rules/no-foo.md)           | disallow using foo | ✅    | 🔧  |     |     |
+| [prefer-bar](docs/rules/prefer-bar.md)   | enforce using bar  | ✅ 🎨 |     | 💡  | 💭  |
+| [require-baz](docs/rules/require-baz.md) | require using baz  |       | 🔧  |     |     | ❌  |
 
 <!-- end rules list -->
 
@@ -128,7 +131,7 @@ And how it looks:
 | Name | Description |
 | :-- | :-- |
 | `--check` | Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. |
-| `--config-emoji` | Custom emoji to use for a config. Defaults to `recommended,✅`. Configs for which no emoji is specified will expect a corresponding [badge](#badge) to be specified in `README.md` instead. Option can be repeated. |
+| `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Defaults to `recommended,✅`. Configs for which no emoji is specified will expect a corresponding [badge](#badge) to be specified in `README.md` instead. Option can be repeated. |
 | `--ignore-config` | Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. |
 | `--ignore-deprecated-rules` | Whether to ignore deprecated rules from being checked, displayed, or updated (default: `false`). |
 | `--rule-doc-section-exclude` | Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. |
