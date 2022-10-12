@@ -17,21 +17,15 @@ import {
   RuleDocTitleFormat,
   RULE_DOC_TITLE_FORMAT_DEFAULT,
 } from './rule-doc-title-format.js';
-
-enum MESSAGE_TYPE {
-  CONFIGS = 'configs',
-  DEPRECATED = 'deprecated',
-  FIXABLE = 'fixable',
-  HAS_SUGGESTIONS = 'hasSuggestions',
-  REQUIRES_TYPE_CHECKING = 'requiresTypeChecking',
-}
+import { COLUMN_TYPE } from './rule-list-columns.js';
 
 /**
  * An object containing the text for each notice type (as a string or function to generate the string).
  */
 const RULE_NOTICES: {
-  [key in MESSAGE_TYPE]:
+  [key in COLUMN_TYPE]:
     | string
+    | undefined
     | ((data: {
         configsEnabled: string[];
         configEmojis: ConfigEmojis;
@@ -40,7 +34,7 @@ const RULE_NOTICES: {
       }) => string);
 } = {
   // Configs notice varies based on whether the rule is enabled in one or more configs.
-  [MESSAGE_TYPE.CONFIGS]: ({
+  [COLUMN_TYPE.CONFIGS]: ({
     configsEnabled,
     configEmojis,
     urlConfigs,
@@ -84,7 +78,7 @@ const RULE_NOTICES: {
   },
 
   // Deprecated notice has optional "replaced by" rules list.
-  [MESSAGE_TYPE.DEPRECATED]: ({
+  [COLUMN_TYPE.DEPRECATED]: ({
     replacedBy,
   }: {
     replacedBy?: readonly string[] | undefined;
@@ -96,9 +90,13 @@ const RULE_NOTICES: {
     }`,
 
   // Simple strings.
-  [MESSAGE_TYPE.FIXABLE]: `${EMOJI_FIXABLE} This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).`,
-  [MESSAGE_TYPE.HAS_SUGGESTIONS]: `${EMOJI_HAS_SUGGESTIONS} This rule is manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`,
-  [MESSAGE_TYPE.REQUIRES_TYPE_CHECKING]: `${EMOJI_REQUIRES_TYPE_CHECKING} This rule requires type information.`,
+  [COLUMN_TYPE.FIXABLE]: `${EMOJI_FIXABLE} This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).`,
+  [COLUMN_TYPE.HAS_SUGGESTIONS]: `${EMOJI_HAS_SUGGESTIONS} This rule is manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`,
+  [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: `${EMOJI_REQUIRES_TYPE_CHECKING} This rule requires type information.`,
+
+  // No notice for these.
+  [COLUMN_TYPE.DESCRIPTION]: undefined,
+  [COLUMN_TYPE.NAME]: undefined,
 };
 
 /**
@@ -115,13 +113,15 @@ function ruleNamesToList(ruleNames: readonly string[]) {
  */
 function getNoticesForRule(rule: RuleModule, configsEnabled: string[]) {
   const notices: {
-    [key in MESSAGE_TYPE]: boolean;
+    [key in COLUMN_TYPE]: boolean;
   } = {
-    [MESSAGE_TYPE.CONFIGS]: configsEnabled.length > 0,
-    [MESSAGE_TYPE.DEPRECATED]: rule.meta.deprecated || false,
-    [MESSAGE_TYPE.FIXABLE]: Boolean(rule.meta.fixable),
-    [MESSAGE_TYPE.HAS_SUGGESTIONS]: rule.meta.hasSuggestions || false,
-    [MESSAGE_TYPE.REQUIRES_TYPE_CHECKING]:
+    [COLUMN_TYPE.CONFIGS]: configsEnabled.length > 0,
+    [COLUMN_TYPE.DEPRECATED]: rule.meta.deprecated || false,
+    [COLUMN_TYPE.DESCRIPTION]: false, // No notice for this column.
+    [COLUMN_TYPE.FIXABLE]: Boolean(rule.meta.fixable),
+    [COLUMN_TYPE.HAS_SUGGESTIONS]: rule.meta.hasSuggestions || false,
+    [COLUMN_TYPE.NAME]: false, // No notice for this column.
+    [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]:
       rule.meta.docs?.requiresTypeChecking || false,
   };
 
@@ -161,10 +161,10 @@ function getRuleNoticeLines(
     pluginPrefix
   ).filter((config) => !ignoreConfig?.includes(config));
   const notices = getNoticesForRule(rule, configsEnabled);
-  let messageType: keyof typeof notices;
+  let noticeType: keyof typeof notices;
 
-  for (messageType in notices) {
-    const expected = notices[messageType];
+  for (noticeType in notices) {
+    const expected = notices[noticeType];
 
     if (!expected) {
       // This notice should not be included.
@@ -173,7 +173,14 @@ function getRuleNoticeLines(
 
     lines.push(''); // Blank line first.
 
-    const ruleNoticeStrOrFn = RULE_NOTICES[messageType];
+    const ruleNoticeStrOrFn = RULE_NOTICES[noticeType];
+
+    /* istanbul ignore next -- this won't happen since we would have already bailed out earlier. */
+    if (!ruleNoticeStrOrFn) {
+      // No notice for this column.
+      continue;
+    }
+
     lines.push(
       typeof ruleNoticeStrOrFn === 'function'
         ? ruleNoticeStrOrFn({
