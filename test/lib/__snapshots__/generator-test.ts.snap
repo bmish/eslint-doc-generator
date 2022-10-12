@@ -483,7 +483,7 @@ Description.
 💼 Configurations enabled in.\\
 ✅ Enabled in the \`recommended\` configuration.\\
 🔧 Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\\
-💡 Manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+💡 Manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
 | Name                           | Description            | 💼                  | 🔧  | 💡  |
 | :----------------------------- | :--------------------- | :------------------ | :-- | :-- |
@@ -502,7 +502,7 @@ exports[`generator #generate successful updates the documentation 2`] = `
 
 🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
-💡 This rule is manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
 <!-- end rule header -->
 ## Rule details

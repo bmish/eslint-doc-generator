@@ -65,7 +65,7 @@ Generated content in a rule doc (everything above the marker comment) (intention
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
-💡 This rule is manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
 ❌ This rule is deprecated. It was replaced by [prefer-bar](prefer-bar.md).
 
@@ -93,7 +93,7 @@ Generated rules table in `README.md` (everything between the marker comments):
 ✅ Enabled in the `recommended` configuration.\
 🎨 Enabled in the `stylistic` configuration.\
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\
-💡 Manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).\
+💡 Manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).\
 💭 Requires type information.\
 ❌ Deprecated.
 
