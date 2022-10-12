@@ -4,6 +4,7 @@ import {
   EMOJI_FIXABLE,
   EMOJI_HAS_SUGGESTIONS,
   EMOJI_CONFIGS,
+  EMOJI_REQUIRES_TYPE_CHECKING,
 } from './emojis.js';
 import { getConfigsForRule } from './configs.js';
 import type {
@@ -22,6 +23,7 @@ enum MESSAGE_TYPE {
   DEPRECATED = 'deprecated',
   FIXABLE = 'fixable',
   HAS_SUGGESTIONS = 'hasSuggestions',
+  REQUIRES_TYPE_CHECKING = 'requiresTypeChecking',
 }
 
 /**
@@ -96,6 +98,7 @@ const RULE_NOTICES: {
   // Simple strings.
   [MESSAGE_TYPE.FIXABLE]: `${EMOJI_FIXABLE} This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).`,
   [MESSAGE_TYPE.HAS_SUGGESTIONS]: `${EMOJI_HAS_SUGGESTIONS} This rule is manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`,
+  [MESSAGE_TYPE.REQUIRES_TYPE_CHECKING]: `${EMOJI_REQUIRES_TYPE_CHECKING} This rule requires type information.`,
 };
 
 /**
@@ -118,6 +121,8 @@ function getNoticesForRule(rule: RuleModule, configsEnabled: string[]) {
     [MESSAGE_TYPE.DEPRECATED]: rule.meta.deprecated || false,
     [MESSAGE_TYPE.FIXABLE]: Boolean(rule.meta.fixable),
     [MESSAGE_TYPE.HAS_SUGGESTIONS]: rule.meta.hasSuggestions || false,
+    [MESSAGE_TYPE.REQUIRES_TYPE_CHECKING]:
+      rule.meta.docs?.requiresTypeChecking || false,
   };
 
   return notices;
