@@ -13,6 +13,13 @@ Also performs some basic section consistency checks on rule docs:
 
 - Contains an `## Options` / `## Config` section and mentions each named option (for rules with options)
 
+## Motivation
+
+- Standardize documentation across thousands of ESLint plugins and rules
+- Improve the discoverability of key rule information and thus rule usability
+- Streamline the process of adding new rules by automating part of the documentation
+- Eliminate the custom documentation scripts and tests previously built and maintained by many ESLint plugins
+
 ## Setup
 
 Install it:
