@@ -15,6 +15,16 @@
 
 
 
+
+## v0.11.0 (2022-10-13)
+
+#### :rocket: Enhancement
+* [#129](https://github.com/bmish/eslint-doc-generator/pull/129) Add `--rule-list-columns` option ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.10.0 (2022-10-12)
 
 #### :rocket: Enhancement
