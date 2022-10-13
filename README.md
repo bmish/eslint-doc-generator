@@ -139,6 +139,7 @@ And how it looks:
 | `--rule-doc-section-exclude` | Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. |
 | `--rule-doc-section-include` | Required section in each rule doc. Exit with failure if missing. Option can be repeated. |
 | `--rule-doc-title-format` | The format to use for rule doc titles. Defaults to `desc-parens-prefix-name`. See choices in below [table](#--rule-doc-title-format). |
+| `--rule-list-columns` | Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. Choices: `configs`, `deprecated`, `description`, `fixable`, `hasSuggestions`, `name`, `requiresTypeChecking`. Default: `name,description,configs,fixable,hasSuggestions,requiresTypeChecking,deprecated`. |
 | `--url-configs` | Link to documentation about the ESLint configurations exported by the plugin. |
 
 All options are optional.

@@ -303,6 +303,13 @@ describe('generator', function () {
                   },
                   create(context) {}
                 },
+                'no-biz': {
+                  // One rule that isn't deprecated.
+                  meta: {
+                    docs: { description: 'Description.' },
+                  },
+                  create(context) {}
+                },
               },
               configs: {}
             };`,
@@ -312,6 +319,7 @@ describe('generator', function () {
           'docs/rules/no-foo.md': '',
           'docs/rules/no-bar.md': '',
           'docs/rules/no-baz.md': '',
+          'docs/rules/no-biz.md': '',
 
           // Needed for some of the test infrastructure to work.
           node_modules: mockFs.load(
@@ -333,6 +341,7 @@ describe('generator', function () {
         expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/no-baz.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-biz.md', 'utf8')).toMatchSnapshot();
       });
     });
 
@@ -2482,6 +2491,135 @@ describe('generator', function () {
           generate('.', { configEmoji: ['config-does-not-exist,🔥'] })
         ).rejects.toThrow(
           'Invalid configEmoji option: config-does-not-exist config not found.'
+        );
+      });
+    });
+
+    describe('with --rule-list-columns', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: {
+                    docs: { description: 'Description for no-foo.' },
+                    hasSuggestions: true,
+                    fixable: 'code',
+                    deprecated: true,
+                  },
+                  create(context) {}
+                },
+              },
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('shows the right columns and legend', async function () {
+        await generate('.', {
+          ruleListColumns: 'hasSuggestions,fixable,name',
+        });
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('with --rule-list-columns and non-existent column', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
+              },
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('throws an error', async function () {
+        await expect(
+          generate('.', { ruleListColumns: 'name,non-existent' })
+        ).rejects.toThrow('Invalid ruleListColumns option: non-existent');
+      });
+    });
+
+    describe('with --rule-list-columns and duplicate column', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
+              },
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('throws an error', async function () {
+        await expect(
+          generate('.', { ruleListColumns: 'name,name' })
+        ).rejects.toThrow(
+          'Duplicate value detected in ruleListColumns option.'
         );
       });
     });

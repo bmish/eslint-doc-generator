@@ -8,6 +8,10 @@ import {
   RULE_DOC_TITLE_FORMAT_DEFAULT,
   RULE_DOC_TITLE_FORMATS,
 } from './rule-doc-title-format.js';
+import {
+  COLUMN_TYPE,
+  COLUMN_TYPE_DEFAULT_ORDERING,
+} from './rule-list-columns.js';
 import type { PackageJson } from 'type-fest';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -78,6 +82,13 @@ export function run() {
         .default(RULE_DOC_TITLE_FORMAT_DEFAULT)
     )
     .option(
+      '--rule-list-columns <columns>',
+      `(optional) Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. (choices: "${Object.values(
+        COLUMN_TYPE
+      ).join('", "')}")`,
+      COLUMN_TYPE_DEFAULT_ORDERING.join(',')
+    )
+    .option(
       '--url-configs <url>',
       '(optional) Link to documentation about the ESLint configurations exported by the plugin.'
     )
@@ -91,6 +102,7 @@ export function run() {
         ruleDocSectionExclude: string[];
         ruleDocSectionInclude: string[];
         ruleDocTitleFormat: RuleDocTitleFormat;
+        ruleListColumns: string;
         urlConfigs?: string;
       }
     ) {
@@ -102,6 +114,7 @@ export function run() {
         ruleDocSectionExclude: options.ruleDocSectionExclude,
         ruleDocSectionInclude: options.ruleDocSectionInclude,
         ruleDocTitleFormat: options.ruleDocTitleFormat,
+        ruleListColumns: options.ruleListColumns,
         urlConfigs: options.urlConfigs,
       });
     })
