@@ -1,10 +1,6 @@
 import { EMOJI_CONFIG_RECOMMENDED } from './emojis.js';
 import type { Plugin, ConfigsToRules, ConfigEmojis } from './types.js';
 
-export function hasAnyConfigs(configsToRules: ConfigsToRules) {
-  return Object.keys(configsToRules).length > 0;
-}
-
 const SEVERITY_ENABLED = new Set([2, 'error']);
 
 /**

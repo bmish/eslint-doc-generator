@@ -13,9 +13,19 @@ export enum COLUMN_TYPE {
   DESCRIPTION = 'description',
   FIXABLE = 'fixable',
   HAS_SUGGESTIONS = 'hasSuggestions',
-  NAME = 'rules',
+  NAME = 'name',
   REQUIRES_TYPE_CHECKING = 'requiresTypeChecking',
 }
+
+export const COLUMN_TYPE_DEFAULT_ORDERING = [
+  COLUMN_TYPE.NAME,
+  COLUMN_TYPE.DESCRIPTION,
+  COLUMN_TYPE.CONFIGS,
+  COLUMN_TYPE.FIXABLE,
+  COLUMN_TYPE.HAS_SUGGESTIONS,
+  COLUMN_TYPE.REQUIRES_TYPE_CHECKING,
+  COLUMN_TYPE.DEPRECATED,
+];
 
 /**
  * An object containing the column header for each column (as a string or function to generate the string).
@@ -66,27 +76,57 @@ export const COLUMN_HEADER: {
 export function getColumns(
   details: RuleDetails[],
   configsToRules: ConfigsToRules,
+  ruleListColumns: COLUMN_TYPE[],
   ignoreConfig: string[]
-) {
+): Record<COLUMN_TYPE, boolean> {
   const columns: {
     [key in COLUMN_TYPE]: boolean;
   } = {
-    // Object keys in display order.
-    [COLUMN_TYPE.NAME]: true,
-    [COLUMN_TYPE.DESCRIPTION]: details.some((detail) => detail.description),
+    // Alphabetical order.
     // Show the configs column if there exists a non-ignored config.
     [COLUMN_TYPE.CONFIGS]: Object.keys(configsToRules).some(
       (config) => !ignoreConfig?.includes(config)
     ),
+    [COLUMN_TYPE.DEPRECATED]: details.some((detail) => detail.deprecated),
+    [COLUMN_TYPE.DESCRIPTION]: details.some((detail) => detail.description),
     [COLUMN_TYPE.FIXABLE]: details.some((detail) => detail.fixable),
     [COLUMN_TYPE.HAS_SUGGESTIONS]: details.some(
       (detail) => detail.hasSuggestions
     ),
+    [COLUMN_TYPE.NAME]: true,
     [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: details.some(
       (detail) => detail.requiresTypeChecking
     ),
-    [COLUMN_TYPE.DEPRECATED]: details.some((detail) => detail.deprecated),
   };
 
-  return columns;
+  // Recreate object using the ordering and presence of columns specified in ruleListColumns.
+  return Object.fromEntries(
+    ruleListColumns.map((column) => [column, columns[column]])
+  ) as Record<COLUMN_TYPE, boolean>;
+}
+
+/**
+ * Parse the option, check for errors, and set defaults.
+ */
+export function parseRuleListColumnsOption(
+  ruleListColumns: string | undefined
+): COLUMN_TYPE[] {
+  const values = ruleListColumns ? ruleListColumns.split(',') : [];
+  const COLUMN_TYPE_VALUES = new Set(Object.values(COLUMN_TYPE).map(String));
+
+  // Check for invalid.
+  const invalid = values.find((val) => !COLUMN_TYPE_VALUES.has(val));
+  if (invalid) {
+    throw new Error(`Invalid ruleListColumns option: ${invalid}`);
+  }
+  if (values.length !== new Set(values).size) {
+    throw new Error('Duplicate value detected in ruleListColumns option.');
+  }
+
+  if (values.length === 0) {
+    // Use default columns and ordering.
+    values.push(...COLUMN_TYPE_DEFAULT_ORDERING);
+  }
+
+  return values as COLUMN_TYPE[];
 }

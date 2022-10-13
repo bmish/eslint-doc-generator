@@ -5,7 +5,7 @@ import {
   EMOJI_HAS_SUGGESTIONS,
   EMOJI_REQUIRES_TYPE_CHECKING,
 } from './emojis.js';
-import { getConfigsForRule, hasAnyConfigs } from './configs.js';
+import { getConfigsForRule } from './configs.js';
 import { COLUMN_TYPE, getColumns, COLUMN_HEADER } from './rule-list-columns.js';
 import { findSectionHeader, format } from './markdown.js';
 import { getPluginRoot } from './package-json.js';
@@ -46,44 +46,38 @@ function buildRuleRow(
   rule: RuleDetails,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
-  includeTypesColumn: boolean,
   configEmojis: ConfigEmojis,
   ignoreConfig: string[]
 ): string[] {
-  const columns: string[] = [];
-  if (columnsEnabled[COLUMN_TYPE.NAME]) {
-    columns.push(`[${rule.name}](docs/rules/${rule.name}.md)`);
-  }
-  if (columnsEnabled[COLUMN_TYPE.DESCRIPTION]) {
-    columns.push(rule.description || '');
-  }
-  if (columnsEnabled[COLUMN_TYPE.CONFIGS] && hasAnyConfigs(configsToRules)) {
-    columns.push(
-      getConfigurationColumnValueForRule(
-        rule,
-        configsToRules,
-        pluginPrefix,
-        configEmojis,
-        ignoreConfig
-      )
-    );
-  }
-  if (columnsEnabled[COLUMN_TYPE.FIXABLE]) {
-    columns.push(rule.fixable ? EMOJI_FIXABLE : '');
-  }
-  if (columnsEnabled[COLUMN_TYPE.HAS_SUGGESTIONS]) {
-    columns.push(rule.hasSuggestions ? EMOJI_HAS_SUGGESTIONS : '');
-  }
-  if (
-    columnsEnabled[COLUMN_TYPE.REQUIRES_TYPE_CHECKING] &&
-    includeTypesColumn
-  ) {
-    columns.push(rule.requiresTypeChecking ? EMOJI_REQUIRES_TYPE_CHECKING : '');
-  }
-  if (columnsEnabled[COLUMN_TYPE.DEPRECATED] && rule.deprecated) {
-    columns.push(EMOJI_DEPRECATED);
-  }
-  return columns;
+  const columns: {
+    [key in COLUMN_TYPE]: string;
+  } = {
+    // Alphabetical order.
+    [COLUMN_TYPE.CONFIGS]: getConfigurationColumnValueForRule(
+      rule,
+      configsToRules,
+      pluginPrefix,
+      configEmojis,
+      ignoreConfig
+    ),
+    [COLUMN_TYPE.DEPRECATED]: rule.deprecated ? EMOJI_DEPRECATED : '',
+    [COLUMN_TYPE.DESCRIPTION]: rule.description || '',
+    [COLUMN_TYPE.FIXABLE]: rule.fixable ? EMOJI_FIXABLE : '',
+    [COLUMN_TYPE.HAS_SUGGESTIONS]: rule.hasSuggestions
+      ? EMOJI_HAS_SUGGESTIONS
+      : '',
+    [COLUMN_TYPE.NAME]: `[${rule.name}](docs/rules/${rule.name}.md)`,
+    [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: rule.requiresTypeChecking
+      ? EMOJI_REQUIRES_TYPE_CHECKING
+      : '',
+  };
+
+  // List columns using the ordering and presence of columns specified in columnsEnabled.
+  return Object.keys(columnsEnabled).flatMap((column) =>
+    columnsEnabled[column as COLUMN_TYPE]
+      ? [columns[column as COLUMN_TYPE]]
+      : []
+  );
 }
 
 function generateRulesListMarkdown(
@@ -94,10 +88,6 @@ function generateRulesListMarkdown(
   configEmojis: ConfigEmojis,
   ignoreConfig: string[]
 ): string {
-  // Since such rules are rare, we'll only include the types column if at least one rule requires type checking.
-  const includeTypesColumn = details.some(
-    (detail: RuleDetails) => detail.requiresTypeChecking
-  );
   const listHeaderRow = (
     Object.entries(columns) as [COLUMN_TYPE, boolean][]
   ).flatMap(([columnType, enabled]) => {
@@ -129,7 +119,6 @@ function generateRulesListMarkdown(
           rule,
           configsToRules,
           pluginPrefix,
-          includeTypesColumn,
           configEmojis,
           ignoreConfig
         )
@@ -149,6 +138,7 @@ export async function updateRulesList(
   pathToPlugin: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: string[],
+  ruleListColumns: COLUMN_TYPE[],
   urlConfigs?: string
 ): Promise<string> {
   let listStartIndex = markdown.indexOf(BEGIN_RULE_LIST_MARKER);
@@ -187,7 +177,12 @@ export async function updateRulesList(
   const postList = markdown.slice(Math.max(0, listEndIndex));
 
   // Determine columns to include in the rules list.
-  const columns = getColumns(details, configsToRules, ignoreConfig);
+  const columns = getColumns(
+    details,
+    configsToRules,
+    ruleListColumns,
+    ignoreConfig
+  );
 
   // New legend.
   const legend = generateLegend(

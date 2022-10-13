@@ -14,6 +14,7 @@ import { findSectionHeader, replaceOrCreateHeader } from './markdown.js';
 import { resolveConfigsToRules } from './config-resolution.js';
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
 import { parseConfigEmojiOptions } from './configs.js';
+import { parseRuleListColumnsOption } from './rule-list-columns.js';
 import type { RuleDetails } from './types.js';
 
 /**
@@ -81,6 +82,7 @@ export async function generate(
     ruleDocSectionExclude?: string[];
     ruleDocSectionInclude?: string[];
     ruleDocTitleFormat?: RuleDocTitleFormat;
+    ruleListColumns?: string;
     urlConfigs?: string;
   }
 ) {
@@ -127,6 +129,7 @@ export async function generate(
   // Options.
   const configEmojis = parseConfigEmojiOptions(plugin, options?.configEmoji);
   const ignoreConfig = options?.ignoreConfig ?? [];
+  const ruleListColumns = parseRuleListColumnsOption(options?.ruleListColumns);
 
   // Update rule doc for each rule.
   for (const { name, description, schema } of details) {
@@ -215,6 +218,7 @@ export async function generate(
     path,
     configEmojis,
     ignoreConfig,
+    ruleListColumns,
     options?.urlConfigs
   );
 
