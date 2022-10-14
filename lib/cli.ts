@@ -10,7 +10,7 @@ import {
 } from './rule-doc-title-format.js';
 import {
   COLUMN_TYPE,
-  COLUMN_TYPE_DEFAULT_ORDERING,
+  COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING,
 } from './rule-list-columns.js';
 import type { PackageJson } from 'type-fest';
 
@@ -86,7 +86,7 @@ export function run() {
       `(optional) Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. (choices: "${Object.values(
         COLUMN_TYPE
       ).join('", "')}")`,
-      COLUMN_TYPE_DEFAULT_ORDERING.join(',')
+      Object.keys(COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING).join(',')
     )
     .option(
       '--url-configs <url>',

@@ -17,15 +17,19 @@ export enum COLUMN_TYPE {
   REQUIRES_TYPE_CHECKING = 'requiresTypeChecking',
 }
 
-export const COLUMN_TYPE_DEFAULT_ORDERING = [
-  COLUMN_TYPE.NAME,
-  COLUMN_TYPE.DESCRIPTION,
-  COLUMN_TYPE.CONFIGS,
-  COLUMN_TYPE.FIXABLE,
-  COLUMN_TYPE.HAS_SUGGESTIONS,
-  COLUMN_TYPE.REQUIRES_TYPE_CHECKING,
-  COLUMN_TYPE.DEPRECATED,
-];
+export const COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
+  [key in COLUMN_TYPE]: boolean;
+} = {
+  // Object keys ordered in display order.
+  // Object values indicate whether the column is displayed by default.
+  [COLUMN_TYPE.NAME]: true,
+  [COLUMN_TYPE.DESCRIPTION]: true,
+  [COLUMN_TYPE.CONFIGS]: true,
+  [COLUMN_TYPE.FIXABLE]: true,
+  [COLUMN_TYPE.HAS_SUGGESTIONS]: true,
+  [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: true,
+  [COLUMN_TYPE.DEPRECATED]: true,
+};
 
 /**
  * An object containing the column header for each column (as a string or function to generate the string).
@@ -125,7 +129,7 @@ export function parseRuleListColumnsOption(
 
   if (values.length === 0) {
     // Use default columns and ordering.
-    values.push(...COLUMN_TYPE_DEFAULT_ORDERING);
+    values.push(...Object.keys(COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING));
   }
 
   return values as COLUMN_TYPE[];
