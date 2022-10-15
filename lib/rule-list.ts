@@ -17,6 +17,7 @@ import type {
   ConfigsToRules,
   ConfigEmojis,
 } from './types.js';
+import { EMOJIS_TYPE, RULE_TYPE } from './rule-type.js';
 
 function getConfigurationColumnValueForRule(
   rule: RuleDetails,
@@ -70,6 +71,7 @@ function buildRuleRow(
     [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: rule.requiresTypeChecking
       ? EMOJI_REQUIRES_TYPE_CHECKING
       : '',
+    [COLUMN_TYPE.TYPE]: rule.type ? EMOJIS_TYPE[rule.type as RULE_TYPE] : '', // Convert union type to enum.
   };
 
   // List columns using the ordering and presence of columns specified in columnsEnabled.

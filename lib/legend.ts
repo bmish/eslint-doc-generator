@@ -4,8 +4,10 @@ import {
   EMOJI_HAS_SUGGESTIONS,
   EMOJI_CONFIGS,
   EMOJI_REQUIRES_TYPE_CHECKING,
+  EMOJI_TYPE,
 } from './emojis.js';
 import { COLUMN_TYPE } from './rule-list-columns.js';
+import { RULE_TYPE_MESSAGES_LEGEND, RULE_TYPES } from './rule-type.js';
 import { ConfigEmojis, Plugin } from './types.js';
 
 /**
@@ -14,9 +16,9 @@ import { ConfigEmojis, Plugin } from './types.js';
 const LEGENDS: {
   [key in COLUMN_TYPE]:
     | string
-    | undefined
+    | undefined // For no legend.
     | ((data: {
-        configNames: string[];
+        plugin: Plugin;
         configEmojis: ConfigEmojis;
         ignoreConfig: string[];
         urlConfigs?: string;
@@ -24,16 +26,24 @@ const LEGENDS: {
 } = {
   // Legends are included for each config. A generic config legend is also included if there are multiple configs.
   [COLUMN_TYPE.CONFIGS]: ({
-    configNames,
+    plugin,
     configEmojis,
     urlConfigs,
     ignoreConfig,
   }: {
-    configNames: string[];
+    plugin: Plugin;
     configEmojis: ConfigEmojis;
     ignoreConfig: string[];
     urlConfigs?: string;
   }) => {
+    /* istanbul ignore next -- this shouldn't happen */
+    if (!plugin.configs) {
+      throw new Error(
+        'Should not be attempting to display configs column when there are no configs.'
+      );
+    }
+    const configNames = Object.keys(plugin.configs);
+
     // Add link to configs documentation if provided.
     const configsLinkOrWord = urlConfigs
       ? `[Configurations](${urlConfigs})`
@@ -73,12 +83,42 @@ const LEGENDS: {
     return legends;
   },
 
+  // Legends are included for each rule type present.
+  [COLUMN_TYPE.TYPE]: ({ plugin }: { plugin: Plugin }) => {
+    /* istanbul ignore next -- this shouldn't happen */
+    if (!plugin.rules) {
+      throw new Error(
+        'Should not be attempting to display type column when there are no rules.'
+      );
+    }
+    const rules = plugin.rules;
+
+    const legends: string[] = [];
+
+    let hasAnyRuleType = false;
+    for (const ruleType of RULE_TYPES) {
+      const hasThisRuleType = Object.values(rules).some(
+        (rule) => typeof rule === 'object' && rule.meta.type === ruleType
+      );
+      if (hasThisRuleType) {
+        if (!hasAnyRuleType) {
+          hasAnyRuleType = true;
+          // Add general rule type emoji first.
+          legends.push(`${EMOJI_TYPE} The type of rule.`);
+        }
+        legends.push(RULE_TYPE_MESSAGES_LEGEND[ruleType]);
+      }
+    }
+
+    return legends;
+  },
+
   // Simple strings.
   [COLUMN_TYPE.DEPRECATED]: `${EMOJI_DEPRECATED} Deprecated.`,
-  [COLUMN_TYPE.DESCRIPTION]: undefined, // No legend for this column.
+  [COLUMN_TYPE.DESCRIPTION]: undefined,
   [COLUMN_TYPE.FIXABLE]: `${EMOJI_FIXABLE} Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).`,
   [COLUMN_TYPE.HAS_SUGGESTIONS]: `${EMOJI_HAS_SUGGESTIONS} Manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`,
-  [COLUMN_TYPE.NAME]: undefined, // No legend for this column.
+  [COLUMN_TYPE.NAME]: undefined,
   [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: `${EMOJI_REQUIRES_TYPE_CHECKING} Requires type information.`,
 };
 
@@ -100,10 +140,9 @@ export function generateLegend(
         // No legend specified for this column.
         return [];
       }
-      const configNames = Object.keys(plugin.configs || {});
       return typeof legendStrOrFn === 'function'
         ? legendStrOrFn({
-            configNames,
+            plugin,
             configEmojis,
             urlConfigs,
             ignoreConfig,

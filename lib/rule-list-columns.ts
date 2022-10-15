@@ -4,7 +4,9 @@ import {
   EMOJI_FIXABLE,
   EMOJI_HAS_SUGGESTIONS,
   EMOJI_REQUIRES_TYPE_CHECKING,
+  EMOJI_TYPE,
 } from './emojis.js';
+import { RULE_TYPES } from './rule-type.js';
 import type { RuleDetails, ConfigsToRules, ConfigEmojis } from './types.js';
 
 export enum COLUMN_TYPE {
@@ -15,6 +17,7 @@ export enum COLUMN_TYPE {
   HAS_SUGGESTIONS = 'hasSuggestions',
   NAME = 'name',
   REQUIRES_TYPE_CHECKING = 'requiresTypeChecking',
+  TYPE = 'type',
 }
 
 export const COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
@@ -28,6 +31,7 @@ export const COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
   [COLUMN_TYPE.FIXABLE]: true,
   [COLUMN_TYPE.HAS_SUGGESTIONS]: true,
   [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: true,
+  [COLUMN_TYPE.TYPE]: false,
   [COLUMN_TYPE.DEPRECATED]: true,
 };
 
@@ -71,6 +75,7 @@ export const COLUMN_HEADER: {
   [COLUMN_TYPE.HAS_SUGGESTIONS]: EMOJI_HAS_SUGGESTIONS,
   [COLUMN_TYPE.NAME]: 'Name',
   [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: EMOJI_REQUIRES_TYPE_CHECKING,
+  [COLUMN_TYPE.TYPE]: EMOJI_TYPE,
 };
 
 /**
@@ -101,6 +106,10 @@ export function getColumns(
     [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: details.some(
       (detail) => detail.requiresTypeChecking
     ),
+    // Show type column only if we found at least one rule with a standard type.
+    [COLUMN_TYPE.TYPE]: details.some(
+      (detail) => detail.type && RULE_TYPES.includes(detail.type as any) // eslint-disable-line @typescript-eslint/no-explicit-any
+    ),
   };
 
   // Recreate object using the ordering and presence of columns specified in ruleListColumns.
@@ -129,7 +138,11 @@ export function parseRuleListColumnsOption(
 
   if (values.length === 0) {
     // Use default columns and ordering.
-    values.push(...Object.keys(COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING));
+    values.push(
+      ...Object.entries(COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING)
+        .filter(([_col, enabled]) => enabled)
+        .map(([col]) => col)
+    );
   }
 
   return values as COLUMN_TYPE[];

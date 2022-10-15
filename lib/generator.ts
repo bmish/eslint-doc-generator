@@ -109,6 +109,7 @@ export async function generate(
             requiresTypeChecking: rule.meta.docs?.requiresTypeChecking ?? false,
             deprecated: rule.meta.deprecated ?? false,
             schema: rule.meta.schema,
+            type: rule.meta.type,
           }
         : // Deprecated function-style rule (does not support most of these features).
           {
@@ -119,6 +120,7 @@ export async function generate(
             requiresTypeChecking: false,
             deprecated: false, // TODO: figure out how to access `deprecated` property that can be exported from function-style rules.
             schema: [], // TODO: figure out how to access `schema` property that can be exported from function-style rules.
+            type: undefined,
           };
     })
     .filter(

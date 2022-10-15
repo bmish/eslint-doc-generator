@@ -439,6 +439,108 @@ Pre-existing notice about the rule being recommended.
 Details."
 `;
 
+exports[`generator #generate rule with type, type column enabled displays the type 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+🗂️ The type of rule.\\
+❗ Identifies problems that could cause errors or unexpected behavior.\\
+📖 Identifies potential improvements.\\
+📏 Focuses on code formatting.
+
+| Name                           | 🗂️  |
+| :----------------------------- | :-- |
+| [no-bar](docs/rules/no-bar.md) | 📖  |
+| [no-biz](docs/rules/no-biz.md) | 📏  |
+| [no-boz](docs/rules/no-boz.md) |     |
+| [no-buz](docs/rules/no-buz.md) |     |
+| [no-foo](docs/rules/no-foo.md) | ❗  |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate rule with type, type column enabled displays the type 2`] = `
+"# \`test/no-foo\`
+
+❗ This rule identifies problems that could cause errors or unexpected behavior.
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate rule with type, type column enabled displays the type 3`] = `
+"# \`test/no-bar\`
+
+📖 This rule identifies potential improvements.
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate rule with type, type column enabled displays the type 4`] = `
+"# \`test/no-biz\`
+
+📏 This rule focuses on code formatting.
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate rule with type, type column enabled displays the type 5`] = `
+"# \`test/no-boz\`
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate rule with type, type column enabled displays the type 6`] = `
+"# \`test/no-buz\`
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate rule with type, type column enabled, but only an unknown type hides the type column and notice 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+| Name                           |
+| :----------------------------- |
+| [no-foo](docs/rules/no-foo.md) |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate rule with type, type column enabled, but only an unknown type hides the type column and notice 2`] = `
+"# \`test/no-foo\`
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate rule with type, type column not enabled hides the type column 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+| Name                           |
+| :----------------------------- |
+| [no-foo](docs/rules/no-foo.md) |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate rule with type, type column not enabled hides the type column 2`] = `
+"# \`test/no-foo\`
+
+❗ This rule identifies problems that could cause errors or unexpected behavior.
+
+<!-- end rule header -->
+"
+`;
+
 exports[`generator #generate rules that are disabled generates the documentation 1`] = `
 "## Rules
 <!-- begin rules list -->
