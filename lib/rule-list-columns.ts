@@ -7,18 +7,8 @@ import {
   EMOJI_TYPE,
 } from './emojis.js';
 import { RULE_TYPES } from './rule-type.js';
+import { COLUMN_TYPE } from './types.js';
 import type { RuleDetails, ConfigsToRules, ConfigEmojis } from './types.js';
-
-export enum COLUMN_TYPE {
-  CONFIGS = 'configs',
-  DEPRECATED = 'deprecated',
-  DESCRIPTION = 'description',
-  FIXABLE = 'fixable',
-  HAS_SUGGESTIONS = 'hasSuggestions',
-  NAME = 'name',
-  REQUIRES_TYPE_CHECKING = 'requiresTypeChecking',
-  TYPE = 'type',
-}
 
 export const COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
   [key in COLUMN_TYPE]: boolean;
@@ -114,36 +104,6 @@ export function getColumns(
 
   // Recreate object using the ordering and presence of columns specified in ruleListColumns.
   return Object.fromEntries(
-    ruleListColumns.map((column) => [column, columns[column]])
+    ruleListColumns.map((type) => [type, columns[type]])
   ) as Record<COLUMN_TYPE, boolean>;
-}
-
-/**
- * Parse the option, check for errors, and set defaults.
- */
-export function parseRuleListColumnsOption(
-  ruleListColumns: string | undefined
-): COLUMN_TYPE[] {
-  const values = ruleListColumns ? ruleListColumns.split(',') : [];
-  const COLUMN_TYPE_VALUES = new Set(Object.values(COLUMN_TYPE).map(String));
-
-  // Check for invalid.
-  const invalid = values.find((val) => !COLUMN_TYPE_VALUES.has(val));
-  if (invalid) {
-    throw new Error(`Invalid ruleListColumns option: ${invalid}`);
-  }
-  if (values.length !== new Set(values).size) {
-    throw new Error('Duplicate value detected in ruleListColumns option.');
-  }
-
-  if (values.length === 0) {
-    // Use default columns and ordering.
-    values.push(
-      ...Object.entries(COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING)
-        .filter(([_col, enabled]) => enabled)
-        .map(([col]) => col)
-    );
-  }
-
-  return values as COLUMN_TYPE[];
 }

@@ -9,12 +9,15 @@ import {
 } from './package-json.js';
 import { updateRulesList } from './rule-list.js';
 import { generateRuleHeaderLines } from './rule-notices.js';
+import {
+  parseRuleDocNoticesOption,
+  parseRuleListColumnsOption,
+} from './options.js';
 import { END_RULE_HEADER_MARKER } from './markers.js';
 import { findSectionHeader, replaceOrCreateHeader } from './markdown.js';
 import { resolveConfigsToRules } from './config-resolution.js';
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
 import { parseConfigEmojiOptions } from './configs.js';
-import { parseRuleListColumnsOption } from './rule-list-columns.js';
 import type { RuleDetails } from './types.js';
 
 /**
@@ -79,6 +82,7 @@ export async function generate(
     configEmoji?: string[];
     ignoreConfig?: string[];
     ignoreDeprecatedRules?: boolean;
+    ruleDocNotices?: string;
     ruleDocSectionExclude?: string[];
     ruleDocSectionInclude?: string[];
     ruleDocTitleFormat?: RuleDocTitleFormat;
@@ -131,6 +135,7 @@ export async function generate(
   // Options.
   const configEmojis = parseConfigEmojiOptions(plugin, options?.configEmoji);
   const ignoreConfig = options?.ignoreConfig ?? [];
+  const ruleDocNotices = parseRuleDocNoticesOption(options?.ruleDocNotices);
   const ruleListColumns = parseRuleListColumnsOption(options?.ruleListColumns);
 
   // Update rule doc for each rule.
@@ -152,6 +157,7 @@ export async function generate(
       pluginPrefix,
       configEmojis,
       ignoreConfig,
+      ruleDocNotices,
       options?.ruleDocTitleFormat,
       options?.urlConfigs
     );
