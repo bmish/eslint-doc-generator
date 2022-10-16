@@ -794,6 +794,29 @@ exports[`generator #generate with --check prints the issues, exits with failure,
 
 exports[`generator #generate with --check prints the issues, exits with failure, and does not write changes 2`] = `""`;
 
+exports[`generator #generate with --config-emoji and removing default emoji for a config reverts to using a badge for the config 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+💼 Configurations enabled in.
+
+| Name                           | Description             | 💼               |
+| :----------------------------- | :---------------------- | :--------------- |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ![recommended][] |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate with --config-emoji and removing default emoji for a config reverts to using a badge for the config 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+💼 This rule is enabled in the \`recommended\` config.
+
+<!-- end rule header -->
+"
+`;
+
 exports[`generator #generate with --config-emoji shows the correct emojis 1`] = `
 "## Rules
 <!-- begin rules list -->

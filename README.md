@@ -150,7 +150,7 @@ And how it looks:
 | Name | Description |
 | :-- | :-- |
 | `--check` | Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. |
-| `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Default emojis are provided for [common configs](./lib/emojis.ts). Configs for which no emoji is specified will expect a corresponding [badge](#badge) to be specified in `README.md` instead. Option can be repeated. |
+| `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Default emojis are provided for [common configs](./lib/emojis.ts). To remove a default emoji and rely on a [badge](#badge) instead, provide the config name without an emoji. Option can be repeated. |
 | `--ignore-config` | Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. |
 | `--ignore-deprecated-rules` | Whether to ignore deprecated rules from being checked, displayed, or updated (default: `false`). |
 | `--rule-doc-section-exclude` | Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. |
