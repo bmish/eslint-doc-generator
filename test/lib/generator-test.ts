@@ -2446,10 +2446,95 @@ describe('generator', function () {
 
       it('throws an error', async function () {
         await expect(
-          generate('.', { configEmoji: ['wrong-format'] })
+          generate('.', { configEmoji: ['foo,bar,baz'] })
         ).rejects.toThrow(
-          'Invalid configEmoji option: wrong-format. Expected format: config,emoji'
+          'Invalid configEmoji option: foo,bar,baz. Expected format: config,emoji'
         );
+      });
+    });
+
+    describe('with --config-emoji and trying to remove a default emoji that does not exist', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
+              },
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('throws an error', async function () {
+        await expect(
+          generate('.', { configEmoji: ['config-without-default-emoji'] })
+        ).rejects.toThrow(
+          'Invalid configEmoji option: config-without-default-emoji. Expected format: config,emoji'
+        );
+      });
+    });
+
+    describe('with --config-emoji and removing default emoji for a config', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
+              },
+              configs: {
+                recommended: { rules: { 'test/no-foo': 'error' } },
+              }
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('reverts to using a badge for the config', async function () {
+        await generate('.', {
+          configEmoji: ['recommended'],
+        });
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
       });
     });
 
@@ -2494,6 +2579,7 @@ describe('generator', function () {
         );
       });
     });
+
     describe('with one config that does not have emoji', function () {
       beforeEach(function () {
         mockFs({

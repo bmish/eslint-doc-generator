@@ -39,10 +39,18 @@ export function parseConfigEmojiOptions(
   plugin: Plugin,
   configEmoji?: string[]
 ): ConfigEmojis {
+  const configsWithDefaultEmojiRemoved: string[] = [];
   const configEmojis =
-    configEmoji?.map((configEmojiItem) => {
-      const [config, emoji] = configEmojiItem.split(',');
-      if (!config || !emoji) {
+    configEmoji?.flatMap((configEmojiItem) => {
+      const [config, emoji, ...extra] = configEmojiItem.split(',');
+
+      if (config && !emoji && Object.keys(EMOJI_CONFIGS).includes(config)) {
+        // User wants to remove the default emoji for this config.
+        configsWithDefaultEmojiRemoved.push(config);
+        return [];
+      }
+
+      if (!config || !emoji || extra.length > 0) {
         throw new Error(
           `Invalid configEmoji option: ${configEmojiItem}. Expected format: config,emoji`
         );
@@ -52,11 +60,15 @@ export function parseConfigEmojiOptions(
           `Invalid configEmoji option: ${config} config not found.`
         );
       }
-      return { config, emoji };
+      return [{ config, emoji }];
     }) || [];
 
   // Add default emojis for the common configs for which the user hasn't already specified an emoji.
   for (const [config, emoji] of Object.entries(EMOJI_CONFIGS)) {
+    if (configsWithDefaultEmojiRemoved.includes(config)) {
+      // Skip the default emoji for this config.
+      continue;
+    }
     if (!configEmojis.some((configEmoji) => configEmoji.config === config)) {
       configEmojis.push({ config, emoji });
     }
