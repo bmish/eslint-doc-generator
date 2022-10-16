@@ -86,7 +86,11 @@ export function run() {
       `(optional) Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. (choices: "${Object.values(
         COLUMN_TYPE
       ).join('", "')}")`,
-      Object.keys(COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING).join(',')
+      // List of default enabled columns.
+      Object.entries(COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING)
+        .filter(([_col, enabled]) => enabled)
+        .map(([col]) => col)
+        .join(',')
     )
     .option(
       '--url-configs <url>',

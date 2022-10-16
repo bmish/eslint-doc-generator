@@ -13,6 +13,7 @@ import type {
   ConfigsToRules,
   ConfigEmojis,
 } from './types.js';
+import { RULE_TYPE, RULE_TYPE_MESSAGES_NOTICES } from './rule-type.js';
 import {
   RuleDocTitleFormat,
   RULE_DOC_TITLE_FORMAT_DEFAULT,
@@ -31,6 +32,7 @@ const RULE_NOTICES: {
         configEmojis: ConfigEmojis;
         urlConfigs?: string;
         replacedBy: readonly string[] | undefined;
+        type?: RULE_TYPE;
       }) => string);
 } = {
   // Configs notice varies based on whether the rule is enabled in one or more configs.
@@ -89,6 +91,16 @@ const RULE_NOTICES: {
         : ''
     }`,
 
+  [COLUMN_TYPE.TYPE]: ({ type }: { type?: RULE_TYPE }) => {
+    /* istanbul ignore next -- this shouldn't happen */
+    if (!type) {
+      throw new Error(
+        'Should not be trying to display type notice for rule with no type.'
+      );
+    }
+    return RULE_TYPE_MESSAGES_NOTICES[type];
+  },
+
   // Simple strings.
   [COLUMN_TYPE.FIXABLE]: `${EMOJI_FIXABLE} This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).`,
   [COLUMN_TYPE.HAS_SUGGESTIONS]: `${EMOJI_HAS_SUGGESTIONS} This rule is manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`,
@@ -123,6 +135,7 @@ function getNoticesForRule(rule: RuleModule, configsEnabled: string[]) {
     [COLUMN_TYPE.NAME]: false, // No notice for this column.
     [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]:
       rule.meta.docs?.requiresTypeChecking || false,
+    [COLUMN_TYPE.TYPE]: Boolean(rule.meta.type),
   };
 
   return notices;
@@ -188,6 +201,7 @@ function getRuleNoticeLines(
             configEmojis,
             urlConfigs,
             replacedBy: rule.meta.replacedBy,
+            type: rule.meta.type as RULE_TYPE, // Convert union type to enum.
           })
         : ruleNoticeStrOrFn
     );

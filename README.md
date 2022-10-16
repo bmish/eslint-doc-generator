@@ -76,6 +76,12 @@ Generated content in a rule doc (everything above the marker comment) (intention
 
 💭 This rule requires type information.
 
+❗ This rule identifies problems that could cause errors or unexpected behavior.
+
+📖 This rule identifies potential improvements.
+
+📏 This rule focuses on code formatting.
+
 ❌ This rule is deprecated. It was replaced by [prefer-bar](prefer-bar.md).
 
 <!-- end rule header -->
@@ -89,7 +95,7 @@ Examples.
 ...
 ```
 
-Generated rules table in `README.md` (everything between the marker comments):
+Generated rules table in `README.md` (everything between the marker comments) (intentionally showing all possible columns):
 
 ```md
 # eslint-plugin-test
@@ -104,13 +110,17 @@ Generated rules table in `README.md` (everything between the marker comments):
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\
 💡 Manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).\
 💭 Requires type information.\
+🗂️ The type of rule.\
+❗ Identifies problems that could cause errors or unexpected behavior.\
+📖 Identifies potential improvements.\
+📏 Focuses on code formatting.\
 ❌ Deprecated.
 
-| Name                                     | Description        | 💼    | 🔧  | 💡  | 💭  | ❌  |
-| :--------------------------------------- | :----------------- | :---- | :-- | :-- | :-- | :-- |
-| [no-foo](docs/rules/no-foo.md)           | disallow using foo | ✅    | 🔧  |     |     |
-| [prefer-bar](docs/rules/prefer-bar.md)   | enforce using bar  | ✅ 🎨 |     | 💡  | 💭  |
-| [require-baz](docs/rules/require-baz.md) | require using baz  |       | 🔧  |     |     | ❌  |
+| Name                                     | Description        | 💼    | 🔧  | 💡  | 💭  | 🗂️  | ❌  |
+| :--------------------------------------- | :----------------- | :---- | :-- | :-- | :-- | :-- | :-- |
+| [no-foo](docs/rules/no-foo.md)           | disallow using foo | ✅    | 🔧  |     |     | ❗  |     |
+| [prefer-bar](docs/rules/prefer-bar.md)   | enforce using bar  | ✅ 🎨 |     | 💡  | 💭  | 📖  |     |
+| [require-baz](docs/rules/require-baz.md) | require using baz  |       | 🔧  |     |     | 📏  | ❌  |
 
 <!-- end rules list -->
 
@@ -146,7 +156,7 @@ And how it looks:
 | `--rule-doc-section-exclude` | Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. |
 | `--rule-doc-section-include` | Required section in each rule doc. Exit with failure if missing. Option can be repeated. |
 | `--rule-doc-title-format` | The format to use for rule doc titles. Defaults to `desc-parens-prefix-name`. See choices in below [table](#--rule-doc-title-format). |
-| `--rule-list-columns` | Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. Choices: `configs`, `deprecated`, `description`, `fixable`, `hasSuggestions`, `name`, `requiresTypeChecking`. Default: `name,description,configs,fixable,hasSuggestions,requiresTypeChecking,deprecated`. |
+| `--rule-list-columns` | Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. Choices: `configs`, `deprecated`, `description`, `fixable`, `hasSuggestions`, `name`, `requiresTypeChecking`, `type` (off by default). Default: `name,description,configs,fixable,hasSuggestions,requiresTypeChecking,deprecated`. |
 | `--url-configs` | Link to documentation about the ESLint configurations exported by the plugin. |
 
 All options are optional.

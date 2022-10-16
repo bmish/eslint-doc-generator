@@ -22,6 +22,7 @@ export interface RuleDetails {
   requiresTypeChecking: boolean;
   deprecated: boolean;
   schema: JSONSchema.JSONSchema4;
+  type?: string; // Rule might not have a type.
 }
 
 /**
