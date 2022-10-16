@@ -2,7 +2,7 @@ import {
   EMOJI_DEPRECATED,
   EMOJI_FIXABLE,
   EMOJI_HAS_SUGGESTIONS,
-  EMOJI_CONFIGS,
+  EMOJI_CONFIG,
   EMOJI_REQUIRES_TYPE_CHECKING,
   EMOJI_TYPE,
 } from './emojis.js';
@@ -59,16 +59,16 @@ const LEGENDS: {
     const legends = [];
     if (
       configNamesWithoutIgnored.length > 1 ||
-      !configEmojis?.find((configEmoji) =>
+      !configEmojis.find((configEmoji) =>
         configNamesWithoutIgnored?.includes(configEmoji.config)
       )?.emoji
     ) {
       // Generic config emoji will be used if the plugin has multiple configs or the sole config has no emoji.
-      legends.push(`${EMOJI_CONFIGS} ${configsLinkOrWord} enabled in.`);
+      legends.push(`${EMOJI_CONFIG} ${configsLinkOrWord} enabled in.`);
     }
     legends.push(
       ...configNames.flatMap((configName) => {
-        const emoji = configEmojis?.find(
+        const emoji = configEmojis.find(
           (configEmoji) => configEmoji.config === configName
         )?.emoji;
         if (!emoji) {

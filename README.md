@@ -131,26 +131,26 @@ The table will hide columns that don't apply to any rules, and the legend will i
 
 ## Badge
 
-If you have any custom configs (besides `recommended`), you'll need to either define emojis for them with `--config-emoji`, or define badges for them at the bottom of your `README.md`.
+For any configs without emojis (see [`--config-emoji`](#configuration-options)), you'll need to define badges for them at the bottom of your `README.md`.
 
-Here's a badge for a custom `style` config that displays in blue:
+Here's a badge for a custom `fun` config that displays in blue:
 
 ```md
-[style]: https://img.shields.io/badge/-style-blue.svg
+[fun]: https://img.shields.io/badge/-fun-blue.svg
 ```
 
 And how it looks:
 
-![style][]
+![fun][]
 
-[style]: https://img.shields.io/badge/-style-blue.svg
+[fun]: https://img.shields.io/badge/-fun-blue.svg
 
 ## Configuration options
 
 | Name | Description |
 | :-- | :-- |
 | `--check` | Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. |
-| `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Defaults to `recommended,✅`. Configs for which no emoji is specified will expect a corresponding [badge](#badge) to be specified in `README.md` instead. Option can be repeated. |
+| `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Default emojis are provided for [common configs](./lib/emojis.ts). Configs for which no emoji is specified will expect a corresponding [badge](#badge) to be specified in `README.md` instead. Option can be repeated. |
 | `--ignore-config` | Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. |
 | `--ignore-deprecated-rules` | Whether to ignore deprecated rules from being checked, displayed, or updated (default: `false`). |
 | `--rule-doc-section-exclude` | Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. |

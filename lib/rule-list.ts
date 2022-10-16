@@ -34,7 +34,7 @@ function getConfigurationColumnValueForRule(
       continue;
     }
     // Find the emoji for the config or otherwise use a badge that can be defined in markdown.
-    const emoji = configEmojis?.find(
+    const emoji = configEmojis.find(
       (configEmoji) => configEmoji.config === configName
     )?.emoji;
     badges.push(emoji ?? `![${configName}][]`);
