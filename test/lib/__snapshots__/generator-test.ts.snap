@@ -573,13 +573,13 @@ exports[`generator #generate rules that are disabled generates the documentation
 exports[`generator #generate shows column and notice for requiresTypeChecking updates the documentation 1`] = `
 "<!-- begin rules list -->
 
-💼 Configurations enabled in.\\
+🌐 Enabled in the \`all\` configuration.\\
 💭 Requires type information.
 
-| Name                           | Description            | 💼       | 💭  |
-| :----------------------------- | :--------------------- | :------- | :-- |
-| [no-bar](docs/rules/no-bar.md) | Description of no-bar. |          | 💭  |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ![all][] |     |
+| Name                           | Description            | 🌐  | 💭  |
+| :----------------------------- | :--------------------- | :-- | :-- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. |     | 💭  |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🌐  |     |
 
 <!-- end rules list -->"
 `;
@@ -587,7 +587,7 @@ exports[`generator #generate shows column and notice for requiresTypeChecking up
 exports[`generator #generate shows column and notice for requiresTypeChecking updates the documentation 2`] = `
 "# Description of no-foo (\`test/no-foo\`)
 
-💼 This rule is enabled in the \`all\` config.
+🌐 This rule is enabled in the \`all\` config.
 
 <!-- end rule header -->
 "
@@ -609,15 +609,17 @@ Description.
 <!-- begin rules list -->
 
 💼 Configurations enabled in.\\
+🌐 Enabled in the \`all\` configuration.\\
 ✅ Enabled in the \`recommended\` configuration.\\
+🎨 Enabled in the \`style\` configuration.\\
 🔧 Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\\
 💡 Manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
-| Name                           | Description            | 💼                  | 🔧  | 💡  |
-| :----------------------------- | :--------------------- | :------------------ | :-- | :-- |
-| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | ![all][] ![style][] | 🔧  |     |
-| [no-baz](docs/rules/no-baz.md) | Description of no-boz. |                     |     |     |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ![all][] ✅         | 🔧  | 💡  |
+| Name                           | Description            | 💼    | 🔧  | 💡  |
+| :----------------------------- | :--------------------- | :---- | :-- | :-- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | 🌐 🎨 | 🔧  |     |
+| [no-baz](docs/rules/no-baz.md) | Description of no-boz. |       |     |     |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🌐 ✅ | 🔧  | 💡  |
 
 <!-- end rules list -->
 more content."
@@ -626,7 +628,7 @@ more content."
 exports[`generator #generate successful updates the documentation 2`] = `
 "# Description of no-foo (\`test/no-foo\`)
 
-💼 This rule is enabled in the following configs: \`all\`, ✅ \`recommended\`.
+💼 This rule is enabled in the following configs: 🌐 \`all\`, ✅ \`recommended\`.
 
 🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
@@ -643,7 +645,7 @@ optionToDoSomething2 - explanation"
 exports[`generator #generate successful updates the documentation 3`] = `
 "# Description of no-bar (\`test/no-bar\`)
 
-💼 This rule is enabled in the following configs: \`all\`, \`style\`.
+💼 This rule is enabled in the following configs: 🌐 \`all\`, 🎨 \`style\`.
 
 🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
@@ -663,12 +665,12 @@ details"
 exports[`generator #generate uses prettier config from package.json should wrap prose in rule doc header to just 20 chars 1`] = `
 "<!-- begin rules list -->
 
-💼 Configurations
-enabled in.
+🌐 Enabled in the
+\`all\` configuration.
 
-| Name                           | Description            | 💼       |
-| :----------------------------- | :--------------------- | :------- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ![all][] |
+| Name                           | Description            | 🌐  |
+| :----------------------------- | :--------------------- | :-- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🌐  |
 
 <!-- end rules list -->"
 `;
@@ -676,7 +678,7 @@ enabled in.
 exports[`generator #generate uses prettier config from package.json should wrap prose in rule doc header to just 20 chars 2`] = `
 "# Description of no-foo (\`test/no-foo\`)
 
-💼 This rule is
+🌐 This rule is
 enabled in the \`all\`
 config.
 
@@ -939,4 +941,27 @@ exports[`generator #generate with one blank line around comment markers generate
 <!-- end rule header -->
 
 One blank line before this."
+`;
+
+exports[`generator #generate with one config that does not have emoji shows the default config emoji 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+💼 Configurations enabled in.
+
+| Name                           | Description             | 💼                      |
+| :----------------------------- | :---------------------- | :---------------------- |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ![configWithoutEmoji][] |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate with one config that does not have emoji shows the default config emoji 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+💼 This rule is enabled in the \`configWithoutEmoji\` config.
+
+<!-- end rule header -->
+"
 `;

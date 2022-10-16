@@ -1,8 +1,20 @@
-// Specific configs.
-export const EMOJI_CONFIG_RECOMMENDED = '✅';
+// Default emojis for common configs.
+export const EMOJI_CONFIGS = {
+  a11y: '⌨️',
+  accessibility: '⌨️',
+  all: '🌐',
+  error: '❗',
+  errors: '❗',
+  recommended: '✅',
+  strict: '🔒',
+  style: '🎨',
+  stylistic: '🎨',
+  warning: '⚠️',
+  warnings: '⚠️',
+};
 
 //  General configs.
-export const EMOJI_CONFIGS = '💼';
+export const EMOJI_CONFIG = '💼';
 
 // Fixers.
 export const EMOJI_FIXABLE = '🔧';

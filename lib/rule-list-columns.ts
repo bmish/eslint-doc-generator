@@ -1,5 +1,5 @@
 import {
-  EMOJI_CONFIGS,
+  EMOJI_CONFIG,
   EMOJI_DEPRECATED,
   EMOJI_FIXABLE,
   EMOJI_HAS_SUGGESTIONS,
@@ -62,10 +62,10 @@ export const COLUMN_HEADER: {
       (configName) => !ignoreConfig?.includes(configName)
     );
     return configNamesWithoutIgnored.length > 1
-      ? EMOJI_CONFIGS
-      : configEmojis?.find((configEmoji) =>
+      ? EMOJI_CONFIG
+      : configEmojis.find((configEmoji) =>
           configNamesWithoutIgnored.includes(configEmoji.config)
-        )?.emoji ?? EMOJI_CONFIGS;
+        )?.emoji ?? EMOJI_CONFIG;
   },
 
   // Simple strings.

@@ -2494,6 +2494,47 @@ describe('generator', function () {
         );
       });
     });
+    describe('with one config that does not have emoji', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
+              },
+              configs: {
+                configWithoutEmoji: { rules: { 'test/no-foo': 'error' } },
+              }
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('shows the default config emoji', async function () {
+        await generate('.');
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
 
     describe('with --rule-list-columns', function () {
       beforeEach(function () {

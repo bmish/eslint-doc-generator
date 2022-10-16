@@ -3,7 +3,7 @@ import {
   EMOJI_DEPRECATED,
   EMOJI_FIXABLE,
   EMOJI_HAS_SUGGESTIONS,
-  EMOJI_CONFIGS,
+  EMOJI_CONFIG,
   EMOJI_REQUIRES_TYPE_CHECKING,
 } from './emojis.js';
 import { getConfigsForRule } from './configs.js';
@@ -62,19 +62,19 @@ const RULE_NOTICES: {
       // Rule is enabled in multiple configs.
       const configs = configsEnabled
         .map((configEnabled) => {
-          const emoji = configEmojis?.find(
+          const emoji = configEmojis.find(
             (configEmoji) => configEmoji.config === configEnabled
           )?.emoji;
           return `${emoji ? `${emoji} ` : ''}\`${configEnabled}\``;
         })
         .join(', ');
-      return `${EMOJI_CONFIGS} This rule is enabled in the following ${configsLinkOrWord}: ${configs}.`;
+      return `${EMOJI_CONFIG} This rule is enabled in the following ${configsLinkOrWord}: ${configs}.`;
     } else {
       // Rule only enabled in one config.
       const emoji =
-        configEmojis?.find(
+        configEmojis.find(
           (configEmoji) => configEmoji.config === configsEnabled?.[0]
-        )?.emoji ?? EMOJI_CONFIGS;
+        )?.emoji ?? EMOJI_CONFIG;
       return `${emoji} This rule is enabled in the \`${configsEnabled?.[0]}\` ${configLinkOrWord}.`;
     }
   },

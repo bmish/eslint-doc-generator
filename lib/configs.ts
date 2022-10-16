@@ -1,4 +1,4 @@
-import { EMOJI_CONFIG_RECOMMENDED } from './emojis.js';
+import { EMOJI_CONFIGS } from './emojis.js';
 import type { Plugin, ConfigsToRules, ConfigEmojis } from './types.js';
 
 const SEVERITY_ENABLED = new Set([2, 'error']);
@@ -55,14 +55,11 @@ export function parseConfigEmojiOptions(
       return { config, emoji };
     }) || [];
 
-  // Add default emoji for the common `recommended` config.
-  if (
-    !configEmojis.some((configEmoji) => configEmoji.config === 'recommended')
-  ) {
-    configEmojis.push({
-      config: 'recommended',
-      emoji: EMOJI_CONFIG_RECOMMENDED,
-    });
+  // Add default emojis for the common configs for which the user hasn't already specified an emoji.
+  for (const [config, emoji] of Object.entries(EMOJI_CONFIGS)) {
+    if (!configEmojis.some((configEmoji) => configEmoji.config === config)) {
+      configEmojis.push({ config, emoji });
+    }
   }
 
   return configEmojis;
