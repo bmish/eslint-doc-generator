@@ -615,6 +615,32 @@ describe('generator', function () {
       });
     });
 
+    describe('Package.json `main` field points to non-existent file', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            type: 'module',
+            main: 'index.js',
+          }),
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+      it('throws an error', async function () {
+        await expect(generate('.')).rejects.toThrow(
+          'Could not find entry point for ESLint plugin. Tried: index.js'
+        );
+      });
+    });
+
     describe('README missing rule list markers but with rules section', function () {
       beforeEach(function () {
         mockFs({
@@ -1100,6 +1126,118 @@ describe('generator', function () {
         expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
 
         expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('package.json using exports, as string', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            exports: './index.js',
+          }),
+
+          'index.js': `export default {
+            rules: {
+              'no-foo': {
+                meta: { docs: { description: 'disallow foo.' }, },
+                create(context) {}
+              },
+            },
+          };`,
+
+          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+      it('finds the entry point', async function () {
+        await expect(generate('.')).resolves.toBeUndefined();
+      });
+    });
+
+    describe('package.json using exports, object with dot', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            exports: { '.': './index-foo.js' },
+          }),
+
+          'index-foo.js': `export default {
+            rules: {
+              'no-foo': {
+                meta: { docs: { description: 'disallow foo.' }, },
+                create(context) {}
+              },
+            },
+          };`,
+
+          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+      it('finds the entry point', async function () {
+        await expect(generate('.')).resolves.toBeUndefined();
+      });
+    });
+
+    describe('package.json using exports, with unsupported entry point file type', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            exports: './index.json',
+          }),
+
+          'index.js': `export default {
+            rules: {
+              'no-foo': {
+                meta: { docs: { description: 'disallow foo.' }, },
+                create(context) {}
+              },
+            },
+          };`,
+
+          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+      it('throws an error', async function () {
+        await expect(
+          generate('.', { configEmoji: ['foo,bar,baz'] })
+        ).rejects.toThrow(
+          'Unsupported file type for plugin entry point. Current types supported: .js, .cjs, .mjs. Entry point detected: ./index.json'
+        );
       });
     });
 
