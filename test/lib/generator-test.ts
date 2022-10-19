@@ -2432,6 +2432,7 @@ describe('generator', function () {
       it('hides the ignored config', async function () {
         await generate('.', {
           ignoreConfig: ['configToIgnore'],
+          configEmoji: ['configToIgnore,😋'], // Ensure this config has an emoji that would normally display in the legend.
         });
         expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
