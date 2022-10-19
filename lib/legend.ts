@@ -66,7 +66,7 @@ const LEGENDS: {
       legends.push(`${EMOJI_CONFIG} ${configsLinkOrWord} enabled in.`);
     }
     legends.push(
-      ...configNames.flatMap((configName) => {
+      ...configNamesWithoutIgnored.flatMap((configName) => {
         const emoji = configEmojis.find(
           (configEmoji) => configEmoji.config === configName
         )?.emoji;
