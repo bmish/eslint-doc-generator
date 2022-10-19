@@ -16,6 +16,26 @@
 
 
 
+
+## v0.12.0 (2022-10-19)
+
+#### :rocket: Enhancement
+* [#139](https://github.com/bmish/eslint-doc-generator/pull/139) Add `--rule-doc-notices` option ([@bmish](https://github.com/bmish))
+* [#136](https://github.com/bmish/eslint-doc-generator/pull/136) Add default emojis for common configs ([@bmish](https://github.com/bmish))
+* [#134](https://github.com/bmish/eslint-doc-generator/pull/134) Add optional column and notice for rule type ([@bmish](https://github.com/bmish))
+* [#137](https://github.com/bmish/eslint-doc-generator/pull/137) Support removing the default emoji for a config with `--config-emoji` option ([@bmish](https://github.com/bmish))
+
+#### :bug: Bug Fix
+* [#147](https://github.com/bmish/eslint-doc-generator/pull/147) Hide ignored configs from rule list legend ([@bmish](https://github.com/bmish))
+* [#140](https://github.com/bmish/eslint-doc-generator/pull/140) Handle plugins using `exports` in package.json ([@bmish](https://github.com/bmish))
+
+#### :memo: Documentation
+* [#130](https://github.com/bmish/eslint-doc-generator/pull/130) Add motivation section to README ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.11.0 (2022-10-13)
 
 #### :rocket: Enhancement
