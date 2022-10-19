@@ -29,3 +29,30 @@ export interface RuleDetails {
  * Some configs may have an emoji defined.
  */
 export type ConfigEmojis = { config: string; emoji: string }[];
+
+/**
+ * Rule doc notices.
+ * Same as COLUMN_TYPE but without NAME, DESCRIPTION (which are in the rule doc title).
+ */
+export enum NOTICE_TYPE {
+  CONFIGS = 'configs',
+  DEPRECATED = 'deprecated',
+  FIXABLE = 'fixable',
+  HAS_SUGGESTIONS = 'hasSuggestions',
+  REQUIRES_TYPE_CHECKING = 'requiresTypeChecking',
+  TYPE = 'type',
+}
+
+/**
+ * Rule list columns.
+ */
+export enum COLUMN_TYPE {
+  CONFIGS = 'configs',
+  DEPRECATED = 'deprecated',
+  DESCRIPTION = 'description',
+  FIXABLE = 'fixable',
+  HAS_SUGGESTIONS = 'hasSuggestions',
+  NAME = 'name',
+  REQUIRES_TYPE_CHECKING = 'requiresTypeChecking',
+  TYPE = 'type',
+}

@@ -463,8 +463,6 @@ exports[`generator #generate rule with type, type column enabled displays the ty
 exports[`generator #generate rule with type, type column enabled displays the type 2`] = `
 "# \`test/no-foo\`
 
-❗ This rule identifies problems that could cause errors or unexpected behavior.
-
 <!-- end rule header -->
 "
 `;
@@ -472,16 +470,12 @@ exports[`generator #generate rule with type, type column enabled displays the ty
 exports[`generator #generate rule with type, type column enabled displays the type 3`] = `
 "# \`test/no-bar\`
 
-📖 This rule identifies potential improvements.
-
 <!-- end rule header -->
 "
 `;
 
 exports[`generator #generate rule with type, type column enabled displays the type 4`] = `
 "# \`test/no-biz\`
-
-📏 This rule focuses on code formatting.
 
 <!-- end rule header -->
 "
@@ -534,8 +528,6 @@ exports[`generator #generate rule with type, type column not enabled hides the t
 
 exports[`generator #generate rule with type, type column not enabled hides the type column 2`] = `
 "# \`test/no-foo\`
-
-❗ This rule identifies problems that could cause errors or unexpected behavior.
 
 <!-- end rule header -->
 "
@@ -880,6 +872,37 @@ exports[`generator #generate with --ignore-config hides the ignored config 2`] =
 "# Description for no-foo (\`test/no-foo\`)
 
 ✅ This rule is enabled in the \`recommended\` config.
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate with --rule-doc-notices shows the right rule doc notices 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+🔧 Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\\
+💡 Manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).\\
+❌ Deprecated.
+
+| Name                           | Description             | 🔧  | 💡  | ❌  |
+| :----------------------------- | :---------------------- | :-- | :-- | :-- |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | 🔧  | 💡  | ❌  |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate with --rule-doc-notices shows the right rule doc notices 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+
+🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+❌ This rule is deprecated.
+
+❗ This rule identifies problems that could cause errors or unexpected behavior.
 
 <!-- end rule header -->
 "

@@ -8,10 +8,9 @@ import {
   RULE_DOC_TITLE_FORMAT_DEFAULT,
   RULE_DOC_TITLE_FORMATS,
 } from './rule-doc-title-format.js';
-import {
-  COLUMN_TYPE,
-  COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING,
-} from './rule-list-columns.js';
+import { COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING } from './rule-list-columns.js';
+import { NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING } from './rule-notices.js';
+import { COLUMN_TYPE, NOTICE_TYPE } from './types.js';
 import type { PackageJson } from 'type-fest';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -62,6 +61,17 @@ export function run() {
       false
     )
     .option(
+      '--rule-doc-notices <notices>',
+      `(optional) Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. (choices: "${Object.values(
+        NOTICE_TYPE
+      ).join('", "')}")`,
+      // List of default enabled notices.
+      Object.entries(NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING)
+        .filter(([_col, enabled]) => enabled)
+        .map(([col]) => col)
+        .join(',')
+    )
+    .option(
       '--rule-doc-section-exclude <section>',
       '(optional) Disallowed section in each rule doc (option can be repeated).',
       collect,
@@ -103,6 +113,7 @@ export function run() {
         configEmoji?: string[];
         ignoreConfig: string[];
         ignoreDeprecatedRules?: boolean;
+        ruleDocNotices: string;
         ruleDocSectionExclude: string[];
         ruleDocSectionInclude: string[];
         ruleDocTitleFormat: RuleDocTitleFormat;
@@ -115,6 +126,7 @@ export function run() {
         configEmoji: options.configEmoji,
         ignoreConfig: options.ignoreConfig,
         ignoreDeprecatedRules: options.ignoreDeprecatedRules,
+        ruleDocNotices: options.ruleDocNotices,
         ruleDocSectionExclude: options.ruleDocSectionExclude,
         ruleDocSectionInclude: options.ruleDocSectionInclude,
         ruleDocTitleFormat: options.ruleDocTitleFormat,

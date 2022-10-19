@@ -6,11 +6,12 @@ import {
   EMOJI_REQUIRES_TYPE_CHECKING,
 } from './emojis.js';
 import { getConfigsForRule } from './configs.js';
-import { COLUMN_TYPE, getColumns, COLUMN_HEADER } from './rule-list-columns.js';
+import { getColumns, COLUMN_HEADER } from './rule-list-columns.js';
 import { findSectionHeader, format } from './markdown.js';
 import { getPluginRoot } from './package-json.js';
 import { generateLegend } from './legend.js';
 import { relative } from 'node:path';
+import { COLUMN_TYPE } from './types.js';
 import type {
   Plugin,
   RuleDetails,

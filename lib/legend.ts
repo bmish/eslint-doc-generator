@@ -6,9 +6,8 @@ import {
   EMOJI_REQUIRES_TYPE_CHECKING,
   EMOJI_TYPE,
 } from './emojis.js';
-import { COLUMN_TYPE } from './rule-list-columns.js';
+import { COLUMN_TYPE, ConfigEmojis, Plugin } from './types.js';
 import { RULE_TYPE_MESSAGES_LEGEND, RULE_TYPES } from './rule-type.js';
-import { ConfigEmojis, Plugin } from './types.js';
 
 /**
  * An object containing the legends for each column (as a string or function to generate the string).

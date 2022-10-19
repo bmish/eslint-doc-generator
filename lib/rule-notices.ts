@@ -18,13 +18,26 @@ import {
   RuleDocTitleFormat,
   RULE_DOC_TITLE_FORMAT_DEFAULT,
 } from './rule-doc-title-format.js';
-import { COLUMN_TYPE } from './rule-list-columns.js';
+import { NOTICE_TYPE } from './types.js';
+
+export const NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
+  [key in NOTICE_TYPE]: boolean;
+} = {
+  // Object keys ordered in display order.
+  // Object values indicate whether the column is displayed by default.
+  [NOTICE_TYPE.DEPRECATED]: true, // Most important.
+  [NOTICE_TYPE.CONFIGS]: true,
+  [NOTICE_TYPE.FIXABLE]: true,
+  [NOTICE_TYPE.HAS_SUGGESTIONS]: true,
+  [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]: true,
+  [NOTICE_TYPE.TYPE]: false,
+};
 
 /**
  * An object containing the text for each notice type (as a string or function to generate the string).
  */
 const RULE_NOTICES: {
-  [key in COLUMN_TYPE]:
+  [key in NOTICE_TYPE]:
     | string
     | undefined
     | ((data: {
@@ -36,7 +49,7 @@ const RULE_NOTICES: {
       }) => string);
 } = {
   // Configs notice varies based on whether the rule is enabled in one or more configs.
-  [COLUMN_TYPE.CONFIGS]: ({
+  [NOTICE_TYPE.CONFIGS]: ({
     configsEnabled,
     configEmojis,
     urlConfigs,
@@ -80,7 +93,7 @@ const RULE_NOTICES: {
   },
 
   // Deprecated notice has optional "replaced by" rules list.
-  [COLUMN_TYPE.DEPRECATED]: ({
+  [NOTICE_TYPE.DEPRECATED]: ({
     replacedBy,
   }: {
     replacedBy?: readonly string[] | undefined;
@@ -91,7 +104,7 @@ const RULE_NOTICES: {
         : ''
     }`,
 
-  [COLUMN_TYPE.TYPE]: ({ type }: { type?: RULE_TYPE }) => {
+  [NOTICE_TYPE.TYPE]: ({ type }: { type?: RULE_TYPE }) => {
     /* istanbul ignore next -- this shouldn't happen */
     if (!type) {
       throw new Error(
@@ -102,13 +115,9 @@ const RULE_NOTICES: {
   },
 
   // Simple strings.
-  [COLUMN_TYPE.FIXABLE]: `${EMOJI_FIXABLE} This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).`,
-  [COLUMN_TYPE.HAS_SUGGESTIONS]: `${EMOJI_HAS_SUGGESTIONS} This rule is manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`,
-  [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: `${EMOJI_REQUIRES_TYPE_CHECKING} This rule requires type information.`,
-
-  // No notice for these.
-  [COLUMN_TYPE.DESCRIPTION]: undefined,
-  [COLUMN_TYPE.NAME]: undefined,
+  [NOTICE_TYPE.FIXABLE]: `${EMOJI_FIXABLE} This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).`,
+  [NOTICE_TYPE.HAS_SUGGESTIONS]: `${EMOJI_HAS_SUGGESTIONS} This rule is manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`,
+  [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]: `${EMOJI_REQUIRES_TYPE_CHECKING} This rule requires type information.`,
 };
 
 /**
@@ -123,22 +132,28 @@ function ruleNamesToList(ruleNames: readonly string[]) {
 /**
  * Determine which notices should and should not be included at the top of a rule doc.
  */
-function getNoticesForRule(rule: RuleModule, configsEnabled: string[]) {
+function getNoticesForRule(
+  rule: RuleModule,
+  configsEnabled: string[],
+  ruleDocNotices: NOTICE_TYPE[]
+) {
   const notices: {
-    [key in COLUMN_TYPE]: boolean;
+    [key in NOTICE_TYPE]: boolean;
   } = {
-    [COLUMN_TYPE.CONFIGS]: configsEnabled.length > 0,
-    [COLUMN_TYPE.DEPRECATED]: rule.meta.deprecated || false,
-    [COLUMN_TYPE.DESCRIPTION]: false, // No notice for this column.
-    [COLUMN_TYPE.FIXABLE]: Boolean(rule.meta.fixable),
-    [COLUMN_TYPE.HAS_SUGGESTIONS]: rule.meta.hasSuggestions || false,
-    [COLUMN_TYPE.NAME]: false, // No notice for this column.
-    [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]:
+    // Alphabetical order.
+    [NOTICE_TYPE.CONFIGS]: configsEnabled.length > 0,
+    [NOTICE_TYPE.DEPRECATED]: rule.meta.deprecated || false,
+    [NOTICE_TYPE.FIXABLE]: Boolean(rule.meta.fixable),
+    [NOTICE_TYPE.HAS_SUGGESTIONS]: rule.meta.hasSuggestions || false,
+    [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]:
       rule.meta.docs?.requiresTypeChecking || false,
-    [COLUMN_TYPE.TYPE]: Boolean(rule.meta.type),
+    [NOTICE_TYPE.TYPE]: Boolean(rule.meta.type),
   };
 
-  return notices;
+  // Recreate object using the ordering and presence of columns specified in ruleDocNotices.
+  return Object.fromEntries(
+    ruleDocNotices.map((type) => [type, notices[type]])
+  ) as Record<NOTICE_TYPE, boolean>;
 }
 
 /**
@@ -151,6 +166,7 @@ function getRuleNoticeLines(
   pluginPrefix: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: string[],
+  ruleDocNotices: NOTICE_TYPE[],
   urlConfigs?: string
 ) {
   const lines: string[] = [];
@@ -173,7 +189,7 @@ function getRuleNoticeLines(
     configsToRules,
     pluginPrefix
   ).filter((config) => !ignoreConfig?.includes(config));
-  const notices = getNoticesForRule(rule, configsEnabled);
+  const notices = getNoticesForRule(rule, configsEnabled, ruleDocNotices);
   let noticeType: keyof typeof notices;
 
   for (noticeType in notices) {
@@ -267,6 +283,7 @@ export function generateRuleHeaderLines(
   pluginPrefix: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: string[],
+  ruleDocNotices: NOTICE_TYPE[],
   ruleDocTitleFormat?: RuleDocTitleFormat,
   urlConfigs?: string
 ): string {
@@ -279,6 +296,7 @@ export function generateRuleHeaderLines(
       pluginPrefix,
       configEmojis,
       ignoreConfig,
+      ruleDocNotices,
       urlConfigs
     ),
     '',

@@ -2889,6 +2889,134 @@ describe('generator', function () {
       });
     });
 
+    describe('with --rule-doc-notices', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: {
+                    docs: { description: 'Description for no-foo.' },
+                    hasSuggestions: true,
+                    fixable: 'code',
+                    deprecated: true,
+                    type: 'problem'
+                  },
+                  create(context) {}
+                },
+              },
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('shows the right rule doc notices', async function () {
+        await generate('.', {
+          ruleDocNotices: 'hasSuggestions,fixable,deprecated,type', // Random values including an optional notice.
+        });
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('with --rule-doc-notices and non-existent notice', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
+              },
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('throws an error', async function () {
+        await expect(
+          generate('.', { ruleDocNotices: 'fixable,non-existent' })
+        ).rejects.toThrow('Invalid ruleDocNotices option: non-existent');
+      });
+    });
+
+    describe('with --rule-doc-notices and duplicate notice', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
+              },
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('throws an error', async function () {
+        await expect(
+          generate('.', { ruleDocNotices: 'fixable,fixable' })
+        ).rejects.toThrow('Duplicate value detected in ruleDocNotices option.');
+      });
+    });
+
     describe('rule with type, type column not enabled', function () {
       beforeEach(function () {
         mockFs({
