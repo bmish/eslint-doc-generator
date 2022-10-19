@@ -439,6 +439,44 @@ Pre-existing notice about the rule being recommended.
 Details."
 `;
 
+exports[`generator #generate rule with long-enough description to require name column wrapping avoidance adds spaces to the name column 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+| Name&nbsp;&nbsp;               | Description                                                                         |
+| :----------------------------- | :---------------------------------------------------------------------------------- |
+| [no-foo](docs/rules/no-foo.md) | over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate rule with long-enough description to require name column wrapping avoidance adds spaces to the name column 2`] = `
+"# Over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars (\`test/no-foo\`)
+
+<!-- end rule header -->
+"
+`;
+
+exports[`generator #generate rule with long-enough description to require name column wrapping avoidance but rule name too short does not add spaces to name column 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+| Name                     | Description                                                                         |
+| :----------------------- | :---------------------------------------------------------------------------------- |
+| [foo](docs/rules/foo.md) | over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate rule with long-enough description to require name column wrapping avoidance but rule name too short does not add spaces to name column 2`] = `
+"# Over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars (\`test/foo\`)
+
+<!-- end rule header -->
+"
+`;
+
 exports[`generator #generate rule with type, type column enabled displays the type 1`] = `
 "## Rules
 <!-- begin rules list -->

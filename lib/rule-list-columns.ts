@@ -35,19 +35,11 @@ export const COLUMN_HEADER: {
         configNames: string[];
         configEmojis: ConfigEmojis;
         ignoreConfig: string[];
+        details: RuleDetails[];
       }) => string);
 } = {
   // Use the general config emoji if there are multiple configs or the sole config doesn't have an emoji.
-  [COLUMN_TYPE.CONFIGS]: ({
-    configNames,
-    configEmojis,
-    ignoreConfig,
-  }: {
-    configNames: string[];
-    configEmojis: ConfigEmojis;
-    ignoreConfig: string[];
-    urlConfigs?: string;
-  }) => {
+  [COLUMN_TYPE.CONFIGS]: ({ configNames, configEmojis, ignoreConfig }) => {
     const configNamesWithoutIgnored = configNames.filter(
       (configName) => !ignoreConfig?.includes(configName)
     );
@@ -58,12 +50,37 @@ export const COLUMN_HEADER: {
         )?.emoji ?? EMOJI_CONFIG;
   },
 
+  [COLUMN_TYPE.NAME]: ({ details }) => {
+    const ruleNames = details.map((detail) => detail.name);
+    const longestRuleNameLength = Math.max(
+      ...ruleNames.map(({ length }) => length)
+    );
+    const ruleDescriptions = details.map((detail) => detail.description);
+    const longestRuleDescriptionLength = Math.max(
+      ...ruleDescriptions.map((description) =>
+        description ? description.length : 0
+      )
+    );
+
+    const title = 'Name';
+
+    // Add nbsp spaces to prevent rule names from wrapping to multiple lines.
+    // Generally only needed when long descriptions are present causing the name column to wrap.
+    const spaces =
+      ruleNames.length > 0 &&
+      longestRuleDescriptionLength >= 60 &&
+      longestRuleNameLength > title.length
+        ? '&nbsp;'.repeat(longestRuleNameLength - title.length)
+        : '';
+
+    return `${title}${spaces}`;
+  },
+
   // Simple strings.
   [COLUMN_TYPE.DEPRECATED]: EMOJI_DEPRECATED,
   [COLUMN_TYPE.DESCRIPTION]: 'Description',
   [COLUMN_TYPE.FIXABLE]: EMOJI_FIXABLE,
   [COLUMN_TYPE.HAS_SUGGESTIONS]: EMOJI_HAS_SUGGESTIONS,
-  [COLUMN_TYPE.NAME]: 'Name',
   [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: EMOJI_REQUIRES_TYPE_CHECKING,
   [COLUMN_TYPE.TYPE]: EMOJI_TYPE,
 };

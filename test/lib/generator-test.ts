@@ -3146,5 +3146,83 @@ describe('generator', function () {
         expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
       });
     });
+
+    describe('rule with long-enough description to require name column wrapping avoidance', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': { meta: { docs: { description: 'over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars'} }, create(context) {} },
+              },
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('adds spaces to the name column', async function () {
+        await generate('.');
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('rule with long-enough description to require name column wrapping avoidance but rule name too short', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'foo': { meta: { docs: { description: 'over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars'} }, create(context) {} },
+              },
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('does not add spaces to name column', async function () {
+        await generate('.');
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
   });
 });
