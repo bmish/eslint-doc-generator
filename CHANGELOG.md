@@ -17,6 +17,19 @@
 
 
 
+
+## v0.13.0 (2022-10-20)
+
+#### :rocket: Enhancement
+* [#149](https://github.com/bmish/eslint-doc-generator/pull/149) Add consolidated rule doc notice for fixable and suggestions ([@bmish](https://github.com/bmish))
+
+#### :bug: Bug Fix
+* [#148](https://github.com/bmish/eslint-doc-generator/pull/148) Avoid wrapping name column in rules list ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.12.0 (2022-10-19)
 
 #### :rocket: Enhancement
