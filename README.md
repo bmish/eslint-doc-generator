@@ -74,6 +74,8 @@ Generated content in a rule doc (everything above the marker comment) (intention
 
 💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+
 💭 This rule requires type information.
 
 ❗ This rule identifies problems that could cause errors or unexpected behavior.
