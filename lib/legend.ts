@@ -29,11 +29,6 @@ const LEGENDS: {
     configEmojis,
     urlConfigs,
     ignoreConfig,
-  }: {
-    plugin: Plugin;
-    configEmojis: ConfigEmojis;
-    ignoreConfig: string[];
-    urlConfigs?: string;
   }) => {
     /* istanbul ignore next -- this shouldn't happen */
     if (!plugin.configs) {
@@ -83,7 +78,7 @@ const LEGENDS: {
   },
 
   // Legends are included for each rule type present.
-  [COLUMN_TYPE.TYPE]: ({ plugin }: { plugin: Plugin }) => {
+  [COLUMN_TYPE.TYPE]: ({ plugin }) => {
     /* istanbul ignore next -- this shouldn't happen */
     if (!plugin.rules) {
       throw new Error(

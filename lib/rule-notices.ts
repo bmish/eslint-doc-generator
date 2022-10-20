@@ -49,15 +49,7 @@ const RULE_NOTICES: {
       }) => string);
 } = {
   // Configs notice varies based on whether the rule is enabled in one or more configs.
-  [NOTICE_TYPE.CONFIGS]: ({
-    configsEnabled,
-    configEmojis,
-    urlConfigs,
-  }: {
-    configsEnabled?: string[];
-    configEmojis: ConfigEmojis;
-    urlConfigs?: string;
-  }) => {
+  [NOTICE_TYPE.CONFIGS]: ({ configsEnabled, configEmojis, urlConfigs }) => {
     // Add link to configs documentation if provided.
     const configsLinkOrWord = urlConfigs
       ? `[configs](${urlConfigs})`
@@ -93,18 +85,14 @@ const RULE_NOTICES: {
   },
 
   // Deprecated notice has optional "replaced by" rules list.
-  [NOTICE_TYPE.DEPRECATED]: ({
-    replacedBy,
-  }: {
-    replacedBy?: readonly string[] | undefined;
-  }) =>
+  [NOTICE_TYPE.DEPRECATED]: ({ replacedBy }) =>
     `${EMOJI_DEPRECATED} This rule is deprecated.${
       replacedBy && replacedBy.length > 0
         ? ` It was replaced by ${ruleNamesToList(replacedBy)}.`
         : ''
     }`,
 
-  [NOTICE_TYPE.TYPE]: ({ type }: { type?: RULE_TYPE }) => {
+  [NOTICE_TYPE.TYPE]: ({ type }) => {
     /* istanbul ignore next -- this shouldn't happen */
     if (!type) {
       throw new Error(

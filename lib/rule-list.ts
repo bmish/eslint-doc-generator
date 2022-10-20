@@ -104,6 +104,7 @@ function generateRulesListMarkdown(
             configNames: Object.keys(configsToRules),
             configEmojis,
             ignoreConfig,
+            details,
           })
         : headerStrOrFn,
     ];
