@@ -38,6 +38,7 @@ export enum NOTICE_TYPE {
   CONFIGS = 'configs',
   DEPRECATED = 'deprecated',
   FIXABLE = 'fixable',
+  FIXABLE_AND_HAS_SUGGESTIONS = 'fixableAndHasSuggestions', // Consolidated notice for space-saving.
   HAS_SUGGESTIONS = 'hasSuggestions',
   REQUIRES_TYPE_CHECKING = 'requiresTypeChecking',
   TYPE = 'type',
