@@ -28,6 +28,7 @@ export const NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
   [NOTICE_TYPE.DEPRECATED]: true, // Most important.
   [NOTICE_TYPE.CONFIGS]: true,
   [NOTICE_TYPE.FIXABLE]: true,
+  [NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: true, // Potentially replaces FIXABLE and HAS_SUGGESTIONS.
   [NOTICE_TYPE.HAS_SUGGESTIONS]: true,
   [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]: true,
   [NOTICE_TYPE.TYPE]: false,
@@ -104,6 +105,7 @@ const RULE_NOTICES: {
 
   // Simple strings.
   [NOTICE_TYPE.FIXABLE]: `${EMOJI_FIXABLE} This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).`,
+  [NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: `${EMOJI_FIXABLE}${EMOJI_HAS_SUGGESTIONS} This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`,
   [NOTICE_TYPE.HAS_SUGGESTIONS]: `${EMOJI_HAS_SUGGESTIONS} This rule is manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`,
   [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]: `${EMOJI_REQUIRES_TYPE_CHECKING} This rule requires type information.`,
 };
@@ -131,8 +133,19 @@ function getNoticesForRule(
     // Alphabetical order.
     [NOTICE_TYPE.CONFIGS]: configsEnabled.length > 0,
     [NOTICE_TYPE.DEPRECATED]: rule.meta.deprecated || false,
-    [NOTICE_TYPE.FIXABLE]: Boolean(rule.meta.fixable),
-    [NOTICE_TYPE.HAS_SUGGESTIONS]: rule.meta.hasSuggestions || false,
+
+    // FIXABLE_AND_HAS_SUGGESTIONS potentially replaces FIXABLE and HAS_SUGGESTIONS.
+    [NOTICE_TYPE.FIXABLE]:
+      Boolean(rule.meta.fixable) &&
+      (!rule.meta.hasSuggestions ||
+        !ruleDocNotices.includes(NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS)),
+    [NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]:
+      Boolean(rule.meta.fixable) && Boolean(rule.meta.hasSuggestions),
+    [NOTICE_TYPE.HAS_SUGGESTIONS]:
+      Boolean(rule.meta.hasSuggestions) &&
+      (!rule.meta.fixable ||
+        !ruleDocNotices.includes(NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS)),
+
     [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]:
       rule.meta.docs?.requiresTypeChecking || false,
     [NOTICE_TYPE.TYPE]: Boolean(rule.meta.type),
