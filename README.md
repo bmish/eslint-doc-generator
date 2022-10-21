@@ -70,6 +70,8 @@ Generated content in a rule doc (everything above the marker comment) (intention
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `stylistic`.
 
+🎨 This rule is _disabled_ in the `stylistic` config.
+
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
 💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
