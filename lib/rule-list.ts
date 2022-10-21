@@ -12,6 +12,7 @@ import { getPluginRoot } from './package-json.js';
 import { generateLegend } from './legend.js';
 import { relative } from 'node:path';
 import { COLUMN_TYPE } from './types.js';
+import { markdownTable } from 'markdown-table';
 import type {
   Plugin,
   RuleDetails,
@@ -109,27 +110,25 @@ function generateRulesListMarkdown(
         : headerStrOrFn,
     ];
   });
-  const listSpacerRow = Array.from({ length: listHeaderRow.length }).fill(
-    ':--'
-  ); // Left-align header with colon.
-  return [
-    listHeaderRow,
-    listSpacerRow,
-    ...details
-      .sort(({ name: a }, { name: b }) => a.localeCompare(b))
-      .map((rule: RuleDetails) =>
-        buildRuleRow(
-          columns,
-          rule,
-          configsToRules,
-          pluginPrefix,
-          configEmojis,
-          ignoreConfig
-        )
-      ),
-  ]
-    .map((column) => [...column, ' '].join('|'))
-    .join('\n');
+
+  return markdownTable(
+    [
+      listHeaderRow,
+      ...details
+        .sort(({ name: a }, { name: b }) => a.localeCompare(b))
+        .map((rule: RuleDetails) =>
+          buildRuleRow(
+            columns,
+            rule,
+            configsToRules,
+            pluginPrefix,
+            configEmojis,
+            ignoreConfig
+          )
+        ),
+    ],
+    { align: 'l' } // Left-align headers.
+  );
 }
 
 export async function updateRulesList(
