@@ -52,10 +52,12 @@ const LEGENDS: {
 
     const legends = [];
     if (
-      configNamesWithoutIgnored.length > 1 ||
-      !configEmojis.find((configEmoji) =>
-        configNamesWithoutIgnored?.includes(configEmoji.config)
-      )?.emoji
+      (configNamesWithoutIgnored.length > 1 ||
+        !configEmojis.find((configEmoji) =>
+          configNamesWithoutIgnored?.includes(configEmoji.config)
+        )?.emoji) &&
+      // If any configs are using the generic config emoji, then don't display the generic config legend.
+      !configEmojis.some((configEmoji) => configEmoji.emoji === EMOJI_CONFIG)
     ) {
       // Generic config emoji will be used if the plugin has multiple configs or the sole config has no emoji.
       legends.push(`${EMOJI_CONFIG} ${configsLinkOrWord} enabled in.`);
