@@ -112,9 +112,9 @@ describe('generator', function () {
             # eslint-plugin-test
             Description.
             ## Rules
-            <!-- begin rules list -->
+            <!-- begin auto-generated rules list -->
             ...
-            <!-- end rules list -->
+            <!-- end auto-generated rules list -->
             more content.
           `,
 
@@ -123,7 +123,7 @@ describe('generator', function () {
           'docs/rules/no-foo.md': outdent`
             # title (rule-name)
             description
-            <!-- end rule header -->
+            <!-- end auto-generated rule header -->
             ## Rule details
             details
             ## Options
@@ -131,7 +131,7 @@ describe('generator', function () {
             optionToDoSomething2 - explanation
           `, // rule doc with incorrect header content
           'docs/rules/no-bar.md': outdent`
-            <!-- end rule header -->
+            <!-- end auto-generated rule header -->
             ## Rule details
             details
           `, // marker but no header content
@@ -189,7 +189,8 @@ describe('generator', function () {
               }
             };`,
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           'docs/rules/no-foo.md': '',
 
@@ -240,7 +241,8 @@ describe('generator', function () {
               }
             };`,
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           'docs/rules/no-foo.md': outdent`
             # Some pre-existing title.
@@ -314,7 +316,8 @@ describe('generator', function () {
               configs: {}
             };`,
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           'docs/rules/no-foo.md': '',
           'docs/rules/no-bar.md': '',
@@ -365,7 +368,8 @@ describe('generator', function () {
               configs: {}
             };`,
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           // Needed for some of the test infrastructure to work.
           node_modules: mockFs.load(
@@ -405,7 +409,8 @@ describe('generator', function () {
               },
             };`,
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           // Needed for some of the test infrastructure to work.
           node_modules: mockFs.load(
@@ -483,7 +488,8 @@ describe('generator', function () {
               },
             };`,
 
-          'readme.md': '<!-- begin rules list --><!-- end rules list -->',
+          'readme.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
           'docs/rules/no-foo.md': '',
 
           // Needed for some of the test infrastructure to work.
@@ -534,7 +540,8 @@ describe('generator', function () {
               }
             };`,
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           'docs/rules/no-foo.md': '',
           'docs/rules/no-bar.md': '',
@@ -570,7 +577,8 @@ describe('generator', function () {
 
           'index.js': 'export default { rules: {} };',
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           // Needed for some of the test infrastructure to work.
           node_modules: mockFs.load(
@@ -598,7 +606,8 @@ describe('generator', function () {
 
           'lib/index.js': 'export default { rules: {} };',
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           // Needed for some of the test infrastructure to work.
           node_modules: mockFs.load(
@@ -757,7 +766,8 @@ describe('generator', function () {
               }
             };`,
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           'docs/rules/no-foo.md': '## Options\n', // empty
 
@@ -804,7 +814,8 @@ describe('generator', function () {
               },
             };`,
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           'docs/rules/no-foo.md': '', // empty
 
@@ -849,7 +860,8 @@ describe('generator', function () {
               configs: {}
             };`,
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           'docs/rules/no-foo.md': '',
 
@@ -909,7 +921,8 @@ describe('generator', function () {
               }
             };`,
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           'docs/rules/no-foo.md': '## Options\n', // empty
 
@@ -998,7 +1011,8 @@ describe('generator', function () {
               }
             };`,
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           'docs/rules/no-foo.md': '',
 
@@ -1037,7 +1051,8 @@ describe('generator', function () {
               }
             };`,
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           'docs/rules/no-foo.md': '',
 
@@ -1069,7 +1084,8 @@ describe('generator', function () {
 
           'index.js': 'export default {};',
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           'docs/rules/no-foo.md': '',
 
@@ -1106,7 +1122,8 @@ describe('generator', function () {
             },
           };`,
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           'docs/rules/no-foo.md': '',
 
@@ -1146,7 +1163,8 @@ describe('generator', function () {
             },
           };`,
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           'docs/rules/no-foo.md': '',
 
@@ -1182,7 +1200,8 @@ describe('generator', function () {
             },
           };`,
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           'docs/rules/no-foo.md': '',
 
@@ -1218,7 +1237,8 @@ describe('generator', function () {
             },
           };`,
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           'docs/rules/no-foo.md': '',
 
@@ -1264,7 +1284,8 @@ describe('generator', function () {
                       },
                     };`,
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           'docs/rules/no-foo.md': outdent`
             ## Rule details
@@ -1319,7 +1340,8 @@ describe('generator', function () {
                   }
                 };`,
 
-          'README.md': '<!-- begin rules list --><!-- end rules list -->',
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
 
           'docs/rules/no-foo.md': outdent`
             ## Rule details
@@ -1371,16 +1393,16 @@ describe('generator', function () {
 
             One blank line after this.
 
-            <!-- begin rules list -->
+            <!-- begin auto-generated rules list -->
 
 
-            <!-- end rules list -->
+            <!-- end auto-generated rules list -->
 
             One blank line before this.
           `,
 
           'docs/rules/no-foo.md': outdent`
-            <!-- end rule header -->
+            <!-- end auto-generated rule header -->
 
             One blank line before this.
           `,
@@ -1428,13 +1450,13 @@ describe('generator', function () {
             # Rules
 
             No blank line after this.
-            <!-- begin rules list -->
-            <!-- end rules list -->
+            <!-- begin auto-generated rules list -->
+            <!-- end auto-generated rules list -->
             No blank line before this.
           `,
 
           'docs/rules/no-foo.md': outdent`
-            <!-- end rule header -->
+            <!-- end auto-generated rule header -->
             No blank line before this.
           `,
 
