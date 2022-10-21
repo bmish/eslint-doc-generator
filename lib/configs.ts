@@ -1,7 +1,10 @@
 import { EMOJI_CONFIGS } from './emojis.js';
-import type { Plugin, ConfigsToRules, ConfigEmojis } from './types.js';
-
-const SEVERITY_ENABLED = new Set([2, 'error']);
+import type {
+  Plugin,
+  ConfigsToRules,
+  ConfigEmojis,
+  RuleSeverity,
+} from './types.js';
 
 /**
  * Get config names that a given rule belongs to.
@@ -9,7 +12,8 @@ const SEVERITY_ENABLED = new Set([2, 'error']);
 export function getConfigsForRule(
   ruleName: string,
   configsToRules: ConfigsToRules,
-  pluginPrefix: string
+  pluginPrefix: string,
+  severity: Set<RuleSeverity>
 ) {
   const configNames: Array<keyof typeof configsToRules> = [];
 
@@ -18,11 +22,11 @@ export function getConfigsForRule(
     const value = rules[`${pluginPrefix}/${ruleName}`];
     const isEnabled =
       ((typeof value === 'string' || typeof value === 'number') &&
-        SEVERITY_ENABLED.has(value)) ||
+        severity.has(value)) ||
       (typeof value === 'object' &&
         Array.isArray(value) &&
         value.length > 0 &&
-        SEVERITY_ENABLED.has(value[0]));
+        severity.has(value[0]));
 
     if (isEnabled) {
       configNames.push(configName);

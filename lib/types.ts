@@ -6,11 +6,16 @@ export type RuleModule = TSESLint.RuleModule<string, unknown[]>;
 
 export type Rules = TSESLint.Linter.RulesRecord;
 
+export type RuleSeverity = TSESLint.Linter.RuleLevel;
+
 export type Config = TSESLint.Linter.Config;
 
 export type Plugin = TSESLint.Linter.Plugin;
 
 // Custom types.
+
+export const SEVERITY_ERROR = new Set<RuleSeverity>([2, 'error']);
+export const SEVERITY_OFF = new Set<RuleSeverity>([0, 'off']);
 
 export type ConfigsToRules = Record<string, Rules>;
 

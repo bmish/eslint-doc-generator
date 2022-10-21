@@ -580,6 +580,8 @@ exports[`generator #generate rules that are disabled generates the documentation
 | Name                           | Description            | ✅  |
 | :----------------------------- | :--------------------- | :-- |
 | [no-bar](docs/rules/no-bar.md) | Description of no-bar. |     |
+| [no-baz](docs/rules/no-baz.md) | Description of no-bar. | ✅  |
+| [no-biz](docs/rules/no-biz.md) | Description of no-bar. |     |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |
 
 <!-- end auto-generated rules list -->
@@ -589,12 +591,34 @@ exports[`generator #generate rules that are disabled generates the documentation
 exports[`generator #generate rules that are disabled generates the documentation 2`] = `
 "# Description of no-foo (\`test/no-foo\`)
 
+✅ This rule is disabled in the \`recommended\` config.
+
 <!-- end auto-generated rule header -->
 "
 `;
 
 exports[`generator #generate rules that are disabled generates the documentation 3`] = `
 "# Description of no-bar (\`test/no-bar\`)
+
+💼 This rule is disabled in the following configs: \`other\`, ✅ \`recommended\`.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generator #generate rules that are disabled generates the documentation 4`] = `
+"# Description of no-bar (\`test/no-baz\`)
+
+💼 This rule is enabled in the \`recommended\` config. This rule is disabled in the \`other\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generator #generate rules that are disabled generates the documentation 5`] = `
+"# Description of no-bar (\`test/no-biz\`)
+
+💼 This rule is disabled in the \`other\` config.
 
 <!-- end auto-generated rule header -->
 "
