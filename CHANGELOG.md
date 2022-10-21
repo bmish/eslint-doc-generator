@@ -18,6 +18,24 @@
 
 
 
+
+## v0.14.0 (2022-10-21)
+
+#### :boom: Breaking Change
+* [#155](https://github.com/bmish/eslint-doc-generator/pull/155) Indicate that content is auto-generated in marker comments ([@bmish](https://github.com/bmish))
+
+#### :rocket: Enhancement
+* [#156](https://github.com/bmish/eslint-doc-generator/pull/156) Indicate which configs disable a rule ([@bmish](https://github.com/bmish))
+
+#### :bug: Bug Fix
+* [#154](https://github.com/bmish/eslint-doc-generator/pull/154) Use code styling for replacement rule name in deprecated rule notice ([@bmish](https://github.com/bmish))
+* [#153](https://github.com/bmish/eslint-doc-generator/pull/153) Avoid potentially having two legends for the same config emoji ([@bmish](https://github.com/bmish))
+* [#152](https://github.com/bmish/eslint-doc-generator/pull/152) Use `markdown-table` for generating rules list ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.13.0 (2022-10-20)
 
 #### :rocket: Enhancement
