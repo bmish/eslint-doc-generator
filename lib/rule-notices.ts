@@ -120,9 +120,9 @@ const RULE_NOTICES: {
     // Complete sentence for configs that disable the rule.
     const SENTENCE_DISABLED =
       configsDisabled.length > 1
-        ? `This rule is disabled in the following ${configsLinkOrWord}: ${configsDisabledCSV}.`
+        ? `This rule is _disabled_ in the following ${configsLinkOrWord}: ${configsDisabledCSV}.`
         : configsDisabled.length === 1
-        ? `This rule is disabled in the \`${configsDisabled?.[0]}\` ${configLinkOrWord}.`
+        ? `This rule is _disabled_ in the \`${configsDisabled?.[0]}\` ${configLinkOrWord}.`
         : '';
 
     return `${emoji} ${SENTENCE_ENABLED}${
