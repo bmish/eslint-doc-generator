@@ -203,7 +203,7 @@ exports[`generator #generate deprecated rules updates the documentation 1`] = `
 exports[`generator #generate deprecated rules updates the documentation 2`] = `
 "# Description (\`test/no-foo\`)
 
-❌ This rule is deprecated. It was replaced by [no-bar](no-bar.md).
+❌ This rule is deprecated. It was replaced by [\`no-bar\`](no-bar.md).
 
 <!-- end rule header -->
 "
