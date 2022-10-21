@@ -845,6 +845,29 @@ exports[`generator #generate with --config-emoji and removing default emoji for 
 "
 `;
 
+exports[`generator #generate with --config-emoji and using the default config emoji for a config hides the generic config emoji legend to avoid two legends for the same emoji 1`] = `
+"## Rules
+<!-- begin rules list -->
+
+💼 Enabled in the \`recommended\` configuration.
+
+| Name                           | Description             | 💼  |
+| :----------------------------- | :---------------------- | :-- |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | 💼  |
+
+<!-- end rules list -->
+"
+`;
+
+exports[`generator #generate with --config-emoji and using the default config emoji for a config hides the generic config emoji legend to avoid two legends for the same emoji 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+💼 This rule is enabled in the \`recommended\` config.
+
+<!-- end rule header -->
+"
+`;
+
 exports[`generator #generate with --config-emoji shows the correct emojis 1`] = `
 "## Rules
 <!-- begin rules list -->
