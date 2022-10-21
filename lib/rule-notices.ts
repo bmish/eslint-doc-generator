@@ -115,7 +115,7 @@ const RULE_NOTICES: {
  */
 function ruleNamesToList(ruleNames: readonly string[]) {
   return ruleNames
-    .map((ruleName) => `[${ruleName}](${ruleName}.md)`)
+    .map((ruleName) => `[\`${ruleName}\`](${ruleName}.md)`)
     .join(', ');
 }
 
