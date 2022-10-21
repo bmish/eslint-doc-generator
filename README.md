@@ -45,8 +45,8 @@ Add scripts to `package.json` (both a lint script to ensure everything is up-to-
 Delete any old rules list from your `README.md`. A new one will be automatically added to your `## Rules` section (along with the following marker comments if they don't already exist):
 
 ```md
-<!-- begin rules list -->
-<!-- end rules list -->
+<!-- begin auto-generated rules list -->
+<!-- end auto-generated rules list -->
 ```
 
 Delete any old recommended/fixable/etc. notices from your rule docs. A new title and notices will be automatically added to the top of each rule doc (along with a marker comment if it doesn't exist yet).
@@ -86,7 +86,7 @@ Generated content in a rule doc (everything above the marker comment) (intention
 
 ❌ This rule is deprecated. It was replaced by [prefer-bar](prefer-bar.md).
 
-<!-- end rule header -->
+<!-- end auto-generated rule header -->
 
 Description.
 
@@ -104,7 +104,7 @@ Generated rules table in `README.md` (everything between the marker comments) (i
 
 ## Rules
 
-<!-- begin rules list -->
+<!-- begin auto-generated rules list -->
 
 💼 Configurations enabled in.\
 ✅ Enabled in the `recommended` configuration.\
@@ -124,7 +124,7 @@ Generated rules table in `README.md` (everything between the marker comments) (i
 | [prefer-bar](docs/rules/prefer-bar.md)   | enforce using bar  | ✅ 🎨 |     | 💡  | 💭  | 📖  |     |
 | [require-baz](docs/rules/require-baz.md) | require using baz  |       | 🔧  |     |     | 📏  | ❌  |
 
-<!-- end rules list -->
+<!-- end auto-generated rules list -->
 
 ...
 ```
