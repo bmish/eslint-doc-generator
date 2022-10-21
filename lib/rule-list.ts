@@ -11,7 +11,7 @@ import { findSectionHeader, format } from './markdown.js';
 import { getPluginRoot } from './package-json.js';
 import { generateLegend } from './legend.js';
 import { relative } from 'node:path';
-import { COLUMN_TYPE } from './types.js';
+import { COLUMN_TYPE, SEVERITY_ERROR } from './types.js';
 import { markdownTable } from 'markdown-table';
 import type {
   Plugin,
@@ -29,12 +29,15 @@ function getConfigurationColumnValueForRule(
   ignoreConfig: string[]
 ): string {
   const badges: string[] = [];
-  const configs = getConfigsForRule(rule.name, configsToRules, pluginPrefix);
-  for (const configName of configs) {
-    if (ignoreConfig?.includes(configName)) {
-      // Ignore config.
-      continue;
-    }
+
+  const configsEnabled = getConfigsForRule(
+    rule.name,
+    configsToRules,
+    pluginPrefix,
+    SEVERITY_ERROR
+  ).filter((configName) => !ignoreConfig?.includes(configName));
+
+  for (const configName of configsEnabled) {
     // Find the emoji for the config or otherwise use a badge that can be defined in markdown.
     const emoji = configEmojis.find(
       (configEmoji) => configEmoji.config === configName
@@ -99,10 +102,23 @@ function generateRulesListMarkdown(
       return [];
     }
     const headerStrOrFn = COLUMN_HEADER[columnType];
+    const ruleNames = details.map((rule) => rule.name);
+    const configsThatEnableAnyRule = Object.entries(configsToRules)
+      .filter(([configName, _config]) =>
+        ruleNames.some((ruleName) =>
+          getConfigsForRule(
+            ruleName,
+            configsToRules,
+            pluginPrefix,
+            SEVERITY_ERROR
+          ).includes(configName)
+        )
+      )
+      .map(([configName, _config]) => configName);
     return [
       typeof headerStrOrFn === 'function'
         ? headerStrOrFn({
-            configNames: Object.keys(configsToRules),
+            configNames: configsThatEnableAnyRule,
             configEmojis,
             ignoreConfig,
             details,
@@ -191,7 +207,9 @@ export async function updateRulesList(
   const legend = generateLegend(
     columns,
     plugin,
+    configsToRules,
     configEmojis,
+    pluginPrefix,
     ignoreConfig,
     urlConfigs
   );

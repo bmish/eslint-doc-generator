@@ -1841,12 +1841,28 @@ describe('generator', function () {
                   meta: { docs: { description: 'Description of no-bar.' }, },
                   create(context) {},
                 },
+                'no-baz': {
+                  meta: { docs: { description: 'Description of no-bar.' }, },
+                  create(context) {},
+                },
+                'no-biz': {
+                  meta: { docs: { description: 'Description of no-bar.' }, },
+                  create(context) {},
+                },
               },
               configs: {
                 recommended: {
                   rules: {
                     'test/no-foo': 'off',
                     'test/no-bar': 0,
+                    'test/no-baz': 'error',
+                  }
+                },
+                other: {
+                  rules: {
+                    'test/no-bar': 0,
+                    'test/no-baz': 'off',
+                    'test/no-biz': 'off',
                   }
                 },
               }
@@ -1856,6 +1872,8 @@ describe('generator', function () {
 
           'docs/rules/no-foo.md': '',
           'docs/rules/no-bar.md': '',
+          'docs/rules/no-baz.md': '',
+          'docs/rules/no-biz.md': '',
 
           // Needed for some of the test infrastructure to work.
           node_modules: mockFs.load(
@@ -1874,6 +1892,8 @@ describe('generator', function () {
         expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-baz.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-biz.md', 'utf8')).toMatchSnapshot();
       });
     });
 
