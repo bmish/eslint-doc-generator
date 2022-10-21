@@ -45,6 +45,7 @@
   "dependencies": {
     "@typescript-eslint/utils": "^5.38.1",
     "commander": "^9.4.0",
+    "markdown-table": "^3.0.2",
     "type-fest": "^3.0.0"
   },
   "devDependencies": {
