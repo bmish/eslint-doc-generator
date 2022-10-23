@@ -35,7 +35,7 @@ Add scripts to `package.json` (both a lint script to ensure everything is up-to-
   "scripts": {
     "lint": "npm-run-all \"lint:*\"",
     "lint:docs": "markdownlint \"**/*.md\"",
-    "lint:eslint-docs": "npm-run-all \"update:eslint-docs --check\"",
+    "lint:eslint-docs": "npm-run-all \"update:eslint-docs -- --check\"",
     "lint:js": "eslint .",
     "update:eslint-docs": "eslint-doc-generator"
   }
