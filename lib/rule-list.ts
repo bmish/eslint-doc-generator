@@ -13,6 +13,7 @@ import { generateLegend } from './legend.js';
 import { relative } from 'node:path';
 import { COLUMN_TYPE, SEVERITY_ERROR } from './types.js';
 import { markdownTable } from 'markdown-table';
+import camelCase from 'camelcase';
 import type {
   Plugin,
   RuleDetails,
@@ -20,6 +21,43 @@ import type {
   ConfigEmojis,
 } from './types.js';
 import { EMOJIS_TYPE, RULE_TYPE } from './rule-type.js';
+
+// Example: theWeatherIsNice => The Weather Is Nice
+function camelCaseStringToTitle(str: string) {
+  const text = str.replace(/([A-Z])/g, ' $1');
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function isCamelCase(str: string) {
+  return camelCase(str) === str;
+}
+
+function getPropertyFromRule(
+  plugin: Plugin,
+  ruleName: string,
+  property: string
+) {
+  /* istanbul ignore next -- this shouldn't happen */
+  if (!plugin.rules) {
+    throw new Error(
+      'Should not be attempting to get a property from a rule when there are no rules.'
+    );
+  }
+
+  const rule = plugin.rules[ruleName];
+
+  // Loop through all the nested property parts.
+  const parts = property.split('.');
+  // @ts-expect-error - Could be non-standard property on a function-style or object-style rule.
+  let result = rule[parts[0]];
+  for (const part of parts.slice(1)) {
+    if (typeof result !== 'object') {
+      return undefined; // eslint-disable-line unicorn/no-useless-undefined -- Rule doesn't have this property.
+    }
+    result = result[part];
+  }
+  return result;
+}
 
 function getConfigurationColumnValueForRule(
   rule: RuleDetails,
@@ -147,6 +185,91 @@ function generateRulesListMarkdown(
   );
 }
 
+/**
+ * Generate multiple rule lists given the `splitBy` property.
+ */
+function generateRulesListMarkdownWithSplitBy(
+  columns: Record<COLUMN_TYPE, boolean>,
+  details: RuleDetails[],
+  plugin: Plugin,
+  configsToRules: ConfigsToRules,
+  pluginPrefix: string,
+  configEmojis: ConfigEmojis,
+  ignoreConfig: string[],
+  splitBy: string
+): string {
+  const values = new Set(
+    details.map((detail) => getPropertyFromRule(plugin, detail.name, splitBy))
+  );
+
+  // Common values for boolean properties.
+  const ENABLED_VALUES = new Set([true, 'true', 'on', 'yes']);
+  const DISABLED_VALUES = new Set([
+    undefined,
+    null, // eslint-disable-line unicorn/no-null
+    false,
+    '',
+    'false',
+    'no',
+    'off',
+  ]);
+
+  if (values.size === 1 && DISABLED_VALUES.has([...values.values()][0])) {
+    throw new Error(`No rules found with --split-by property "${splitBy}"."`);
+  }
+
+  const parts: string[] = [];
+
+  // Show any rules that don't have a value for this split-by property first, or for which the boolean property is off.
+  if ([...DISABLED_VALUES.values()].some((val) => values.has(val))) {
+    const rulesForThisValue = details.filter((detail) =>
+      DISABLED_VALUES.has(getPropertyFromRule(plugin, detail.name, splitBy))
+    );
+    parts.push(
+      generateRulesListMarkdown(
+        columns,
+        rulesForThisValue,
+        configsToRules,
+        pluginPrefix,
+        configEmojis,
+        ignoreConfig
+      )
+    );
+  }
+
+  // For each possible non-disabled value, show a header and list of corresponding rules.
+  for (const value of [...values.values()]
+    .sort()
+    .filter((value) => !DISABLED_VALUES.has(value))) {
+    const rulesForThisValue = details.filter(
+      (detail) => getPropertyFromRule(plugin, detail.name, splitBy) === value
+    );
+
+    // Turn splitBy into a title.
+    // E.g. meta.docs.requiresTypeChecking to "Requires Type Checking".
+    // TODO: handle other types of variable casing.
+    const splitByParts = splitBy.split('.');
+    const splitByFinalPart = splitByParts[splitByParts.length - 1];
+    const splitByTitle = isCamelCase(splitByFinalPart)
+      ? camelCaseStringToTitle(splitByParts[splitByParts.length - 1])
+      : splitByFinalPart;
+
+    parts.push(
+      `### ${ENABLED_VALUES.has(value) ? splitByTitle : value}`,
+      generateRulesListMarkdown(
+        columns,
+        rulesForThisValue,
+        configsToRules,
+        pluginPrefix,
+        configEmojis,
+        ignoreConfig
+      )
+    );
+  }
+
+  return parts.join('\n\n');
+}
+
 export async function updateRulesList(
   details: RuleDetails[],
   markdown: string,
@@ -158,7 +281,8 @@ export async function updateRulesList(
   configEmojis: ConfigEmojis,
   ignoreConfig: string[],
   ruleListColumns: COLUMN_TYPE[],
-  urlConfigs?: string
+  urlConfigs?: string,
+  splitBy?: string
 ): Promise<string> {
   let listStartIndex = markdown.indexOf(BEGIN_RULE_LIST_MARKER);
   let listEndIndex = markdown.indexOf(END_RULE_LIST_MARKER);
@@ -215,14 +339,25 @@ export async function updateRulesList(
   );
 
   // New rule list.
-  const list = generateRulesListMarkdown(
-    columns,
-    details,
-    configsToRules,
-    pluginPrefix,
-    configEmojis,
-    ignoreConfig
-  );
+  const list = splitBy
+    ? generateRulesListMarkdownWithSplitBy(
+        columns,
+        details,
+        plugin,
+        configsToRules,
+        pluginPrefix,
+        configEmojis,
+        ignoreConfig,
+        splitBy
+      )
+    : generateRulesListMarkdown(
+        columns,
+        details,
+        configsToRules,
+        pluginPrefix,
+        configEmojis,
+        ignoreConfig
+      );
 
   const newContent = await format(`${legend}\n\n${list}`, pathToReadme);
 
