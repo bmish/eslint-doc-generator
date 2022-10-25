@@ -3233,6 +3233,221 @@ describe('generator', function () {
       });
     });
 
+    describe('splitting list by type', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': { meta: { type: 'problem' }, create(context) {} },
+                'no-bar': { meta: { type: 'suggestion' }, create(context) {} },
+                'no-baz': { meta: { type: 'suggestion' }, create(context) {} },
+                'no-biz': { meta: { /* no type */ }, create(context) {} },
+              },
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+          'docs/rules/no-bar.md': '',
+          'docs/rules/no-baz.md': '',
+          'docs/rules/no-biz.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('splits the list', async function () {
+        await generate('.', {
+          splitBy: 'meta.type',
+        });
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('splitting list by nested property meta.docs.category', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': { meta: { docs: { category: 'fruits' } }, create(context) {} },
+                'no-bar': { meta: { docs: { category: 'candy' } }, create(context) {} },
+                'no-baz': { meta: { /* no nested object */ }, create(context) {} },
+              },
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+          'docs/rules/no-bar.md': '',
+          'docs/rules/no-baz.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('splits the list', async function () {
+        await generate('.', { splitBy: 'meta.docs.category' });
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('splitting list, with boolean', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': { meta: { hasSuggestions: true }, create(context) {} },
+                'no-bar': { meta: {  }, create(context) {} },
+                'no-baz': { meta: { hasSuggestions: false }, create(context) {} },
+              },
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+          'docs/rules/no-bar.md': '',
+          'docs/rules/no-baz.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('splits the list', async function () {
+        await generate('.', {
+          splitBy: 'meta.hasSuggestions',
+        });
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('splitting list, with unknown variable type', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': { 'foo_barBIZ-baz3bOz': false, meta: { }, create(context) {} },
+                'no-bar': { 'foo_barBIZ-baz3bOz': true, meta: { }, create(context) {} },
+              },
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+          'docs/rules/no-bar.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('splits the list but does not attempt to convert variable name to title', async function () {
+        await generate('.', {
+          splitBy: 'foo_barBIZ-baz3bOz',
+        });
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('splitting list by property that no rules have', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': { meta: {  }, create(context) {} },
+              },
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('throws an error', async function () {
+        await expect(
+          generate('.', { splitBy: 'non-existent-property' })
+        ).rejects.toThrow(
+          'No rules found with --split-by property "non-existent-property".'
+        );
+      });
+    });
+
     describe('rule with long-enough description to require name column wrapping avoidance', function () {
       beforeEach(function () {
         mockFs({

@@ -88,6 +88,7 @@ export async function generate(
     ruleDocTitleFormat?: RuleDocTitleFormat;
     ruleListColumns?: string;
     urlConfigs?: string;
+    splitBy?: string;
   }
 ) {
   const plugin = await loadPlugin(path);
@@ -227,7 +228,8 @@ export async function generate(
     configEmojis,
     ignoreConfig,
     ruleListColumns,
-    options?.urlConfigs
+    options?.urlConfigs,
+    options?.splitBy
   );
 
   if (options?.check) {

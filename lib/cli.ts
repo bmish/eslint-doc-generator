@@ -103,6 +103,10 @@ export function run() {
         .join(',')
     )
     .option(
+      '--split-by <property>',
+      '(optional) Rule property to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`.'
+    )
+    .option(
       '--url-configs <url>',
       '(optional) Link to documentation about the ESLint configurations exported by the plugin.'
     )
@@ -119,6 +123,7 @@ export function run() {
         ruleDocTitleFormat: RuleDocTitleFormat;
         ruleListColumns: string;
         urlConfigs?: string;
+        splitBy?: string;
       }
     ) {
       await generate(path, {
@@ -132,6 +137,7 @@ export function run() {
         ruleDocTitleFormat: options.ruleDocTitleFormat,
         ruleListColumns: options.ruleListColumns,
         urlConfigs: options.urlConfigs,
+        splitBy: options.splitBy,
       });
     })
     .parse(process.argv);
