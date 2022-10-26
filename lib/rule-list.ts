@@ -140,12 +140,11 @@ function generateRulesListMarkdown(
       return [];
     }
     const headerStrOrFn = COLUMN_HEADER[columnType];
-    const ruleNames = details.map((rule) => rule.name);
     const configsThatEnableAnyRule = Object.entries(configsToRules)
-      .filter(([configName, _config]) =>
-        ruleNames.some((ruleName) =>
+      .filter(([configName, config]) =>
+        Object.keys(config).some((ruleNameWithPrefix) =>
           getConfigsForRule(
-            ruleName,
+            ruleNameWithPrefix.replace(`${pluginPrefix}/`, ''),
             configsToRules,
             pluginPrefix,
             SEVERITY_ERROR
