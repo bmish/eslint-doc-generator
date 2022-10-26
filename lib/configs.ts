@@ -33,7 +33,9 @@ export function getConfigsForRule(
     }
   }
 
-  return configNames.sort();
+  return configNames.sort((a, b) =>
+    a.toLowerCase().localeCompare(b.toLowerCase())
+  );
 }
 
 /**

@@ -656,6 +656,45 @@ exports[`generator #generate shows column and notice for requiresTypeChecking up
 "
 `;
 
+exports[`generator #generate sorting rules and configs case-insensitive sorts correctly 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.
+
+| Name                 | 💼                   |
+| :------------------- | :------------------- |
+| [a](docs/rules/a.md) | ![a][] ![B][] ![c][] |
+| [B](docs/rules/B.md) |                      |
+| [c](docs/rules/c.md) |                      |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generator #generate sorting rules and configs case-insensitive sorts correctly 2`] = `
+"# \`test/a\`
+
+💼 This rule is enabled in the following configs: \`a\`, \`B\`, \`c\`.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generator #generate sorting rules and configs case-insensitive sorts correctly 3`] = `
+"# \`test/B\`
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generator #generate sorting rules and configs case-insensitive sorts correctly 4`] = `
+"# \`test/c\`
+
+<!-- end auto-generated rule header -->
+"
+`;
+
 exports[`generator #generate splitting list by nested property meta.docs.category splits the list 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
@@ -700,6 +739,32 @@ exports[`generator #generate splitting list by type splits the list 1`] = `
 | :----------------------------- |
 | [no-bar](docs/rules/no-bar.md) |
 | [no-baz](docs/rules/no-baz.md) |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generator #generate splitting list, ignores case splits the list 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+### a
+
+| Name                           |
+| :----------------------------- |
+| [no-bar](docs/rules/no-bar.md) |
+
+### B
+
+| Name                           |
+| :----------------------------- |
+| [no-baz](docs/rules/no-baz.md) |
+
+### c
+
+| Name                           |
+| :----------------------------- |
+| [no-foo](docs/rules/no-foo.md) |
 
 <!-- end auto-generated rules list -->
 "

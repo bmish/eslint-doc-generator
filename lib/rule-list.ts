@@ -169,7 +169,9 @@ function generateRulesListMarkdown(
     [
       listHeaderRow,
       ...details
-        .sort(({ name: a }, { name: b }) => a.localeCompare(b))
+        .sort(({ name: a }, { name: b }) =>
+          a.toLowerCase().localeCompare(b.toLowerCase())
+        )
         .map((rule: RuleDetails) =>
           buildRuleRow(
             columns,
@@ -239,8 +241,8 @@ function generateRulesListMarkdownWithSplitBy(
 
   // For each possible non-disabled value, show a header and list of corresponding rules.
   for (const value of [...values.values()]
-    .sort()
-    .filter((value) => !DISABLED_VALUES.has(value))) {
+    .filter((value) => !DISABLED_VALUES.has(value))
+    .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))) {
     const rulesForThisValue = details.filter(
       (detail) => getPropertyFromRule(plugin, detail.name, splitBy) === value
     );
