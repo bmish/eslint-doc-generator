@@ -316,6 +316,7 @@ function makeTitle(
   }
 
   switch (ruleDocTitleFormatWithFallback) {
+    // Backticks (code-style) only used around rule name to differentiate it when the rule description is also present.
     case 'desc':
       return `# ${descriptionFormatted}`;
     case 'desc-parens-name':
@@ -323,9 +324,9 @@ function makeTitle(
     case 'desc-parens-prefix-name':
       return `# ${descriptionFormatted} (\`${pluginPrefix}/${name}\`)`;
     case 'name':
-      return `# \`${name}\``;
+      return `# ${name}`;
     case 'prefix-name':
-      return `# \`${pluginPrefix}/${name}\``;
+      return `# ${pluginPrefix}/${name}`;
     /* istanbul ignore next -- this shouldn't happen */
     default:
       throw new Error(

@@ -170,7 +170,7 @@ exports[`generator #generate deprecated function-style rule generates the docume
 `;
 
 exports[`generator #generate deprecated function-style rule generates the documentation 2`] = `
-"# \`test/no-foo\`
+"# test/no-foo
 
 <!-- end auto-generated rule header -->
 "
@@ -351,7 +351,7 @@ exports[`generator #generate no rules with description generates the documentati
 `;
 
 exports[`generator #generate no rules with description generates the documentation 2`] = `
-"# \`test/no-foo\`
+"# test/no-foo
 
 <!-- end auto-generated rule header -->
 "
@@ -378,7 +378,7 @@ exports[`generator #generate one rule missing description generates the document
 `;
 
 exports[`generator #generate one rule missing description generates the documentation 3`] = `
-"# \`test/no-bar\`
+"# test/no-bar
 
 <!-- end auto-generated rule header -->
 "
@@ -499,35 +499,35 @@ exports[`generator #generate rule with type, type column enabled displays the ty
 `;
 
 exports[`generator #generate rule with type, type column enabled displays the type 2`] = `
-"# \`test/no-foo\`
+"# test/no-foo
 
 <!-- end auto-generated rule header -->
 "
 `;
 
 exports[`generator #generate rule with type, type column enabled displays the type 3`] = `
-"# \`test/no-bar\`
+"# test/no-bar
 
 <!-- end auto-generated rule header -->
 "
 `;
 
 exports[`generator #generate rule with type, type column enabled displays the type 4`] = `
-"# \`test/no-biz\`
+"# test/no-biz
 
 <!-- end auto-generated rule header -->
 "
 `;
 
 exports[`generator #generate rule with type, type column enabled displays the type 5`] = `
-"# \`test/no-boz\`
+"# test/no-boz
 
 <!-- end auto-generated rule header -->
 "
 `;
 
 exports[`generator #generate rule with type, type column enabled displays the type 6`] = `
-"# \`test/no-buz\`
+"# test/no-buz
 
 <!-- end auto-generated rule header -->
 "
@@ -546,7 +546,7 @@ exports[`generator #generate rule with type, type column enabled, but only an un
 `;
 
 exports[`generator #generate rule with type, type column enabled, but only an unknown type hides the type column and notice 2`] = `
-"# \`test/no-foo\`
+"# test/no-foo
 
 <!-- end auto-generated rule header -->
 "
@@ -565,7 +565,7 @@ exports[`generator #generate rule with type, type column not enabled hides the t
 `;
 
 exports[`generator #generate rule with type, type column not enabled hides the type column 2`] = `
-"# \`test/no-foo\`
+"# test/no-foo
 
 <!-- end auto-generated rule header -->
 "
@@ -673,7 +673,7 @@ exports[`generator #generate sorting rules and configs case-insensitive sorts co
 `;
 
 exports[`generator #generate sorting rules and configs case-insensitive sorts correctly 2`] = `
-"# \`test/a\`
+"# test/a
 
 💼 This rule is enabled in the following configs: \`a\`, \`B\`, \`c\`.
 
@@ -682,14 +682,14 @@ exports[`generator #generate sorting rules and configs case-insensitive sorts co
 `;
 
 exports[`generator #generate sorting rules and configs case-insensitive sorts correctly 3`] = `
-"# \`test/B\`
+"# test/B
 
 <!-- end auto-generated rule header -->
 "
 `;
 
 exports[`generator #generate sorting rules and configs case-insensitive sorts correctly 4`] = `
-"# \`test/c\`
+"# test/c
 
 <!-- end auto-generated rule header -->
 "
@@ -915,21 +915,21 @@ exports[`generator #generate with \`--rule-doc-title-format\` option = desc-pare
 `;
 
 exports[`generator #generate with \`--rule-doc-title-format\` option = desc-parens-prefix-name uses the right rule doc title format, with fallback when missing description 2`] = `
-"# \`test/no-bar\`
+"# test/no-bar
 
 <!-- end auto-generated rule header -->
 "
 `;
 
 exports[`generator #generate with \`--rule-doc-title-format\` option = name uses the right rule doc title format 1`] = `
-"# \`no-foo\`
+"# no-foo
 
 <!-- end auto-generated rule header -->
 "
 `;
 
 exports[`generator #generate with \`--rule-doc-title-format\` option = prefix-name uses the right rule doc title format 1`] = `
-"# \`test/no-foo\`
+"# test/no-foo
 
 <!-- end auto-generated rule header -->
 "
