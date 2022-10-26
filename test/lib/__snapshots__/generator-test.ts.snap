@@ -791,6 +791,28 @@ exports[`generator #generate splitting list, with boolean splits the list 1`] = 
 "
 `;
 
+exports[`generator #generate splitting list, with one sub-list having no rules enabled by the config splits the list and still uses recommended config emoji in both lists 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+✅ Enabled in the \`recommended\` configuration.
+
+### bar
+
+| Name                           | ✅  |
+| :----------------------------- | :-- |
+| [no-bar](docs/rules/no-bar.md) |     |
+
+### foo
+
+| Name                           | ✅  |
+| :----------------------------- | :-- |
+| [no-foo](docs/rules/no-foo.md) | ✅  |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
 exports[`generator #generate splitting list, with unknown variable type splits the list but does not attempt to convert variable name to title 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
