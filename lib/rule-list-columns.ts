@@ -70,7 +70,7 @@ export const COLUMN_HEADER: {
       ruleNames.length > 0 &&
       longestRuleDescriptionLength >= 60 &&
       longestRuleNameLength > title.length
-        ? '&nbsp;'.repeat(longestRuleNameLength - title.length)
+        ? ' '.repeat(longestRuleNameLength - title.length) // U+00A0 nbsp character.
         : '';
 
     return `${title}${spaces}`;
