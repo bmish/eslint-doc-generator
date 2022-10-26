@@ -19,6 +19,28 @@
 
 
 
+
+## v0.15.0 (2022-10-26)
+
+#### :rocket: Enhancement
+* [#162](https://github.com/bmish/eslint-doc-generator/pull/162) Add `--split-by` option ([@bmish](https://github.com/bmish))
+
+#### :bug: Bug Fix
+* [#170](https://github.com/bmish/eslint-doc-generator/pull/170) Use code-style around rule name in rule doc title only when description also present ([@bmish](https://github.com/bmish))
+* [#169](https://github.com/bmish/eslint-doc-generator/pull/169) Use case-insensitive sorting for rules, configs, and lists ([@bmish](https://github.com/bmish))
+
+#### :memo: Documentation
+* [#161](https://github.com/bmish/eslint-doc-generator/pull/161) Fix example script in README ([@ddzz](https://github.com/ddzz))
+
+#### :house: Internal
+* [#158](https://github.com/bmish/eslint-doc-generator/pull/158) Fix ts-jest deprecation warning ([@ddzz](https://github.com/ddzz))
+* [#160](https://github.com/bmish/eslint-doc-generator/pull/160) Fix `lint:js:fix` script ([@ddzz](https://github.com/ddzz))
+
+#### Committers: 2
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+- Darius Dzien ([@ddzz](https://github.com/ddzz))
+
+
 ## v0.14.0 (2022-10-21)
 
 #### :boom: Breaking Change
