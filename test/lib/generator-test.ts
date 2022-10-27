@@ -2193,12 +2193,14 @@ describe('generator', function () {
             export default {
               rules: {
                 'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
+                'no-bar': { meta: { docs: { /* one rule without description */ } }, create(context) {} },
               },
             };`,
 
           'README.md': '## Rules\n',
 
           'docs/rules/no-foo.md': '',
+          'docs/rules/no-bar.md': '',
 
           // Needed for some of the test infrastructure to work.
           node_modules: mockFs.load(
@@ -2217,6 +2219,7 @@ describe('generator', function () {
           ruleDocTitleFormat: 'desc-parens-name',
         });
         expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
       });
     });
 
@@ -2233,12 +2236,14 @@ describe('generator', function () {
             export default {
               rules: {
                 'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
+                'no-bar': { meta: { docs: { /* one rule without description */ } }, create(context) {} },
               },
             };`,
 
           'README.md': '## Rules\n',
 
           'docs/rules/no-foo.md': '',
+          'docs/rules/no-bar.md': '',
 
           // Needed for some of the test infrastructure to work.
           node_modules: mockFs.load(
@@ -2257,6 +2262,7 @@ describe('generator', function () {
           ruleDocTitleFormat: 'desc',
         });
         expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
       });
     });
 
