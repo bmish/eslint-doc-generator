@@ -840,6 +840,64 @@ describe('generator', function () {
       });
     });
 
+    describe('Rule has options with quotes', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: {
+                    docs: { description: 'Description of no-foo.', },
+                    schema: [
+                      {
+                        type: 'object',
+                        properties: {
+                          'input[type="foo"]': {
+                            type: 'boolean',
+                            default: false,
+                          },
+                          "input[type='bar']": {
+                            type: 'boolean',
+                            default: false,
+                          },
+                        },
+                        additionalProperties: false,
+                      },
+                    ]
+                  },
+                  create(context) {},
+                },
+              },
+            };`,
+
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+          'docs/rules/no-foo.md':
+            '## Options\n input[type=\\"foo\\"] \n input[type=\\\'bar\\\']',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+      it('successfully finds the options mentioned in the rule doc despite quote escaping', async function () {
+        await expect(generate('.')).resolves.toBeUndefined();
+      });
+    });
+
     describe('Rule description needs to be formatted', function () {
       beforeEach(function () {
         mockFs({
