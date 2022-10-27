@@ -443,7 +443,7 @@ exports[`generator #generate rule with long-enough description to require name c
 "## Rules
 <!-- begin auto-generated rules list -->
 
-| Name&nbsp;&nbsp;               | Description                                                                         |
+| Name                           | Description                                                                         |
 | :----------------------------- | :---------------------------------------------------------------------------------- |
 | [no-foo](docs/rules/no-foo.md) | over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars |
 
