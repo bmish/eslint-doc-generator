@@ -311,8 +311,24 @@ function makeTitle(
 
   let ruleDocTitleFormatWithFallback: RuleDocTitleFormat =
     ruleDocTitleFormat ?? RULE_DOC_TITLE_FORMAT_DEFAULT;
+
   if (ruleDocTitleFormatWithFallback.includes('desc') && !description) {
-    ruleDocTitleFormatWithFallback = 'prefix-name'; // Fallback if rule missing description.
+    // If format includes the description but the rule is missing a description,
+    // fallback to the corresponding format without the description.
+    switch (ruleDocTitleFormatWithFallback) {
+      case 'desc':
+      case 'desc-parens-prefix-name':
+        ruleDocTitleFormatWithFallback = 'prefix-name';
+        break;
+      case 'desc-parens-name':
+        ruleDocTitleFormatWithFallback = 'name';
+        break;
+      /* istanbul ignore next -- this shouldn't happen */
+      default:
+        throw new Error(
+          `Unhandled rule doc title format fallback: ${ruleDocTitleFormatWithFallback}`
+        );
+    }
   }
 
   switch (ruleDocTitleFormatWithFallback) {
