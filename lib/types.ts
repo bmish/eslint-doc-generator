@@ -15,6 +15,7 @@ export type Plugin = TSESLint.Linter.Plugin;
 // Custom types.
 
 export const SEVERITY_ERROR = new Set<RuleSeverity>([2, 'error']);
+export const SEVERITY_WARN = new Set<RuleSeverity>([1, 'warn']);
 export const SEVERITY_OFF = new Set<RuleSeverity>([0, 'off']);
 
 export type ConfigsToRules = Record<string, Rules>;

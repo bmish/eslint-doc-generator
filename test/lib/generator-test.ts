@@ -1976,7 +1976,7 @@ describe('generator', function () {
       });
     });
 
-    describe('rules that are disabled', function () {
+    describe('rules that are disabled or set to warn', function () {
       beforeEach(function () {
         mockFs({
           'package.json': JSON.stringify({
@@ -1997,11 +1997,23 @@ describe('generator', function () {
                   create(context) {},
                 },
                 'no-baz': {
-                  meta: { docs: { description: 'Description of no-bar.' }, },
+                  meta: { docs: { description: 'Description of no-baz.' }, },
                   create(context) {},
                 },
                 'no-biz': {
-                  meta: { docs: { description: 'Description of no-bar.' }, },
+                  meta: { docs: { description: 'Description of no-biz.' }, },
+                  create(context) {},
+                },
+                'no-boz': {
+                  meta: { docs: { description: 'Description of no-boz.' }, },
+                  create(context) {},
+                },
+                'no-buz': {
+                  meta: { docs: { description: 'Description of no-buz.' }, },
+                  create(context) {},
+                },
+                'no-bez': {
+                  meta: { docs: { description: 'Description of no-bez.' }, },
                   create(context) {},
                 },
               },
@@ -2011,6 +2023,8 @@ describe('generator', function () {
                     'test/no-foo': 'off',
                     'test/no-bar': 0,
                     'test/no-baz': 'error',
+                    'test/no-boz': 'warn',
+                    'test/no-buz': 1,
                   }
                 },
                 other: {
@@ -2018,6 +2032,8 @@ describe('generator', function () {
                     'test/no-bar': 0,
                     'test/no-baz': 'off',
                     'test/no-biz': 'off',
+                    'test/no-buz': 'warn',
+                    'test/no-bez': 'warn',
                   }
                 },
               }
@@ -2029,6 +2045,9 @@ describe('generator', function () {
           'docs/rules/no-bar.md': '',
           'docs/rules/no-baz.md': '',
           'docs/rules/no-biz.md': '',
+          'docs/rules/no-boz.md': '',
+          'docs/rules/no-buz.md': '',
+          'docs/rules/no-bez.md': '',
 
           // Needed for some of the test infrastructure to work.
           node_modules: mockFs.load(
@@ -2049,6 +2068,9 @@ describe('generator', function () {
         expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/no-baz.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/no-biz.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-boz.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-buz.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-bez.md', 'utf8')).toMatchSnapshot();
       });
     });
 
