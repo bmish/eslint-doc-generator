@@ -217,23 +217,23 @@ function getNoticesForRule(
       configsEnabled.length > 0 ||
       configsWarn.length > 0 ||
       configsDisabled.length > 0,
-    [NOTICE_TYPE.DEPRECATED]: rule.meta.deprecated || false,
+    [NOTICE_TYPE.DEPRECATED]: rule.meta?.deprecated || false,
 
     // FIXABLE_AND_HAS_SUGGESTIONS potentially replaces FIXABLE and HAS_SUGGESTIONS.
     [NOTICE_TYPE.FIXABLE]:
-      Boolean(rule.meta.fixable) &&
+      Boolean(rule.meta?.fixable) &&
       (!rule.meta.hasSuggestions ||
         !ruleDocNotices.includes(NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS)),
     [NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]:
-      Boolean(rule.meta.fixable) && Boolean(rule.meta.hasSuggestions),
+      Boolean(rule.meta?.fixable) && Boolean(rule.meta?.hasSuggestions),
     [NOTICE_TYPE.HAS_SUGGESTIONS]:
-      Boolean(rule.meta.hasSuggestions) &&
+      Boolean(rule.meta?.hasSuggestions) &&
       (!rule.meta.fixable ||
         !ruleDocNotices.includes(NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS)),
 
     [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]:
-      rule.meta.docs?.requiresTypeChecking || false,
-    [NOTICE_TYPE.TYPE]: Boolean(rule.meta.type),
+      rule.meta?.docs?.requiresTypeChecking || false,
+    [NOTICE_TYPE.TYPE]: Boolean(rule.meta?.type),
   };
 
   // Recreate object using the ordering and presence of columns specified in ruleDocNotices.
@@ -326,8 +326,8 @@ function getRuleNoticeLines(
             configsDisabled,
             configEmojis,
             urlConfigs,
-            replacedBy: rule.meta.replacedBy,
-            type: rule.meta.type as RULE_TYPE, // Convert union type to enum.
+            replacedBy: rule.meta?.replacedBy,
+            type: rule.meta?.type as RULE_TYPE, // Convert union type to enum.
           })
         : ruleNoticeStrOrFn
     );
