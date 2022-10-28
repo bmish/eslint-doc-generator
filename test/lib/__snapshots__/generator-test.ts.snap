@@ -1058,7 +1058,7 @@ exports[`generator #generate with --config-emoji and removing default emoji for 
 "
 `;
 
-exports[`generator #generate with --config-emoji and using the default config emoji for a config hides the generic config emoji legend to avoid two legends for the same emoji 1`] = `
+exports[`generator #generate with --config-emoji and using the general configs emoji for the sole config hides the generic config emoji legend to avoid two legends for the same emoji 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -1072,7 +1072,7 @@ exports[`generator #generate with --config-emoji and using the default config em
 "
 `;
 
-exports[`generator #generate with --config-emoji and using the default config emoji for a config hides the generic config emoji legend to avoid two legends for the same emoji 2`] = `
+exports[`generator #generate with --config-emoji and using the general configs emoji for the sole config hides the generic config emoji legend to avoid two legends for the same emoji 2`] = `
 "# Description for no-foo (\`test/no-foo\`)
 
 💼 This rule is enabled in the \`recommended\` config.
