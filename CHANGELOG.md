@@ -20,6 +20,24 @@
 
 
 
+
+## v0.16.0 (2022-10-28)
+
+#### :rocket: Enhancement
+* [#180](https://github.com/bmish/eslint-doc-generator/pull/180) Indicate which configs warn for a rule ([@bmish](https://github.com/bmish))
+* [#178](https://github.com/bmish/eslint-doc-generator/pull/178) Add option `--rule-doc-section-options` ([@bmish](https://github.com/bmish))
+
+#### :bug: Bug Fix
+* [#181](https://github.com/bmish/eslint-doc-generator/pull/181) Handle rule with no `meta` object ([@bmish](https://github.com/bmish))
+* [#177](https://github.com/bmish/eslint-doc-generator/pull/177) Throw error when trying to use general configs emoji for a config when multiple configs are present ([@bmish](https://github.com/bmish))
+* [#176](https://github.com/bmish/eslint-doc-generator/pull/176) Also check for escaped version of option name in rule doc for rules with options ([@bmish](https://github.com/bmish))
+* [#175](https://github.com/bmish/eslint-doc-generator/pull/175) Use correct rule doc title format fallback when rule missing description ([@bmish](https://github.com/bmish))
+* [#172](https://github.com/bmish/eslint-doc-generator/pull/172) Use actual nbsp character instead of HTML entity when avoiding wrapping rule names in rules list ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.15.0 (2022-10-26)
 
 #### :rocket: Enhancement
