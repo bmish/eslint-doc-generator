@@ -571,7 +571,7 @@ exports[`generator #generate rule with type, type column not enabled hides the t
 "
 `;
 
-exports[`generator #generate rules that are disabled generates the documentation 1`] = `
+exports[`generator #generate rules that are disabled or set to warn generates the documentation 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -580,15 +580,18 @@ exports[`generator #generate rules that are disabled generates the documentation
 | Name                           | Description            | ✅  |
 | :----------------------------- | :--------------------- | :-- |
 | [no-bar](docs/rules/no-bar.md) | Description of no-bar. |     |
-| [no-baz](docs/rules/no-baz.md) | Description of no-bar. | ✅  |
-| [no-biz](docs/rules/no-biz.md) | Description of no-bar. |     |
+| [no-baz](docs/rules/no-baz.md) | Description of no-baz. | ✅  |
+| [no-bez](docs/rules/no-bez.md) | Description of no-bez. |     |
+| [no-biz](docs/rules/no-biz.md) | Description of no-biz. |     |
+| [no-boz](docs/rules/no-boz.md) | Description of no-boz. |     |
+| [no-buz](docs/rules/no-buz.md) | Description of no-buz. |     |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |
 
 <!-- end auto-generated rules list -->
 "
 `;
 
-exports[`generator #generate rules that are disabled generates the documentation 2`] = `
+exports[`generator #generate rules that are disabled or set to warn generates the documentation 2`] = `
 "# Description of no-foo (\`test/no-foo\`)
 
 ✅ This rule is _disabled_ in the \`recommended\` config.
@@ -597,7 +600,7 @@ exports[`generator #generate rules that are disabled generates the documentation
 "
 `;
 
-exports[`generator #generate rules that are disabled generates the documentation 3`] = `
+exports[`generator #generate rules that are disabled or set to warn generates the documentation 3`] = `
 "# Description of no-bar (\`test/no-bar\`)
 
 💼 This rule is _disabled_ in the following configs: \`other\`, ✅ \`recommended\`.
@@ -606,8 +609,8 @@ exports[`generator #generate rules that are disabled generates the documentation
 "
 `;
 
-exports[`generator #generate rules that are disabled generates the documentation 4`] = `
-"# Description of no-bar (\`test/no-baz\`)
+exports[`generator #generate rules that are disabled or set to warn generates the documentation 4`] = `
+"# Description of no-baz (\`test/no-baz\`)
 
 💼 This rule is enabled in the \`recommended\` config. This rule is _disabled_ in the \`other\` config.
 
@@ -615,10 +618,37 @@ exports[`generator #generate rules that are disabled generates the documentation
 "
 `;
 
-exports[`generator #generate rules that are disabled generates the documentation 5`] = `
-"# Description of no-bar (\`test/no-biz\`)
+exports[`generator #generate rules that are disabled or set to warn generates the documentation 5`] = `
+"# Description of no-biz (\`test/no-biz\`)
 
 💼 This rule is _disabled_ in the \`other\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generator #generate rules that are disabled or set to warn generates the documentation 6`] = `
+"# Description of no-boz (\`test/no-boz\`)
+
+✅ This rule will _warn_ in the \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generator #generate rules that are disabled or set to warn generates the documentation 7`] = `
+"# Description of no-buz (\`test/no-buz\`)
+
+💼 This rule will _warn_ in the following configs: \`other\`, ✅ \`recommended\`.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generator #generate rules that are disabled or set to warn generates the documentation 8`] = `
+"# Description of no-bez (\`test/no-bez\`)
+
+💼 This rule will _warn_ in the \`other\` config.
 
 <!-- end auto-generated rule header -->
 "

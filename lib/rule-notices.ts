@@ -18,7 +18,12 @@ import {
   RuleDocTitleFormat,
   RULE_DOC_TITLE_FORMAT_DEFAULT,
 } from './rule-doc-title-format.js';
-import { NOTICE_TYPE, SEVERITY_ERROR, SEVERITY_OFF } from './types.js';
+import {
+  NOTICE_TYPE,
+  SEVERITY_ERROR,
+  SEVERITY_OFF,
+  SEVERITY_WARN,
+} from './types.js';
 
 export const NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
   [key in NOTICE_TYPE]: boolean;
@@ -43,6 +48,7 @@ const RULE_NOTICES: {
     | undefined
     | ((data: {
         configsEnabled: string[];
+        configsWarn: string[];
         configsDisabled: string[];
         configEmojis: ConfigEmojis;
         urlConfigs?: string;
@@ -50,9 +56,11 @@ const RULE_NOTICES: {
         type?: RULE_TYPE;
       }) => string);
 } = {
-  // Configs notice varies based on whether the rule is enabled in one or more configs.
+  // Configs notice varies based on whether the rule is configured in one or more configs.
+  // eslint-disable-next-line complexity
   [NOTICE_TYPE.CONFIGS]: ({
     configsEnabled,
+    configsWarn,
     configsDisabled,
     configEmojis,
     urlConfigs,
@@ -66,21 +74,30 @@ const RULE_NOTICES: {
     /* istanbul ignore next -- this shouldn't happen */
     if (
       (!configsEnabled || configsEnabled.length === 0) &&
+      (!configsWarn || configsWarn.length === 0) &&
       (!configsDisabled || configsDisabled.length === 0)
     ) {
       throw new Error(
-        'Should not be trying to display config notice for rule not enabled/disabled in any configs.'
+        'Should not be trying to display config notice for rule not configured in any configs.'
       );
     }
 
     // If one applicable config with an emoji, use the emoji for that config, otherwise use the general config emoji.
     let emoji = '';
-    if (configsEnabled.length + configsDisabled.length > 1) {
+    if (
+      configsEnabled.length + configsWarn.length + configsDisabled.length >
+      1
+    ) {
       emoji = EMOJI_CONFIG;
     } else if (configsEnabled.length > 0) {
       emoji =
         configEmojis.find(
           (configEmoji) => configEmoji.config === configsEnabled[0]
+        )?.emoji ?? EMOJI_CONFIG;
+    } else if (configsWarn.length > 0) {
+      emoji =
+        configEmojis.find(
+          (configEmoji) => configEmoji.config === configsWarn[0]
         )?.emoji ?? EMOJI_CONFIG;
     } else if (configsDisabled.length > 0) {
       emoji =
@@ -96,6 +113,16 @@ const RULE_NOTICES: {
           (configEmoji) => configEmoji.config === configEnabled
         )?.emoji;
         return `${emoji ? `${emoji} ` : ''}\`${configEnabled}\``;
+      })
+      .join(', ');
+
+    // List of configs that warn for the rule.
+    const configsWarnCSV = configsWarn
+      .map((configWarn) => {
+        const emoji = configEmojis.find(
+          (configEmoji) => configEmoji.config === configWarn
+        )?.emoji;
+        return `${emoji ? `${emoji} ` : ''}\`${configWarn}\``;
       })
       .join(', ');
 
@@ -115,7 +142,15 @@ const RULE_NOTICES: {
         ? `This rule is enabled in the following ${configsLinkOrWord}: ${configsEnabledCSV}.`
         : configsEnabled.length === 1
         ? `This rule is enabled in the \`${configsEnabled?.[0]}\` ${configLinkOrWord}.`
-        : '';
+        : undefined;
+
+    // Complete sentence for configs that warn for the rule.
+    const SENTENCE_WARN =
+      configsWarn.length > 1
+        ? `This rule will _warn_ in the following ${configsLinkOrWord}: ${configsWarnCSV}.`
+        : configsWarn.length === 1
+        ? `This rule will _warn_ in the \`${configsWarn?.[0]}\` ${configLinkOrWord}.`
+        : undefined;
 
     // Complete sentence for configs that disable the rule.
     const SENTENCE_DISABLED =
@@ -123,11 +158,11 @@ const RULE_NOTICES: {
         ? `This rule is _disabled_ in the following ${configsLinkOrWord}: ${configsDisabledCSV}.`
         : configsDisabled.length === 1
         ? `This rule is _disabled_ in the \`${configsDisabled?.[0]}\` ${configLinkOrWord}.`
-        : '';
+        : undefined;
 
-    return `${emoji} ${SENTENCE_ENABLED}${
-      SENTENCE_ENABLED && SENTENCE_DISABLED ? ' ' : '' // Space if two sentences.
-    }${SENTENCE_DISABLED}`;
+    return `${emoji} ${[SENTENCE_ENABLED, SENTENCE_WARN, SENTENCE_DISABLED]
+      .filter((sentence) => sentence !== undefined)
+      .join(' ')}`;
   },
 
   // Deprecated notice has optional "replaced by" rules list.
@@ -170,6 +205,7 @@ function ruleNamesToList(ruleNames: readonly string[]) {
 function getNoticesForRule(
   rule: RuleModule,
   configsEnabled: string[],
+  configsWarn: string[],
   configsDisabled: string[],
   ruleDocNotices: NOTICE_TYPE[]
 ) {
@@ -178,7 +214,9 @@ function getNoticesForRule(
   } = {
     // Alphabetical order.
     [NOTICE_TYPE.CONFIGS]:
-      configsEnabled.length > 0 || configsDisabled.length > 0,
+      configsEnabled.length > 0 ||
+      configsWarn.length > 0 ||
+      configsDisabled.length > 0,
     [NOTICE_TYPE.DEPRECATED]: rule.meta.deprecated || false,
 
     // FIXABLE_AND_HAS_SUGGESTIONS potentially replaces FIXABLE and HAS_SUGGESTIONS.
@@ -239,6 +277,13 @@ function getRuleNoticeLines(
     SEVERITY_ERROR
   ).filter((configName) => !ignoreConfig?.includes(configName));
 
+  const configsWarn = getConfigsForRule(
+    ruleName,
+    configsToRules,
+    pluginPrefix,
+    SEVERITY_WARN
+  ).filter((configName) => !ignoreConfig?.includes(configName));
+
   const configsDisabled = getConfigsForRule(
     ruleName,
     configsToRules,
@@ -249,6 +294,7 @@ function getRuleNoticeLines(
   const notices = getNoticesForRule(
     rule,
     configsEnabled,
+    configsWarn,
     configsDisabled,
     ruleDocNotices
   );
@@ -276,6 +322,7 @@ function getRuleNoticeLines(
       typeof ruleNoticeStrOrFn === 'function'
         ? ruleNoticeStrOrFn({
             configsEnabled,
+            configsWarn,
             configsDisabled,
             configEmojis,
             urlConfigs,
