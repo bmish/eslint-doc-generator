@@ -38,8 +38,8 @@ function expectContent(
   // in case escaping is needed where the content is referenced.
   const hasContent =
     contents.includes(content) ||
-    contents.includes(content.replace('"', '\\"')) ||
-    contents.includes(content.replace("'", "\\'"));
+    contents.includes(content.replace(/"/g, '\\"')) ||
+    contents.includes(content.replace(/'/g, "\\'"));
   if (hasContent !== expected) {
     console.error(
       `\`${ruleName}\` rule doc should ${
