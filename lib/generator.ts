@@ -91,6 +91,7 @@ export async function generate(
     ruleDocNotices?: string;
     ruleDocSectionExclude?: string[];
     ruleDocSectionInclude?: string[];
+    ruleDocSectionOptions?: boolean;
     ruleDocTitleFormat?: RuleDocTitleFormat;
     ruleListColumns?: string;
     urlConfigs?: string;
@@ -143,6 +144,7 @@ export async function generate(
   const configEmojis = parseConfigEmojiOptions(plugin, options?.configEmoji);
   const ignoreConfig = options?.ignoreConfig ?? [];
   const ruleDocNotices = parseRuleDocNoticesOption(options?.ruleDocNotices);
+  const ruleDocSectionOptions = options?.ruleDocSectionOptions ?? true;
   const ruleListColumns = parseRuleListColumnsOption(options?.ruleListColumns);
 
   // Update rule doc for each rule.
@@ -203,15 +205,17 @@ export async function generate(
       expectSectionHeader(name, contents, [section], false);
     }
 
-    // Options section.
-    expectSectionHeader(
-      name,
-      contents,
-      ['Options', 'Config'],
-      hasOptions(schema)
-    );
-    for (const namedOption of getAllNamedOptions(schema)) {
-      expectContent(name, contents, namedOption, true); // Each rule option is mentioned.
+    if (ruleDocSectionOptions) {
+      // Options section.
+      expectSectionHeader(
+        name,
+        contents,
+        ['Options', 'Config'],
+        hasOptions(schema)
+      );
+      for (const namedOption of getAllNamedOptions(schema)) {
+        expectContent(name, contents, namedOption, true); // Each rule option is mentioned.
+      }
     }
   }
 

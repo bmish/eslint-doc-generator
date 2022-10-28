@@ -160,6 +160,7 @@ And how it looks:
 | `--rule-doc-notices` | Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. Choices: `configs`, `deprecated`, `fixable`, `fixableAndHasSuggestions`, `hasSuggestions`, `requiresTypeChecking`, `type` (off by default). Default: `deprecated,configs,fixable,fixableAndHasSuggestions,hasSuggestions,requiresTypeChecking`. |
 | `--rule-doc-section-exclude` | Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. |
 | `--rule-doc-section-include` | Required section in each rule doc. Exit with failure if missing. Option can be repeated. |
+| `--rule-doc-section-options` | Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options (default: `true`). |
 | `--rule-doc-title-format` | The format to use for rule doc titles. Defaults to `desc-parens-prefix-name`. See choices in below [table](#--rule-doc-title-format). |
 | `--rule-list-columns` | Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. Choices: `configs`, `deprecated`, `description`, `fixable`, `hasSuggestions`, `name`, `requiresTypeChecking`, `type` (off by default). Default: `name,description,configs,fixable,hasSuggestions,requiresTypeChecking,deprecated`. |
 | `--split-by` | Rule property to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`. |

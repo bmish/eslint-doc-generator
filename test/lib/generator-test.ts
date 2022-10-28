@@ -841,6 +841,99 @@ describe('generator', function () {
       });
     });
 
+    describe('Rule doc missing options section with --rule-doc-section-options=true', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: {
+                    docs: { description: 'Description of no-foo.', },
+                    schema: [{ type: 'object', },]
+                  },
+                  create(context) {},
+                },
+              },
+            };`,
+
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+          'docs/rules/no-foo.md': '', // empty
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+      it('prints an error', async function () {
+        const consoleErrorStub = sinon.stub(console, 'error');
+        await generate('.', { ruleDocSectionOptions: true });
+        expect(consoleErrorStub.callCount).toBe(1);
+        expect(consoleErrorStub.firstCall.args).toStrictEqual([
+          '`no-foo` rule doc should have included one of these headers: Options, Config',
+        ]);
+        consoleErrorStub.restore();
+      });
+    });
+
+    describe('Rule doc missing options section with --rule-doc-section-options=false', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: {
+                    docs: { description: 'Description of no-foo.', },
+                    schema: [{ type: 'object', },]
+                  },
+                  create(context) {},
+                },
+              },
+            };`,
+
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+          'docs/rules/no-foo.md': '', // empty
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+      it('has no error', async function () {
+        const consoleErrorStub = sinon.stub(console, 'error');
+        await generate('.', { ruleDocSectionOptions: false });
+        expect(consoleErrorStub.callCount).toBe(0);
+        consoleErrorStub.restore();
+      });
+    });
+
     describe('Rule has options with quotes', function () {
       beforeEach(function () {
         mockFs({

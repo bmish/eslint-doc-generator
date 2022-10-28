@@ -83,6 +83,11 @@ export function run() {
       collect,
       []
     )
+    .option(
+      '--rule-doc-section-options [required]',
+      '(optional) Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options.',
+      true
+    )
     .addOption(
       new Option(
         '--rule-doc-title-format <format>',
@@ -120,6 +125,7 @@ export function run() {
         ruleDocNotices: string;
         ruleDocSectionExclude: string[];
         ruleDocSectionInclude: string[];
+        ruleDocSectionOptions?: boolean;
         ruleDocTitleFormat: RuleDocTitleFormat;
         ruleListColumns: string;
         urlConfigs?: string;
@@ -134,6 +140,9 @@ export function run() {
         ruleDocNotices: options.ruleDocNotices,
         ruleDocSectionExclude: options.ruleDocSectionExclude,
         ruleDocSectionInclude: options.ruleDocSectionInclude,
+        ruleDocSectionOptions: ['true', true, undefined].includes(
+          options.ruleDocSectionOptions
+        ),
         ruleDocTitleFormat: options.ruleDocTitleFormat,
         ruleListColumns: options.ruleListColumns,
         urlConfigs: options.urlConfigs,
