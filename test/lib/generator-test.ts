@@ -988,7 +988,10 @@ describe('generator', function () {
         jest.resetModules();
       });
       it('successfully finds the options mentioned in the rule doc despite quote escaping', async function () {
-        await expect(generate('.')).resolves.toBeUndefined();
+        const consoleErrorStub = sinon.stub(console, 'error');
+        await generate('.');
+        expect(consoleErrorStub.callCount).toBe(0);
+        consoleErrorStub.restore();
       });
     });
 
