@@ -34,7 +34,13 @@ function expectContent(
   content: string,
   expected: boolean
 ) {
-  if (contents.includes(content) !== expected) {
+  // Check for the content and also the versions of the content with escaped quotes
+  // in case escaping is needed where the content is referenced.
+  const hasContent =
+    contents.includes(content) ||
+    contents.includes(content.replace('"', '\\"')) ||
+    contents.includes(content.replace("'", "\\'"));
+  if (hasContent !== expected) {
     console.error(
       `\`${ruleName}\` rule doc should ${
         /* istanbul ignore next -- TODO: test !expected or remove parameter */
