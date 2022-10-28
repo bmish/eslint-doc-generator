@@ -13,6 +13,12 @@ Also performs some basic section consistency checks on rule docs:
 
 - Contains an `## Options` / `## Config` section and mentions each named option (for rules with options)
 
+Used by popular ESLint plugins like:
+
+- [eslint-plugin-ember](https://github.com/ember-cli/eslint-plugin-ember#-rules)
+- [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react#list-of-supported-rules)
+- [eslint-plugin-unicorn](https://github.com/sindresorhus/eslint-plugin-unicorn#rules)
+
 ## Motivation
 
 - Standardize documentation across thousands of ESLint plugins and rules
