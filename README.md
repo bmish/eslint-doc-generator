@@ -15,6 +15,7 @@ Also performs some basic section consistency checks on rule docs:
 
 Used by popular ESLint plugins like:
 
+- [eslint-plugin-ava](https://github.com/avajs/eslint-plugin-ava#rules)
 - [eslint-plugin-ember](https://github.com/ember-cli/eslint-plugin-ember#-rules)
 - [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react#list-of-supported-rules)
 - [eslint-plugin-unicorn](https://github.com/sindresorhus/eslint-plugin-unicorn#rules)
@@ -34,7 +35,10 @@ Install it:
 npm i --save-dev eslint-doc-generator
 ```
 
-Add scripts to `package.json` (both a lint script to ensure everything is up-to-date in CI and an update script) (add any config options in the `update:eslint-docs` script):
+Add scripts to `package.json`:
+
+- Both a lint script to ensure everything is up-to-date in CI and an update script for contributors to run locally
+- Add any [config options](#configuration-options) in the `update:eslint-docs` script only
 
 ```json
 {
@@ -143,7 +147,7 @@ The table will hide columns that don't apply to any rules, and the legend will i
 
 ## Badge
 
-For any configs without emojis (see [`--config-emoji`](#configuration-options)), you'll need to define badges for them at the bottom of your `README.md`.
+While config emojis are recommended (see [`--config-emoji`](#configuration-options)), you can alternatively define badges for configs at the bottom of your `README.md`.
 
 Here's a badge for a custom `fun` config that displays in blue:
 
@@ -165,7 +169,7 @@ And how it looks:
 | `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Default emojis are provided for [common configs](./lib/emojis.ts). To remove a default emoji and rely on a [badge](#badge) instead, provide the config name without an emoji. Option can be repeated. |
 | `--ignore-config` | Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. |
 | `--ignore-deprecated-rules` | Whether to ignore deprecated rules from being checked, displayed, or updated (default: `false`). |
-| `--rule-doc-notices` | Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. Choices: `configs`, `deprecated`, `fixable`, `fixableAndHasSuggestions`, `hasSuggestions`, `requiresTypeChecking`, `type` (off by default). Default: `deprecated,configs,fixable,fixableAndHasSuggestions,hasSuggestions,requiresTypeChecking`. |
+| `--rule-doc-notices` | Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. Choices: `configs`, `deprecated`, `fixable`, `fixableAndHasSuggestions`, `hasSuggestions`, `requiresTypeChecking`, `type` (off by default). A consolidated notice called `fixableAndHasSuggestions` automatically replaces `fixable` and `hasSuggestions` when applicable. Default: `deprecated,configs,fixable,fixableAndHasSuggestions,hasSuggestions,requiresTypeChecking`. |
 | `--rule-doc-section-exclude` | Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. |
 | `--rule-doc-section-include` | Required section in each rule doc. Exit with failure if missing. Option can be repeated. |
 | `--rule-doc-section-options` | Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options (default: `true`). |
