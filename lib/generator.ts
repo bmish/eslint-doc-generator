@@ -113,15 +113,16 @@ export async function generate(
         ? // Object-style rule.
           {
             name,
-            description: rule.meta.docs?.description,
-            fixable: rule.meta.fixable
+            description: rule.meta?.docs?.description,
+            fixable: rule.meta?.fixable
               ? ['code', 'whitespace'].includes(rule.meta.fixable)
               : false,
-            hasSuggestions: rule.meta.hasSuggestions ?? false,
-            requiresTypeChecking: rule.meta.docs?.requiresTypeChecking ?? false,
-            deprecated: rule.meta.deprecated ?? false,
-            schema: rule.meta.schema,
-            type: rule.meta.type,
+            hasSuggestions: rule.meta?.hasSuggestions ?? false,
+            requiresTypeChecking:
+              rule.meta?.docs?.requiresTypeChecking ?? false,
+            deprecated: rule.meta?.deprecated ?? false,
+            schema: rule.meta?.schema,
+            type: rule.meta?.type,
           }
         : // Deprecated function-style rule (does not support most of these features).
           {

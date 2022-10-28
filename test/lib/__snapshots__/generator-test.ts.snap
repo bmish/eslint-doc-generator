@@ -477,6 +477,29 @@ exports[`generator #generate rule with long-enough description to require name c
 "
 `;
 
+exports[`generator #generate rule with no meta object generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+✅ Enabled in the \`recommended\` configuration.
+
+| Name                           | ✅  |
+| :----------------------------- | :-- |
+| [no-foo](docs/rules/no-foo.md) | ✅  |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generator #generate rule with no meta object generates the documentation 2`] = `
+"# test/no-foo
+
+✅ This rule is enabled in the \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
 exports[`generator #generate rule with type, type column enabled displays the type 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
