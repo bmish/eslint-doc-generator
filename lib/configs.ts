@@ -1,4 +1,4 @@
-import { EMOJI_CONFIGS } from './emojis.js';
+import { EMOJI_CONFIGS, EMOJI_CONFIG } from './emojis.js';
 import type {
   Plugin,
   ConfigsToRules,
@@ -61,11 +61,19 @@ export function parseConfigEmojiOptions(
           `Invalid configEmoji option: ${configEmojiItem}. Expected format: config,emoji`
         );
       }
+
       if (plugin.configs?.[config] === undefined) {
         throw new Error(
           `Invalid configEmoji option: ${config} config not found.`
         );
       }
+
+      if (Object.keys(plugin.configs)?.length > 1 && emoji === EMOJI_CONFIG) {
+        throw new Error(
+          `Cannot use the general configs emoji ${EMOJI_CONFIG} for an individual config when multiple configs are present.`
+        );
+      }
+
       return [{ config, emoji }];
     }) || [];
 
