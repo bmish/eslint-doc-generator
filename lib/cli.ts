@@ -62,7 +62,7 @@ export function run() {
     )
     .option(
       '--rule-doc-notices <notices>',
-      `(optional) Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. (choices: "${Object.values(
+      `(optional) Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. A consolidated notice called \`fixableAndHasSuggestions\` automatically replaces \`fixable\` and \`hasSuggestions\` when applicable. (choices: "${Object.values(
         NOTICE_TYPE
       ).join('", "')}")`,
       // List of default enabled notices.
