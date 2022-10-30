@@ -1,20 +1,15 @@
 // General helpers for dealing with markdown files / content.
 
-function removeTrailingNewline(str: string) {
-  return str.replace(/\s+$/, '');
-}
-
 export async function format(str: string, filePath: string): Promise<string> {
   try {
     const { default: prettier } = await import('prettier');
     const options = await prettier.resolveConfig(filePath);
-    // Trim the ending newline that prettier may add.
-    return removeTrailingNewline(
-      prettier.format(str, {
+    return prettier
+      .format(str, {
         ...options,
         parser: 'markdown',
       })
-    );
+      .trimEnd(); // Trim the ending newline that prettier may add.
   } catch {
     // Skip prettier formatting if not installed.
     /* istanbul ignore next -- TODO: Figure out how to test when prettier is not installed. */
