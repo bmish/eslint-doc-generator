@@ -21,6 +21,21 @@
 
 
 
+
+## v0.17.0 (2022-10-30)
+
+#### :rocket: Enhancement
+* [#187](https://github.com/bmish/eslint-doc-generator/pull/187) Show diff when `--check` fails because docs are out-of-sync ([@bmish](https://github.com/bmish))
+* [#188](https://github.com/bmish/eslint-doc-generator/pull/188) Reduce complexity by removing prettier formatting of outputted markdown ([@bmish](https://github.com/bmish))
+
+#### :memo: Documentation
+* [#190](https://github.com/bmish/eslint-doc-generator/pull/190) Encourage complementary use of `eslint-plugin/require-meta-docs-description` lint rule in readme ([@bmish](https://github.com/bmish))
+* [#183](https://github.com/bmish/eslint-doc-generator/pull/183) Mention popular plugins that use this ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.16.0 (2022-10-28)
 
 #### :rocket: Enhancement
