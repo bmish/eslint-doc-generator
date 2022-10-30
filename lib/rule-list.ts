@@ -7,7 +7,7 @@ import {
 } from './emojis.js';
 import { getConfigsForRule } from './configs.js';
 import { getColumns, COLUMN_HEADER } from './rule-list-columns.js';
-import { findSectionHeader, format } from './markdown.js';
+import { findSectionHeader } from './markdown.js';
 import { getPluginRoot } from './package-json.js';
 import { generateLegend } from './legend.js';
 import { relative } from 'node:path';
@@ -271,7 +271,7 @@ function generateRulesListMarkdownWithSplitBy(
   return parts.join('\n\n');
 }
 
-export async function updateRulesList(
+export function updateRulesList(
   details: RuleDetails[],
   markdown: string,
   plugin: Plugin,
@@ -284,7 +284,7 @@ export async function updateRulesList(
   ruleListColumns: COLUMN_TYPE[],
   urlConfigs?: string,
   splitBy?: string
-): Promise<string> {
+): string {
   let listStartIndex = markdown.indexOf(BEGIN_RULE_LIST_MARKER);
   let listEndIndex = markdown.indexOf(END_RULE_LIST_MARKER);
 
@@ -360,7 +360,7 @@ export async function updateRulesList(
         ignoreConfig
       );
 
-  const newContent = await format(`${legend}\n\n${list}`, pathToReadme);
+  const newContent = `${legend ? `${legend}\n\n` : ''}${list}`;
 
   return `${preList}${BEGIN_RULE_LIST_MARKER}\n\n${newContent}\n\n${END_RULE_LIST_MARKER}${postList}`;
 }

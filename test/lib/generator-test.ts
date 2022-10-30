@@ -5,7 +5,6 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
 import { jest } from '@jest/globals';
-import prettier from 'prettier';
 import * as sinon from 'sinon';
 import { EMOJI_CONFIG } from '../../lib/emojis.js';
 
@@ -15,11 +14,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 describe('generator', function () {
   describe('#generate', function () {
-    beforeEach(function () {
-      // We have to clear the prettier cache between tests for this to work.
-      prettier.clearConfigCache();
-    });
-
     describe('successful', function () {
       beforeEach(function () {
         mockFs({
@@ -1413,115 +1407,6 @@ describe('generator', function () {
         ).rejects.toThrow(
           'Unsupported file type for plugin entry point. Current types supported: .js, .cjs, .mjs. Entry point detected: ./index.json'
         );
-      });
-    });
-
-    beforeEach(function () {
-      // We have to clear the prettier cache between tests for this to work.
-      prettier.clearConfigCache();
-    });
-
-    describe('no prettier config', function () {
-      beforeEach(function () {
-        mockFs({
-          'package.json': JSON.stringify({
-            name: 'eslint-plugin-test',
-            type: 'module',
-          }),
-
-          'index.js': `
-                    export default {
-                      rules: {
-                        'no-foo': {
-                          meta: { docs: { description: 'Description of no-foo.' }, fixable: 'code' },
-                          create(context) {}
-                        },
-                      },
-                    };`,
-
-          'README.md':
-            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
-
-          'docs/rules/no-foo.md': outdent`
-            ## Rule details
-            details
-            Long line that SHOULD NOT get wrapped by prettier since it's outside the header. Long line that SHOULD NOT get wrapped by prettier since it's outside the header."
-          `,
-
-          // Needed for some of the test infrastructure to work.
-          node_modules: mockFs.load(
-            resolve(__dirname, '..', '..', 'node_modules')
-          ),
-        });
-      });
-
-      afterEach(function () {
-        mockFs.restore();
-        jest.resetModules();
-      });
-
-      it('generates the documentation', async function () {
-        await generate('.');
-
-        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-
-        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
-      });
-    });
-
-    describe('uses prettier config from package.json', function () {
-      beforeEach(function () {
-        mockFs({
-          'package.json': JSON.stringify({
-            name: 'eslint-plugin-test',
-            type: 'module',
-            prettier: { proseWrap: 'always', printWidth: 20 },
-          }),
-
-          'index.js': `
-                export default {
-                  rules: {
-                    'no-foo': {
-                      meta: { docs: { description: 'Description of no-foo.' }, },
-                      create(context) {}
-                    },
-                  },
-                  configs: {
-                    all: {
-                      rules: {
-                        'test/no-foo': 'error',
-                      }
-                    },
-                  }
-                };`,
-
-          'README.md':
-            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
-
-          'docs/rules/no-foo.md': outdent`
-            ## Rule details
-            details
-            Long line that SHOULD NOT get wrapped by prettier since it's outside the header. Long line that SHOULD NOT get wrapped by prettier since it's outside the header.
-          `,
-
-          // Needed for some of the test infrastructure to work.
-          node_modules: mockFs.load(
-            resolve(__dirname, '..', '..', 'node_modules')
-          ),
-        });
-      });
-
-      afterEach(function () {
-        mockFs.restore();
-        jest.resetModules();
-      });
-
-      it('should wrap prose in rule doc header to just 20 chars', async function () {
-        await generate('.');
-
-        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-
-        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
       });
     });
 

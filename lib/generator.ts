@@ -174,11 +174,10 @@ export async function generate(
     );
 
     const contents = readFileSync(pathToDoc).toString();
-    const contentsNew = await replaceOrCreateHeader(
+    const contentsNew = replaceOrCreateHeader(
       contents,
       newHeaderLines,
-      END_RULE_HEADER_MARKER,
-      pathToDoc
+      END_RULE_HEADER_MARKER
     );
 
     if (options?.check) {
@@ -230,7 +229,7 @@ export async function generate(
 
   // Update the rules list in the README.
   const readmeContents = readFileSync(pathToReadme, 'utf8');
-  const readmeContentsNew = await updateRulesList(
+  const readmeContentsNew = updateRulesList(
     details,
     readmeContents,
     plugin,
