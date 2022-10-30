@@ -17,6 +17,9 @@ Used by popular ESLint plugins like:
 
 - [eslint-plugin-ava](https://github.com/avajs/eslint-plugin-ava#rules)
 - [eslint-plugin-ember](https://github.com/ember-cli/eslint-plugin-ember#-rules)
+- [eslint-plugin-eslint-plugin](https://github.com/eslint-community/eslint-plugin-eslint-plugin#rules)
+- [eslint-plugin-jsx-a11y](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y#supported-rules)
+- [eslint-plugin-qunit](https://github.com/platinumazure/eslint-plugin-qunit#rules)
 - [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react#list-of-supported-rules)
 - [eslint-plugin-unicorn](https://github.com/sindresorhus/eslint-plugin-unicorn#rules)
 
@@ -60,6 +63,12 @@ Delete any old rules list from your `README.md`. A new one will be automatically
 ```
 
 Delete any old recommended/fixable/etc. notices from your rule docs. A new title and notices will be automatically added to the top of each rule doc (along with a marker comment if it doesn't exist yet).
+
+```md
+<!-- end auto-generated rule header -->
+```
+
+And be sure to enable the `recommended` rules from [eslint-plugin-eslint-plugin](https://github.com/eslint-community/eslint-plugin-eslint-plugin) as well as [eslint-plugin/require-meta-docs-description](https://github.com/eslint-community/eslint-plugin-eslint-plugin/blob/main/docs/rules/require-meta-docs-description.md) to ensure your rules have consistent descriptions for use in the generated docs.
 
 ## Usage
 
