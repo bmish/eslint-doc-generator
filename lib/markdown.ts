@@ -1,22 +1,5 @@
 // General helpers for dealing with markdown files / content.
 
-export async function format(str: string, filePath: string): Promise<string> {
-  try {
-    const { default: prettier } = await import('prettier');
-    const options = await prettier.resolveConfig(filePath);
-    return prettier
-      .format(str, {
-        ...options,
-        parser: 'markdown',
-      })
-      .trimEnd(); // Trim the ending newline that prettier may add.
-  } catch {
-    // Skip prettier formatting if not installed.
-    /* istanbul ignore next -- TODO: Figure out how to test when prettier is not installed. */
-    return str;
-  }
-}
-
 /**
  * Replace the header of a doc up to and including the specified marker.
  * Insert at beginning if header doesn't exist.
@@ -24,11 +7,10 @@ export async function format(str: string, filePath: string): Promise<string> {
  * @param newHeader - new header including marker
  * @param marker - marker to indicate end of header
  */
-export async function replaceOrCreateHeader(
+export function replaceOrCreateHeader(
   markdown: string,
   newHeader: string,
-  marker: string,
-  pathToDoc: string
+  marker: string
 ) {
   const lines = markdown.split('\n');
 
@@ -39,9 +21,7 @@ export async function replaceOrCreateHeader(
     lines.splice(0, 1);
   }
 
-  return `${await format(newHeader, pathToDoc)}\n${lines
-    .slice(markerLineIndex + 1)
-    .join('\n')}`;
+  return `${newHeader}\n${lines.slice(markerLineIndex + 1).join('\n')}`;
 }
 
 /**

@@ -86,7 +86,7 @@ exports[`generator #generate config that extends another config generates the do
 ✅ Enabled in the \`recommended\` configuration.
 
 | Name                           | Description            | ✅  |
-| :----------------------------- | :--------------------- | :-- |
+| :----------------------------- | :--------------------- | :- |
 | [no-bar](docs/rules/no-bar.md) | Description of no-bar. | ✅  |
 | [no-baz](docs/rules/no-baz.md) | Description of no-baz. | ✅  |
 | [no-biz](docs/rules/no-biz.md) | Description of no-biz. | ✅  |
@@ -139,7 +139,7 @@ exports[`generator #generate config with overrides generates the documentation 1
 ✅ Enabled in the \`recommended\` configuration.
 
 | Name                           | Description            | ✅  |
-| :----------------------------- | :--------------------- | :-- |
+| :----------------------------- | :--------------------- | :- |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
 
 <!-- end auto-generated rules list -->
@@ -162,7 +162,7 @@ exports[`generator #generate deprecated function-style rule generates the docume
 ✅ Enabled in the \`recommended\` configuration.
 
 | Name                           | ✅  |
-| :----------------------------- | :-- |
+| :----------------------------- | :- |
 | [no-foo](docs/rules/no-foo.md) | ✅  |
 
 <!-- end auto-generated rules list -->
@@ -191,10 +191,10 @@ exports[`generator #generate deprecated rules updates the documentation 1`] = `
 ❌ Deprecated.
 
 | Name                           | Description  | ❌  |
-| :----------------------------- | :----------- | :-- |
+| :----------------------------- | :----------- | :- |
 | [no-bar](docs/rules/no-bar.md) | Description. | ❌  |
 | [no-baz](docs/rules/no-baz.md) | Description. | ❌  |
-| [no-biz](docs/rules/no-biz.md) | Description. |     |
+| [no-biz](docs/rules/no-biz.md) | Description. |    |
 | [no-foo](docs/rules/no-foo.md) | Description. | ❌  |
 
 <!-- end auto-generated rules list -->"
@@ -250,9 +250,9 @@ exports[`generator #generate no existing comment markers - minimal doc content g
 
 🔧 Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
-| Name                           | Description            | 🔧  |
-| :----------------------------- | :--------------------- | :-- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |
+| Name                           | Description            | 🔧 |
+| :----------------------------- | :--------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧 |
 
 <!-- end auto-generated rules list -->
 "
@@ -273,9 +273,9 @@ exports[`generator #generate no existing comment markers - with no blank lines i
 
 🔧 Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
-| Name                           | Description            | 🔧  |
-| :----------------------------- | :--------------------- | :-- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |
+| Name                           | Description            | 🔧 |
+| :----------------------------- | :--------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧 |
 
 <!-- end auto-generated rules list -->
 Existing rules section content."
@@ -296,9 +296,9 @@ exports[`generator #generate no existing comment markers - with one blank line a
 
 🔧 Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
-| Name                           | Description            | 🔧  |
-| :----------------------------- | :--------------------- | :-- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |
+| Name                           | Description            | 🔧 |
+| :----------------------------- | :--------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧 |
 
 <!-- end auto-generated rules list -->
 
@@ -313,29 +313,6 @@ exports[`generator #generate no existing comment markers - with one blank line a
 <!-- end auto-generated rule header -->
 
 Existing rule doc content."
-`;
-
-exports[`generator #generate no prettier config generates the documentation 1`] = `
-"<!-- begin auto-generated rules list -->
-
-🔧 Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
-
-| Name                           | Description            | 🔧  |
-| :----------------------------- | :--------------------- | :-- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |
-
-<!-- end auto-generated rules list -->"
-`;
-
-exports[`generator #generate no prettier config generates the documentation 2`] = `
-"# Description of no-foo (\`test/no-foo\`)
-
-🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
-
-<!-- end auto-generated rule header -->
-## Rule details
-details
-Long line that SHOULD NOT get wrapped by prettier since it's outside the header. Long line that SHOULD NOT get wrapped by prettier since it's outside the header.""
 `;
 
 exports[`generator #generate no rules with description generates the documentation 1`] = `
@@ -390,7 +367,7 @@ exports[`generator #generate only a \`recommended\` config updates the documenta
 ✅ Enabled in the \`recommended\` configuration.
 
 | Name                           | Description  | ✅  |
-| :----------------------------- | :----------- | :-- |
+| :----------------------------- | :----------- | :- |
 | [no-foo](docs/rules/no-foo.md) | Description. | ✅  |
 
 <!-- end auto-generated rules list -->"
@@ -412,7 +389,7 @@ exports[`generator #generate rule config with options generates the documentatio
 ✅ Enabled in the \`recommended\` configuration.
 
 | Name                           | Description            | ✅  |
-| :----------------------------- | :--------------------- | :-- |
+| :----------------------------- | :--------------------- | :- |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
 
 <!-- end auto-generated rules list -->
@@ -484,7 +461,7 @@ exports[`generator #generate rule with no meta object generates the documentatio
 ✅ Enabled in the \`recommended\` configuration.
 
 | Name                           | ✅  |
-| :----------------------------- | :-- |
+| :----------------------------- | :- |
 | [no-foo](docs/rules/no-foo.md) | ✅  |
 
 <!-- end auto-generated rules list -->
@@ -509,13 +486,13 @@ exports[`generator #generate rule with type, type column enabled displays the ty
 📖 Identifies potential improvements.\\
 📏 Focuses on code formatting.
 
-| Name                           | 🗂️  |
+| Name                           | 🗂️ |
 | :----------------------------- | :-- |
 | [no-bar](docs/rules/no-bar.md) | 📖  |
 | [no-biz](docs/rules/no-biz.md) | 📏  |
 | [no-boz](docs/rules/no-boz.md) |     |
 | [no-buz](docs/rules/no-buz.md) |     |
-| [no-foo](docs/rules/no-foo.md) | ❗  |
+| [no-foo](docs/rules/no-foo.md) | ❗   |
 
 <!-- end auto-generated rules list -->
 "
@@ -601,14 +578,14 @@ exports[`generator #generate rules that are disabled or set to warn generates th
 ✅ Enabled in the \`recommended\` configuration.
 
 | Name                           | Description            | ✅  |
-| :----------------------------- | :--------------------- | :-- |
-| [no-bar](docs/rules/no-bar.md) | Description of no-bar. |     |
+| :----------------------------- | :--------------------- | :- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. |    |
 | [no-baz](docs/rules/no-baz.md) | Description of no-baz. | ✅  |
-| [no-bez](docs/rules/no-bez.md) | Description of no-bez. |     |
-| [no-biz](docs/rules/no-biz.md) | Description of no-biz. |     |
-| [no-boz](docs/rules/no-boz.md) | Description of no-boz. |     |
-| [no-buz](docs/rules/no-buz.md) | Description of no-buz. |     |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |     |
+| [no-bez](docs/rules/no-bez.md) | Description of no-bez. |    |
+| [no-biz](docs/rules/no-biz.md) | Description of no-biz. |    |
+| [no-boz](docs/rules/no-boz.md) | Description of no-boz. |    |
+| [no-buz](docs/rules/no-buz.md) | Description of no-buz. |    |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |    |
 
 <!-- end auto-generated rules list -->
 "
@@ -683,10 +660,10 @@ exports[`generator #generate shows column and notice for requiresTypeChecking up
 🌐 Enabled in the \`all\` configuration.\\
 💭 Requires type information.
 
-| Name                           | Description            | 🌐  | 💭  |
-| :----------------------------- | :--------------------- | :-- | :-- |
-| [no-bar](docs/rules/no-bar.md) | Description of no-bar. |     | 💭  |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🌐  |     |
+| Name                           | Description            | 🌐 | 💭 |
+| :----------------------------- | :--------------------- | :- | :- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. |    | 💭 |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🌐 |    |
 
 <!-- end auto-generated rules list -->"
 `;
@@ -829,16 +806,16 @@ exports[`generator #generate splitting list, with boolean splits the list 1`] = 
 
 💡 Manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
-| Name                           | 💡  |
-| :----------------------------- | :-- |
-| [no-bar](docs/rules/no-bar.md) |     |
-| [no-baz](docs/rules/no-baz.md) |     |
+| Name                           | 💡 |
+| :----------------------------- | :- |
+| [no-bar](docs/rules/no-bar.md) |    |
+| [no-baz](docs/rules/no-baz.md) |    |
 
 ### Has Suggestions
 
-| Name                           | 💡  |
-| :----------------------------- | :-- |
-| [no-foo](docs/rules/no-foo.md) | 💡  |
+| Name                           | 💡 |
+| :----------------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | 💡 |
 
 <!-- end auto-generated rules list -->
 "
@@ -853,13 +830,13 @@ exports[`generator #generate splitting list, with one sub-list having no rules e
 ### bar
 
 | Name                           | ✅  |
-| :----------------------------- | :-- |
-| [no-bar](docs/rules/no-bar.md) |     |
+| :----------------------------- | :- |
+| [no-bar](docs/rules/no-bar.md) |    |
 
 ### foo
 
 | Name                           | ✅  |
-| :----------------------------- | :-- |
+| :----------------------------- | :- |
 | [no-foo](docs/rules/no-foo.md) | ✅  |
 
 <!-- end auto-generated rules list -->
@@ -897,11 +874,11 @@ Description.
 🔧 Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\\
 💡 Manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
-| Name                           | Description            | 💼    | 🔧  | 💡  |
-| :----------------------------- | :--------------------- | :---- | :-- | :-- |
-| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | 🌐 🎨 | 🔧  |     |
-| [no-baz](docs/rules/no-baz.md) | Description of no-boz. |       |     |     |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🌐 ✅ | 🔧  | 💡  |
+| Name                           | Description            | 💼    | 🔧 | 💡 |
+| :----------------------------- | :--------------------- | :---- | :- | :- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | 🌐 🎨 | 🔧 |    |
+| [no-baz](docs/rules/no-baz.md) | Description of no-boz. |       |    |    |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🌐 ✅  | 🔧 | 💡 |
 
 <!-- end auto-generated rules list -->
 more content."
@@ -940,32 +917,6 @@ exports[`generator #generate successful updates the documentation 4`] = `
 <!-- end auto-generated rule header -->
 ## Rule details
 details"
-`;
-
-exports[`generator #generate uses prettier config from package.json should wrap prose in rule doc header to just 20 chars 1`] = `
-"<!-- begin auto-generated rules list -->
-
-🌐 Enabled in the
-\`all\` configuration.
-
-| Name                           | Description            | 🌐  |
-| :----------------------------- | :--------------------- | :-- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🌐  |
-
-<!-- end auto-generated rules list -->"
-`;
-
-exports[`generator #generate uses prettier config from package.json should wrap prose in rule doc header to just 20 chars 2`] = `
-"# Description of no-foo (\`test/no-foo\`)
-
-🌐 This rule is
-enabled in the \`all\`
-config.
-
-<!-- end auto-generated rule header -->
-## Rule details
-details
-Long line that SHOULD NOT get wrapped by prettier since it's outside the header. Long line that SHOULD NOT get wrapped by prettier since it's outside the header."
 `;
 
 exports[`generator #generate with \`--rule-doc-title-format\` option = desc uses the right rule doc title format 1`] = `
@@ -1034,7 +985,7 @@ exports[`generator #generate with \`--url-configs\` option includes the config l
 | Name                           | Description             | 💼                |
 | :----------------------------- | :---------------------- | :---------------- |
 | [no-bar](docs/rules/no-bar.md) | Description for no-bar. | ![customConfig][] |
-| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅                |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅                 |
 
 <!-- end auto-generated rules list -->
 "
@@ -1065,7 +1016,7 @@ exports[`generator #generate with \`--url-configs\` option with only recommended
 ✅ Enabled in the \`recommended\` [configuration](http://example.com/configs).
 
 | Name                           | Description             | ✅  |
-| :----------------------------- | :---------------------- | :-- |
+| :----------------------------- | :---------------------- | :- |
 | [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅  |
 
 <!-- end auto-generated rules list -->
@@ -1147,9 +1098,9 @@ exports[`generator #generate with --config-emoji and using the general configs e
 
 💼 Enabled in the \`recommended\` configuration.
 
-| Name                           | Description             | 💼  |
-| :----------------------------- | :---------------------- | :-- |
-| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | 💼  |
+| Name                           | Description             | 💼 |
+| :----------------------------- | :---------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | 💼 |
 
 <!-- end auto-generated rules list -->
 "
@@ -1216,7 +1167,7 @@ exports[`generator #generate with --ignore-config hides the ignored config 1`] =
 ✅ Enabled in the \`recommended\` configuration.
 
 | Name                           | Description             | ✅  |
-| :----------------------------- | :---------------------- | :-- |
+| :----------------------------- | :---------------------- | :- |
 | [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅  |
 
 <!-- end auto-generated rules list -->
@@ -1240,9 +1191,9 @@ exports[`generator #generate with --rule-doc-notices shows the right rule doc no
 💡 Manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).\\
 ❌ Deprecated.
 
-| Name                           | Description             | 🔧  | 💡  | ❌  |
-| :----------------------------- | :---------------------- | :-- | :-- | :-- |
-| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | 🔧  | 💡  | ❌  |
+| Name                           | Description             | 🔧 | 💡 | ❌  |
+| :----------------------------- | :---------------------- | :- | :- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | 🔧 | 💡 | ❌  |
 
 <!-- end auto-generated rules list -->
 "
@@ -1270,9 +1221,9 @@ exports[`generator #generate with --rule-list-columns shows the right columns an
 💡 Manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).\\
 🔧 Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
-| 💡  | 🔧  | Name                           |
-| :-- | :-- | :----------------------------- |
-| 💡  | 🔧  | [no-foo](docs/rules/no-foo.md) |
+| 💡 | 🔧 | Name                           |
+| :- | :- | :----------------------------- |
+| 💡 | 🔧 | [no-foo](docs/rules/no-foo.md) |
 
 <!-- end auto-generated rules list -->
 "
@@ -1297,9 +1248,9 @@ No blank line after this.
 
 🔧 Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
-| Name                           | Description            | 🔧  |
-| :----------------------------- | :--------------------- | :-- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |
+| Name                           | Description            | 🔧 |
+| :----------------------------- | :--------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧 |
 
 <!-- end auto-generated rules list -->
 No blank line before this."
@@ -1323,9 +1274,9 @@ One blank line after this.
 
 🔧 Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
-| Name                           | Description            | 🔧  |
-| :----------------------------- | :--------------------- | :-- |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧  |
+| Name                           | Description            | 🔧 |
+| :----------------------------- | :--------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧 |
 
 <!-- end auto-generated rules list -->
 
