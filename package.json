@@ -40,12 +40,13 @@
     "lint:types": "tsc",
     "prepublishOnly": "tsc",
     "release": "release-it",
-    "test": "node --max-old-space-size=4096 --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
+    "test": "node --max-old-space-size=4096 --experimental-vm-modules node_modules/jest/bin/jest.js --colors --coverage"
   },
   "dependencies": {
     "@typescript-eslint/utils": "^5.38.1",
     "camelcase": "^7.0.0",
     "commander": "^9.4.0",
+    "jest-diff": "^29.2.1",
     "markdown-table": "^3.0.2",
     "type-fest": "^3.0.0"
   },

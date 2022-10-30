@@ -18,6 +18,7 @@ import { findSectionHeader, replaceOrCreateHeader } from './markdown.js';
 import { resolveConfigsToRules } from './config-resolution.js';
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
 import { parseConfigEmojiOptions } from './configs.js';
+import { diff } from 'jest-diff';
 import type { RuleDetails } from './types.js';
 
 /**
@@ -188,6 +189,7 @@ export async function generate(
             pathToDoc
           )}`
         );
+        console.error(diff(contentsNew, contents, { expand: false }));
         process.exitCode = 1;
       }
     } else {
@@ -251,6 +253,7 @@ export async function generate(
           pathToReadme
         )} is out-of-date.`
       );
+      console.error(diff(readmeContentsNew, readmeContents, { expand: false }));
       process.exitCode = 1;
     }
   } else {

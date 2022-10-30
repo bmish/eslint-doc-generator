@@ -2728,7 +2728,7 @@ describe('generator', function () {
 
           'README.md': '## Rules\n',
 
-          'docs/rules/no-foo.md': '',
+          'docs/rules/no-foo.md': '# test/no-foo',
 
           // Needed for some of the test infrastructure to work.
           node_modules: mockFs.load(
@@ -2745,7 +2745,7 @@ describe('generator', function () {
       it('prints the issues, exits with failure, and does not write changes', async function () {
         const consoleErrorStub = sinon.stub(console, 'error');
         await generate('.', { check: true });
-        expect(consoleErrorStub.callCount).toBe(2);
+        expect(consoleErrorStub.callCount).toBe(4);
         // Use join to handle both Windows and Unix paths.
         expect(consoleErrorStub.firstCall.args).toStrictEqual([
           `Please run eslint-doc-generator. A rule doc is out-of-date: ${join(
@@ -2754,9 +2754,11 @@ describe('generator', function () {
             'no-foo.md'
           )}`,
         ]);
-        expect(consoleErrorStub.secondCall.args).toStrictEqual([
+        expect(consoleErrorStub.secondCall.args).toMatchSnapshot(); // Diff
+        expect(consoleErrorStub.thirdCall.args).toStrictEqual([
           'Please run eslint-doc-generator. README.md is out-of-date.',
         ]);
+        expect(consoleErrorStub.getCall(3).args).toMatchSnapshot(); // Diff
         consoleErrorStub.restore();
 
         expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
