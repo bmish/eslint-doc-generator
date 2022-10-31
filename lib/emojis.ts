@@ -15,6 +15,8 @@ export const EMOJI_CONFIGS = {
 
 //  General configs.
 export const EMOJI_CONFIG = '💼';
+export const EMOJI_CONFIG_WARN = '⚠️';
+export const EMOJI_CONFIG_OFF = '🚫';
 
 // Fixers.
 export const EMOJI_FIXABLE = '🔧';

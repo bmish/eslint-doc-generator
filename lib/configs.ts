@@ -1,34 +1,41 @@
-import { EMOJI_CONFIGS, EMOJI_CONFIG } from './emojis.js';
+import {
+  EMOJI_CONFIGS,
+  EMOJI_CONFIG,
+  EMOJI_CONFIG_WARN,
+  EMOJI_CONFIG_OFF,
+} from './emojis.js';
 import type {
   Plugin,
   ConfigsToRules,
   ConfigEmojis,
   RuleSeverity,
+  SEVERITY_TYPE,
 } from './types.js';
 
 /**
  * Get config names that a given rule belongs to.
+ * @param severity - Include configs that set the rule to this severity. Omit to allow any severity.
  */
 export function getConfigsForRule(
   ruleName: string,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
-  severity: Set<RuleSeverity>
+  severity?: Set<RuleSeverity>
 ) {
   const configNames: Array<keyof typeof configsToRules> = [];
 
   for (const configName in configsToRules) {
     const rules = configsToRules[configName];
     const value = rules[`${pluginPrefix}/${ruleName}`];
-    const isEnabled =
+    const isSet =
       ((typeof value === 'string' || typeof value === 'number') &&
-        severity.has(value)) ||
+        (!severity || severity.has(value))) ||
       (typeof value === 'object' &&
         Array.isArray(value) &&
         value.length > 0 &&
-        severity.has(value[0]));
+        (!severity || severity.has(value[0])));
 
-    if (isEnabled) {
+    if (isSet) {
       configNames.push(configName);
     }
   }
@@ -89,4 +96,50 @@ export function parseConfigEmojiOptions(
   }
 
   return configEmojis;
+}
+
+/**
+ * Find the representation of a config to display.
+ * @param configEmojis - known list of configs and corresponding emojis
+ * @param configName - name of the config to find an emoji for
+ * @param options
+ * @param options.severity - if present, decorate the config's emoji for the given severity level
+ * @param options.fallback - if true and no emoji is found, choose whether to fallback to a generic config emoji or a badge
+ * @returns the string to display for the config
+ */
+export function findConfigEmoji(
+  configEmojis: ConfigEmojis,
+  configName: string,
+  options?: {
+    severity?: SEVERITY_TYPE;
+    fallback?: 'badge' | 'emoji';
+  }
+) {
+  let emoji = configEmojis.find(
+    (configEmoji) => configEmoji.config === configName
+  )?.emoji;
+  if (!emoji) {
+    if (options?.fallback === 'badge') {
+      emoji = `![${configName}][]`;
+    } else if (options?.fallback === 'emoji') {
+      emoji = EMOJI_CONFIG;
+    } else {
+      // No fallback.
+      return undefined; // eslint-disable-line unicorn/no-useless-undefined
+    }
+  }
+  switch (options?.severity) {
+    case 'warn':
+      return `${emoji}${
+        // Conditional is to avoid double emoji.
+        emoji === EMOJI_CONFIG_WARN ? '' : `<sup>${EMOJI_CONFIG_WARN}</sup>`
+      }`;
+    case 'off':
+      // Conditional is to avoid double emoji.
+      return `${emoji}${
+        emoji === EMOJI_CONFIG_OFF ? '' : `<sup>${EMOJI_CONFIG_OFF}</sup>`
+      }`;
+    default:
+      return emoji;
+  }
 }

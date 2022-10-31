@@ -6,13 +6,16 @@ import {
   EMOJI_REQUIRES_TYPE_CHECKING,
   EMOJI_TYPE,
 } from './emojis.js';
-import { getConfigsForRule } from './configs.js';
+import { getConfigsForRule, findConfigEmoji } from './configs.js';
 import {
   COLUMN_TYPE,
   ConfigEmojis,
   Plugin,
   ConfigsToRules,
   SEVERITY_ERROR,
+  SEVERITY_WARN,
+  SEVERITY_OFF,
+  SEVERITY_TYPE,
 } from './types.js';
 import { RULE_TYPE_MESSAGES_LEGEND, RULE_TYPES } from './rule-type.js';
 
@@ -57,28 +60,24 @@ const LEGENDS: {
       : 'configuration';
 
     const ruleNames = Object.keys(plugin.rules);
-    const configsThatEnableAnyRule = Object.entries(configsToRules)
+    const configNamesWithoutIgnored = Object.entries(configsToRules)
       .filter(([configName, _config]) =>
+        // Only consider configs that configure at least one of the plugin's rules.
         ruleNames.some((ruleName) =>
-          getConfigsForRule(
-            ruleName,
-            configsToRules,
-            pluginPrefix,
-            SEVERITY_ERROR
-          ).includes(configName)
+          getConfigsForRule(ruleName, configsToRules, pluginPrefix).includes(
+            configName
+          )
         )
       )
-      .map(([configName, _config]) => configName);
-
-    const configNamesWithoutIgnored = configsThatEnableAnyRule.filter(
-      (configName) => !ignoreConfig?.includes(configName)
-    );
+      // Filter out ignored configs.
+      .filter(([configName]) => !ignoreConfig?.includes(configName))
+      .map(([configName]) => configName);
 
     const legends = [];
     if (
       (configNamesWithoutIgnored.length > 1 ||
         !configEmojis.find((configEmoji) =>
-          configNamesWithoutIgnored?.includes(configEmoji.config)
+          configNamesWithoutIgnored.includes(configEmoji.config)
         )?.emoji) &&
       // If any configs are using the generic config emoji, then don't display the generic config legend.
       !configEmojis
@@ -90,16 +89,70 @@ const LEGENDS: {
     }
     legends.push(
       ...configNamesWithoutIgnored.flatMap((configName) => {
-        const emoji = configEmojis.find(
-          (configEmoji) => configEmoji.config === configName
-        )?.emoji;
-        if (!emoji) {
+        if (!findConfigEmoji(configEmojis, configName)) {
           // No legend for this config as it has no emoji.
           return [];
         }
-        return [
-          `${emoji} Enabled in the \`${configName}\` ${configLinkOrWord}.`,
-        ];
+
+        let hasErrorRule = false;
+        let hasWarnRule = false;
+        let hasOffRule = false;
+        for (const ruleName of ruleNames) {
+          if (
+            getConfigsForRule(
+              ruleName,
+              configsToRules,
+              pluginPrefix,
+              SEVERITY_ERROR
+            ).includes(configName)
+          ) {
+            hasErrorRule = true;
+          }
+          if (
+            getConfigsForRule(
+              ruleName,
+              configsToRules,
+              pluginPrefix,
+              SEVERITY_WARN
+            ).includes(configName)
+          ) {
+            hasWarnRule = true;
+          }
+          if (
+            getConfigsForRule(
+              ruleName,
+              configsToRules,
+              pluginPrefix,
+              SEVERITY_OFF
+            ).includes(configName)
+          ) {
+            hasOffRule = true;
+          }
+        }
+
+        const legendsForThisConfig = [];
+        if (hasErrorRule) {
+          legendsForThisConfig.push(
+            `${findConfigEmoji(configEmojis, configName, {
+              severity: SEVERITY_TYPE.error,
+            })} Enabled in the \`${configName}\` ${configLinkOrWord}.`
+          );
+        }
+        if (hasWarnRule) {
+          legendsForThisConfig.push(
+            `${findConfigEmoji(configEmojis, configName, {
+              severity: SEVERITY_TYPE.warn,
+            })} Warns in the \`${configName}\` ${configLinkOrWord}.`
+          );
+        }
+        if (hasOffRule) {
+          legendsForThisConfig.push(
+            `${findConfigEmoji(configEmojis, configName, {
+              severity: SEVERITY_TYPE.off,
+            })} Disabled in the \`${configName}\` ${configLinkOrWord}.`
+          );
+        }
+        return legendsForThisConfig;
       })
     );
     return legends;
