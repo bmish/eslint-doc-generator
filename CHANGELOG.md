@@ -22,6 +22,20 @@
 
 
 
+
+## v0.18.0 (2022-10-31)
+
+#### :rocket: Enhancement
+* [#198](https://github.com/bmish/eslint-doc-generator/pull/198) Indicate when a rule is set to off/warn by a config in the README rules list ([@bmish](https://github.com/bmish))
+* [#199](https://github.com/bmish/eslint-doc-generator/pull/199) Add default emoji for TypeScript configs, adjust default emoji for accessibility configs ([@bmish](https://github.com/bmish))
+
+#### :memo: Documentation
+* [#200](https://github.com/bmish/eslint-doc-generator/pull/200) Demonstrage usage with a build step or prettier formatting ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.17.0 (2022-10-30)
 
 #### :rocket: Enhancement
