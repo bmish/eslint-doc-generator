@@ -24,6 +24,16 @@
 
 
 
+
+## v0.18.2 (2022-11-01)
+
+#### :bug: Bug Fix
+* [#203](https://github.com/bmish/eslint-doc-generator/pull/203) Redo fix to ensure notation for config that warns/disables a rule does not wrap to two lines in rules table cell ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.18.1 (2022-11-01)
 
 #### :bug: Bug Fix
