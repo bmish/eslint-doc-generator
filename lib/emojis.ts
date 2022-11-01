@@ -1,16 +1,26 @@
 // Default emojis for common configs.
+const EMOJI_A11Y = '♿';
+const EMOJI_ERROR = '❗';
+const EMOJI_STYLE = '🎨';
+const EMOJI_TYPESCRIPT = '⌨️';
+const EMOJI_WARNING = '⚠️';
 export const EMOJI_CONFIGS = {
-  a11y: '⌨️',
-  accessibility: '⌨️',
+  a11y: EMOJI_A11Y,
+  accessibility: EMOJI_A11Y,
   all: '🌐',
-  error: '❗',
-  errors: '❗',
+  error: EMOJI_ERROR,
+  errors: EMOJI_ERROR,
   recommended: '✅',
   strict: '🔒',
-  style: '🎨',
-  stylistic: '🎨',
-  warning: '⚠️',
-  warnings: '⚠️',
+  style: EMOJI_STYLE,
+  stylistic: EMOJI_STYLE,
+  ts: EMOJI_TYPESCRIPT,
+  type: EMOJI_TYPESCRIPT,
+  typed: EMOJI_TYPESCRIPT,
+  types: EMOJI_TYPESCRIPT,
+  typescript: EMOJI_TYPESCRIPT,
+  warning: EMOJI_WARNING,
+  warnings: EMOJI_WARNING,
 };
 
 //  General configs.
