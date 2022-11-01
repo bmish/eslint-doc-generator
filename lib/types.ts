@@ -24,6 +24,14 @@ export enum SEVERITY_TYPE {
   'off' = 'off',
 }
 
+export const SEVERITY_TYPE_TO_SET: {
+  [key in SEVERITY_TYPE]: Set<TSESLint.Linter.RuleLevel>;
+} = {
+  [SEVERITY_TYPE.error]: SEVERITY_ERROR,
+  [SEVERITY_TYPE.warn]: SEVERITY_WARN,
+  [SEVERITY_TYPE.off]: SEVERITY_OFF,
+};
+
 export type ConfigsToRules = Record<string, Rules>;
 
 export interface RuleDetails {

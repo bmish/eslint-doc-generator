@@ -11,13 +11,7 @@ import { findSectionHeader } from './markdown.js';
 import { getPluginRoot } from './package-json.js';
 import { generateLegend } from './legend.js';
 import { relative } from 'node:path';
-import {
-  COLUMN_TYPE,
-  SEVERITY_ERROR,
-  SEVERITY_WARN,
-  SEVERITY_OFF,
-  SEVERITY_TYPE,
-} from './types.js';
+import { COLUMN_TYPE, SEVERITY_TYPE, SEVERITY_TYPE_TO_SET } from './types.js';
 import { markdownTable } from 'markdown-table';
 import camelCase from 'camelcase';
 import type {
@@ -65,6 +59,42 @@ function getPropertyFromRule(
   return result;
 }
 
+/**
+ * Get the emojis for the configs that set a rule to a certain severity.
+ */
+function getEmojisForConfigsSettingRuleToSeverity(
+  ruleName: string,
+  configsToRulesWithoutIgnored: ConfigsToRules,
+  pluginPrefix: string,
+  configEmojis: ConfigEmojis,
+  severityType: SEVERITY_TYPE
+) {
+  const severity = SEVERITY_TYPE_TO_SET[severityType];
+  const configsOfThisSeverity = getConfigsForRule(
+    ruleName,
+    configsToRulesWithoutIgnored,
+    pluginPrefix,
+    severity
+  );
+
+  const emojis: string[] = [];
+  for (const configName of configsOfThisSeverity) {
+    // Find the emoji for each config or otherwise use a badge that can be defined in markdown.
+    const emoji = findConfigEmoji(configEmojis, configName, {
+      severity: severityType,
+      fallback: 'badge',
+    });
+    /* istanbul ignore next -- this shouldn't happen */
+    if (typeof emoji !== 'string') {
+      throw new TypeError('Emoji will always be a string thanks to fallback');
+    }
+    // For emojis with a superscript, add a newline first to ensure we don't end up with a linebreak between the emoji and the superscript.
+    emojis.push(emoji.includes('<sup>') ? `<br>${emoji}` : emoji);
+  }
+
+  return emojis;
+}
+
 function getConfigurationColumnValueForRule(
   rule: RuleDetails,
   configsToRules: ConfigsToRules,
@@ -72,7 +102,7 @@ function getConfigurationColumnValueForRule(
   configEmojis: ConfigEmojis,
   ignoreConfig: string[]
 ): string {
-  const badges: string[] = [];
+  const emojis: string[] = [];
 
   const configsToRulesWithoutIgnored = Object.fromEntries(
     Object.entries(configsToRules).filter(
@@ -80,63 +110,36 @@ function getConfigurationColumnValueForRule(
     )
   );
 
-  const configsEnabled = getConfigsForRule(
-    rule.name,
-    configsToRulesWithoutIgnored,
-    pluginPrefix,
-    SEVERITY_ERROR
+  // Collect the emojis for the configs that set the rule to each severity level.
+  emojis.push(
+    ...getEmojisForConfigsSettingRuleToSeverity(
+      rule.name,
+      configsToRulesWithoutIgnored,
+      pluginPrefix,
+      configEmojis,
+      SEVERITY_TYPE.error
+    ),
+    ...getEmojisForConfigsSettingRuleToSeverity(
+      rule.name,
+      configsToRulesWithoutIgnored,
+      pluginPrefix,
+      configEmojis,
+      SEVERITY_TYPE.warn
+    ),
+    ...getEmojisForConfigsSettingRuleToSeverity(
+      rule.name,
+      configsToRulesWithoutIgnored,
+      pluginPrefix,
+      configEmojis,
+      SEVERITY_TYPE.off
+    )
   );
 
-  const configsWarn = getConfigsForRule(
-    rule.name,
-    configsToRulesWithoutIgnored,
-    pluginPrefix,
-    SEVERITY_WARN
-  );
-
-  const configsOff = getConfigsForRule(
-    rule.name,
-    configsToRulesWithoutIgnored,
-    pluginPrefix,
-    SEVERITY_OFF
-  );
-
-  // Find the emoji for each config or otherwise use a badge that can be defined in markdown.
-
-  for (const configName of configsEnabled) {
-    badges.push(
-      // @ts-expect-error -- will always be a string thanks to fallback
-      findConfigEmoji(configEmojis, configName, {
-        severity: SEVERITY_TYPE.error,
-        fallback: 'badge',
-        noWrap: true,
-      })
-    );
+  if (emojis.length > 0 && emojis[0].startsWith('<br>')) {
+    emojis[0] = emojis[0].slice(4); // Avoid any leading linebreak. Linebreak only necessary after emojis and before emojis with superscripts.
   }
 
-  for (const configName of configsWarn) {
-    badges.push(
-      // @ts-expect-error -- will always be a string thanks to fallback
-      findConfigEmoji(configEmojis, configName, {
-        severity: SEVERITY_TYPE.warn,
-        fallback: 'badge',
-        noWrap: true,
-      })
-    );
-  }
-
-  for (const configName of configsOff) {
-    badges.push(
-      // @ts-expect-error -- will always be a string thanks to fallback
-      findConfigEmoji(configEmojis, configName, {
-        severity: SEVERITY_TYPE.off,
-        fallback: 'badge',
-        noWrap: true,
-      })
-    );
-  }
-
-  return badges.join(' ');
+  return emojis.join(' ');
 }
 
 function buildRuleRow(
