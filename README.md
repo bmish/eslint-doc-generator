@@ -42,6 +42,7 @@ Add scripts to `package.json`:
 
 - Both a lint script to ensure everything is up-to-date in CI and an update script for contributors to run locally
 - Add any [config options](#configuration-options) in the `update:eslint-docs` script only
+- Alternative scripts may be needed with [build tools](#build-tools) or [prettier](#prettier)
 
 ```json
 {
@@ -205,6 +206,17 @@ Where `no-foo` is the rule name, `Disallow use of foo` is the rule description, 
 
 ## Compatibility
 
+### Build tools
+
+If you have a build step for your code like [Babel](https://babeljs.io/) or [TypeScript](https://www.typescriptlang.org/), you may need to adjust your scripts to run your build before this tool:
+
+```json
+{
+  "build": "tsc",
+  "update:eslint-docs": "npm run build && eslint-doc-generator"
+}
+```
+
 ### markdownlint
 
 The output of this tool should be compatible with [markdownlint](https://github.com/DavidAnson/markdownlint) which you might use to lint your markdown. However, if any of your ESLint configs disable your rules or set them to warn, you'll need to exempt the [`<sup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/sup) (superscript) element from [no-inline-html](https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md#md033---inline-html):
@@ -212,6 +224,18 @@ The output of this tool should be compatible with [markdownlint](https://github.
 ```json
 {
   "no-inline-html": { "allowed_elements": ["sup"] }
+}
+```
+
+### prettier
+
+If you use [prettier](https://prettier.io/) to format your markdown, you may need to adjust your scripts to run prettier formatting after running this tool:
+
+```json
+{
+  "format": "prettier --write .",
+  "lint:eslint-docs": "npm run update:eslint-docs && git diff --exit-code",
+  "update:eslint-docs": "eslint-doc-generator && npm run format"
 }
 ```
 
