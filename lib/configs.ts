@@ -98,6 +98,21 @@ export function parseConfigEmojiOptions(
   return configEmojis;
 }
 
+function emojiWithSuperscript(
+  emoji: string,
+  superscriptEmoji: string,
+  noWrap = false
+) {
+  if (emoji === superscriptEmoji) {
+    // Avoid double emoji.
+    return emoji;
+  }
+  // Style is to ensure superscript doesn't wrap to separate line, useful in constrained spaces.
+  return noWrap
+    ? `<span style="white-space:nowrap">${emoji}<sup>${superscriptEmoji}</sup></span>`
+    : `${emoji}<sup>${superscriptEmoji}</sup>`;
+}
+
 /**
  * Find the representation of a config to display.
  * @param configEmojis - known list of configs and corresponding emojis
@@ -105,6 +120,7 @@ export function parseConfigEmojiOptions(
  * @param options
  * @param options.severity - if present, decorate the config's emoji for the given severity level
  * @param options.fallback - if true and no emoji is found, choose whether to fallback to a generic config emoji or a badge
+ * @param options.noWrap - whether to add styling to ensure the superscript doesn't wrap to a separate line when used in constrained spaces
  * @returns the string to display for the config
  */
 export function findConfigEmoji(
@@ -113,6 +129,7 @@ export function findConfigEmoji(
   options?: {
     severity?: SEVERITY_TYPE;
     fallback?: 'badge' | 'emoji';
+    noWrap?: boolean;
   }
 ) {
   let emoji = configEmojis.find(
@@ -128,17 +145,12 @@ export function findConfigEmoji(
       return undefined; // eslint-disable-line unicorn/no-useless-undefined
     }
   }
+
   switch (options?.severity) {
     case 'warn':
-      return `${emoji}${
-        // Conditional is to avoid double emoji.
-        emoji === EMOJI_CONFIG_WARN ? '' : `<sup>${EMOJI_CONFIG_WARN}</sup>`
-      }`;
+      return emojiWithSuperscript(emoji, EMOJI_CONFIG_WARN, options.noWrap);
     case 'off':
-      // Conditional is to avoid double emoji.
-      return `${emoji}${
-        emoji === EMOJI_CONFIG_OFF ? '' : `<sup>${EMOJI_CONFIG_OFF}</sup>`
-      }`;
+      return emojiWithSuperscript(emoji, EMOJI_CONFIG_OFF, options.noWrap);
     default:
       return emoji;
   }
