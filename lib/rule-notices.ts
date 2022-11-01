@@ -38,6 +38,51 @@ export const NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
   [NOTICE_TYPE.TYPE]: false,
 };
 
+function severityToTerminology(severity: SEVERITY_TYPE) {
+  switch (severity) {
+    case SEVERITY_TYPE.error:
+      return 'is enabled';
+    case SEVERITY_TYPE.warn:
+      return '_warns_';
+    case SEVERITY_TYPE.off:
+      return 'is _disabled_';
+    /* istanbul ignore next -- this shouldn't happen */
+    default:
+      throw new Error(`Unknown severity: ${severity}`);
+  }
+}
+
+function configsToNoticeSentence(
+  configs: string[],
+  severity: SEVERITY_TYPE,
+  configsLinkOrWord: string,
+  configLinkOrWord: string,
+  configEmojis: ConfigEmojis,
+  useGenericConfigEmoji: boolean
+): string | undefined {
+  // Create CSV list of configs with their emojis.
+  const csv = configs
+    .map((config) => {
+      const emoji = findConfigEmoji(configEmojis, config);
+      return `${emoji ? `${emoji} ` : ''}\`${config}\``;
+    })
+    .join(', ');
+
+  const term = severityToTerminology(severity);
+  const sentence =
+    configs.length > 1
+      ? `This rule ${term} in the following ${configsLinkOrWord}: ${csv}.`
+      : configs.length === 1
+      ? `This rule ${term} in the ${
+          // If the config's emoji isn't already being used at the front of the notice, include it here by using the CSV.
+          // If the config's emoji IS already being used, just use the config name only here.
+          useGenericConfigEmoji ? csv : `\`${configs?.[0]}\``
+        } ${configLinkOrWord}.`
+      : undefined;
+
+  return sentence;
+}
+
 /**
  * An object containing the text for each notice type (as a string or function to generate the string).
  */
@@ -82,10 +127,9 @@ const RULE_NOTICES: {
 
     // If one applicable config with an emoji, use the emoji for that config, otherwise use the general config emoji.
     let emoji = '';
-    if (
-      configsEnabled.length + configsWarn.length + configsDisabled.length >
-      1
-    ) {
+    const useGenericConfigEmoji =
+      configsEnabled.length + configsWarn.length + configsDisabled.length > 1;
+    if (useGenericConfigEmoji) {
       emoji = EMOJI_CONFIG;
     } else if (configsEnabled.length > 0) {
       // @ts-expect-error -- will always be a string thanks to fallback
@@ -107,63 +151,36 @@ const RULE_NOTICES: {
       });
     }
 
-    // List of configs that enable the rule.
-    const configsEnabledCSV = configsEnabled
-      .map((configEnabled) => {
-        const emoji = configEmojis.find(
-          (configEmoji) => configEmoji.config === configEnabled
-        )?.emoji;
-        return `${emoji ? `${emoji} ` : ''}\`${configEnabled}\``;
-      })
-      .join(', ');
+    const sentences = [
+      configsToNoticeSentence(
+        configsEnabled,
+        SEVERITY_TYPE.error,
+        configsLinkOrWord,
+        configLinkOrWord,
+        configEmojis,
+        useGenericConfigEmoji
+      ),
+      configsToNoticeSentence(
+        configsWarn,
+        SEVERITY_TYPE.warn,
+        configsLinkOrWord,
+        configLinkOrWord,
+        configEmojis,
+        useGenericConfigEmoji
+      ),
+      configsToNoticeSentence(
+        configsDisabled,
+        SEVERITY_TYPE.off,
+        configsLinkOrWord,
+        configLinkOrWord,
+        configEmojis,
+        useGenericConfigEmoji
+      ),
+    ]
+      .filter(Boolean)
+      .join(' ');
 
-    // List of configs that warn for the rule.
-    const configsWarnCSV = configsWarn
-      .map((configWarn) => {
-        const emoji = configEmojis.find(
-          (configEmoji) => configEmoji.config === configWarn
-        )?.emoji;
-        return `${emoji ? `${emoji} ` : ''}\`${configWarn}\``;
-      })
-      .join(', ');
-
-    // List of configs that disable the rule.
-    const configsDisabledCSV = configsDisabled
-      .map((configDisabled) => {
-        const emoji = configEmojis.find(
-          (configEmoji) => configEmoji.config === configDisabled
-        )?.emoji;
-        return `${emoji ? `${emoji} ` : ''}\`${configDisabled}\``;
-      })
-      .join(', ');
-
-    // Complete sentence for configs that enable the rule.
-    const SENTENCE_ENABLED =
-      configsEnabled.length > 1
-        ? `This rule is enabled in the following ${configsLinkOrWord}: ${configsEnabledCSV}.`
-        : configsEnabled.length === 1
-        ? `This rule is enabled in the \`${configsEnabled?.[0]}\` ${configLinkOrWord}.`
-        : undefined;
-
-    // Complete sentence for configs that warn for the rule.
-    const SENTENCE_WARN =
-      configsWarn.length > 1
-        ? `This rule _warns_ in the following ${configsLinkOrWord}: ${configsWarnCSV}.`
-        : configsWarn.length === 1
-        ? `This rule _warns_ in the \`${configsWarn?.[0]}\` ${configLinkOrWord}.`
-        : undefined;
-
-    // Complete sentence for configs that disable the rule.
-    const SENTENCE_DISABLED =
-      configsDisabled.length > 1
-        ? `This rule is _disabled_ in the following ${configsLinkOrWord}: ${configsDisabledCSV}.`
-        : configsDisabled.length === 1
-        ? `This rule is _disabled_ in the \`${configsDisabled?.[0]}\` ${configLinkOrWord}.`
-        : undefined;
-
-    return `${emoji} ${[SENTENCE_ENABLED, SENTENCE_WARN, SENTENCE_DISABLED]
-      .filter((sentence) => sentence !== undefined)
-      .join(' ')}`;
+    return `${emoji} ${sentences}`;
   },
 
   // Deprecated notice has optional "replaced by" rules list.

@@ -2015,6 +2015,60 @@ describe('generator', function () {
       });
     });
 
+    describe('rules that are disabled or set to warn, two configs present', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: { docs: { description: 'Description of no-foo.' }, },
+                  create(context) {},
+                },
+              },
+              configs: {
+                recommended: {
+                  rules: {
+                    'test/no-foo': 1,
+                  }
+                },
+                typescript: {
+                  rules: {
+                    'test/no-foo': 0,
+                  }
+                },
+              }
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('generates the documentation', async function () {
+        await generate('.');
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
     describe('config emoji matches off/warn emoji superscript', function () {
       beforeEach(function () {
         mockFs({
