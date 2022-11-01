@@ -1,6 +1,6 @@
 {
   "name": "eslint-doc-generator",
-  "version": "0.18.0",
+  "version": "0.18.1",
   "description": "Automatic documentation generator for ESLint plugins and rules.",
   "keywords": [
     "doc",

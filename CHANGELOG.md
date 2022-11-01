@@ -23,6 +23,17 @@
 
 
 
+
+## v0.18.1 (2022-11-01)
+
+#### :bug: Bug Fix
+* [#202](https://github.com/bmish/eslint-doc-generator/pull/202) Ensure config emoji isn't missing in multi-sentence rule doc notice ([@bmish](https://github.com/bmish))
+* [#201](https://github.com/bmish/eslint-doc-generator/pull/201) Ensure notation for config that warns/disables a rule does not wrap to separate line ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.18.0 (2022-10-31)
 
 #### :rocket: Enhancement
