@@ -650,7 +650,7 @@ exports[`generator #generate rules that are disabled or set to warn generates th
 exports[`generator #generate rules that are disabled or set to warn generates the documentation 4`] = `
 "# Description of no-baz (\`test/no-baz\`)
 
-💼 This rule is enabled in the \`recommended\` config. This rule is _disabled_ in the \`other\` config.
+💼 This rule is enabled in the ✅ \`recommended\` config. This rule is _disabled_ in the \`other\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -721,6 +721,31 @@ exports[`generator #generate rules that are disabled or set to warn, only one co
 "# Description of no-bar (\`test/no-bar\`)
 
 ✅<sup>🚫</sup> This rule is _disabled_ in the \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generator #generate rules that are disabled or set to warn, two configs present generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+✅<sup>⚠️</sup> Warns in the \`recommended\` configuration.\\
+⌨️<sup>🚫</sup> Disabled in the \`typescript\` configuration.
+
+| Name                           | Description            | 💼                                                                                                             |
+| :----------------------------- | :--------------------- | :------------------------------------------------------------------------------------------------------------- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | <span style="white-space:nowrap">✅<sup>⚠️</sup></span> <span style="white-space:nowrap">⌨️<sup>🚫</sup></span> |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generator #generate rules that are disabled or set to warn, two configs present generates the documentation 2`] = `
+"# Description of no-foo (\`test/no-foo\`)
+
+💼 This rule _warns_ in the ✅ \`recommended\` config. This rule is _disabled_ in the ⌨️ \`typescript\` config.
 
 <!-- end auto-generated rule header -->
 "
