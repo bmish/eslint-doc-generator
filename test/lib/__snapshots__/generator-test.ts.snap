@@ -615,15 +615,15 @@ exports[`generator #generate rules that are disabled or set to warn generates th
 ✅<sup>⚠️</sup> Warns in the \`recommended\` configuration.\\
 ✅<sup>🚫</sup> Disabled in the \`recommended\` configuration.
 
-| Name                           | Description            | 💼                                     |
-| :----------------------------- | :--------------------- | :------------------------------------- |
-| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | ![other][]<sup>🚫</sup> ✅<sup>🚫</sup> |
-| [no-baz](docs/rules/no-baz.md) | Description of no-baz. | ✅ ![other][]<sup>🚫</sup>              |
-| [no-bez](docs/rules/no-bez.md) | Description of no-bez. | ![other][]<sup>⚠️</sup>                |
-| [no-biz](docs/rules/no-biz.md) | Description of no-biz. | ![other][]<sup>🚫</sup>                |
-| [no-boz](docs/rules/no-boz.md) | Description of no-boz. | ✅<sup>⚠️</sup>                         |
-| [no-buz](docs/rules/no-buz.md) | Description of no-buz. | ![other][]<sup>⚠️</sup> ✅<sup>⚠️</sup> |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅<sup>🚫</sup>                         |
+| Name                           | Description            | 💼                                                                                                                     |
+| :----------------------------- | :--------------------- | :--------------------------------------------------------------------------------------------------------------------- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | <span style="white-space:nowrap">![other][]<sup>🚫</sup></span> <span style="white-space:nowrap">✅<sup>🚫</sup></span> |
+| [no-baz](docs/rules/no-baz.md) | Description of no-baz. | ✅ <span style="white-space:nowrap">![other][]<sup>🚫</sup></span>                                                      |
+| [no-bez](docs/rules/no-bez.md) | Description of no-bez. | <span style="white-space:nowrap">![other][]<sup>⚠️</sup></span>                                                        |
+| [no-biz](docs/rules/no-biz.md) | Description of no-biz. | <span style="white-space:nowrap">![other][]<sup>🚫</sup></span>                                                        |
+| [no-boz](docs/rules/no-boz.md) | Description of no-boz. | <span style="white-space:nowrap">✅<sup>⚠️</sup></span>                                                                 |
+| [no-buz](docs/rules/no-buz.md) | Description of no-buz. | <span style="white-space:nowrap">![other][]<sup>⚠️</sup></span> <span style="white-space:nowrap">✅<sup>⚠️</sup></span> |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | <span style="white-space:nowrap">✅<sup>🚫</sup></span>                                                                 |
 
 <!-- end auto-generated rules list -->
 "
@@ -699,10 +699,10 @@ exports[`generator #generate rules that are disabled or set to warn, only one co
 ✅<sup>⚠️</sup> Warns in the \`recommended\` configuration.\\
 ✅<sup>🚫</sup> Disabled in the \`recommended\` configuration.
 
-| Name                           | Description            | ✅              |
-| :----------------------------- | :--------------------- | :------------- |
-| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | ✅<sup>🚫</sup> |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅<sup>⚠️</sup> |
+| Name                           | Description            | ✅                                                      |
+| :----------------------------- | :--------------------- | :----------------------------------------------------- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | <span style="white-space:nowrap">✅<sup>🚫</sup></span> |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | <span style="white-space:nowrap">✅<sup>⚠️</sup></span> |
 
 <!-- end auto-generated rules list -->
 "

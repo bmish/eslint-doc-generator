@@ -219,11 +219,11 @@ If you have a build step for your code like [Babel](https://babeljs.io/) or [Typ
 
 ### markdownlint
 
-The output of this tool should be compatible with [markdownlint](https://github.com/DavidAnson/markdownlint) which you might use to lint your markdown. However, if any of your ESLint configs disable your rules or set them to warn, you'll need to exempt the [`<sup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/sup) (superscript) element from [no-inline-html](https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md#md033---inline-html):
+The output of this tool should be compatible with [markdownlint](https://github.com/DavidAnson/markdownlint) which you might use to lint your markdown. However, if any of your ESLint configs disable your rules or set them to warn, you'll need to exempt some elements used for the emoji superscript from [no-inline-html](https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md#md033---inline-html):
 
 ```json
 {
-  "no-inline-html": { "allowed_elements": ["sup"] }
+  "no-inline-html": { "allowed_elements": ["span", "sup"] }
 }
 ```
 

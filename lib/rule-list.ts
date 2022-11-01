@@ -109,6 +109,7 @@ function getConfigurationColumnValueForRule(
       findConfigEmoji(configEmojis, configName, {
         severity: SEVERITY_TYPE.error,
         fallback: 'badge',
+        noWrap: true,
       })
     );
   }
@@ -119,6 +120,7 @@ function getConfigurationColumnValueForRule(
       findConfigEmoji(configEmojis, configName, {
         severity: SEVERITY_TYPE.warn,
         fallback: 'badge',
+        noWrap: true,
       })
     );
   }
@@ -129,6 +131,7 @@ function getConfigurationColumnValueForRule(
       findConfigEmoji(configEmojis, configName, {
         severity: SEVERITY_TYPE.off,
         fallback: 'badge',
+        noWrap: true,
       })
     );
   }
