@@ -6,24 +6,23 @@ import {
   EMOJI_CONFIG,
   EMOJI_REQUIRES_TYPE_CHECKING,
 } from './emojis.js';
-import { getConfigsForRule } from './configs.js';
-import type {
+import { findConfigEmoji, getConfigsForRule } from './configs.js';
+import {
   RuleModule,
   Plugin,
   ConfigsToRules,
   ConfigEmojis,
+  SEVERITY_TYPE,
+  NOTICE_TYPE,
+  SEVERITY_ERROR,
+  SEVERITY_OFF,
+  SEVERITY_WARN,
 } from './types.js';
 import { RULE_TYPE, RULE_TYPE_MESSAGES_NOTICES } from './rule-type.js';
 import {
   RuleDocTitleFormat,
   RULE_DOC_TITLE_FORMAT_DEFAULT,
 } from './rule-doc-title-format.js';
-import {
-  NOTICE_TYPE,
-  SEVERITY_ERROR,
-  SEVERITY_OFF,
-  SEVERITY_WARN,
-} from './types.js';
 
 export const NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
   [key in NOTICE_TYPE]: boolean;
@@ -57,7 +56,6 @@ const RULE_NOTICES: {
       }) => string);
 } = {
   // Configs notice varies based on whether the rule is configured in one or more configs.
-  // eslint-disable-next-line complexity
   [NOTICE_TYPE.CONFIGS]: ({
     configsEnabled,
     configsWarn,
@@ -90,20 +88,23 @@ const RULE_NOTICES: {
     ) {
       emoji = EMOJI_CONFIG;
     } else if (configsEnabled.length > 0) {
-      emoji =
-        configEmojis.find(
-          (configEmoji) => configEmoji.config === configsEnabled[0]
-        )?.emoji ?? EMOJI_CONFIG;
+      // @ts-expect-error -- will always be a string thanks to fallback
+      emoji = findConfigEmoji(configEmojis, configsEnabled[0], {
+        severity: SEVERITY_TYPE.error,
+        fallback: 'emoji',
+      });
     } else if (configsWarn.length > 0) {
-      emoji =
-        configEmojis.find(
-          (configEmoji) => configEmoji.config === configsWarn[0]
-        )?.emoji ?? EMOJI_CONFIG;
+      // @ts-expect-error -- will always be a string thanks to fallback
+      emoji = findConfigEmoji(configEmojis, configsWarn[0], {
+        severity: SEVERITY_TYPE.warn,
+        fallback: 'emoji',
+      });
     } else if (configsDisabled.length > 0) {
-      emoji =
-        configEmojis.find(
-          (configEmoji) => configEmoji.config === configsDisabled[0]
-        )?.emoji ?? EMOJI_CONFIG;
+      // @ts-expect-error -- will always be a string thanks to fallback
+      emoji = findConfigEmoji(configEmojis, configsDisabled[0], {
+        severity: SEVERITY_TYPE.off,
+        fallback: 'emoji',
+      });
     }
 
     // List of configs that enable the rule.
@@ -147,9 +148,9 @@ const RULE_NOTICES: {
     // Complete sentence for configs that warn for the rule.
     const SENTENCE_WARN =
       configsWarn.length > 1
-        ? `This rule will _warn_ in the following ${configsLinkOrWord}: ${configsWarnCSV}.`
+        ? `This rule _warns_ in the following ${configsLinkOrWord}: ${configsWarnCSV}.`
         : configsWarn.length === 1
-        ? `This rule will _warn_ in the \`${configsWarn?.[0]}\` ${configLinkOrWord}.`
+        ? `This rule _warns_ in the \`${configsWarn?.[0]}\` ${configLinkOrWord}.`
         : undefined;
 
     // Complete sentence for configs that disable the rule.

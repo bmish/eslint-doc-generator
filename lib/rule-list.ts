@@ -5,13 +5,19 @@ import {
   EMOJI_HAS_SUGGESTIONS,
   EMOJI_REQUIRES_TYPE_CHECKING,
 } from './emojis.js';
-import { getConfigsForRule } from './configs.js';
+import { getConfigsForRule, findConfigEmoji } from './configs.js';
 import { getColumns, COLUMN_HEADER } from './rule-list-columns.js';
 import { findSectionHeader } from './markdown.js';
 import { getPluginRoot } from './package-json.js';
 import { generateLegend } from './legend.js';
 import { relative } from 'node:path';
-import { COLUMN_TYPE, SEVERITY_ERROR } from './types.js';
+import {
+  COLUMN_TYPE,
+  SEVERITY_ERROR,
+  SEVERITY_WARN,
+  SEVERITY_OFF,
+  SEVERITY_TYPE,
+} from './types.js';
 import { markdownTable } from 'markdown-table';
 import camelCase from 'camelcase';
 import type {
@@ -68,20 +74,65 @@ function getConfigurationColumnValueForRule(
 ): string {
   const badges: string[] = [];
 
+  const configsToRulesWithoutIgnored = Object.fromEntries(
+    Object.entries(configsToRules).filter(
+      ([configName]) => !ignoreConfig?.includes(configName)
+    )
+  );
+
   const configsEnabled = getConfigsForRule(
     rule.name,
-    configsToRules,
+    configsToRulesWithoutIgnored,
     pluginPrefix,
     SEVERITY_ERROR
-  ).filter((configName) => !ignoreConfig?.includes(configName));
+  );
+
+  const configsWarn = getConfigsForRule(
+    rule.name,
+    configsToRulesWithoutIgnored,
+    pluginPrefix,
+    SEVERITY_WARN
+  );
+
+  const configsOff = getConfigsForRule(
+    rule.name,
+    configsToRulesWithoutIgnored,
+    pluginPrefix,
+    SEVERITY_OFF
+  );
+
+  // Find the emoji for each config or otherwise use a badge that can be defined in markdown.
 
   for (const configName of configsEnabled) {
-    // Find the emoji for the config or otherwise use a badge that can be defined in markdown.
-    const emoji = configEmojis.find(
-      (configEmoji) => configEmoji.config === configName
-    )?.emoji;
-    badges.push(emoji ?? `![${configName}][]`);
+    badges.push(
+      // @ts-expect-error -- will always be a string thanks to fallback
+      findConfigEmoji(configEmojis, configName, {
+        severity: SEVERITY_TYPE.error,
+        fallback: 'badge',
+      })
+    );
   }
+
+  for (const configName of configsWarn) {
+    badges.push(
+      // @ts-expect-error -- will always be a string thanks to fallback
+      findConfigEmoji(configEmojis, configName, {
+        severity: SEVERITY_TYPE.warn,
+        fallback: 'badge',
+      })
+    );
+  }
+
+  for (const configName of configsOff) {
+    badges.push(
+      // @ts-expect-error -- will always be a string thanks to fallback
+      findConfigEmoji(configEmojis, configName, {
+        severity: SEVERITY_TYPE.off,
+        fallback: 'badge',
+      })
+    );
+  }
+
   return badges.join(' ');
 }
 
@@ -140,14 +191,13 @@ function generateRulesListMarkdown(
       return [];
     }
     const headerStrOrFn = COLUMN_HEADER[columnType];
-    const configsThatEnableAnyRule = Object.entries(configsToRules)
+    const configsThatSetAnyRule = Object.entries(configsToRules)
       .filter(([configName, config]) =>
         Object.keys(config).some((ruleNameWithPrefix) =>
           getConfigsForRule(
             ruleNameWithPrefix.replace(`${pluginPrefix}/`, ''),
             configsToRules,
-            pluginPrefix,
-            SEVERITY_ERROR
+            pluginPrefix
           ).includes(configName)
         )
       )
@@ -155,7 +205,7 @@ function generateRulesListMarkdown(
     return [
       typeof headerStrOrFn === 'function'
         ? headerStrOrFn({
-            configNames: configsThatEnableAnyRule,
+            configNames: configsThatSetAnyRule,
             configEmojis,
             ignoreConfig,
             details,

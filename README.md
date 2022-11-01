@@ -7,7 +7,7 @@ Automatic documentation generator for [ESLint](https://eslint.org/) plugins and 
 Generates the following documentation based on ESLint and top [ESLint plugin](https://eslint.org/docs/latest/developer-guide/working-with-plugins) conventions:
 
 - `README.md` rules table
-- Rule doc titles and notices
+- Rule doc titles and config/fixable/etc. notices
 
 Also performs some basic section consistency checks on rule docs:
 
@@ -89,9 +89,9 @@ Generated content in a rule doc (everything above the marker comment) (intention
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `stylistic`.
 
-🎨 This rule will _warn_ in the `stylistic` config.
+🎨<sup>⚠️</sup> This rule _warns_ in the `stylistic` config.
 
-🎨 This rule is _disabled_ in the `stylistic` config.
+🎨<sup>🚫</sup> This rule is _disabled_ in the `stylistic` config.
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
@@ -131,6 +131,8 @@ Generated rules table in `README.md` (everything between the marker comments) (i
 
 💼 Configurations enabled in.\
 ✅ Enabled in the `recommended` configuration.\
+✅<sup>⚠️</sup> Warns in the `recommended` configuration.\
+✅<sup>🚫</sup> Disabled in the `recommended` configuration.\
 🎨 Enabled in the `stylistic` configuration.\
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\
 💡 Manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).\
@@ -191,15 +193,27 @@ All options are optional.
 
 ### `--rule-doc-title-format`
 
-Where `no-foo` is the rule name, `Do not use foo` is the rule description, and `eslint-plugin-test` is the plugin name.
+Where `no-foo` is the rule name, `Disallow use of foo` is the rule description, and `eslint-plugin-test` is the plugin name.
 
 | Value | Example |
 | :-- | :-- |
-| `desc` | `# Do not use foo` |
-| `desc-parens-name` | `# Do not use foo (no-foo)` |
-| `desc-parens-prefix-name` (default) | `# Do not use foo (test/no-foo)` |
+| `desc` | `# Disallow use of foo` |
+| `desc-parens-name` | `# Disallow use of foo (no-foo)` |
+| `desc-parens-prefix-name` (default) | `# Disallow use of foo (test/no-foo)` |
 | `name` | `# no-foo` |
 `prefix-name` | `# test/no-foo` |
+
+## Compatibility
+
+### markdownlint
+
+The output of this tool should be compatible with [markdownlint](https://github.com/DavidAnson/markdownlint) which you might use to lint your markdown. However, if any of your ESLint configs disable your rules or set them to warn, you'll need to exempt the [`<sup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/sup) (superscript) element from [no-inline-html](https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md#md033---inline-html):
+
+```json
+{
+  "no-inline-html": { "allowed_elements": ["sup"] }
+}
+```
 
 ## Related
 
