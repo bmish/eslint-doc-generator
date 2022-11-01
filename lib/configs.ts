@@ -98,19 +98,12 @@ export function parseConfigEmojiOptions(
   return configEmojis;
 }
 
-function emojiWithSuperscript(
-  emoji: string,
-  superscriptEmoji: string,
-  noWrap = false
-) {
+function emojiWithSuperscript(emoji: string, superscriptEmoji: string) {
   if (emoji === superscriptEmoji) {
     // Avoid double emoji.
     return emoji;
   }
-  // Style is to ensure superscript doesn't wrap to separate line, useful in constrained spaces.
-  return noWrap
-    ? `<span style="white-space:nowrap">${emoji}<sup>${superscriptEmoji}</sup></span>`
-    : `${emoji}<sup>${superscriptEmoji}</sup>`;
+  return `${emoji}<sup>${superscriptEmoji}</sup>`;
 }
 
 /**
@@ -120,7 +113,6 @@ function emojiWithSuperscript(
  * @param options
  * @param options.severity - if present, decorate the config's emoji for the given severity level
  * @param options.fallback - if true and no emoji is found, choose whether to fallback to a generic config emoji or a badge
- * @param options.noWrap - whether to add styling to ensure the superscript doesn't wrap to a separate line when used in constrained spaces
  * @returns the string to display for the config
  */
 export function findConfigEmoji(
@@ -129,7 +121,6 @@ export function findConfigEmoji(
   options?: {
     severity?: SEVERITY_TYPE;
     fallback?: 'badge' | 'emoji';
-    noWrap?: boolean;
   }
 ) {
   let emoji = configEmojis.find(
@@ -148,9 +139,9 @@ export function findConfigEmoji(
 
   switch (options?.severity) {
     case 'warn':
-      return emojiWithSuperscript(emoji, EMOJI_CONFIG_WARN, options.noWrap);
+      return emojiWithSuperscript(emoji, EMOJI_CONFIG_WARN);
     case 'off':
-      return emojiWithSuperscript(emoji, EMOJI_CONFIG_OFF, options.noWrap);
+      return emojiWithSuperscript(emoji, EMOJI_CONFIG_OFF);
     default:
       return emoji;
   }
