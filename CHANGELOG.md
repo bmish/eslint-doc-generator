@@ -25,6 +25,16 @@
 
 
 
+
+## v0.19.0 (2022-11-02)
+
+#### :boom: Breaking Change
+* [#205](https://github.com/bmish/eslint-doc-generator/pull/205) Redesign information architecture of rules table columns and rule doc notices for representing rule configs/severities ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.18.2 (2022-11-01)
 
 #### :bug: Bug Fix
