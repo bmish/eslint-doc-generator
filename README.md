@@ -86,13 +86,11 @@ Generated content in a rule doc (everything above the marker comment) (intention
 ```md
 # Disallow using foo (`test/no-foo`)
 
-✅ This rule is enabled in the `recommended` config.
-
 💼 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `stylistic`.
 
-🎨<sup>⚠️</sup> This rule _warns_ in the `stylistic` config.
+⚠️ This rule _warns_ in the 🎨 `stylistic` config.
 
-🎨<sup>🚫</sup> This rule is _disabled_ in the `stylistic` config.
+🚫 This rule is _disabled_ in the 🎨 `stylistic` config.
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
@@ -131,10 +129,10 @@ Generated rules table in `README.md` (everything between the marker comments) (i
 <!-- begin auto-generated rules list -->
 
 💼 Configurations enabled in.\
-✅ Enabled in the `recommended` configuration.\
-✅<sup>⚠️</sup> Warns in the `recommended` configuration.\
-✅<sup>🚫</sup> Disabled in the `recommended` configuration.\
-🎨 Enabled in the `stylistic` configuration.\
+⚠️ Configurations set to warn in.\
+🚫 Configurations disabled in.\
+✅ Set in the `recommended` configuration.\
+🎨 Set in the `stylistic` configuration.\
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\
 💡 Manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).\
 💭 Requires type information.\
@@ -186,7 +184,7 @@ And how it looks:
 | `--rule-doc-section-include` | Required section in each rule doc. Exit with failure if missing. Option can be repeated. |
 | `--rule-doc-section-options` | Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options (default: `true`). |
 | `--rule-doc-title-format` | The format to use for rule doc titles. Defaults to `desc-parens-prefix-name`. See choices in below [table](#--rule-doc-title-format). |
-| `--rule-list-columns` | Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. Choices: `configs`, `deprecated`, `description`, `fixable`, `hasSuggestions`, `name`, `requiresTypeChecking`, `type` (off by default). Default: `name,description,configs,fixable,hasSuggestions,requiresTypeChecking,deprecated`. |
+| `--rule-list-columns` | Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. Choices: `configsError`, `configsOff`, `configsWarn`, `deprecated`, `description`, `fixable`, `hasSuggestions`, `name`, `requiresTypeChecking`, `type` (off by default). Default: `name,description,configsError,configsWarn,configsOff,fixable,hasSuggestions,requiresTypeChecking,deprecated`. |
 | `--split-by` | Rule property to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`. |
 | `--url-configs` | Link to documentation about the ESLint configurations exported by the plugin. |
 
@@ -214,16 +212,6 @@ If you have a build step for your code like [Babel](https://babeljs.io/) or [Typ
 {
   "build": "tsc",
   "update:eslint-docs": "npm run build && eslint-doc-generator"
-}
-```
-
-### markdownlint
-
-The output of this tool should be compatible with [markdownlint](https://github.com/DavidAnson/markdownlint) which you might use to lint your markdown. However, if any of your ESLint configs disable your rules or set them to warn, you'll need to exempt some elements used for emoji superscripts from [no-inline-html](https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md#md033---inline-html):
-
-```json
-{
-  "no-inline-html": { "allowed_elements": ["br", "sup"] }
 }
 ```
 

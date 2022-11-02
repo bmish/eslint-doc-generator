@@ -11,7 +11,7 @@ import { findSectionHeader } from './markdown.js';
 import { getPluginRoot } from './package-json.js';
 import { generateLegend } from './legend.js';
 import { relative } from 'node:path';
-import { COLUMN_TYPE, SEVERITY_TYPE, SEVERITY_TYPE_TO_SET } from './types.js';
+import { COLUMN_TYPE, SEVERITY_TYPE } from './types.js';
 import { markdownTable } from 'markdown-table';
 import camelCase from 'camelcase';
 import type {
@@ -69,27 +69,24 @@ function getEmojisForConfigsSettingRuleToSeverity(
   configEmojis: ConfigEmojis,
   severityType: SEVERITY_TYPE
 ) {
-  const severity = SEVERITY_TYPE_TO_SET[severityType];
   const configsOfThisSeverity = getConfigsForRule(
     ruleName,
     configsToRulesWithoutIgnored,
     pluginPrefix,
-    severity
+    severityType
   );
 
   const emojis: string[] = [];
   for (const configName of configsOfThisSeverity) {
     // Find the emoji for each config or otherwise use a badge that can be defined in markdown.
     const emoji = findConfigEmoji(configEmojis, configName, {
-      severity: severityType,
       fallback: 'badge',
     });
     /* istanbul ignore next -- this shouldn't happen */
     if (typeof emoji !== 'string') {
       throw new TypeError('Emoji will always be a string thanks to fallback');
     }
-    // For emojis with a superscript, add a newline first to ensure we don't end up with a linebreak between the emoji and the superscript.
-    emojis.push(emoji.includes('<sup>') ? `<br>${emoji}` : emoji);
+    emojis.push(emoji);
   }
 
   return emojis;
@@ -100,46 +97,23 @@ function getConfigurationColumnValueForRule(
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: string[]
+  ignoreConfig: string[],
+  severityType: SEVERITY_TYPE
 ): string {
-  const emojis: string[] = [];
-
   const configsToRulesWithoutIgnored = Object.fromEntries(
     Object.entries(configsToRules).filter(
       ([configName]) => !ignoreConfig?.includes(configName)
     )
   );
 
-  // Collect the emojis for the configs that set the rule to each severity level.
-  emojis.push(
-    ...getEmojisForConfigsSettingRuleToSeverity(
-      rule.name,
-      configsToRulesWithoutIgnored,
-      pluginPrefix,
-      configEmojis,
-      SEVERITY_TYPE.error
-    ),
-    ...getEmojisForConfigsSettingRuleToSeverity(
-      rule.name,
-      configsToRulesWithoutIgnored,
-      pluginPrefix,
-      configEmojis,
-      SEVERITY_TYPE.warn
-    ),
-    ...getEmojisForConfigsSettingRuleToSeverity(
-      rule.name,
-      configsToRulesWithoutIgnored,
-      pluginPrefix,
-      configEmojis,
-      SEVERITY_TYPE.off
-    )
-  );
-
-  if (emojis.length > 0 && emojis[0].startsWith('<br>')) {
-    emojis[0] = emojis[0].slice(4); // Avoid any leading linebreak. Linebreak only necessary after emojis and before emojis with superscripts.
-  }
-
-  return emojis.join(' ');
+  // Collect the emojis for the configs that set the rule to this severity level.
+  return getEmojisForConfigsSettingRuleToSeverity(
+    rule.name,
+    configsToRulesWithoutIgnored,
+    pluginPrefix,
+    configEmojis,
+    severityType
+  ).join(' ');
 }
 
 function buildRuleRow(
@@ -154,12 +128,29 @@ function buildRuleRow(
     [key in COLUMN_TYPE]: string;
   } = {
     // Alphabetical order.
-    [COLUMN_TYPE.CONFIGS]: getConfigurationColumnValueForRule(
+    [COLUMN_TYPE.CONFIGS_ERROR]: getConfigurationColumnValueForRule(
       rule,
       configsToRules,
       pluginPrefix,
       configEmojis,
-      ignoreConfig
+      ignoreConfig,
+      SEVERITY_TYPE.error
+    ),
+    [COLUMN_TYPE.CONFIGS_OFF]: getConfigurationColumnValueForRule(
+      rule,
+      configsToRules,
+      pluginPrefix,
+      configEmojis,
+      ignoreConfig,
+      SEVERITY_TYPE.off
+    ),
+    [COLUMN_TYPE.CONFIGS_WARN]: getConfigurationColumnValueForRule(
+      rule,
+      configsToRules,
+      pluginPrefix,
+      configEmojis,
+      ignoreConfig,
+      SEVERITY_TYPE.warn
     ),
     [COLUMN_TYPE.DEPRECATED]: rule.deprecated ? EMOJI_DEPRECATED : '',
     [COLUMN_TYPE.DESCRIPTION]: rule.description || '',
@@ -197,25 +188,9 @@ function generateRulesListMarkdown(
       return [];
     }
     const headerStrOrFn = COLUMN_HEADER[columnType];
-    const configsThatSetAnyRule = Object.entries(configsToRules)
-      .filter(([configName, config]) =>
-        Object.keys(config).some((ruleNameWithPrefix) =>
-          getConfigsForRule(
-            ruleNameWithPrefix.replace(`${pluginPrefix}/`, ''),
-            configsToRules,
-            pluginPrefix
-          ).includes(configName)
-        )
-      )
-      .map(([configName, _config]) => configName);
     return [
       typeof headerStrOrFn === 'function'
-        ? headerStrOrFn({
-            configNames: configsThatSetAnyRule,
-            configEmojis,
-            ignoreConfig,
-            details,
-          })
+        ? headerStrOrFn({ details })
         : headerStrOrFn,
     ];
   });
@@ -378,9 +353,11 @@ export function updateRulesList(
 
   // Determine columns to include in the rules list.
   const columns = getColumns(
+    plugin,
     details,
     configsToRules,
     ruleListColumns,
+    pluginPrefix,
     ignoreConfig
   );
 

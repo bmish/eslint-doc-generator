@@ -3,8 +3,8 @@ import {
   EMOJI_DEPRECATED,
   EMOJI_FIXABLE,
   EMOJI_HAS_SUGGESTIONS,
-  EMOJI_CONFIG,
   EMOJI_REQUIRES_TYPE_CHECKING,
+  EMOJI_CONFIG_FROM_SEVERITY,
 } from './emojis.js';
 import { findConfigEmoji, getConfigsForRule } from './configs.js';
 import {
@@ -14,9 +14,6 @@ import {
   ConfigEmojis,
   SEVERITY_TYPE,
   NOTICE_TYPE,
-  SEVERITY_ERROR,
-  SEVERITY_OFF,
-  SEVERITY_WARN,
 } from './types.js';
 import { RULE_TYPE, RULE_TYPE_MESSAGES_NOTICES } from './rule-type.js';
 import {
@@ -57,8 +54,7 @@ function configsToNoticeSentence(
   severity: SEVERITY_TYPE,
   configsLinkOrWord: string,
   configLinkOrWord: string,
-  configEmojis: ConfigEmojis,
-  useGenericConfigEmoji: boolean
+  configEmojis: ConfigEmojis
 ): string | undefined {
   // Create CSV list of configs with their emojis.
   const csv = configs
@@ -73,11 +69,7 @@ function configsToNoticeSentence(
     configs.length > 1
       ? `This rule ${term} in the following ${configsLinkOrWord}: ${csv}.`
       : configs.length === 1
-      ? `This rule ${term} in the ${
-          // If the config's emoji isn't already being used at the front of the notice, include it here by using the CSV.
-          // If the config's emoji IS already being used, just use the config name only here.
-          useGenericConfigEmoji ? csv : `\`${configs?.[0]}\``
-        } ${configLinkOrWord}.`
+      ? `This rule ${term} in the ${csv} ${configLinkOrWord}.`
       : undefined;
 
   return sentence;
@@ -91,9 +83,9 @@ const RULE_NOTICES: {
     | string
     | undefined
     | ((data: {
-        configsEnabled: string[];
+        configsError: string[];
         configsWarn: string[];
-        configsDisabled: string[];
+        configsOff: string[];
         configEmojis: ConfigEmojis;
         urlConfigs?: string;
         replacedBy: readonly string[] | undefined;
@@ -102,9 +94,9 @@ const RULE_NOTICES: {
 } = {
   // Configs notice varies based on whether the rule is configured in one or more configs.
   [NOTICE_TYPE.CONFIGS]: ({
-    configsEnabled,
+    configsError,
     configsWarn,
-    configsDisabled,
+    configsOff,
     configEmojis,
     urlConfigs,
   }) => {
@@ -116,71 +108,54 @@ const RULE_NOTICES: {
 
     /* istanbul ignore next -- this shouldn't happen */
     if (
-      (!configsEnabled || configsEnabled.length === 0) &&
+      (!configsError || configsError.length === 0) &&
       (!configsWarn || configsWarn.length === 0) &&
-      (!configsDisabled || configsDisabled.length === 0)
+      (!configsOff || configsOff.length === 0)
     ) {
       throw new Error(
         'Should not be trying to display config notice for rule not configured in any configs.'
       );
     }
 
-    // If one applicable config with an emoji, use the emoji for that config, otherwise use the general config emoji.
-    let emoji = '';
-    const useGenericConfigEmoji =
-      configsEnabled.length + configsWarn.length + configsDisabled.length > 1;
-    if (useGenericConfigEmoji) {
-      emoji = EMOJI_CONFIG;
-    } else if (configsEnabled.length > 0) {
-      // @ts-expect-error -- will always be a string thanks to fallback
-      emoji = findConfigEmoji(configEmojis, configsEnabled[0], {
-        severity: SEVERITY_TYPE.error,
-        fallback: 'emoji',
-      });
-    } else if (configsWarn.length > 0) {
-      // @ts-expect-error -- will always be a string thanks to fallback
-      emoji = findConfigEmoji(configEmojis, configsWarn[0], {
-        severity: SEVERITY_TYPE.warn,
-        fallback: 'emoji',
-      });
-    } else if (configsDisabled.length > 0) {
-      // @ts-expect-error -- will always be a string thanks to fallback
-      emoji = findConfigEmoji(configEmojis, configsDisabled[0], {
-        severity: SEVERITY_TYPE.off,
-        fallback: 'emoji',
-      });
+    // Use the emoji(s) for the severity levels this rule is set to in various configs.
+    const emojis: string[] = [];
+    if (configsError.length > 0) {
+      emojis.push(EMOJI_CONFIG_FROM_SEVERITY[SEVERITY_TYPE.error]);
+    }
+    if (configsWarn.length > 0) {
+      emojis.push(EMOJI_CONFIG_FROM_SEVERITY[SEVERITY_TYPE.warn]);
+    }
+    if (configsOff.length > 0) {
+      emojis.push(EMOJI_CONFIG_FROM_SEVERITY[SEVERITY_TYPE.off]);
     }
 
     const sentences = [
       configsToNoticeSentence(
-        configsEnabled,
+        configsError,
         SEVERITY_TYPE.error,
         configsLinkOrWord,
         configLinkOrWord,
-        configEmojis,
-        useGenericConfigEmoji
+        configEmojis
       ),
       configsToNoticeSentence(
         configsWarn,
         SEVERITY_TYPE.warn,
         configsLinkOrWord,
         configLinkOrWord,
-        configEmojis,
-        useGenericConfigEmoji
+        configEmojis
       ),
       configsToNoticeSentence(
-        configsDisabled,
+        configsOff,
         SEVERITY_TYPE.off,
         configsLinkOrWord,
         configLinkOrWord,
-        configEmojis,
-        useGenericConfigEmoji
+        configEmojis
       ),
     ]
       .filter(Boolean)
       .join(' ');
 
-    return `${emoji} ${sentences}`;
+    return `${emojis.join('')} ${sentences}`;
   },
 
   // Deprecated notice has optional "replaced by" rules list.
@@ -222,9 +197,9 @@ function ruleNamesToList(ruleNames: readonly string[]) {
  */
 function getNoticesForRule(
   rule: RuleModule,
-  configsEnabled: string[],
+  configsError: string[],
   configsWarn: string[],
-  configsDisabled: string[],
+  configsOff: string[],
   ruleDocNotices: NOTICE_TYPE[]
 ) {
   const notices: {
@@ -232,9 +207,9 @@ function getNoticesForRule(
   } = {
     // Alphabetical order.
     [NOTICE_TYPE.CONFIGS]:
-      configsEnabled.length > 0 ||
+      configsError.length > 0 ||
       configsWarn.length > 0 ||
-      configsDisabled.length > 0,
+      configsOff.length > 0,
     [NOTICE_TYPE.DEPRECATED]: rule.meta?.deprecated || false,
 
     // FIXABLE_AND_HAS_SUGGESTIONS potentially replaces FIXABLE and HAS_SUGGESTIONS.
@@ -288,32 +263,32 @@ function getRuleNoticeLines(
     return [];
   }
 
-  const configsEnabled = getConfigsForRule(
+  const configsError = getConfigsForRule(
     ruleName,
     configsToRules,
     pluginPrefix,
-    SEVERITY_ERROR
+    SEVERITY_TYPE.error
   ).filter((configName) => !ignoreConfig?.includes(configName));
 
   const configsWarn = getConfigsForRule(
     ruleName,
     configsToRules,
     pluginPrefix,
-    SEVERITY_WARN
+    SEVERITY_TYPE.warn
   ).filter((configName) => !ignoreConfig?.includes(configName));
 
-  const configsDisabled = getConfigsForRule(
+  const configsOff = getConfigsForRule(
     ruleName,
     configsToRules,
     pluginPrefix,
-    SEVERITY_OFF
+    SEVERITY_TYPE.off
   ).filter((configName) => !ignoreConfig?.includes(configName));
 
   const notices = getNoticesForRule(
     rule,
-    configsEnabled,
+    configsError,
     configsWarn,
-    configsDisabled,
+    configsOff,
     ruleDocNotices
   );
   let noticeType: keyof typeof notices;
@@ -339,9 +314,9 @@ function getRuleNoticeLines(
     lines.push(
       typeof ruleNoticeStrOrFn === 'function'
         ? ruleNoticeStrOrFn({
-            configsEnabled,
+            configsError,
             configsWarn,
-            configsDisabled,
+            configsOff,
             configEmojis,
             urlConfigs,
             replacedBy: rule.meta?.replacedBy,
