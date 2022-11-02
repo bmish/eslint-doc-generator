@@ -68,7 +68,9 @@ export enum NOTICE_TYPE {
  * Rule list columns.
  */
 export enum COLUMN_TYPE {
-  CONFIGS = 'configs',
+  CONFIGS_ERROR = 'configsError',
+  CONFIGS_OFF = 'configsOff',
+  CONFIGS_WARN = 'configsWarn',
   DEPRECATED = 'deprecated',
   DESCRIPTION = 'description',
   FIXABLE = 'fixable',

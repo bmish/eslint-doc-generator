@@ -1,14 +1,15 @@
 import {
-  EMOJI_CONFIG,
   EMOJI_DEPRECATED,
   EMOJI_FIXABLE,
   EMOJI_HAS_SUGGESTIONS,
   EMOJI_REQUIRES_TYPE_CHECKING,
   EMOJI_TYPE,
+  EMOJI_CONFIG_FROM_SEVERITY,
 } from './emojis.js';
 import { RULE_TYPES } from './rule-type.js';
-import { COLUMN_TYPE } from './types.js';
-import type { RuleDetails, ConfigsToRules, ConfigEmojis } from './types.js';
+import { COLUMN_TYPE, SEVERITY_TYPE } from './types.js';
+import { getConfigsThatSetARule } from './configs.js';
+import type { RuleDetails, ConfigsToRules, Plugin } from './types.js';
 
 export const COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
   [key in COLUMN_TYPE]: boolean;
@@ -17,7 +18,9 @@ export const COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
   // Object values indicate whether the column is displayed by default.
   [COLUMN_TYPE.NAME]: true,
   [COLUMN_TYPE.DESCRIPTION]: true,
-  [COLUMN_TYPE.CONFIGS]: true,
+  [COLUMN_TYPE.CONFIGS_ERROR]: true,
+  [COLUMN_TYPE.CONFIGS_WARN]: true,
+  [COLUMN_TYPE.CONFIGS_OFF]: true,
   [COLUMN_TYPE.FIXABLE]: true,
   [COLUMN_TYPE.HAS_SUGGESTIONS]: true,
   [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: true,
@@ -29,27 +32,8 @@ export const COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
  * An object containing the column header for each column (as a string or function to generate the string).
  */
 export const COLUMN_HEADER: {
-  [key in COLUMN_TYPE]:
-    | string
-    | ((data: {
-        configNames: string[];
-        configEmojis: ConfigEmojis;
-        ignoreConfig: string[];
-        details: RuleDetails[];
-      }) => string);
+  [key in COLUMN_TYPE]: string | ((data: { details: RuleDetails[] }) => string);
 } = {
-  // Use the general config emoji if there are multiple configs or the sole config doesn't have an emoji.
-  [COLUMN_TYPE.CONFIGS]: ({ configNames, configEmojis, ignoreConfig }) => {
-    const configNamesWithoutIgnored = configNames.filter(
-      (configName) => !ignoreConfig?.includes(configName)
-    );
-    return configNamesWithoutIgnored.length > 1
-      ? EMOJI_CONFIG
-      : configEmojis.find((configEmoji) =>
-          configNamesWithoutIgnored.includes(configEmoji.config)
-        )?.emoji ?? EMOJI_CONFIG;
-  },
-
   [COLUMN_TYPE.NAME]: ({ details }) => {
     const ruleNames = details.map((detail) => detail.name);
     const longestRuleNameLength = Math.max(
@@ -77,6 +61,9 @@ export const COLUMN_HEADER: {
   },
 
   // Simple strings.
+  [COLUMN_TYPE.CONFIGS_ERROR]: EMOJI_CONFIG_FROM_SEVERITY[SEVERITY_TYPE.error],
+  [COLUMN_TYPE.CONFIGS_OFF]: EMOJI_CONFIG_FROM_SEVERITY[SEVERITY_TYPE.off],
+  [COLUMN_TYPE.CONFIGS_WARN]: EMOJI_CONFIG_FROM_SEVERITY[SEVERITY_TYPE.warn],
   [COLUMN_TYPE.DEPRECATED]: EMOJI_DEPRECATED,
   [COLUMN_TYPE.DESCRIPTION]: 'Description',
   [COLUMN_TYPE.FIXABLE]: EMOJI_FIXABLE,
@@ -90,19 +77,41 @@ export const COLUMN_HEADER: {
  * Only display columns for which there is at least one rule that has a value for that column.
  */
 export function getColumns(
+  plugin: Plugin,
   details: RuleDetails[],
   configsToRules: ConfigsToRules,
   ruleListColumns: COLUMN_TYPE[],
+  pluginPrefix: string,
   ignoreConfig: string[]
 ): Record<COLUMN_TYPE, boolean> {
   const columns: {
     [key in COLUMN_TYPE]: boolean;
   } = {
     // Alphabetical order.
-    // Show the configs column if there exists a non-ignored config.
-    [COLUMN_TYPE.CONFIGS]: Object.keys(configsToRules).some(
-      (config) => !ignoreConfig?.includes(config)
-    ),
+    [COLUMN_TYPE.CONFIGS_ERROR]:
+      getConfigsThatSetARule(
+        plugin,
+        configsToRules,
+        pluginPrefix,
+        ignoreConfig,
+        SEVERITY_TYPE.error
+      ).length > 0,
+    [COLUMN_TYPE.CONFIGS_OFF]:
+      getConfigsThatSetARule(
+        plugin,
+        configsToRules,
+        pluginPrefix,
+        ignoreConfig,
+        SEVERITY_TYPE.off
+      ).length > 0,
+    [COLUMN_TYPE.CONFIGS_WARN]:
+      getConfigsThatSetARule(
+        plugin,
+        configsToRules,
+        pluginPrefix,
+        ignoreConfig,
+        SEVERITY_TYPE.warn
+      ).length > 0,
     [COLUMN_TYPE.DEPRECATED]: details.some((detail) => detail.deprecated),
     [COLUMN_TYPE.DESCRIPTION]: details.some((detail) => detail.description),
     [COLUMN_TYPE.FIXABLE]: details.some((detail) => detail.fixable),

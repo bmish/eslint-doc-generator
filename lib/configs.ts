@@ -1,27 +1,61 @@
 import {
   EMOJI_CONFIGS,
-  EMOJI_CONFIG,
-  EMOJI_CONFIG_WARN,
-  EMOJI_CONFIG_OFF,
+  EMOJI_CONFIG_ERROR,
+  RESERVED_EMOJIS,
 } from './emojis.js';
+import { SEVERITY_TYPE_TO_SET } from './types.js';
 import type {
   Plugin,
   ConfigsToRules,
   ConfigEmojis,
-  RuleSeverity,
   SEVERITY_TYPE,
 } from './types.js';
 
+export function getConfigsThatSetARule(
+  plugin: Plugin,
+  configsToRules: ConfigsToRules,
+  pluginPrefix: string,
+  ignoreConfig: string[],
+  severityType?: SEVERITY_TYPE
+) {
+  /* istanbul ignore next -- this shouldn't happen */
+  if (!plugin.rules) {
+    throw new Error('Missing rules in plugin.');
+  }
+  const ruleNames = Object.keys(plugin.rules);
+  return (
+    Object.entries(configsToRules)
+      .filter(([configName]) =>
+        // Only consider configs that configure at least one of the plugin's rules.
+        ruleNames.some((ruleName) =>
+          getConfigsForRule(
+            ruleName,
+            configsToRules,
+            pluginPrefix,
+            severityType
+          ).includes(configName)
+        )
+      )
+      // Filter out ignored configs.
+      .filter(([configName]) => !ignoreConfig?.includes(configName))
+      .map(([configName]) => configName)
+      .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+  );
+}
+
 /**
  * Get config names that a given rule belongs to.
- * @param severity - Include configs that set the rule to this severity. Omit to allow any severity.
+ * @param severityType - Include configs that set the rule to this severity. Omit to allow any severity.
  */
 export function getConfigsForRule(
   ruleName: string,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
-  severity?: Set<RuleSeverity>
+  severityType?: SEVERITY_TYPE
 ) {
+  const severity = severityType
+    ? SEVERITY_TYPE_TO_SET[severityType]
+    : undefined;
   const configNames: Array<keyof typeof configsToRules> = [];
 
   for (const configName in configsToRules) {
@@ -75,10 +109,8 @@ export function parseConfigEmojiOptions(
         );
       }
 
-      if (Object.keys(plugin.configs)?.length > 1 && emoji === EMOJI_CONFIG) {
-        throw new Error(
-          `Cannot use the general configs emoji ${EMOJI_CONFIG} for an individual config when multiple configs are present.`
-        );
+      if (RESERVED_EMOJIS.includes(emoji)) {
+        throw new Error(`Cannot specify reserved emoji ${EMOJI_CONFIG_ERROR}.`);
       }
 
       return [{ config, emoji }];
@@ -98,29 +130,19 @@ export function parseConfigEmojiOptions(
   return configEmojis;
 }
 
-function emojiWithSuperscript(emoji: string, superscriptEmoji: string) {
-  if (emoji === superscriptEmoji) {
-    // Avoid double emoji.
-    return emoji;
-  }
-  return `${emoji}<sup>${superscriptEmoji}</sup>`;
-}
-
 /**
  * Find the representation of a config to display.
  * @param configEmojis - known list of configs and corresponding emojis
  * @param configName - name of the config to find an emoji for
  * @param options
- * @param options.severity - if present, decorate the config's emoji for the given severity level
- * @param options.fallback - if true and no emoji is found, choose whether to fallback to a generic config emoji or a badge
+ * @param options.fallback - if true and no emoji is found, choose whether to fallback to a badge.
  * @returns the string to display for the config
  */
 export function findConfigEmoji(
   configEmojis: ConfigEmojis,
   configName: string,
   options?: {
-    severity?: SEVERITY_TYPE;
-    fallback?: 'badge' | 'emoji';
+    fallback?: 'badge';
   }
 ) {
   let emoji = configEmojis.find(
@@ -129,20 +151,11 @@ export function findConfigEmoji(
   if (!emoji) {
     if (options?.fallback === 'badge') {
       emoji = `![${configName}][]`;
-    } else if (options?.fallback === 'emoji') {
-      emoji = EMOJI_CONFIG;
     } else {
       // No fallback.
       return undefined; // eslint-disable-line unicorn/no-useless-undefined
     }
   }
 
-  switch (options?.severity) {
-    case 'warn':
-      return emojiWithSuperscript(emoji, EMOJI_CONFIG_WARN);
-    case 'off':
-      return emojiWithSuperscript(emoji, EMOJI_CONFIG_OFF);
-    default:
-      return emoji;
-  }
+  return emoji;
 }
