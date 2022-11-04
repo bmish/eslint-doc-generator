@@ -13,12 +13,16 @@ Also performs some basic section consistency checks on rule docs:
 
 - Contains an `## Options` / `## Config` section and mentions each named option (for rules with options)
 
-Used by popular ESLint plugins like:
+## Users
+
+This tool is used by popular ESLint plugins like:
 
 - [eslint-plugin-ava](https://github.com/avajs/eslint-plugin-ava#rules)
 - [eslint-plugin-ember](https://github.com/ember-cli/eslint-plugin-ember#-rules)
 - [eslint-plugin-eslint-plugin](https://github.com/eslint-community/eslint-plugin-eslint-plugin#rules)
+- [eslint-plugin-import](https://github.com/import-js/eslint-plugin-import#rules)
 - [eslint-plugin-jsx-a11y](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y#supported-rules)
+- [eslint-plugin-promise](https://github.com/eslint-community/eslint-plugin-promise#rules)
 - [eslint-plugin-qunit](https://github.com/platinumazure/eslint-plugin-qunit#rules)
 - [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react#list-of-supported-rules)
 - [eslint-plugin-unicorn](https://github.com/sindresorhus/eslint-plugin-unicorn#rules)
@@ -81,84 +85,19 @@ npm run update:eslint-docs
 
 ## Example
 
-Generated content in a rule doc (everything above the marker comment) (intentionally showing all possible notices):
+For examples, see our [users](#users) or the in-house examples below. Note that the in-house examples intentionally show all possible columns and notices.
 
-```md
-# Disallow using foo (`test/no-foo`)
+### Rules list table
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `stylistic`.
+See the generated rules table and legend in our example [`README.md`](./docs/examples/eslint-plugin-test/README.md#rules).
 
-⚠️ This rule _warns_ in the 🎨 `stylistic` config.
+### Rule doc notices
 
-🚫 This rule is _disabled_ in the 🎨 `stylistic` config.
-
-🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
-
-💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
-
-🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
-
-💭 This rule requires type information.
-
-❗ This rule identifies problems that could cause errors or unexpected behavior.
-
-📖 This rule identifies potential improvements.
-
-📏 This rule focuses on code formatting.
-
-❌ This rule is deprecated. It was replaced by [prefer-bar](prefer-bar.md).
-
-<!-- end auto-generated rule header -->
-
-Description.
-
-## Examples
-
-Examples.
-
-...
-```
-
-Generated rules table in `README.md` (everything between the marker comments) (intentionally showing all possible columns):
-
-```md
-# eslint-plugin-test
-
-## Rules
-
-<!-- begin auto-generated rules list -->
-
-💼 Configurations enabled in.\
-⚠️ Configurations set to warn in.\
-🚫 Configurations disabled in.\
-✅ Set in the `recommended` configuration.\
-🎨 Set in the `stylistic` configuration.\
-⌨️ Set in the `typescript` configuration.\
-🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\
-💡 Manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).\
-💭 Requires type information.\
-🗂️ The type of rule.\
-❗ Identifies problems that could cause errors or unexpected behavior.\
-📖 Identifies potential improvements.\
-📏 Focuses on code formatting.\
-❌ Deprecated.
-
-| Name                                     | Description        | 💼 | ⚠️ | 🚫 | 🔧 | 💡 | 💭 | 🗂️ | ❌  |
-| :--------------------------------------- | :----------------- | :- | :- | :- | :- | :- | :- | :-- | :- |
-| [no-foo](docs/rules/no-foo.md)           | disallow using foo | ✅  |    |    | 🔧 |    | 💭 | ❗   |    |
-| [prefer-bar](docs/rules/prefer-bar.md)   | enforce using bar  | ✅  | 🎨 |    |    | 💡 | 💭 | 📖  |    |
-| [require-baz](docs/rules/require-baz.md) | require using baz  |    |    | ⌨️ | 🔧 |    |    | 📏  | ❌  |
-
-<!-- end auto-generated rules list -->
-
-...
-```
-
-The table will hide columns that don't apply to any rules, and the legend will include only the symbols that are used in the table.
+See the generated rule doc title and notices in our example rule docs [`no-foo.md`](./docs/examples/eslint-plugin-test/docs/rules/no-foo.md), [`prefer-bar.md`](./docs/examples/eslint-plugin-test/docs/rules/prefer-bar.md), [`require-baz.md`](./docs/examples/eslint-plugin-test/docs/rules/require-baz.md).
 
 ## Badge
 
-While config emojis are recommended (see [`--config-emoji`](#configuration-options)), you can alternatively define badges for configs at the bottom of your `README.md`.
+While config emojis are the recommended representations of configs that a rule belongs to (see [`--config-emoji`](#configuration-options)), you can alternatively define badges for configs at the bottom of your `README.md`.
 
 Here's a badge for a custom `fun` config that displays in blue:
 
