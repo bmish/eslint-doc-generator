@@ -83,6 +83,7 @@ const RULE_NOTICES: {
     | string
     | undefined
     | ((data: {
+        ruleName: string;
         configsError: string[];
         configsWarn: string[];
         configsOff: string[];
@@ -160,12 +161,22 @@ const RULE_NOTICES: {
   },
 
   // Deprecated notice has optional "replaced by" rules list.
-  [NOTICE_TYPE.DEPRECATED]: ({ replacedBy, pluginPrefix }) =>
-    `${EMOJI_DEPRECATED} This rule is deprecated.${
+  [NOTICE_TYPE.DEPRECATED]: ({ replacedBy, pluginPrefix, ruleName }) => {
+    // Determine the relative path to the rule doc root so that any replacement rule links can account for this.
+    const slashesInCurrentRuleName = ruleName.match(/\//g);
+    const nestingDepthOfCurrentRule = slashesInCurrentRuleName?.length ?? 0;
+    const relativePathToRuleDocRoot = '../'.repeat(nestingDepthOfCurrentRule);
+
+    return `${EMOJI_DEPRECATED} This rule is deprecated.${
       replacedBy && replacedBy.length > 0
-        ? ` It was replaced by ${ruleNamesToList(replacedBy, pluginPrefix)}.`
+        ? ` It was replaced by ${ruleNamesToList(
+            replacedBy,
+            pluginPrefix,
+            relativePathToRuleDocRoot
+          )}.`
         : ''
-    }`,
+    }`;
+  },
 
   [NOTICE_TYPE.TYPE]: ({ type }) => {
     /* istanbul ignore next -- this shouldn't happen */
@@ -187,7 +198,11 @@ const RULE_NOTICES: {
 /**
  * Convert list of rule names to string list of links.
  */
-function ruleNamesToList(ruleNames: readonly string[], pluginPrefix: string) {
+function ruleNamesToList(
+  ruleNames: readonly string[],
+  pluginPrefix: string,
+  relativePathToRuleDocRoot: string
+) {
   return ruleNames
     .map((ruleName) => {
       // Ignore plugin prefix if it's included in rule name.
@@ -197,7 +212,9 @@ function ruleNamesToList(ruleNames: readonly string[], pluginPrefix: string) {
       )
         ? ruleName.slice(pluginPrefix.length + 1)
         : ruleName;
-      return `[\`${ruleNameWithoutPluginPrefix}\`](${ruleNameWithoutPluginPrefix}.md)`;
+      return `[\`${ruleNameWithoutPluginPrefix}\`](${
+        relativePathToRuleDocRoot + ruleNameWithoutPluginPrefix
+      }.md)`;
     })
     .join(', ');
 }
@@ -324,6 +341,7 @@ function getRuleNoticeLines(
     lines.push(
       typeof ruleNoticeStrOrFn === 'function'
         ? ruleNoticeStrOrFn({
+            ruleName,
             configsError,
             configsWarn,
             configsOff,
