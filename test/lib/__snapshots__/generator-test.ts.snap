@@ -179,6 +179,35 @@ exports[`generator #generate deprecated function-style rule generates the docume
 "
 `;
 
+exports[`generator #generate deprecated rule - using prefix ahead of replacement rule name uses correct replacement rule link 1`] = `
+"<!-- begin auto-generated rules list -->
+
+❌ Deprecated.
+
+| Name                           | Description  | ❌  |
+| :----------------------------- | :----------- | :- |
+| [no-bar](docs/rules/no-bar.md) | Description. |    |
+| [no-foo](docs/rules/no-foo.md) | Description. | ❌  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generator #generate deprecated rule - using prefix ahead of replacement rule name uses correct replacement rule link 2`] = `
+"# Description (\`test/no-foo\`)
+
+❌ This rule is deprecated. It was replaced by [\`no-bar\`](no-bar.md).
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generator #generate deprecated rule - using prefix ahead of replacement rule name uses correct replacement rule link 3`] = `
+"# Description (\`test/no-bar\`)
+
+<!-- end auto-generated rule header -->
+"
+`;
+
 exports[`generator #generate deprecated rule with no rule doc but --ignore-deprecated-rules omits the rule from the README and does not try to update its non-existent rule doc 1`] = `
 "<!-- begin auto-generated rules list -->
 

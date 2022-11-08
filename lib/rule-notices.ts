@@ -89,6 +89,7 @@ const RULE_NOTICES: {
         configEmojis: ConfigEmojis;
         urlConfigs?: string;
         replacedBy: readonly string[] | undefined;
+        pluginPrefix: string;
         type?: RULE_TYPE;
       }) => string);
 } = {
@@ -159,10 +160,10 @@ const RULE_NOTICES: {
   },
 
   // Deprecated notice has optional "replaced by" rules list.
-  [NOTICE_TYPE.DEPRECATED]: ({ replacedBy }) =>
+  [NOTICE_TYPE.DEPRECATED]: ({ replacedBy, pluginPrefix }) =>
     `${EMOJI_DEPRECATED} This rule is deprecated.${
       replacedBy && replacedBy.length > 0
-        ? ` It was replaced by ${ruleNamesToList(replacedBy)}.`
+        ? ` It was replaced by ${ruleNamesToList(replacedBy, pluginPrefix)}.`
         : ''
     }`,
 
@@ -186,9 +187,18 @@ const RULE_NOTICES: {
 /**
  * Convert list of rule names to string list of links.
  */
-function ruleNamesToList(ruleNames: readonly string[]) {
+function ruleNamesToList(ruleNames: readonly string[], pluginPrefix: string) {
   return ruleNames
-    .map((ruleName) => `[\`${ruleName}\`](${ruleName}.md)`)
+    .map((ruleName) => {
+      // Ignore plugin prefix if it's included in rule name.
+      // While we could display the prefix if we wanted, it definitely cannot be part of the link.
+      const ruleNameWithoutPluginPrefix = ruleName.startsWith(
+        `${pluginPrefix}/`
+      )
+        ? ruleName.slice(pluginPrefix.length + 1)
+        : ruleName;
+      return `[\`${ruleNameWithoutPluginPrefix}\`](${ruleNameWithoutPluginPrefix}.md)`;
+    })
     .join(', ');
 }
 
@@ -320,6 +330,7 @@ function getRuleNoticeLines(
             configEmojis,
             urlConfigs,
             replacedBy: rule.meta?.replacedBy,
+            pluginPrefix,
             type: rule.meta?.type as RULE_TYPE, // Convert union type to enum.
           })
         : ruleNoticeStrOrFn

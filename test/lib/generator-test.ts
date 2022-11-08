@@ -343,6 +343,62 @@ describe('generator', function () {
       });
     });
 
+    describe('deprecated rule - using prefix ahead of replacement rule name', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: {
+                    docs: { description: 'Description.' },
+                    deprecated: true,
+                    replacedBy: ['test/no-bar'],
+                  },
+                  create(context) {}
+                },
+                'no-bar': {
+                  meta: { docs: { description: 'Description.' }, },
+                  create(context) {}
+                },
+              },
+              configs: {}
+            };`,
+
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+          'docs/rules/no-foo.md': '',
+          'docs/rules/no-bar.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('uses correct replacement rule link', async function () {
+        await generate('.');
+
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
     describe('deprecated rule with no rule doc but --ignore-deprecated-rules', function () {
       beforeEach(function () {
         mockFs({
