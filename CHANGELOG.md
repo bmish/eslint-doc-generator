@@ -26,6 +26,24 @@
 
 
 
+
+## v0.19.1 (2022-11-09)
+
+#### :bug: Bug Fix
+* [#220](https://github.com/bmish/eslint-doc-generator/pull/220) Fix deprecated rule replacement rule link with nested rule name ([@bmish](https://github.com/bmish))
+* [#218](https://github.com/bmish/eslint-doc-generator/pull/218) Fix deprecated rule replacement rule link when plugin prefix included in replacement rule name ([@bmish](https://github.com/bmish))
+
+#### :memo: Documentation
+* [#208](https://github.com/bmish/eslint-doc-generator/pull/208) Move examples into separate files ([@bmish](https://github.com/bmish))
+
+#### :house: Internal
+* [#211](https://github.com/bmish/eslint-doc-generator/pull/211) Update Dependabot URL in comment ([@ddzz](https://github.com/ddzz))
+
+#### Committers: 2
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+- Darius Dzien ([@ddzz](https://github.com/ddzz))
+
+
 ## v0.19.0 (2022-11-02)
 
 #### :boom: Breaking Change
