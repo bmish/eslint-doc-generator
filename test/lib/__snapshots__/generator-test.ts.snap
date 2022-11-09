@@ -217,6 +217,37 @@ exports[`generator #generate deprecated rule with no rule doc but --ignore-depre
 <!-- end auto-generated rules list -->"
 `;
 
+exports[`generator #generate deprecated rules - with nested rule names has the correct links, especially replacement rule link 1`] = `
+"<!-- begin auto-generated rules list -->
+
+❌ Deprecated.
+
+| Name                                             | Description  | ❌  |
+| :----------------------------------------------- | :----------- | :- |
+| [category/no-bar](docs/rules/category/no-bar.md) | Description. | ❌  |
+| [category/no-foo](docs/rules/category/no-foo.md) | Description. | ❌  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generator #generate deprecated rules - with nested rule names has the correct links, especially replacement rule link 2`] = `
+"# Description (\`test/category/no-foo\`)
+
+❌ This rule is deprecated. It was replaced by [\`category/no-bar\`](../category/no-bar.md).
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generator #generate deprecated rules - with nested rule names has the correct links, especially replacement rule link 3`] = `
+"# Description (\`test/category/no-bar\`)
+
+❌ This rule is deprecated. It was replaced by [\`category/no-foo\`](../category/no-foo.md).
+
+<!-- end auto-generated rule header -->
+"
+`;
+
 exports[`generator #generate deprecated rules updates the documentation 1`] = `
 "<!-- begin auto-generated rules list -->
 
