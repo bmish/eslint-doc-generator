@@ -1,23 +1,21 @@
 import { Command, Argument, Option } from 'commander';
-import { join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
-import { generate } from './generator.js';
-import {
-  RuleDocTitleFormat,
-  RULE_DOC_TITLE_FORMAT_DEFAULT,
-  RULE_DOC_TITLE_FORMATS,
-} from './rule-doc-title-format.js';
-import { COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING } from './rule-list-columns.js';
-import { NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING } from './rule-notices.js';
-import { COLUMN_TYPE, NOTICE_TYPE } from './types.js';
+import { RULE_DOC_TITLE_FORMATS } from './rule-doc-title-format.js';
+import { OPTION_DEFAULTS, OPTION_TYPE, GenerateOptions } from './options.js';
+import { cosmiconfig } from 'cosmiconfig';
+import Ajv from 'ajv';
+import merge from 'deepmerge';
 import type { PackageJson } from 'type-fest';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
 function getCurrentPackageVersion(): string {
+  // When running as compiled code, use path relative to compiled version of this file in the dist folder.
+  // When running as TypeScript (in a test), use path relative to this file.
+  const pathToPackageJson = import.meta.url.endsWith('.ts')
+    ? '../package.json'
+    : /* istanbul ignore next -- can't test the compiled version in test */
+      '../../package.json';
   const packageJson: PackageJson = JSON.parse(
-    readFileSync(join(__dirname, '..', '..', 'package.json'), 'utf8') // Relative to compiled version of this file in the dist folder.
+    readFileSync(new URL(pathToPackageJson, import.meta.url), 'utf8')
   );
   if (!packageJson.version) {
     throw new Error('Could not find package.json `version`.');
@@ -25,27 +23,99 @@ function getCurrentPackageVersion(): string {
   return packageJson.version;
 }
 
-// Used for collecting repeated CLI options into an array.
+/** Used for collecting repeated CLI options into an array. */
 function collect(value: string, previous: string[]) {
   return [...previous, value];
 }
 
-export function run() {
+function parseBoolean(value: string | undefined): boolean {
+  return ['true', undefined].includes(value);
+}
+
+/**
+ * Load and validate the config file.
+ * Cosmiconfig supports many possible filenames/formats.
+ */
+async function loadConfigFileOptions() {
+  const explorer = cosmiconfig('eslint-doc-generator');
+  const explorerResults = await explorer.search();
+  if (explorerResults && !explorerResults.isEmpty) {
+    // Validate schema for config file.
+    const schemaStringArray = {
+      type: 'array',
+      uniqueItems: true,
+      minItems: 1,
+      items: {
+        type: 'string',
+        minLength: 1,
+      },
+    };
+    const properties: { [key in OPTION_TYPE]: unknown } = {
+      check: { type: 'boolean' },
+      configEmoji: schemaStringArray,
+      ignoreConfig: schemaStringArray,
+      ignoreDeprecatedRules: { type: 'boolean' },
+      pathRuleDoc: { type: 'string' },
+      pathRuleList: { type: 'string' },
+      ruleDocNotices: { type: 'string' },
+      ruleDocSectionExclude: schemaStringArray,
+      ruleDocSectionInclude: schemaStringArray,
+      ruleDocSectionOptions: { type: 'boolean' },
+      ruleDocTitleFormat: { type: 'string' },
+      ruleListColumns: { type: 'string' },
+      splitBy: { type: 'string' },
+      urlConfigs: { type: 'string' },
+    };
+    const schema = {
+      type: 'object',
+      properties,
+      additionalProperties: false,
+    };
+
+    const ajv = new Ajv();
+    const validate = ajv.compile(schema);
+    const valid = validate(explorerResults.config);
+    if (!valid) {
+      throw new Error(
+        validate.errors
+          ? ajv.errorsText(validate.errors, { dataVar: 'config file' })
+          : /* istanbul ignore next -- this shouldn't happen */
+            'Invalid config file'
+      );
+    }
+
+    return explorerResults.config;
+  }
+  return {};
+}
+
+/**
+ * Run the CLI and gather options.
+ * When this is done, load any config file and merge with the CLI options.
+ * Finally, invoke a callback with the merged options.
+ * Note: Does not introduce default values. Default values should be handled in the callback function.
+ */
+export async function run(
+  argv: string[],
+  cb: (path: string, options: GenerateOptions) => Promise<void>
+) {
   const program = new Command();
 
-  program
+  await program
     .version(getCurrentPackageVersion())
     .addArgument(
       new Argument('[path]', 'path to ESLint plugin root').default('.')
     )
     .option(
-      '--check',
-      '(optional) Whether to check for and fail if there is a diff. No output will be written. Typically used during CI.',
-      false
+      '--check [boolean]',
+      `(optional) Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. (default: ${
+        OPTION_DEFAULTS[OPTION_TYPE.CHECK]
+      })`,
+      parseBoolean
     )
     .option(
       '--config-emoji <config-emoji>',
-      '(optional) Custom emoji to use for a config. Defaults to `recommended,✅`. Configs for which no emoji is specified will expect a corresponding badge to be specified in `README.md` instead. Option can be repeated.',
+      '(optional) Custom emoji to use for a config. Format is `config-name,emoji`. Default emojis are provided for common configs. To remove a default emoji and rely on a badge instead, provide the config name without an emoji. Option can be repeated.',
       collect,
       []
     )
@@ -56,30 +126,29 @@ export function run() {
       []
     )
     .option(
-      '--ignore-deprecated-rules',
-      '(optional) Whether to ignore deprecated rules from being checked, displayed, or updated.',
-      false
+      '--ignore-deprecated-rules [boolean]',
+      `(optional) Whether to ignore deprecated rules from being checked, displayed, or updated. (default: ${
+        OPTION_DEFAULTS[OPTION_TYPE.IGNORE_DEPRECATED_RULES]
+      })`,
+      parseBoolean
     )
     .option(
       '--path-rule-doc <path>',
-      '(optional) Path to markdown file for each rule doc. Use `{name}` placeholder for the rule name.',
-      'docs/rules/{name}.md'
+      `(optional) Path to markdown file for each rule doc. Use \`{name}\` placeholder for the rule name. (default: ${
+        OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_DOC]
+      })`
     )
     .option(
       '--path-rule-list <path>',
-      '(optional) Path to markdown file with a rules section where the rules table list should live.',
-      'README.md'
+      `(optional) Path to markdown file with a rules section where the rules table list should live. (default: ${
+        OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_LIST]
+      })`
     )
     .option(
       '--rule-doc-notices <notices>',
-      `(optional) Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. A consolidated notice called \`fixableAndHasSuggestions\` automatically replaces \`fixable\` and \`hasSuggestions\` when applicable. (choices: "${Object.values(
-        NOTICE_TYPE
-      ).join('", "')}")`,
-      // List of default enabled notices.
-      Object.entries(NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING)
-        .filter(([_col, enabled]) => enabled)
-        .map(([col]) => col)
-        .join(',')
+      `(optional) Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. A consolidated notice called \`fixableAndHasSuggestions\` automatically replaces \`fixable\` and \`hasSuggestions\` when applicable. (default: ${
+        OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_NOTICES]
+      })`
     )
     .option(
       '--rule-doc-section-exclude <section>',
@@ -94,28 +163,25 @@ export function run() {
       []
     )
     .option(
-      '--rule-doc-section-options [required]',
-      '(optional) Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options.',
-      true
+      '--rule-doc-section-options [boolean]',
+      `(optional) Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options. (default: ${
+        OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_OPTIONS]
+      })`,
+      parseBoolean
     )
     .addOption(
       new Option(
         '--rule-doc-title-format <format>',
-        '(optional) The format to use for rule doc titles.'
-      )
-        .choices(RULE_DOC_TITLE_FORMATS)
-        .default(RULE_DOC_TITLE_FORMAT_DEFAULT)
+        `(optional) The format to use for rule doc titles. (default: ${
+          OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_TITLE_FORMAT]
+        })`
+      ).choices(RULE_DOC_TITLE_FORMATS)
     )
     .option(
       '--rule-list-columns <columns>',
-      `(optional) Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. (choices: "${Object.values(
-        COLUMN_TYPE
-      ).join('", "')}")`,
-      // List of default enabled columns.
-      Object.entries(COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING)
-        .filter(([_col, enabled]) => enabled)
-        .map(([col]) => col)
-        .join(',')
+      `(optional) Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. (default: ${
+        OPTION_DEFAULTS[OPTION_TYPE.RULE_LIST_COLUMNS]
+      })`
     )
     .option(
       '--split-by <property>',
@@ -125,45 +191,18 @@ export function run() {
       '--url-configs <url>',
       '(optional) Link to documentation about the ESLint configurations exported by the plugin.'
     )
-    .action(async function (
-      path,
-      options: {
-        check?: boolean;
-        configEmoji?: string[];
-        ignoreConfig: string[];
-        ignoreDeprecatedRules?: boolean;
-        pathRuleDoc: string;
-        pathRuleList: string;
-        ruleDocNotices: string;
-        ruleDocSectionExclude: string[];
-        ruleDocSectionInclude: string[];
-        ruleDocSectionOptions?: boolean;
-        ruleDocTitleFormat: RuleDocTitleFormat;
-        ruleListColumns: string;
-        urlConfigs?: string;
-        splitBy?: string;
-      }
-    ) {
-      await generate(path, {
-        check: options.check,
-        configEmoji: options.configEmoji,
-        ignoreConfig: options.ignoreConfig,
-        ignoreDeprecatedRules: options.ignoreDeprecatedRules,
-        pathRuleDoc: options.pathRuleDoc,
-        pathRuleList: options.pathRuleList,
-        ruleDocNotices: options.ruleDocNotices,
-        ruleDocSectionExclude: options.ruleDocSectionExclude,
-        ruleDocSectionInclude: options.ruleDocSectionInclude,
-        ruleDocSectionOptions: ['true', true, undefined].includes(
-          options.ruleDocSectionOptions
-        ),
-        ruleDocTitleFormat: options.ruleDocTitleFormat,
-        ruleListColumns: options.ruleListColumns,
-        urlConfigs: options.urlConfigs,
-        splitBy: options.splitBy,
-      });
+    .action(async function (path, options: GenerateOptions) {
+      // Load config file options and merge with CLI options.
+      // CLI options take precedence.
+      // For this to work, we can't have any default values from the CLI options that will override the config file options (except empty arrays, as arrays will be merged).
+      // Default values should be handled in the callback function.
+      const configFileOptions = await loadConfigFileOptions();
+      const generateOptions = merge(configFileOptions, options); // Recursive merge.
+
+      // Invoke callback.
+      await cb(path, generateOptions);
     })
-    .parse(process.argv);
+    .parseAsync(argv);
 
   return program;
 }

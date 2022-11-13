@@ -44,8 +44,11 @@
   },
   "dependencies": {
     "@typescript-eslint/utils": "^5.38.1",
+    "ajv": "^8.11.2",
     "camelcase": "^7.0.0",
     "commander": "^9.4.0",
+    "cosmiconfig": "^7.1.0",
+    "deepmerge": "^4.2.2",
     "jest-diff": "^29.2.1",
     "markdown-table": "^3.0.2",
     "type-fest": "^3.0.0"

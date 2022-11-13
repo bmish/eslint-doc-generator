@@ -113,6 +113,8 @@ And how it looks:
 
 ## Configuration options
 
+These can be provided as CLI options or as [config file](#configuration-file) options.
+
 | Name | Description |
 | :-- | :-- |
 | `--check` | Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. |
@@ -143,6 +145,24 @@ Where `no-foo` is the rule name, `Disallow use of foo` is the rule description, 
 | `desc-parens-prefix-name` (default) | `# Disallow use of foo (test/no-foo)` |
 | `name` | `# no-foo` |
 `prefix-name` | `# test/no-foo` |
+
+### Configuration file
+
+There are a few ways to create a config file:
+
+- An object exported by `.eslint-doc-generatorrc.js`, `.eslint-doc-generatorrc.json`, or any other config file format/name supported by [cosmiconfig](https://github.com/davidtheclark/cosmiconfig#searchplaces)
+- An object under the `eslint-doc-generator` key in `package.json`
+
+Config files support all the [CLI options](#configuration-options) but in camelCase. CLI options take precedence over config file options.
+
+Example:
+
+```js
+// .eslint-doc-generatorrc.js
+module.exports = {
+  ignoreConfig: ['all'],
+};
+```
 
 ## Compatibility
 
