@@ -157,6 +157,23 @@ exports[`generator #generate config with overrides generates the documentation 2
 "
 `;
 
+exports[`generator #generate custom path to rule docs and rules list generates the documentation 1`] = `
+"<!-- begin auto-generated rules list -->
+
+| Name                             |
+| :------------------------------- |
+| [no-foo](rules/no-foo/no-foo.md) |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generator #generate custom path to rule docs and rules list generates the documentation 2`] = `
+"# test/no-foo
+
+<!-- end auto-generated rule header -->
+"
+`;
+
 exports[`generator #generate deprecated function-style rule generates the documentation 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->

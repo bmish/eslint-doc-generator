@@ -1,4 +1,4 @@
-import { join, resolve, extname } from 'node:path';
+import { join, resolve, extname, basename, dirname } from 'node:path';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { importAbs } from './import.js';
 import type { Plugin } from './types.js';
@@ -100,10 +100,9 @@ export function getPluginPrefix(path: string): string {
 /**
  * Resolve the path to a file but with the exact filename-casing present on disk.
  */
-export function getPathWithExactFileNameCasing(
-  dir: string,
-  fileNameToSearch: string
-) {
+export function getPathWithExactFileNameCasing(path: string) {
+  const dir = dirname(path);
+  const fileNameToSearch = basename(path);
   const filenames = readdirSync(dir, { withFileTypes: true });
   for (const dirent of filenames) {
     if (

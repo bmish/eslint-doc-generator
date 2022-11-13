@@ -1,5 +1,5 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { join, relative, resolve } from 'node:path';
+import { join, relative } from 'node:path';
 import { getAllNamedOptions, hasOptions } from './rule-options.js';
 import {
   loadPlugin,
@@ -89,6 +89,8 @@ export async function generate(
     configEmoji?: string[];
     ignoreConfig?: string[];
     ignoreDeprecatedRules?: boolean;
+    pathRuleDoc?: string;
+    pathRuleList?: string;
     ruleDocNotices?: string;
     ruleDocSectionExclude?: string[];
     ruleDocSectionInclude?: string[];
@@ -145,13 +147,15 @@ export async function generate(
   // Options.
   const configEmojis = parseConfigEmojiOptions(plugin, options?.configEmoji);
   const ignoreConfig = options?.ignoreConfig ?? [];
+  const pathRuleDoc = options?.pathRuleDoc ?? 'docs/rules/{name}.md';
+  const pathRuleList = options?.pathRuleList ?? 'README.md';
   const ruleDocNotices = parseRuleDocNoticesOption(options?.ruleDocNotices);
   const ruleDocSectionOptions = options?.ruleDocSectionOptions ?? true;
   const ruleListColumns = parseRuleListColumnsOption(options?.ruleListColumns);
 
   // Update rule doc for each rule.
   for (const { name, description, schema } of details) {
-    const pathToDoc = join(resolve(path, 'docs'), 'rules', `${name}.md`);
+    const pathToDoc = join(path, pathRuleDoc).replace(/{name}/g, name);
 
     if (!existsSync(pathToDoc)) {
       throw new Error(
@@ -222,9 +226,9 @@ export async function generate(
   }
 
   // Find the README.
-  const pathToReadme = getPathWithExactFileNameCasing(path, 'README.md');
+  const pathToReadme = getPathWithExactFileNameCasing(join(path, pathRuleList));
   if (!pathToReadme || !existsSync(pathToReadme)) {
-    throw new Error('Could not find README.md in ESLint plugin root.');
+    throw new Error(`Could not find ${pathRuleList} in ESLint plugin.`);
   }
 
   // Update the rules list in the README.
@@ -235,6 +239,7 @@ export async function generate(
     plugin,
     configsToRules,
     pluginPrefix,
+    pathRuleDoc,
     pathToReadme,
     path,
     configEmojis,

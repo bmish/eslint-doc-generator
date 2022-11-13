@@ -119,6 +119,8 @@ And how it looks:
 | `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Default emojis are provided for [common configs](./lib/emojis.ts). To remove a default emoji and rely on a [badge](#badge) instead, provide the config name without an emoji. Option can be repeated. |
 | `--ignore-config` | Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. |
 | `--ignore-deprecated-rules` | Whether to ignore deprecated rules from being checked, displayed, or updated (default: `false`). |
+| `--path-rule-doc` | Path to markdown file for each rule doc. Use `{name}` placeholder for the rule name (default: `docs/rules/{name}.md`). |
+| `--path-rule-list` | Path to markdown file with a rules section where the rules table list should live (default: `README.md`). |
 | `--rule-doc-notices` | Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. Choices: `configs`, `deprecated`, `fixable`, `fixableAndHasSuggestions`, `hasSuggestions`, `requiresTypeChecking`, `type` (off by default). A consolidated notice called `fixableAndHasSuggestions` automatically replaces `fixable` and `hasSuggestions` when applicable. Default: `deprecated,configs,fixable,fixableAndHasSuggestions,hasSuggestions,requiresTypeChecking`. |
 | `--rule-doc-section-exclude` | Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. |
 | `--rule-doc-section-include` | Required section in each rule doc. Exit with failure if missing. Option can be repeated. |
