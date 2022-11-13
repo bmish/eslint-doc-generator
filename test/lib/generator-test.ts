@@ -582,7 +582,7 @@ describe('generator', function () {
 
       it('throws an error', async function () {
         await expect(generate('.')).rejects.toThrow(
-          'Could not find README.md in ESLint plugin root.'
+          'Could not find README.md in ESLint plugin.'
         );
       });
     });
@@ -622,6 +622,50 @@ describe('generator', function () {
       it('generates the documentation', async function () {
         await generate('.');
         expect(readFileSync('readme.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('custom path to rule docs and rules list', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': { meta: { }, create(context) {} },
+              },
+            };`,
+
+          'rules/list.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+          'rules/no-foo/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('generates the documentation', async function () {
+        await generate('.', {
+          pathRuleDoc: 'rules/{name}/{name}.md',
+          pathRuleList: 'rules/list.md',
+        });
+        expect(readFileSync('rules/list.md', 'utf8')).toMatchSnapshot();
+        expect(
+          readFileSync('rules/no-foo/no-foo.md', 'utf8')
+        ).toMatchSnapshot();
       });
     });
 

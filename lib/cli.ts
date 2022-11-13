@@ -61,6 +61,16 @@ export function run() {
       false
     )
     .option(
+      '--path-rule-doc <path>',
+      '(optional) Path to markdown file for each rule doc. Use `{name}` placeholder for the rule name.',
+      'docs/rules/{name}.md'
+    )
+    .option(
+      '--path-rule-list <path>',
+      '(optional) Path to markdown file with a rules section where the rules table list should live.',
+      'README.md'
+    )
+    .option(
       '--rule-doc-notices <notices>',
       `(optional) Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. A consolidated notice called \`fixableAndHasSuggestions\` automatically replaces \`fixable\` and \`hasSuggestions\` when applicable. (choices: "${Object.values(
         NOTICE_TYPE
@@ -122,6 +132,8 @@ export function run() {
         configEmoji?: string[];
         ignoreConfig: string[];
         ignoreDeprecatedRules?: boolean;
+        pathRuleDoc: string;
+        pathRuleList: string;
         ruleDocNotices: string;
         ruleDocSectionExclude: string[];
         ruleDocSectionInclude: string[];
@@ -137,6 +149,8 @@ export function run() {
         configEmoji: options.configEmoji,
         ignoreConfig: options.ignoreConfig,
         ignoreDeprecatedRules: options.ignoreDeprecatedRules,
+        pathRuleDoc: options.pathRuleDoc,
+        pathRuleList: options.pathRuleList,
         ruleDocNotices: options.ruleDocNotices,
         ruleDocSectionExclude: options.ruleDocSectionExclude,
         ruleDocSectionInclude: options.ruleDocSectionInclude,

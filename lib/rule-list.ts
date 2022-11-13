@@ -121,6 +121,7 @@ function buildRuleRow(
   rule: RuleDetails,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
+  pathRuleDoc: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: string[]
 ): string[] {
@@ -158,7 +159,10 @@ function buildRuleRow(
     [COLUMN_TYPE.HAS_SUGGESTIONS]: rule.hasSuggestions
       ? EMOJI_HAS_SUGGESTIONS
       : '',
-    [COLUMN_TYPE.NAME]: `[${rule.name}](docs/rules/${rule.name}.md)`,
+    [COLUMN_TYPE.NAME]: `[${rule.name}](${pathRuleDoc.replace(
+      /{name}/g,
+      rule.name
+    )})`,
     [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: rule.requiresTypeChecking
       ? EMOJI_REQUIRES_TYPE_CHECKING
       : '',
@@ -178,6 +182,7 @@ function generateRulesListMarkdown(
   details: RuleDetails[],
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
+  pathRuleDoc: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: string[]
 ): string {
@@ -208,6 +213,7 @@ function generateRulesListMarkdown(
             rule,
             configsToRules,
             pluginPrefix,
+            pathRuleDoc,
             configEmojis,
             ignoreConfig
           )
@@ -226,6 +232,7 @@ function generateRulesListMarkdownWithSplitBy(
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
+  pathRuleDoc: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: string[],
   splitBy: string
@@ -263,6 +270,7 @@ function generateRulesListMarkdownWithSplitBy(
         rulesForThisValue,
         configsToRules,
         pluginPrefix,
+        pathRuleDoc,
         configEmojis,
         ignoreConfig
       )
@@ -293,6 +301,7 @@ function generateRulesListMarkdownWithSplitBy(
         rulesForThisValue,
         configsToRules,
         pluginPrefix,
+        pathRuleDoc,
         configEmojis,
         ignoreConfig
       )
@@ -308,6 +317,7 @@ export function updateRulesList(
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
+  pathRuleDoc: string,
   pathToReadme: string,
   pathToPlugin: string,
   configEmojis: ConfigEmojis,
@@ -380,6 +390,7 @@ export function updateRulesList(
         plugin,
         configsToRules,
         pluginPrefix,
+        pathRuleDoc,
         configEmojis,
         ignoreConfig,
         splitBy
@@ -389,6 +400,7 @@ export function updateRulesList(
         details,
         configsToRules,
         pluginPrefix,
+        pathRuleDoc,
         configEmojis,
         ignoreConfig
       );
