@@ -265,6 +265,70 @@ describe('generator', function () {
       });
     });
 
+    describe('deprecated rules - with nested rule names', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'category/no-foo': {
+                  meta: {
+                    docs: { description: 'Description.' },
+                    deprecated: true,
+                    replacedBy: ['category/no-bar'], // without plugin prefix
+                  },
+                  create(context) {}
+                },
+                'category/no-bar': {
+                  meta: {
+                    docs: { description: 'Description.' },
+                    deprecated: true,
+                    replacedBy: ['test/category/no-foo'], // with plugin prefix
+                  },
+                  create(context) {}
+                },
+              },
+              configs: {}
+            };`,
+
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+          'docs/rules/category/no-foo.md': '',
+          'docs/rules/category/no-bar.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('has the correct links, especially replacement rule link', async function () {
+        await generate('.');
+
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+
+        expect(
+          readFileSync('docs/rules/category/no-foo.md', 'utf8')
+        ).toMatchSnapshot();
+        expect(
+          readFileSync('docs/rules/category/no-bar.md', 'utf8')
+        ).toMatchSnapshot();
+      });
+    });
+
     describe('deprecated rules', function () {
       beforeEach(function () {
         mockFs({
@@ -340,6 +404,62 @@ describe('generator', function () {
         expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/no-baz.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/no-biz.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('deprecated rule - using prefix ahead of replacement rule name', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: {
+                    docs: { description: 'Description.' },
+                    deprecated: true,
+                    replacedBy: ['test/no-bar'],
+                  },
+                  create(context) {}
+                },
+                'no-bar': {
+                  meta: { docs: { description: 'Description.' }, },
+                  create(context) {}
+                },
+              },
+              configs: {}
+            };`,
+
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+          'docs/rules/no-foo.md': '',
+          'docs/rules/no-bar.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('uses correct replacement rule link', async function () {
+        await generate('.');
+
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
       });
     });
 

@@ -83,12 +83,14 @@ const RULE_NOTICES: {
     | string
     | undefined
     | ((data: {
+        ruleName: string;
         configsError: string[];
         configsWarn: string[];
         configsOff: string[];
         configEmojis: ConfigEmojis;
         urlConfigs?: string;
         replacedBy: readonly string[] | undefined;
+        pluginPrefix: string;
         type?: RULE_TYPE;
       }) => string);
 } = {
@@ -159,12 +161,22 @@ const RULE_NOTICES: {
   },
 
   // Deprecated notice has optional "replaced by" rules list.
-  [NOTICE_TYPE.DEPRECATED]: ({ replacedBy }) =>
-    `${EMOJI_DEPRECATED} This rule is deprecated.${
+  [NOTICE_TYPE.DEPRECATED]: ({ replacedBy, pluginPrefix, ruleName }) => {
+    // Determine the relative path to the rule doc root so that any replacement rule links can account for this.
+    const slashesInCurrentRuleName = ruleName.match(/\//g);
+    const nestingDepthOfCurrentRule = slashesInCurrentRuleName?.length ?? 0;
+    const relativePathToRuleDocRoot = '../'.repeat(nestingDepthOfCurrentRule);
+
+    return `${EMOJI_DEPRECATED} This rule is deprecated.${
       replacedBy && replacedBy.length > 0
-        ? ` It was replaced by ${ruleNamesToList(replacedBy)}.`
+        ? ` It was replaced by ${ruleNamesToList(
+            replacedBy,
+            pluginPrefix,
+            relativePathToRuleDocRoot
+          )}.`
         : ''
-    }`,
+    }`;
+  },
 
   [NOTICE_TYPE.TYPE]: ({ type }) => {
     /* istanbul ignore next -- this shouldn't happen */
@@ -186,9 +198,24 @@ const RULE_NOTICES: {
 /**
  * Convert list of rule names to string list of links.
  */
-function ruleNamesToList(ruleNames: readonly string[]) {
+function ruleNamesToList(
+  ruleNames: readonly string[],
+  pluginPrefix: string,
+  relativePathToRuleDocRoot: string
+) {
   return ruleNames
-    .map((ruleName) => `[\`${ruleName}\`](${ruleName}.md)`)
+    .map((ruleName) => {
+      // Ignore plugin prefix if it's included in rule name.
+      // While we could display the prefix if we wanted, it definitely cannot be part of the link.
+      const ruleNameWithoutPluginPrefix = ruleName.startsWith(
+        `${pluginPrefix}/`
+      )
+        ? ruleName.slice(pluginPrefix.length + 1)
+        : ruleName;
+      return `[\`${ruleNameWithoutPluginPrefix}\`](${
+        relativePathToRuleDocRoot + ruleNameWithoutPluginPrefix
+      }.md)`;
+    })
     .join(', ');
 }
 
@@ -314,12 +341,14 @@ function getRuleNoticeLines(
     lines.push(
       typeof ruleNoticeStrOrFn === 'function'
         ? ruleNoticeStrOrFn({
+            ruleName,
             configsError,
             configsWarn,
             configsOff,
             configEmojis,
             urlConfigs,
             replacedBy: rule.meta?.replacedBy,
+            pluginPrefix,
             type: rule.meta?.type as RULE_TYPE, // Convert union type to enum.
           })
         : ruleNoticeStrOrFn
