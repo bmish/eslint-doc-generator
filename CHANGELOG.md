@@ -28,6 +28,19 @@
 
 
 
+
+## v0.21.0 (2022-11-15)
+
+#### :rocket: Enhancement
+* [#229](https://github.com/bmish/eslint-doc-generator/pull/229) Add optional rule list column `fixableAndHasSuggestions` ([@bmish](https://github.com/bmish))
+
+#### :bug: Bug Fix
+* [#230](https://github.com/bmish/eslint-doc-generator/pull/230) Remove special case handling for rule doc notice `fixableAndHasSuggestions` ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.20.0 (2022-11-15)
 
 #### :rocket: Enhancement
