@@ -156,6 +156,9 @@ function buildRuleRow(
     [COLUMN_TYPE.DEPRECATED]: rule.deprecated ? EMOJI_DEPRECATED : '',
     [COLUMN_TYPE.DESCRIPTION]: rule.description || '',
     [COLUMN_TYPE.FIXABLE]: rule.fixable ? EMOJI_FIXABLE : '',
+    [COLUMN_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: `${
+      rule.fixable ? EMOJI_FIXABLE : ''
+    }${rule.hasSuggestions ? EMOJI_HAS_SUGGESTIONS : ''}`,
     [COLUMN_TYPE.HAS_SUGGESTIONS]: rule.hasSuggestions
       ? EMOJI_HAS_SUGGESTIONS
       : '',

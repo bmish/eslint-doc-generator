@@ -3374,6 +3374,68 @@ describe('generator', function () {
       });
     });
 
+    describe('with --rule-list-columns and consolidated fixableAndHasSuggestions column', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: {
+                    docs: { description: 'Description for no-foo.' },
+                    hasSuggestions: true,
+                    fixable: 'code',
+                  },
+                  create(context) {}
+                },
+                'no-bar': {
+                  meta: {
+                    docs: { description: 'Description for no-bar.' },
+                    fixable: 'code',
+                  },
+                  create(context) {}
+                },
+                'no-baz': {
+                  meta: {
+                    docs: { description: 'Description for no-baz.' },
+                  },
+                  create(context) {}
+                },
+              },
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+          'docs/rules/no-bar.md': '',
+          'docs/rules/no-baz.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('shows the right columns and legend', async function () {
+        await generate('.', {
+          ruleListColumns: 'name,fixableAndHasSuggestions',
+        });
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
     describe('with --rule-list-columns and non-existent column', function () {
       beforeEach(function () {
         mockFs({

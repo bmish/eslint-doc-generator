@@ -74,6 +74,7 @@ export enum COLUMN_TYPE {
   DEPRECATED = 'deprecated',
   DESCRIPTION = 'description',
   FIXABLE = 'fixable',
+  FIXABLE_AND_HAS_SUGGESTIONS = 'fixableAndHasSuggestions', // Consolidated column for space-saving.
   HAS_SUGGESTIONS = 'hasSuggestions',
   NAME = 'name',
   REQUIRES_TYPE_CHECKING = 'requiresTypeChecking',
