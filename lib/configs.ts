@@ -1,8 +1,3 @@
-import {
-  EMOJI_CONFIGS,
-  EMOJI_CONFIG_ERROR,
-  RESERVED_EMOJIS,
-} from './emojis.js';
 import { SEVERITY_TYPE_TO_SET } from './types.js';
 import type {
   Plugin,
@@ -77,57 +72,6 @@ export function getConfigsForRule(
   return configNames.sort((a, b) =>
     a.toLowerCase().localeCompare(b.toLowerCase())
   );
-}
-
-/**
- * Parse the options, check for errors, and set defaults.
- */
-export function parseConfigEmojiOptions(
-  plugin: Plugin,
-  configEmoji?: string[]
-): ConfigEmojis {
-  const configsWithDefaultEmojiRemoved: string[] = [];
-  const configEmojis =
-    configEmoji?.flatMap((configEmojiItem) => {
-      const [config, emoji, ...extra] = configEmojiItem.split(',');
-
-      if (config && !emoji && Object.keys(EMOJI_CONFIGS).includes(config)) {
-        // User wants to remove the default emoji for this config.
-        configsWithDefaultEmojiRemoved.push(config);
-        return [];
-      }
-
-      if (!config || !emoji || extra.length > 0) {
-        throw new Error(
-          `Invalid configEmoji option: ${configEmojiItem}. Expected format: config,emoji`
-        );
-      }
-
-      if (plugin.configs?.[config] === undefined) {
-        throw new Error(
-          `Invalid configEmoji option: ${config} config not found.`
-        );
-      }
-
-      if (RESERVED_EMOJIS.includes(emoji)) {
-        throw new Error(`Cannot specify reserved emoji ${EMOJI_CONFIG_ERROR}.`);
-      }
-
-      return [{ config, emoji }];
-    }) || [];
-
-  // Add default emojis for the common configs for which the user hasn't already specified an emoji.
-  for (const [config, emoji] of Object.entries(EMOJI_CONFIGS)) {
-    if (configsWithDefaultEmojiRemoved.includes(config)) {
-      // Skip the default emoji for this config.
-      continue;
-    }
-    if (!configEmojis.some((configEmoji) => configEmoji.config === config)) {
-      configEmojis.push({ config, emoji });
-    }
-  }
-
-  return configEmojis;
 }
 
 /**

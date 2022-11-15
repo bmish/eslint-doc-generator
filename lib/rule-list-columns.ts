@@ -11,23 +11,6 @@ import { COLUMN_TYPE, SEVERITY_TYPE } from './types.js';
 import { getConfigsThatSetARule } from './configs.js';
 import type { RuleDetails, ConfigsToRules, Plugin } from './types.js';
 
-export const COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
-  [key in COLUMN_TYPE]: boolean;
-} = {
-  // Object keys ordered in display order.
-  // Object values indicate whether the column is displayed by default.
-  [COLUMN_TYPE.NAME]: true,
-  [COLUMN_TYPE.DESCRIPTION]: true,
-  [COLUMN_TYPE.CONFIGS_ERROR]: true,
-  [COLUMN_TYPE.CONFIGS_WARN]: true,
-  [COLUMN_TYPE.CONFIGS_OFF]: true,
-  [COLUMN_TYPE.FIXABLE]: true,
-  [COLUMN_TYPE.HAS_SUGGESTIONS]: true,
-  [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: true,
-  [COLUMN_TYPE.TYPE]: false,
-  [COLUMN_TYPE.DEPRECATED]: true,
-};
-
 /**
  * An object containing the column header for each column (as a string or function to generate the string).
  */

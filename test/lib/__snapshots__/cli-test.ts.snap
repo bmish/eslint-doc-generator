@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cli all CLI options and all config files options merges correctly, with CLI options taking precedence 1`] = `
+[
+  ".",
+  {
+    "check": true,
+    "configEmoji": [
+      "recommended-from-config-file,🚲",
+      "recommended-from-cli,🚲",
+    ],
+    "ignoreConfig": [
+      "ignoredConfigFromConfigFile1",
+      "ignoredConfigFromConfigFile2",
+      "ignoredConfigFromCli1",
+      "ignoredConfigFromCli2",
+    ],
+    "ignoreDeprecatedRules": true,
+    "pathRuleDoc": "www.example.com/rule-doc-from-cli",
+    "pathRuleList": "www.example.com/rule-list-from-cli",
+    "ruleDocNotices": "type",
+    "ruleDocSectionExclude": [
+      "excludedSectionFromConfigFile1",
+      "excludedSectionFromConfigFile2",
+      "excludedSectionFromCli1",
+      "excludedSectionFromCli2",
+    ],
+    "ruleDocSectionInclude": [
+      "includedSectionFromConfigFile1",
+      "includedSectionFromConfigFile2",
+      "includedSectionFromCli1",
+      "includedSectionFromCli2",
+    ],
+    "ruleDocSectionOptions": true,
+    "ruleDocTitleFormat": "name",
+    "ruleListColumns": "type",
+    "splitBy": "meta.docs.foo-from-cli",
+    "urlConfigs": "www.example.com/configs-from-cli",
+  },
+]
+`;
+
+exports[`cli all CLI options, no config file options is called correctly 1`] = `
+[
+  ".",
+  {
+    "check": true,
+    "configEmoji": [
+      "recommended-from-cli,🚲",
+    ],
+    "ignoreConfig": [
+      "ignoredConfigFromCli1",
+      "ignoredConfigFromCli2",
+    ],
+    "ignoreDeprecatedRules": true,
+    "pathRuleDoc": "www.example.com/rule-doc-from-cli",
+    "pathRuleList": "www.example.com/rule-list-from-cli",
+    "ruleDocNotices": "type",
+    "ruleDocSectionExclude": [
+      "excludedSectionFromCli1",
+      "excludedSectionFromCli2",
+    ],
+    "ruleDocSectionInclude": [
+      "includedSectionFromCli1",
+      "includedSectionFromCli2",
+    ],
+    "ruleDocSectionOptions": true,
+    "ruleDocTitleFormat": "name",
+    "ruleListColumns": "type",
+    "splitBy": "meta.docs.foo-from-cli",
+    "urlConfigs": "www.example.com/configs-from-cli",
+  },
+]
+`;
+
+exports[`cli all config files options, no CLI options is called correctly 1`] = `
+[
+  ".",
+  {
+    "check": true,
+    "configEmoji": [
+      "recommended-from-config-file,🚲",
+    ],
+    "ignoreConfig": [
+      "ignoredConfigFromConfigFile1",
+      "ignoredConfigFromConfigFile2",
+    ],
+    "ignoreDeprecatedRules": true,
+    "pathRuleDoc": "www.example.com/rule-doc-from-config-file",
+    "pathRuleList": "www.example.com/rule-list-from-config-file",
+    "ruleDocNotices": "type",
+    "ruleDocSectionExclude": [
+      "excludedSectionFromConfigFile1",
+      "excludedSectionFromConfigFile2",
+    ],
+    "ruleDocSectionInclude": [
+      "includedSectionFromConfigFile1",
+      "includedSectionFromConfigFile2",
+    ],
+    "ruleDocSectionOptions": false,
+    "ruleDocTitleFormat": "desc",
+    "ruleListColumns": "fixable,hasSuggestions",
+    "splitBy": "meta.docs.foo-from-config-file",
+    "urlConfigs": "www.example.com/configs-from-config-file",
+  },
+]
+`;
+
+exports[`cli boolean option - false (explicit) is called correctly 1`] = `
+[
+  ".",
+  {
+    "configEmoji": [],
+    "ignoreConfig": [],
+    "ignoreDeprecatedRules": false,
+    "ruleDocSectionExclude": [],
+    "ruleDocSectionInclude": [],
+  },
+]
+`;
+
+exports[`cli boolean option - true (explicit) is called correctly 1`] = `
+[
+  ".",
+  {
+    "configEmoji": [],
+    "ignoreConfig": [],
+    "ignoreDeprecatedRules": true,
+    "ruleDocSectionExclude": [],
+    "ruleDocSectionInclude": [],
+  },
+]
+`;
+
+exports[`cli boolean option - true (implicit) is called correctly 1`] = `
+[
+  ".",
+  {
+    "configEmoji": [],
+    "ignoreConfig": [],
+    "ignoreDeprecatedRules": true,
+    "ruleDocSectionExclude": [],
+    "ruleDocSectionInclude": [],
+  },
+]
+`;
+
+exports[`cli no options is called correctly 1`] = `
+[
+  ".",
+  {
+    "configEmoji": [],
+    "ignoreConfig": [],
+    "ruleDocSectionExclude": [],
+    "ruleDocSectionInclude": [],
+  },
+]
+`;

@@ -16,24 +16,7 @@ import {
   NOTICE_TYPE,
 } from './types.js';
 import { RULE_TYPE, RULE_TYPE_MESSAGES_NOTICES } from './rule-type.js';
-import {
-  RuleDocTitleFormat,
-  RULE_DOC_TITLE_FORMAT_DEFAULT,
-} from './rule-doc-title-format.js';
-
-export const NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
-  [key in NOTICE_TYPE]: boolean;
-} = {
-  // Object keys ordered in display order.
-  // Object values indicate whether the column is displayed by default.
-  [NOTICE_TYPE.DEPRECATED]: true, // Most important.
-  [NOTICE_TYPE.CONFIGS]: true,
-  [NOTICE_TYPE.FIXABLE]: true,
-  [NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: true, // Potentially replaces FIXABLE and HAS_SUGGESTIONS.
-  [NOTICE_TYPE.HAS_SUGGESTIONS]: true,
-  [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]: true,
-  [NOTICE_TYPE.TYPE]: false,
-};
+import { RuleDocTitleFormat } from './rule-doc-title-format.js';
 
 function severityToTerminology(severity: SEVERITY_TYPE) {
   switch (severity) {
@@ -372,14 +355,13 @@ function makeTitle(
   name: string,
   description: string | undefined,
   pluginPrefix: string,
-  ruleDocTitleFormat?: RuleDocTitleFormat
+  ruleDocTitleFormat: RuleDocTitleFormat
 ) {
   const descriptionFormatted = description
     ? removeTrailingPeriod(toSentenceCase(description))
     : undefined;
 
-  let ruleDocTitleFormatWithFallback: RuleDocTitleFormat =
-    ruleDocTitleFormat ?? RULE_DOC_TITLE_FORMAT_DEFAULT;
+  let ruleDocTitleFormatWithFallback: RuleDocTitleFormat = ruleDocTitleFormat;
 
   if (ruleDocTitleFormatWithFallback.includes('desc') && !description) {
     // If format includes the description but the rule is missing a description,
@@ -433,7 +415,7 @@ export function generateRuleHeaderLines(
   configEmojis: ConfigEmojis,
   ignoreConfig: string[],
   ruleDocNotices: NOTICE_TYPE[],
-  ruleDocTitleFormat?: RuleDocTitleFormat,
+  ruleDocTitleFormat: RuleDocTitleFormat,
   urlConfigs?: string
 ): string {
   return [

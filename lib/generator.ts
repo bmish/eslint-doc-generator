@@ -12,12 +12,12 @@ import { generateRuleHeaderLines } from './rule-notices.js';
 import {
   parseRuleDocNoticesOption,
   parseRuleListColumnsOption,
-} from './options.js';
+  parseConfigEmojiOptions,
+} from './option-parsers.js';
 import { END_RULE_HEADER_MARKER } from './markers.js';
 import { findSectionHeader, replaceOrCreateHeader } from './markdown.js';
 import { resolveConfigsToRules } from './config-resolution.js';
-import { RuleDocTitleFormat } from './rule-doc-title-format.js';
-import { parseConfigEmojiOptions } from './configs.js';
+import { OPTION_DEFAULTS, OPTION_TYPE, GenerateOptions } from './options.js';
 import { diff } from 'jest-diff';
 import type { RuleDetails } from './types.js';
 
@@ -82,25 +82,8 @@ function expectSectionHeader(
   }
 }
 
-export async function generate(
-  path: string,
-  options?: {
-    check?: boolean;
-    configEmoji?: string[];
-    ignoreConfig?: string[];
-    ignoreDeprecatedRules?: boolean;
-    pathRuleDoc?: string;
-    pathRuleList?: string;
-    ruleDocNotices?: string;
-    ruleDocSectionExclude?: string[];
-    ruleDocSectionInclude?: string[];
-    ruleDocSectionOptions?: boolean;
-    ruleDocTitleFormat?: RuleDocTitleFormat;
-    ruleListColumns?: string;
-    urlConfigs?: string;
-    splitBy?: string;
-  }
-) {
+// eslint-disable-next-line complexity
+export async function generate(path: string, options?: GenerateOptions) {
   const plugin = await loadPlugin(path);
   const pluginPrefix = getPluginPrefix(path);
   const configsToRules = await resolveConfigsToRules(plugin);
@@ -108,6 +91,36 @@ export async function generate(
   if (!plugin.rules) {
     throw new Error('Could not find exported `rules` object in ESLint plugin.');
   }
+
+  // Options. Add default values as needed.
+  const check = options?.check ?? OPTION_DEFAULTS[OPTION_TYPE.CHECK];
+  const configEmojis = parseConfigEmojiOptions(plugin, options?.configEmoji);
+  const ignoreConfig =
+    options?.ignoreConfig ?? OPTION_DEFAULTS[OPTION_TYPE.IGNORE_CONFIG];
+  const ignoreDeprecatedRules =
+    options?.ignoreDeprecatedRules ??
+    OPTION_DEFAULTS[OPTION_TYPE.IGNORE_DEPRECATED_RULES];
+  const pathRuleDoc =
+    options?.pathRuleDoc ?? OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_DOC];
+  const pathRuleList =
+    options?.pathRuleList ?? OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_LIST];
+  const ruleDocNotices = parseRuleDocNoticesOption(options?.ruleDocNotices);
+  const ruleDocSectionExclude =
+    options?.ruleDocSectionExclude ??
+    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_EXCLUDE];
+  const ruleDocSectionInclude =
+    options?.ruleDocSectionInclude ??
+    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_INCLUDE];
+  const ruleDocSectionOptions =
+    options?.ruleDocSectionOptions ??
+    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_OPTIONS];
+  const ruleDocTitleFormat =
+    options?.ruleDocTitleFormat ??
+    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_TITLE_FORMAT];
+  const ruleListColumns = parseRuleListColumnsOption(options?.ruleListColumns);
+  const splitBy = options?.splitBy ?? OPTION_DEFAULTS[OPTION_TYPE.SPLIT_BY];
+  const urlConfigs =
+    options?.urlConfigs ?? OPTION_DEFAULTS[OPTION_TYPE.URL_CONFIGS];
 
   // Gather details about rules.
   const details: RuleDetails[] = Object.entries(plugin.rules)
@@ -141,17 +154,8 @@ export async function generate(
     })
     .filter(
       // Filter out deprecated rules from being checked, displayed, or updated if the option is set.
-      (details) => !options?.ignoreDeprecatedRules || !details.deprecated
+      (details) => !ignoreDeprecatedRules || !details.deprecated
     );
-
-  // Options.
-  const configEmojis = parseConfigEmojiOptions(plugin, options?.configEmoji);
-  const ignoreConfig = options?.ignoreConfig ?? [];
-  const pathRuleDoc = options?.pathRuleDoc ?? 'docs/rules/{name}.md';
-  const pathRuleList = options?.pathRuleList ?? 'README.md';
-  const ruleDocNotices = parseRuleDocNoticesOption(options?.ruleDocNotices);
-  const ruleDocSectionOptions = options?.ruleDocSectionOptions ?? true;
-  const ruleListColumns = parseRuleListColumnsOption(options?.ruleListColumns);
 
   // Update rule doc for each rule.
   for (const { name, description, schema } of details) {
@@ -173,8 +177,8 @@ export async function generate(
       configEmojis,
       ignoreConfig,
       ruleDocNotices,
-      options?.ruleDocTitleFormat,
-      options?.urlConfigs
+      ruleDocTitleFormat,
+      urlConfigs
     );
 
     const contents = readFileSync(pathToDoc).toString();
@@ -184,7 +188,7 @@ export async function generate(
       END_RULE_HEADER_MARKER
     );
 
-    if (options?.check) {
+    if (check) {
       if (contentsNew !== contents) {
         console.error(
           `Please run eslint-doc-generator. A rule doc is out-of-date: ${relative(
@@ -202,12 +206,12 @@ export async function generate(
     // Check for potential issues with the rule doc.
 
     // Check for required sections.
-    for (const section of options?.ruleDocSectionInclude || []) {
+    for (const section of ruleDocSectionInclude) {
       expectSectionHeader(name, contents, [section], true);
     }
 
     // Check for disallowed sections.
-    for (const section of options?.ruleDocSectionExclude || []) {
+    for (const section of ruleDocSectionExclude) {
       expectSectionHeader(name, contents, [section], false);
     }
 
@@ -245,11 +249,11 @@ export async function generate(
     configEmojis,
     ignoreConfig,
     ruleListColumns,
-    options?.urlConfigs,
-    options?.splitBy
+    urlConfigs,
+    splitBy
   );
 
-  if (options?.check) {
+  if (check) {
     if (readmeContentsNew !== readmeContents) {
       console.error(
         `Please run eslint-doc-generator. ${relative(

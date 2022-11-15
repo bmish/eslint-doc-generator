@@ -3196,6 +3196,50 @@ describe('generator', function () {
       });
     });
 
+    describe('with --config-emoji and duplicate config name', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
+              },
+              configs: {
+                recommended: { rules: { 'test/no-foo': 'error' } },
+              }
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('throws an error', async function () {
+        await expect(
+          generate('.', { configEmoji: ['recommended,🔥', 'recommended,😋'] })
+        ).rejects.toThrow(
+          'Duplicate config name in configEmoji options: recommended'
+        );
+      });
+    });
+
     describe('with one config that does not have emoji', function () {
       beforeEach(function () {
         mockFs({
