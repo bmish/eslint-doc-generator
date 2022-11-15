@@ -27,6 +27,20 @@
 
 
 
+
+## v0.20.0 (2022-11-15)
+
+#### :rocket: Enhancement
+* [#223](https://github.com/bmish/eslint-doc-generator/pull/223) Implement config file support ([@bmish](https://github.com/bmish))
+* [#222](https://github.com/bmish/eslint-doc-generator/pull/222) Add `--path-rule-doc` and `--path-rule-list` options ([@bmish](https://github.com/bmish))
+
+#### :house: Internal
+* [#221](https://github.com/bmish/eslint-doc-generator/pull/221) Add CodeQL ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.19.1 (2022-11-09)
 
 #### :bug: Bug Fix
