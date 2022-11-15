@@ -50,6 +50,7 @@ export const COLUMN_HEADER: {
   [COLUMN_TYPE.DEPRECATED]: EMOJI_DEPRECATED,
   [COLUMN_TYPE.DESCRIPTION]: 'Description',
   [COLUMN_TYPE.FIXABLE]: EMOJI_FIXABLE,
+  [COLUMN_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: `${EMOJI_FIXABLE}${EMOJI_HAS_SUGGESTIONS}`,
   [COLUMN_TYPE.HAS_SUGGESTIONS]: EMOJI_HAS_SUGGESTIONS,
   [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: EMOJI_REQUIRES_TYPE_CHECKING,
   [COLUMN_TYPE.TYPE]: EMOJI_TYPE,
@@ -98,6 +99,9 @@ export function getColumns(
     [COLUMN_TYPE.DEPRECATED]: details.some((detail) => detail.deprecated),
     [COLUMN_TYPE.DESCRIPTION]: details.some((detail) => detail.description),
     [COLUMN_TYPE.FIXABLE]: details.some((detail) => detail.fixable),
+    [COLUMN_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: details.some(
+      (detail) => detail.fixable || detail.hasSuggestions
+    ),
     [COLUMN_TYPE.HAS_SUGGESTIONS]: details.some(
       (detail) => detail.hasSuggestions
     ),

@@ -1342,6 +1342,23 @@ exports[`generator #generate with --rule-doc-notices shows the right rule doc no
 "
 `;
 
+exports[`generator #generate with --rule-list-columns and consolidated fixableAndHasSuggestions column shows the right columns and legend 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+🔧 Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\\
+💡 Manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+
+| Name                           | 🔧💡 |
+| :----------------------------- | :--- |
+| [no-bar](docs/rules/no-bar.md) | 🔧   |
+| [no-baz](docs/rules/no-baz.md) |      |
+| [no-foo](docs/rules/no-foo.md) | 🔧💡 |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
 exports[`generator #generate with --rule-list-columns shows the right columns and legend 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->

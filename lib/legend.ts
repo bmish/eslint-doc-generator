@@ -24,12 +24,16 @@ export const SEVERITY_TYPE_TO_WORD: {
   [SEVERITY_TYPE.off]: 'disabled',
 };
 
+// A few individual legends declared here just so they can be reused in multiple legends.
+const LEGEND_FIXABLE = `${EMOJI_FIXABLE} Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).`;
+const LEGEND_HAS_SUGGESTIONS = `${EMOJI_HAS_SUGGESTIONS} Manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`;
+
 /**
  * An object containing the legends for each column (as a string or function to generate the string).
  */
 const LEGENDS: {
   [key in COLUMN_TYPE]:
-    | string
+    | string[]
     | undefined // For no legend.
     | ((data: {
         plugin: Plugin;
@@ -126,12 +130,18 @@ const LEGENDS: {
   },
 
   // Simple strings.
-  [COLUMN_TYPE.DEPRECATED]: `${EMOJI_DEPRECATED} Deprecated.`,
+  [COLUMN_TYPE.DEPRECATED]: [`${EMOJI_DEPRECATED} Deprecated.`],
   [COLUMN_TYPE.DESCRIPTION]: undefined,
-  [COLUMN_TYPE.FIXABLE]: `${EMOJI_FIXABLE} Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).`,
-  [COLUMN_TYPE.HAS_SUGGESTIONS]: `${EMOJI_HAS_SUGGESTIONS} Manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`,
+  [COLUMN_TYPE.FIXABLE]: [LEGEND_FIXABLE],
+  [COLUMN_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: [
+    LEGEND_FIXABLE,
+    LEGEND_HAS_SUGGESTIONS,
+  ],
+  [COLUMN_TYPE.HAS_SUGGESTIONS]: [LEGEND_HAS_SUGGESTIONS],
   [COLUMN_TYPE.NAME]: undefined,
-  [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: `${EMOJI_REQUIRES_TYPE_CHECKING} Requires type information.`,
+  [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: [
+    `${EMOJI_REQUIRES_TYPE_CHECKING} Requires type information.`,
+  ],
 };
 
 function getLegendForConfigColumnOfSeverity({
@@ -222,13 +232,13 @@ export function generateLegend(
         // This column is turned off.
         return [];
       }
-      const legendStrOrFn = LEGENDS[columnType];
-      if (!legendStrOrFn) {
+      const legendArrayOrFn = LEGENDS[columnType];
+      if (!legendArrayOrFn) {
         // No legend specified for this column.
         return [];
       }
-      return typeof legendStrOrFn === 'function'
-        ? legendStrOrFn({
+      return typeof legendArrayOrFn === 'function'
+        ? legendArrayOrFn({
             plugin,
             configsToRules,
             configEmojis,
@@ -236,7 +246,7 @@ export function generateLegend(
             urlConfigs,
             ignoreConfig,
           })
-        : [legendStrOrFn];
+        : legendArrayOrFn;
     }
   );
 
