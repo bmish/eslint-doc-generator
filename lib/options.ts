@@ -26,9 +26,9 @@ export const NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
   // Object values indicate whether the column is displayed by default.
   [NOTICE_TYPE.DEPRECATED]: true, // Most important.
   [NOTICE_TYPE.CONFIGS]: true,
-  [NOTICE_TYPE.FIXABLE]: true,
-  [NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: true, // Potentially replaces FIXABLE and HAS_SUGGESTIONS.
-  [NOTICE_TYPE.HAS_SUGGESTIONS]: true,
+  [NOTICE_TYPE.FIXABLE]: false,
+  [NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: true, // Default, consolidated notice.
+  [NOTICE_TYPE.HAS_SUGGESTIONS]: false,
   [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]: true,
   [NOTICE_TYPE.TYPE]: false,
 };
