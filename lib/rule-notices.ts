@@ -58,6 +58,10 @@ function configsToNoticeSentence(
   return sentence;
 }
 
+// A few individual notices declared here just so they can be reused in multiple notices.
+const NOTICE_FIXABLE = `${EMOJI_FIXABLE} This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).`;
+const NOTICE_HAS_SUGGESTIONS = `${EMOJI_HAS_SUGGESTIONS} This rule is manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`;
+
 /**
  * An object containing the text for each notice type (as a string or function to generate the string).
  */
@@ -71,6 +75,8 @@ const RULE_NOTICES: {
         configsWarn: string[];
         configsOff: string[];
         configEmojis: ConfigEmojis;
+        fixable: boolean;
+        hasSuggestions: boolean;
         urlConfigs?: string;
         replacedBy: readonly string[] | undefined;
         pluginPrefix: string;
@@ -171,10 +177,23 @@ const RULE_NOTICES: {
     return RULE_TYPE_MESSAGES_NOTICES[type];
   },
 
-  // Simple strings.
-  [NOTICE_TYPE.FIXABLE]: `${EMOJI_FIXABLE} This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).`,
-  [NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: `${EMOJI_FIXABLE}${EMOJI_HAS_SUGGESTIONS} This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`,
-  [NOTICE_TYPE.HAS_SUGGESTIONS]: `${EMOJI_HAS_SUGGESTIONS} This rule is manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`,
+  // Fixable/suggestions.
+  [NOTICE_TYPE.FIXABLE]: NOTICE_FIXABLE,
+  [NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: ({ fixable, hasSuggestions }) => {
+    if (fixable && hasSuggestions) {
+      return `${EMOJI_FIXABLE}${EMOJI_HAS_SUGGESTIONS} This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`;
+    } else if (fixable) {
+      return NOTICE_FIXABLE;
+    } else if (hasSuggestions) {
+      return NOTICE_HAS_SUGGESTIONS;
+    }
+    /* istanbul ignore next -- this shouldn't happen */
+    throw new Error(
+      'Should not be trying to display fixable and has suggestions column when neither apply.'
+    );
+  },
+  [NOTICE_TYPE.HAS_SUGGESTIONS]: NOTICE_HAS_SUGGESTIONS,
+
   [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]: `${EMOJI_REQUIRES_TYPE_CHECKING} This rule requires type information.`,
 };
 
@@ -222,17 +241,10 @@ function getNoticesForRule(
       configsOff.length > 0,
     [NOTICE_TYPE.DEPRECATED]: rule.meta?.deprecated || false,
 
-    // FIXABLE_AND_HAS_SUGGESTIONS potentially replaces FIXABLE and HAS_SUGGESTIONS.
-    [NOTICE_TYPE.FIXABLE]:
-      Boolean(rule.meta?.fixable) &&
-      (!rule.meta.hasSuggestions ||
-        !ruleDocNotices.includes(NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS)),
+    [NOTICE_TYPE.FIXABLE]: Boolean(rule.meta?.fixable),
     [NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]:
-      Boolean(rule.meta?.fixable) && Boolean(rule.meta?.hasSuggestions),
-    [NOTICE_TYPE.HAS_SUGGESTIONS]:
-      Boolean(rule.meta?.hasSuggestions) &&
-      (!rule.meta.fixable ||
-        !ruleDocNotices.includes(NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS)),
+      Boolean(rule.meta?.fixable) || Boolean(rule.meta?.hasSuggestions),
+    [NOTICE_TYPE.HAS_SUGGESTIONS]: Boolean(rule.meta?.hasSuggestions),
 
     [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]:
       rule.meta?.docs?.requiresTypeChecking || false,
@@ -329,6 +341,8 @@ function getRuleNoticeLines(
             configsWarn,
             configsOff,
             configEmojis,
+            fixable: Boolean(rule.meta?.fixable),
+            hasSuggestions: Boolean(rule.meta?.hasSuggestions),
             urlConfigs,
             replacedBy: rule.meta?.replacedBy,
             pluginPrefix,

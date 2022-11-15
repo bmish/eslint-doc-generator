@@ -5,6 +5,7 @@ import { OPTION_DEFAULTS, OPTION_TYPE, GenerateOptions } from './options.js';
 import { cosmiconfig } from 'cosmiconfig';
 import Ajv from 'ajv';
 import merge from 'deepmerge';
+import { COLUMN_TYPE, NOTICE_TYPE } from './types.js';
 import type { PackageJson } from 'type-fest';
 
 function getCurrentPackageVersion(): string {
@@ -146,7 +147,9 @@ export async function run(
     )
     .option(
       '--rule-doc-notices <notices>',
-      `(optional) Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. A consolidated notice called \`fixableAndHasSuggestions\` automatically replaces \`fixable\` and \`hasSuggestions\` when applicable. (default: ${
+      `(optional) Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. (choices: "${Object.values(
+        NOTICE_TYPE
+      ).join('", "')}") (default: ${
         OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_NOTICES]
       })`
     )
@@ -179,7 +182,9 @@ export async function run(
     )
     .option(
       '--rule-list-columns <columns>',
-      `(optional) Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. (default: ${
+      `(optional) Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. (choices: "${Object.values(
+        COLUMN_TYPE
+      ).join('", "')})" (default: ${
         OPTION_DEFAULTS[OPTION_TYPE.RULE_LIST_COLUMNS]
       })`
     )
