@@ -29,6 +29,21 @@
 
 
 
+
+## v0.22.0 (2022-11-17)
+
+#### :rocket: Enhancement
+* [#232](https://github.com/bmish/eslint-doc-generator/pull/232) Add optional `options` column and notice to indicate whether a rule is configurable ([@bmish](https://github.com/bmish))
+* [#141](https://github.com/bmish/eslint-doc-generator/pull/141) More robust loading of CJS plugins using `require()` ([@bmish](https://github.com/bmish))
+* [#234](https://github.com/bmish/eslint-doc-generator/pull/234) Support absolute path for plugin root CLI argument ([@bmish](https://github.com/bmish))
+
+#### :bug: Bug Fix
+* [#233](https://github.com/bmish/eslint-doc-generator/pull/233) Target `ES2020` for TypeScript output ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.21.0 (2022-11-15)
 
 #### :rocket: Enhancement
