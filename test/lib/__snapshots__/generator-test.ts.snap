@@ -1,22 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`generator #generate CJS (non-ESM) generates the documentation 1`] = `
-"<!-- begin auto-generated rules list -->
-
-| Name                           | Description   |
-| :----------------------------- | :------------ |
-| [no-foo](docs/rules/no-foo.md) | disallow foo. |
-
-<!-- end auto-generated rules list -->"
-`;
-
-exports[`generator #generate CJS (non-ESM) generates the documentation 2`] = `
-"# Disallow foo (\`test/no-foo\`)
-
-<!-- end auto-generated rule header -->
-"
-`;
-
 exports[`generator #generate Missing plugin package.json \`name\` field throws an error 1`] = `"Could not find \`name\` field in ESLint plugin's package.json."`;
 
 exports[`generator #generate Missing plugin package.json throws an error 1`] = `"Could not find package.json of ESLint plugin."`;
@@ -72,60 +55,6 @@ exports[`generator #generate Rule description needs to be formatted capitalizes 
 
 exports[`generator #generate Scoped plugin name determines the correct plugin prefix 1`] = `
 "# Disallow foo (\`@my-scope/no-foo\`)
-
-💼 This rule is enabled in the ✅ \`recommended\` config.
-
-<!-- end auto-generated rule header -->
-"
-`;
-
-exports[`generator #generate config that extends another config generates the documentation 1`] = `
-"## Rules
-<!-- begin auto-generated rules list -->
-
-💼 Configurations enabled in.\\
-✅ Set in the \`recommended\` configuration.
-
-| Name                           | Description            | 💼 |
-| :----------------------------- | :--------------------- | :- |
-| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | ✅  |
-| [no-baz](docs/rules/no-baz.md) | Description of no-baz. | ✅  |
-| [no-biz](docs/rules/no-biz.md) | Description of no-biz. | ✅  |
-| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
-
-<!-- end auto-generated rules list -->
-"
-`;
-
-exports[`generator #generate config that extends another config generates the documentation 2`] = `
-"# Description of no-foo (\`test/no-foo\`)
-
-💼 This rule is enabled in the ✅ \`recommended\` config.
-
-<!-- end auto-generated rule header -->
-"
-`;
-
-exports[`generator #generate config that extends another config generates the documentation 3`] = `
-"# Description of no-bar (\`test/no-bar\`)
-
-💼 This rule is enabled in the ✅ \`recommended\` config.
-
-<!-- end auto-generated rule header -->
-"
-`;
-
-exports[`generator #generate config that extends another config generates the documentation 4`] = `
-"# Description of no-baz (\`test/no-baz\`)
-
-💼 This rule is enabled in the ✅ \`recommended\` config.
-
-<!-- end auto-generated rule header -->
-"
-`;
-
-exports[`generator #generate config that extends another config generates the documentation 5`] = `
-"# Description of no-biz (\`test/no-biz\`)
 
 💼 This rule is enabled in the ✅ \`recommended\` config.
 
@@ -456,6 +385,28 @@ exports[`generator #generate only a \`recommended\` config updates the documenta
 
 exports[`generator #generate only a \`recommended\` config updates the documentation 2`] = `
 "# Description (\`test/no-foo\`)
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generator #generate plugin entry point in JSON format generates the documentation 1`] = `
+"<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description            | 💼 |
+| :----------------------------- | :--------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo | ✅  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generator #generate plugin entry point in JSON format generates the documentation 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
 
 💼 This rule is enabled in the ✅ \`recommended\` config.
 

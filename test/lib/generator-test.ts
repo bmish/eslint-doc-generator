@@ -20,7 +20,7 @@ describe('generator', function () {
           // package.json
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -163,7 +163,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -215,7 +215,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -270,7 +270,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -334,7 +334,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -412,7 +412,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -468,7 +468,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -510,7 +510,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -552,7 +552,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -592,7 +592,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -630,7 +630,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -674,7 +674,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -725,96 +725,12 @@ describe('generator', function () {
         expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
       });
     });
-
-    describe('Missing plugin package.json `main` field', function () {
-      beforeEach(function () {
-        mockFs({
-          'package.json': JSON.stringify({
-            name: 'eslint-plugin-test',
-            type: 'module',
-          }),
-
-          'index.js': 'export default { rules: {} };',
-
-          'README.md':
-            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
-
-          // Needed for some of the test infrastructure to work.
-          node_modules: mockFs.load(
-            resolve(__dirname, '..', '..', 'node_modules')
-          ),
-        });
-      });
-      afterEach(function () {
-        mockFs.restore();
-        jest.resetModules();
-      });
-      it('defaults to index.js entry point', async function () {
-        await expect(generate('.')).resolves.toBeUndefined();
-      });
-    });
-
-    describe('Package.json `main` field points to directory', function () {
-      beforeEach(function () {
-        mockFs({
-          'package.json': JSON.stringify({
-            name: 'eslint-plugin-test',
-            type: 'module',
-            main: 'lib/',
-          }),
-
-          'lib/index.js': 'export default { rules: {} };',
-
-          'README.md':
-            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
-
-          // Needed for some of the test infrastructure to work.
-          node_modules: mockFs.load(
-            resolve(__dirname, '..', '..', 'node_modules')
-          ),
-        });
-      });
-      afterEach(function () {
-        mockFs.restore();
-        jest.resetModules();
-      });
-      it('finds index.js entry point', async function () {
-        await expect(generate('.')).resolves.toBeUndefined();
-      });
-    });
-
-    describe('Package.json `main` field points to non-existent file', function () {
-      beforeEach(function () {
-        mockFs({
-          'package.json': JSON.stringify({
-            name: 'eslint-plugin-test',
-            type: 'module',
-            main: 'index.js',
-          }),
-
-          // Needed for some of the test infrastructure to work.
-          node_modules: mockFs.load(
-            resolve(__dirname, '..', '..', 'node_modules')
-          ),
-        });
-      });
-      afterEach(function () {
-        mockFs.restore();
-        jest.resetModules();
-      });
-      it('throws an error', async function () {
-        await expect(generate('.')).rejects.toThrow(
-          'Could not find entry point for ESLint plugin. Tried: index.js'
-        );
-      });
-    });
-
     describe('README missing rule list markers but with rules section', function () {
       beforeEach(function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -866,7 +782,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -904,7 +820,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -956,7 +872,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -1004,7 +920,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -1052,7 +968,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -1097,7 +1013,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -1158,7 +1074,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -1199,7 +1115,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -1282,7 +1198,7 @@ describe('generator', function () {
       beforeEach(function () {
         mockFs({
           'package.json': JSON.stringify({
-            main: 'index.js',
+            exports: 'index.js',
           }),
 
           'index.js': 'export default { rules: {} }',
@@ -1307,7 +1223,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: '@my-scope/eslint-plugin',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -1350,7 +1266,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -1391,7 +1307,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -1414,48 +1330,6 @@ describe('generator', function () {
       });
       it('throws an error', async function () {
         await expect(generate('.')).rejects.toThrowErrorMatchingSnapshot();
-      });
-    });
-
-    describe('CJS (non-ESM)', function () {
-      beforeEach(function () {
-        mockFs({
-          'package.json': JSON.stringify({
-            name: 'eslint-plugin-test',
-            main: 'index.cjs',
-            type: 'commonjs', // ts-jest doesn't seem to respect this `type`, so we have to use .cjs extension.
-          }),
-
-          'index.cjs': `module.exports = {
-            rules: {
-              'no-foo': {
-                meta: { docs: { description: 'disallow foo.' }, },
-                create(context) {}
-              },
-            },
-          };`,
-
-          'README.md':
-            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
-
-          'docs/rules/no-foo.md': '',
-
-          // Needed for some of the test infrastructure to work.
-          node_modules: mockFs.load(
-            resolve(__dirname, '..', '..', 'node_modules')
-          ),
-        });
-      });
-      afterEach(function () {
-        mockFs.restore();
-        jest.resetModules();
-      });
-      it('generates the documentation', async function () {
-        await generate('.');
-
-        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-
-        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
       });
     });
 
@@ -1533,7 +1407,7 @@ describe('generator', function () {
       });
     });
 
-    describe('package.json using exports, with unsupported entry point file type', function () {
+    describe('plugin entry point in JSON format', function () {
       beforeEach(function () {
         mockFs({
           'package.json': JSON.stringify({
@@ -1541,14 +1415,26 @@ describe('generator', function () {
             exports: './index.json',
           }),
 
-          'index.js': `export default {
-            rules: {
-              'no-foo': {
-                meta: { docs: { description: 'disallow foo.' }, },
-                create(context) {}
+          'index.json': `
+            {
+              "rules": {
+                "no-foo": {
+                  "meta": {
+                    "docs": {
+                      "description": "Description for no-foo"
+                    }
+                  }
+                }
               },
-            },
-          };`,
+              "configs": {
+                "recommended": {
+                  "rules": {
+                    "test/no-foo": "error"
+                  }
+                }
+              }
+            }
+          `,
 
           'README.md':
             '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
@@ -1565,12 +1451,12 @@ describe('generator', function () {
         mockFs.restore();
         jest.resetModules();
       });
-      it('throws an error', async function () {
-        await expect(
-          generate('.', { configEmoji: ['foo,bar,baz'] })
-        ).rejects.toThrow(
-          'Unsupported file type for plugin entry point. Current types supported: .js, .cjs, .mjs. Entry point detected: ./index.json'
-        );
+      it('generates the documentation', async function () {
+        await generate('.');
+
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
       });
     });
 
@@ -1580,6 +1466,7 @@ describe('generator', function () {
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
             type: 'module',
+            exports: 'index.js',
           }),
 
           'index.js': `
@@ -1638,6 +1525,7 @@ describe('generator', function () {
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
             type: 'module',
+            exports: 'index.js',
           }),
 
           'index.js': `
@@ -1691,6 +1579,7 @@ describe('generator', function () {
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
             type: 'module',
+            exports: 'index.js',
           }),
 
           'index.js': `
@@ -1740,6 +1629,7 @@ describe('generator', function () {
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
             type: 'module',
+            exports: 'index.js',
           }),
 
           'index.js': `
@@ -1791,6 +1681,7 @@ describe('generator', function () {
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
             type: 'module',
+            exports: 'index.js',
           }),
 
           'index.js': `
@@ -1828,107 +1719,12 @@ describe('generator', function () {
       });
     });
 
-    describe('config that extends another config', function () {
-      beforeEach(function () {
-        mockFs({
-          'package.json': JSON.stringify({
-            name: 'eslint-plugin-test',
-            main: 'index.cjs',
-            type: 'commonjs',
-          }),
-
-          'index.cjs': `
-            module.exports = {
-              rules: {
-                'no-foo': {
-                  meta: { docs: { description: 'Description of no-foo.' }, },
-                  create(context) {}
-                },
-                'no-bar': {
-                  meta: { docs: { description: 'Description of no-bar.' }, },
-                  create(context) {}
-                },
-                'no-baz': {
-                  meta: { docs: { description: 'Description of no-baz.' }, },
-                  create(context) {}
-                },
-                'no-biz': {
-                  meta: { docs: { description: 'Description of no-biz.' }, },
-                  create(context) {}
-                },
-              },
-              configs: {
-                recommended: {
-                  extends: [
-                    require.resolve('./base-config'),
-                    // Should ignore these since they're external:
-                    'eslint:recommended',
-                    'plugin:some-plugin/recommended',
-                    'prettier',
-                  ],
-                }
-              }
-            };`,
-
-          // Multi-level nested config with `rules` and `extends`.
-          'base-config.cjs': `
-            module.exports = {
-              extends: [require.resolve("./base-base-config")],
-              rules: { "test/no-foo": "error" },
-              overrides: [{
-                extends: [require.resolve("./override-config")],
-                files: ["*.js"],
-                rules: { "test/no-baz": "error" },
-              }]
-            };`,
-
-          // Multi-level nested config with no `rules` and string (non-array) version of `extends`.
-          'base-base-config.cjs':
-            'module.exports = { extends: require.resolve("./base-base-base-config") };',
-
-          // Multi-level nested config with no further `extends`.
-          'base-base-base-config.cjs':
-            'module.exports = { rules: { "test/no-bar": "error" } };',
-
-          // Config extended from an override.
-          'override-config.cjs':
-            'module.exports = { rules: { "test/no-biz": "error" } };',
-
-          'README.md': '## Rules\n',
-
-          'docs/rules/no-foo.md': '',
-          'docs/rules/no-bar.md': '',
-          'docs/rules/no-baz.md': '',
-          'docs/rules/no-biz.md': '',
-
-          // Needed for some of the test infrastructure to work.
-          node_modules: mockFs.load(
-            resolve(__dirname, '..', '..', 'node_modules')
-          ),
-        });
-      });
-
-      afterEach(function () {
-        mockFs.restore();
-        jest.resetModules();
-      });
-
-      it('generates the documentation', async function () {
-        await generate('.');
-        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
-        expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
-        expect(readFileSync('docs/rules/no-baz.md', 'utf8')).toMatchSnapshot();
-        expect(readFileSync('docs/rules/no-biz.md', 'utf8')).toMatchSnapshot();
-      });
-    });
-
     describe('config with overrides', function () {
       beforeEach(function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -1980,7 +1776,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2030,7 +1826,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2128,7 +1924,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2184,7 +1980,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2238,7 +2034,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2280,7 +2076,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2328,7 +2124,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2374,7 +2170,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2420,7 +2216,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2476,7 +2272,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2524,7 +2320,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2567,7 +2363,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2610,7 +2406,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2653,7 +2449,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2693,7 +2489,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2733,7 +2529,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2775,7 +2571,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2824,7 +2620,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2874,7 +2670,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2930,7 +2726,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -2988,7 +2784,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3029,7 +2825,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3070,7 +2866,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3114,7 +2910,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3156,7 +2952,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3201,7 +2997,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3245,7 +3041,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3287,7 +3083,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3330,7 +3126,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3379,7 +3175,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3441,7 +3237,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3480,7 +3276,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3521,7 +3317,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3571,7 +3367,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3610,7 +3406,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3649,7 +3445,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3688,7 +3484,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3739,7 +3535,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3778,7 +3574,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3824,7 +3620,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3866,7 +3662,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3910,7 +3706,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3954,7 +3750,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -3996,7 +3792,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -4041,7 +3837,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -4082,7 +3878,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -4133,7 +3929,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -4172,7 +3968,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -4211,7 +4007,7 @@ describe('generator', function () {
         mockFs({
           'package.json': JSON.stringify({
             name: 'eslint-plugin-test',
-            main: 'index.js',
+            exports: 'index.js',
             type: 'module',
           }),
 
@@ -4253,6 +4049,37 @@ describe('generator', function () {
         expect(readFileSync('docs/rules/a.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/B.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/c.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
+    describe('plugin entry point specified but does not exist', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            exports: 'index.js',
+            type: 'module',
+          }),
+
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('throws an error', async function () {
+        await expect(generate('.')).rejects.toThrow(
+          'ESLint plugin entry point does not exist. Tried: index.js'
+        );
       });
     });
   });
