@@ -18,6 +18,7 @@ Configs section would normally go here.
 ⌨️ Set in the `typescript` configuration.\
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\
 💡 Manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).\
+⚙️ Has configuration options.\
 💭 Requires type information.\
 🗂️ The type of rule.\
 ❗ Identifies problems that could cause errors or unexpected behavior.\
@@ -25,10 +26,10 @@ Configs section would normally go here.
 📏 Focuses on code formatting.\
 ❌ Deprecated.
 
-| Name                                     | Description        | 💼 | ⚠️ | 🚫 | 🔧 | 💡 | 💭 | 🗂️ | ❌  |
-| :--------------------------------------- | :----------------- | :- | :- | :- | :- | :- | :- | :-- | :- |
-| [no-foo](docs/rules/no-foo.md)           | disallow using foo | ✅  |    |    | 🔧 |    | 💭 | ❗   |    |
-| [prefer-bar](docs/rules/prefer-bar.md)   | enforce using bar  | ✅  | 🎨 |    |    | 💡 | 💭 | 📖  |    |
-| [require-baz](docs/rules/require-baz.md) | require using baz  |    |    | ⌨️ | 🔧 |    |    | 📏  | ❌  |
+| Name                                     | Description        | 💼 | ⚠️ | 🚫 | 🔧 | 💡 | ⚙️ | 💭 | 🗂️ | ❌  |
+| :--------------------------------------- | :----------------- | :- | :- | :- | :- | :- | :- | :- | :-- | :- |
+| [no-foo](docs/rules/no-foo.md)           | disallow using foo | ✅  |    |    | 🔧 |    | ⚙️ | 💭 | ❗   |    |
+| [prefer-bar](docs/rules/prefer-bar.md)   | enforce using bar  | ✅  | 🎨 |    |    | 💡 |    | 💭 | 📖  |    |
+| [require-baz](docs/rules/require-baz.md) | require using baz  |    |    | ⌨️ | 🔧 |    |    |    | 📏  | ❌  |
 
 <!-- end auto-generated rules list -->

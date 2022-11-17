@@ -3,6 +3,7 @@ import {
   EMOJI_DEPRECATED,
   EMOJI_FIXABLE,
   EMOJI_HAS_SUGGESTIONS,
+  EMOJI_OPTIONS,
   EMOJI_REQUIRES_TYPE_CHECKING,
 } from './emojis.js';
 import { getConfigsForRule, findConfigEmoji } from './configs.js';
@@ -21,6 +22,7 @@ import type {
   ConfigEmojis,
 } from './types.js';
 import { EMOJIS_TYPE, RULE_TYPE } from './rule-type.js';
+import { hasOptions } from './rule-options.js';
 
 // Example: theWeatherIsNice => The Weather Is Nice
 function camelCaseStringToTitle(str: string) {
@@ -166,6 +168,7 @@ function buildRuleRow(
       /{name}/g,
       rule.name
     )})`,
+    [COLUMN_TYPE.OPTIONS]: hasOptions(rule.schema) ? EMOJI_OPTIONS : '',
     [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: rule.requiresTypeChecking
       ? EMOJI_REQUIRES_TYPE_CHECKING
       : '',

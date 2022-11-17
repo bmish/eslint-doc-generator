@@ -42,6 +42,9 @@ export const EMOJI_CONFIG_FROM_SEVERITY: {
 export const EMOJI_FIXABLE = '🔧';
 export const EMOJI_HAS_SUGGESTIONS = '💡';
 
+// Options.
+export const EMOJI_OPTIONS = '⚙️';
+
 // TypeScript.
 export const EMOJI_REQUIRES_TYPE_CHECKING = '💭';
 
@@ -58,6 +61,7 @@ export const RESERVED_EMOJIS = [
 
   EMOJI_FIXABLE,
   EMOJI_HAS_SUGGESTIONS,
+  EMOJI_OPTIONS,
   EMOJI_REQUIRES_TYPE_CHECKING,
   EMOJI_TYPE,
   EMOJI_DEPRECATED,

@@ -6,6 +6,8 @@
 
 💭 This rule requires type information.
 
+📖 This rule identifies potential improvements.
+
 <!-- end auto-generated rule header -->
 
 ## Rule details
