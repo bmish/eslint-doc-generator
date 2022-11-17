@@ -4,7 +4,11 @@
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
+⚙️ This rule is configurable.
+
 💭 This rule requires type information.
+
+❗ This rule identifies problems that could cause errors or unexpected behavior.
 
 <!-- end auto-generated rule header -->
 

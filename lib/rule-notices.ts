@@ -5,6 +5,7 @@ import {
   EMOJI_HAS_SUGGESTIONS,
   EMOJI_REQUIRES_TYPE_CHECKING,
   EMOJI_CONFIG_FROM_SEVERITY,
+  EMOJI_OPTIONS,
 } from './emojis.js';
 import { findConfigEmoji, getConfigsForRule } from './configs.js';
 import {
@@ -17,6 +18,7 @@ import {
 } from './types.js';
 import { RULE_TYPE, RULE_TYPE_MESSAGES_NOTICES } from './rule-type.js';
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
+import { hasOptions } from './rule-options.js';
 
 function severityToTerminology(severity: SEVERITY_TYPE) {
   switch (severity) {
@@ -194,6 +196,7 @@ const RULE_NOTICES: {
   },
   [NOTICE_TYPE.HAS_SUGGESTIONS]: NOTICE_HAS_SUGGESTIONS,
 
+  [NOTICE_TYPE.OPTIONS]: `${EMOJI_OPTIONS} This rule is configurable.`,
   [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]: `${EMOJI_REQUIRES_TYPE_CHECKING} This rule requires type information.`,
 };
 
@@ -241,11 +244,13 @@ function getNoticesForRule(
       configsOff.length > 0,
     [NOTICE_TYPE.DEPRECATED]: rule.meta?.deprecated || false,
 
+    // Fixable/suggestions.
     [NOTICE_TYPE.FIXABLE]: Boolean(rule.meta?.fixable),
     [NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]:
       Boolean(rule.meta?.fixable) || Boolean(rule.meta?.hasSuggestions),
     [NOTICE_TYPE.HAS_SUGGESTIONS]: Boolean(rule.meta?.hasSuggestions),
 
+    [NOTICE_TYPE.OPTIONS]: hasOptions(rule.meta?.schema),
     [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]:
       rule.meta?.docs?.requiresTypeChecking || false,
     [NOTICE_TYPE.TYPE]: Boolean(rule.meta?.type),

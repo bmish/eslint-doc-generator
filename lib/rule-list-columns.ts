@@ -5,10 +5,12 @@ import {
   EMOJI_REQUIRES_TYPE_CHECKING,
   EMOJI_TYPE,
   EMOJI_CONFIG_FROM_SEVERITY,
+  EMOJI_OPTIONS,
 } from './emojis.js';
 import { RULE_TYPES } from './rule-type.js';
 import { COLUMN_TYPE, SEVERITY_TYPE } from './types.js';
 import { getConfigsThatSetARule } from './configs.js';
+import { hasOptions } from './rule-options.js';
 import type { RuleDetails, ConfigsToRules, Plugin } from './types.js';
 
 /**
@@ -52,6 +54,7 @@ export const COLUMN_HEADER: {
   [COLUMN_TYPE.FIXABLE]: EMOJI_FIXABLE,
   [COLUMN_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: `${EMOJI_FIXABLE}${EMOJI_HAS_SUGGESTIONS}`,
   [COLUMN_TYPE.HAS_SUGGESTIONS]: EMOJI_HAS_SUGGESTIONS,
+  [COLUMN_TYPE.OPTIONS]: EMOJI_OPTIONS,
   [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: EMOJI_REQUIRES_TYPE_CHECKING,
   [COLUMN_TYPE.TYPE]: EMOJI_TYPE,
 };
@@ -106,6 +109,7 @@ export function getColumns(
       (detail) => detail.hasSuggestions
     ),
     [COLUMN_TYPE.NAME]: true,
+    [COLUMN_TYPE.OPTIONS]: details.some((detail) => hasOptions(detail.schema)),
     [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: details.some(
       (detail) => detail.requiresTypeChecking
     ),

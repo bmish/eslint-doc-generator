@@ -52,7 +52,6 @@ export type ConfigEmojis = { config: string; emoji: string }[];
 
 /**
  * Rule doc notices.
- * Same as COLUMN_TYPE but without NAME, DESCRIPTION (which are in the rule doc title).
  */
 export enum NOTICE_TYPE {
   CONFIGS = 'configs',
@@ -60,6 +59,7 @@ export enum NOTICE_TYPE {
   FIXABLE = 'fixable',
   FIXABLE_AND_HAS_SUGGESTIONS = 'fixableAndHasSuggestions', // Consolidated notice for space-saving.
   HAS_SUGGESTIONS = 'hasSuggestions',
+  OPTIONS = 'options',
   REQUIRES_TYPE_CHECKING = 'requiresTypeChecking',
   TYPE = 'type',
 }
@@ -77,6 +77,7 @@ export enum COLUMN_TYPE {
   FIXABLE_AND_HAS_SUGGESTIONS = 'fixableAndHasSuggestions', // Consolidated column for space-saving.
   HAS_SUGGESTIONS = 'hasSuggestions',
   NAME = 'name',
+  OPTIONS = 'options',
   REQUIRES_TYPE_CHECKING = 'requiresTypeChecking',
   TYPE = 'type',
 }

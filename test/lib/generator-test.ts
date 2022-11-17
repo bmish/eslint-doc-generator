@@ -4077,6 +4077,57 @@ describe('generator', function () {
       });
     });
 
+    describe('rule with options, options column/notice enabled', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': { meta: { schema: [{foo:true}] }, create(context) {} },
+                'no-bar': { meta: { schema: {foo:true} }, create(context) {} },
+                'no-biz': { meta: { schema: [] }, create(context) {} },
+                'no-baz': { meta: {  }, create(context) {} },
+              },
+            };`,
+
+          'README.md': '## Rules\n',
+
+          'docs/rules/no-foo.md': '## Options\n',
+          'docs/rules/no-bar.md': '## Options\n',
+          'docs/rules/no-biz.md': '',
+          'docs/rules/no-baz.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('displays the column and notice', async function () {
+        await generate('.', {
+          ruleListColumns: 'name,options',
+          ruleDocNotices: 'options',
+        });
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-biz.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-baz.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+
     describe('rule with long-enough description to require name column wrapping avoidance', function () {
       beforeEach(function () {
         mockFs({

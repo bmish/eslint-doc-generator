@@ -560,6 +560,57 @@ exports[`generator #generate rule with no meta object generates the documentatio
 "
 `;
 
+exports[`generator #generate rule with options, options column/notice enabled displays the column and notice 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+⚙️ Has configuration options.
+
+| Name                           | ⚙️ |
+| :----------------------------- | :- |
+| [no-bar](docs/rules/no-bar.md) | ⚙️ |
+| [no-baz](docs/rules/no-baz.md) |    |
+| [no-biz](docs/rules/no-biz.md) |    |
+| [no-foo](docs/rules/no-foo.md) | ⚙️ |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generator #generate rule with options, options column/notice enabled displays the column and notice 2`] = `
+"# test/no-foo
+
+⚙️ This rule is configurable.
+
+<!-- end auto-generated rule header -->
+## Options
+"
+`;
+
+exports[`generator #generate rule with options, options column/notice enabled displays the column and notice 3`] = `
+"# test/no-bar
+
+⚙️ This rule is configurable.
+
+<!-- end auto-generated rule header -->
+## Options
+"
+`;
+
+exports[`generator #generate rule with options, options column/notice enabled displays the column and notice 4`] = `
+"# test/no-biz
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generator #generate rule with options, options column/notice enabled displays the column and notice 5`] = `
+"# test/no-baz
+
+<!-- end auto-generated rule header -->
+"
+`;
+
 exports[`generator #generate rule with type, type column enabled displays the type 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
