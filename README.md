@@ -21,6 +21,7 @@ This tool is used by popular ESLint plugins like:
 - [eslint-plugin-ember](https://github.com/ember-cli/eslint-plugin-ember#-rules)
 - [eslint-plugin-eslint-plugin](https://github.com/eslint-community/eslint-plugin-eslint-plugin#rules)
 - [eslint-plugin-import](https://github.com/import-js/eslint-plugin-import#rules)
+- [eslint-plugin-jest](https://github.com/jest-community/eslint-plugin-jest#rules)
 - [eslint-plugin-jsx-a11y](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y#supported-rules)
 - [eslint-plugin-promise](https://github.com/eslint-community/eslint-plugin-promise#rules)
 - [eslint-plugin-qunit](https://github.com/platinumazure/eslint-plugin-qunit#rules)
@@ -113,7 +114,9 @@ And how it looks:
 
 ## Configuration options
 
-These can be provided as CLI options or as [config file](#configuration-file) options.
+These can be provided as CLI options or as [config file](#configuration-file) options. All options are optional.
+
+There's also an optional path argument if you need to point the CLI to an ESLint plugin directory that isn't just the current directory.
 
 | Name | Description |
 | :-- | :-- |
@@ -131,8 +134,6 @@ These can be provided as CLI options or as [config file](#configuration-file) op
 | `--rule-list-columns` | Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. Choices: `configsError`, `configsOff`, `configsWarn`, `deprecated`, `description`, `fixable`, `fixableAndHasSuggestions` (off by default), `hasSuggestions`, `name`, `options` (off by default), `requiresTypeChecking`, `type` (off by default). Default: `name,description,configsError,configsWarn,configsOff,fixable,hasSuggestions,requiresTypeChecking,deprecated`. |
 | `--split-by` | Rule property to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`. |
 | `--url-configs` | Link to documentation about the ESLint configurations exported by the plugin. |
-
-All options are optional.
 
 ### `--rule-doc-title-format`
 
