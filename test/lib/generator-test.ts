@@ -4082,5 +4082,37 @@ describe('generator', function () {
         );
       });
     });
+
+    describe('passing absolute path for plugin root', function () {
+      beforeEach(function () {
+        mockFs({
+          '/eslint-plugin-test/package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            exports: 'index.js',
+            type: 'module',
+          }),
+
+          '/eslint-plugin-test/index.js':
+            'export default { rules: {}, configs: {} };',
+
+          '/eslint-plugin-test/README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(
+            resolve(__dirname, '..', '..', 'node_modules')
+          ),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('finds the entry point', async function () {
+        await expect(generate('/eslint-plugin-test/')).resolves.toBeUndefined();
+      });
+    });
   });
 });

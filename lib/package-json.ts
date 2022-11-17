@@ -1,4 +1,4 @@
-import { join, resolve, basename, dirname } from 'node:path';
+import { join, resolve, basename, dirname, isAbsolute } from 'node:path';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { importAbs } from './import.js';
 import { createRequire } from 'node:module';
@@ -8,7 +8,7 @@ import type { PackageJson } from 'type-fest';
 const require = createRequire(import.meta.url);
 
 export function getPluginRoot(path: string) {
-  return join(process.cwd(), path);
+  return isAbsolute(path) ? path : join(process.cwd(), path);
 }
 
 function loadPackageJson(path: string): PackageJson {
