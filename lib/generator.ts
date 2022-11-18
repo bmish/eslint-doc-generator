@@ -159,6 +159,8 @@ export async function generate(path: string, options?: GenerateOptions) {
       (details) => !ignoreDeprecatedRules || !details.deprecated
     );
 
+  let initializedRuleDoc = false;
+
   // Update rule doc for each rule.
   for (const { name, description, schema } of details) {
     const pathToDoc = join(path, pathRuleDoc).replace(/{name}/g, name);
@@ -172,6 +174,7 @@ export async function generate(path: string, options?: GenerateOptions) {
 
       mkdirSync(dirname(pathToDoc), { recursive: true });
       writeFileSync(pathToDoc, '');
+      initializedRuleDoc = true;
     }
 
     // Regenerate the header (title/notices) of each rule doc.
@@ -273,5 +276,11 @@ export async function generate(path: string, options?: GenerateOptions) {
     }
   } else {
     writeFileSync(pathToReadme, readmeContentsNew, 'utf8');
+  }
+
+  if (initRuleDocs && !initializedRuleDoc) {
+    throw new Error(
+      '--init-rule-docs was enabled, but no rule doc file needed to be created.'
+    );
   }
 }
