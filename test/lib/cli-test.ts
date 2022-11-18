@@ -11,6 +11,7 @@ const configFileOptionsAll: { [key in OPTION_TYPE]: unknown } = {
     'ignoredConfigFromConfigFile2',
   ],
   ignoreDeprecatedRules: true,
+  initRuleDocs: true,
   pathRuleDoc: 'www.example.com/rule-doc-from-config-file',
   pathRuleList: 'www.example.com/rule-list-from-config-file',
   ruleDocNotices: 'type',
@@ -42,6 +43,8 @@ const cliOptionsAll: { [key in OPTION_TYPE]: string[] } = {
   ],
 
   [OPTION_TYPE.IGNORE_DEPRECATED_RULES]: ['--ignore-deprecated-rules', 'true'],
+
+  [OPTION_TYPE.INIT_RULE_DOCS]: ['--init-rule-docs', 'false'],
 
   [OPTION_TYPE.PATH_RULE_DOC]: [
     '--path-rule-doc',
