@@ -136,7 +136,7 @@ export async function run(
     )
     .option(
       '--init-rule-docs [boolean]',
-      `(optional) Whether to generate rule docs files if they don't yet exist. (default: ${
+      `(optional) Whether to create rule doc files if they don't yet exist. (default: ${
         OPTION_DEFAULTS[OPTION_TYPE.INIT_RULE_DOCS]
       })`,
       parseBoolean
