@@ -40,6 +40,7 @@ export enum OPTION_TYPE {
   CONFIG_EMOJI = 'configEmoji',
   IGNORE_CONFIG = 'ignoreConfig',
   IGNORE_DEPRECATED_RULES = 'ignoreDeprecatedRules',
+  INIT_RULE_DOCS = 'initRuleDocs',
   PATH_RULE_DOC = 'pathRuleDoc',
   PATH_RULE_LIST = 'pathRuleList',
   RULE_DOC_NOTICES = 'ruleDocNotices',
@@ -61,6 +62,7 @@ export const OPTION_DEFAULTS = {
   [OPTION_TYPE.CONFIG_EMOJI]: [],
   [OPTION_TYPE.IGNORE_CONFIG]: [],
   [OPTION_TYPE.IGNORE_DEPRECATED_RULES]: false,
+  [OPTION_TYPE.INIT_RULE_DOCS]: false,
   [OPTION_TYPE.PATH_RULE_DOC]: 'docs/rules/{name}.md',
   [OPTION_TYPE.PATH_RULE_LIST]: 'README.md',
   [OPTION_TYPE.RULE_DOC_NOTICES]: Object.entries(
@@ -88,6 +90,7 @@ export type GenerateOptions = {
   configEmoji?: string[];
   ignoreConfig?: string[];
   ignoreDeprecatedRules?: boolean;
+  initRuleDocs?: boolean;
   pathRuleDoc?: string;
   pathRuleList?: string;
   ruleDocNotices?: string;

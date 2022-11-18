@@ -539,11 +539,22 @@ describe('generator', function () {
         jest.resetModules();
       });
 
-      it('throws an error', async function () {
-        // Use join to handle both Windows and Unix paths.
-        await expect(generate('.')).rejects.toThrow(
-          `Could not find rule doc: ${join('docs', 'rules', 'no-foo.md')}`
-        );
+      describe('when initRuleDocs is false', () => {
+        it('throws an error', async function () {
+          // Use join to handle both Windows and Unix paths.
+          await expect(generate('.')).rejects.toThrow(
+            `Could not find rule doc: ${join('docs', 'rules', 'no-foo.md')}`
+          );
+        });
+      });
+
+      describe('when initRuleDocs is true', () => {
+        it('creates the rule doc', async function () {
+          await generate('.', { initRuleDocs: true });
+          expect(
+            readFileSync('docs/rules/no-foo.md', 'utf8')
+          ).toMatchSnapshot();
+        });
       });
     });
 

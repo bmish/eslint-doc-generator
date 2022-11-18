@@ -1,5 +1,5 @@
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { join, relative } from 'node:path';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { dirname, join, relative } from 'node:path';
 import { getAllNamedOptions, hasOptions } from './rule-options.js';
 import {
   loadPlugin,
@@ -100,6 +100,8 @@ export async function generate(path: string, options?: GenerateOptions) {
   const ignoreDeprecatedRules =
     options?.ignoreDeprecatedRules ??
     OPTION_DEFAULTS[OPTION_TYPE.IGNORE_DEPRECATED_RULES];
+  const initRuleDocs =
+    options?.initRuleDocs ?? OPTION_DEFAULTS[OPTION_TYPE.INIT_RULE_DOCS];
   const pathRuleDoc =
     options?.pathRuleDoc ?? OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_DOC];
   const pathRuleList =
@@ -162,9 +164,14 @@ export async function generate(path: string, options?: GenerateOptions) {
     const pathToDoc = join(path, pathRuleDoc).replace(/{name}/g, name);
 
     if (!existsSync(pathToDoc)) {
-      throw new Error(
-        `Could not find rule doc: ${relative(getPluginRoot(path), pathToDoc)}`
-      );
+      if (!initRuleDocs) {
+        throw new Error(
+          `Could not find rule doc: ${relative(getPluginRoot(path), pathToDoc)}`
+        );
+      }
+
+      mkdirSync(dirname(pathToDoc), { recursive: true });
+      writeFileSync(pathToDoc, '', {});
     }
 
     // Regenerate the header (title/notices) of each rule doc.

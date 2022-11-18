@@ -253,6 +253,13 @@ exports[`generator #generate lowercase README file generates the documentation 1
 <!-- end auto-generated rules list -->"
 `;
 
+exports[`generator #generate missing rule doc when initRuleDocs is true creates the rule doc 1`] = `
+"# test/no-foo
+
+<!-- end auto-generated rule header -->
+"
+`;
+
 exports[`generator #generate no existing comment markers - minimal doc content generates the documentation 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
