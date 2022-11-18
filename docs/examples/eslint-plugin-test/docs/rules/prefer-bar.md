@@ -17,7 +17,3 @@ Description of the rule would normally go here.
 ## Examples
 
 Examples would normally go here.
-
-## Options
-
-Config options would normally go here.
