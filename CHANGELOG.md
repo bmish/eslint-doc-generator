@@ -30,6 +30,20 @@
 
 
 
+
+## v0.23.0 (2022-11-18)
+
+#### :rocket: Enhancement
+* [#240](https://github.com/bmish/eslint-doc-generator/pull/240) Add option `--init-rule-docs` ([@JoshuaKGoldberg](https://github.com/JoshuaKGoldberg))
+
+#### :house: Internal
+* [#239](https://github.com/bmish/eslint-doc-generator/pull/239) Split up tests into multiple test files ([@bmish](https://github.com/bmish))
+
+#### Committers: 2
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+- Josh Goldberg ([@JoshuaKGoldberg](https://github.com/JoshuaKGoldberg))
+
+
 ## v0.22.0 (2022-11-17)
 
 #### :rocket: Enhancement
