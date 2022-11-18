@@ -1,4 +1,4 @@
-# eslint-doc-generator
+-# eslint-doc-generator
 
 [![npm version][npm-image]][npm-url]
 
@@ -124,6 +124,7 @@ There's also an optional path argument if you need to point the CLI to an ESLint
 | `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Default emojis are provided for [common configs](./lib/emojis.ts). To remove a default emoji and rely on a [badge](#badge) instead, provide the config name without an emoji. Option can be repeated. |
 | `--ignore-config` | Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. |
 | `--ignore-deprecated-rules` | Whether to ignore deprecated rules from being checked, displayed, or updated (default: `false`). |
+| `--ignore-deprecated-rules` | Whether to create rule doc files if they don't yet exist (default: `false`). |
 | `--path-rule-doc` | Path to markdown file for each rule doc. Use `{name}` placeholder for the rule name (default: `docs/rules/{name}.md`). |
 | `--path-rule-list` | Path to markdown file with a rules section where the rules table list should live (default: `README.md`). |
 | `--rule-doc-notices` | Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. Choices: `configs`, `deprecated`, `fixable` (off by default), `fixableAndHasSuggestions`, `hasSuggestions` (off by default), `options` (off by default), `requiresTypeChecking`, `type` (off by default). Default: `deprecated,configs,fixableAndHasSuggestions,requiresTypeChecking`. |

@@ -171,7 +171,7 @@ export async function generate(path: string, options?: GenerateOptions) {
       }
 
       mkdirSync(dirname(pathToDoc), { recursive: true });
-      writeFileSync(pathToDoc, '', {});
+      writeFileSync(pathToDoc, '');
     }
 
     // Regenerate the header (title/notices) of each rule doc.
