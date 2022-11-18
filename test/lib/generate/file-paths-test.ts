@@ -20,14 +20,65 @@ describe('generate (file paths)', function () {
         }),
 
         'index.js': `
-              export default {
-                rules: {
-                  'no-foo': {
-                    meta: { },
-                    create(context) {}
-                  },
-                },
-              };`,
+          export default {
+            rules: {
+              'no-foo': {
+                meta: { },
+                create(context) {}
+              },
+            },
+          };`,
+
+        'README.md':
+          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    describe('when initRuleDocs is false', () => {
+      it('throws an error', async function () {
+        // Use join to handle both Windows and Unix paths.
+        await expect(generate('.')).rejects.toThrow(
+          `Could not find rule doc: ${join('docs', 'rules', 'no-foo.md')}`
+        );
+      });
+    });
+
+    describe('when initRuleDocs is true', () => {
+      it('creates the rule doc', async function () {
+        await generate('.', { initRuleDocs: true });
+        expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      });
+    });
+  });
+
+  describe('no missing rule doc but --init-rule-docs enabled', function () {
+    beforeEach(function () {
+      mockFs({
+        'docs/rules/no-foo.md': '',
+
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: { },
+                create(context) {}
+              },
+            },
+          };`,
 
         'README.md':
           '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
@@ -43,9 +94,8 @@ describe('generate (file paths)', function () {
     });
 
     it('throws an error', async function () {
-      // Use join to handle both Windows and Unix paths.
-      await expect(generate('.')).rejects.toThrow(
-        `Could not find rule doc: ${join('docs', 'rules', 'no-foo.md')}`
+      await expect(generate('.', { initRuleDocs: true })).rejects.toThrow(
+        '--init-rule-docs was enabled, but no rule doc file needed to be created.'
       );
     });
   });

@@ -26,3 +26,10 @@ exports[`generate (file paths) lowercase README file generates the documentation
 
 <!-- end auto-generated rules list -->"
 `;
+
+exports[`generate (file paths) missing rule doc when initRuleDocs is true creates the rule doc 1`] = `
+"# test/no-foo
+
+<!-- end auto-generated rule header -->
+"
+`;

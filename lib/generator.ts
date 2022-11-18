@@ -1,5 +1,5 @@
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { join, relative } from 'node:path';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { dirname, join, relative } from 'node:path';
 import { getAllNamedOptions, hasOptions } from './rule-options.js';
 import {
   loadPlugin,
@@ -100,6 +100,8 @@ export async function generate(path: string, options?: GenerateOptions) {
   const ignoreDeprecatedRules =
     options?.ignoreDeprecatedRules ??
     OPTION_DEFAULTS[OPTION_TYPE.IGNORE_DEPRECATED_RULES];
+  const initRuleDocs =
+    options?.initRuleDocs ?? OPTION_DEFAULTS[OPTION_TYPE.INIT_RULE_DOCS];
   const pathRuleDoc =
     options?.pathRuleDoc ?? OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_DOC];
   const pathRuleList =
@@ -157,14 +159,22 @@ export async function generate(path: string, options?: GenerateOptions) {
       (details) => !ignoreDeprecatedRules || !details.deprecated
     );
 
+  let initializedRuleDoc = false;
+
   // Update rule doc for each rule.
   for (const { name, description, schema } of details) {
     const pathToDoc = join(path, pathRuleDoc).replace(/{name}/g, name);
 
     if (!existsSync(pathToDoc)) {
-      throw new Error(
-        `Could not find rule doc: ${relative(getPluginRoot(path), pathToDoc)}`
-      );
+      if (!initRuleDocs) {
+        throw new Error(
+          `Could not find rule doc: ${relative(getPluginRoot(path), pathToDoc)}`
+        );
+      }
+
+      mkdirSync(dirname(pathToDoc), { recursive: true });
+      writeFileSync(pathToDoc, '');
+      initializedRuleDoc = true;
     }
 
     // Regenerate the header (title/notices) of each rule doc.
@@ -266,5 +276,11 @@ export async function generate(path: string, options?: GenerateOptions) {
     }
   } else {
     writeFileSync(pathToReadme, readmeContentsNew, 'utf8');
+  }
+
+  if (initRuleDocs && !initializedRuleDoc) {
+    throw new Error(
+      '--init-rule-docs was enabled, but no rule doc file needed to be created.'
+    );
   }
 }

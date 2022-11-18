@@ -56,6 +56,7 @@ async function loadConfigFileOptions() {
       configEmoji: schemaStringArray,
       ignoreConfig: schemaStringArray,
       ignoreDeprecatedRules: { type: 'boolean' },
+      initRuleDocs: { type: 'boolean' },
       pathRuleDoc: { type: 'string' },
       pathRuleList: { type: 'string' },
       ruleDocNotices: { type: 'string' },
@@ -130,6 +131,13 @@ export async function run(
       '--ignore-deprecated-rules [boolean]',
       `(optional) Whether to ignore deprecated rules from being checked, displayed, or updated. (default: ${
         OPTION_DEFAULTS[OPTION_TYPE.IGNORE_DEPRECATED_RULES]
+      })`,
+      parseBoolean
+    )
+    .option(
+      '--init-rule-docs [boolean]',
+      `(optional) Whether to create rule doc files if they don't yet exist. (default: ${
+        OPTION_DEFAULTS[OPTION_TYPE.INIT_RULE_DOCS]
       })`,
       parseBoolean
     )
