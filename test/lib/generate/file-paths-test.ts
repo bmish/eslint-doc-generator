@@ -94,7 +94,6 @@ describe('generate (file paths)', function () {
     });
 
     it('throws an error', async function () {
-      // Use join to handle both Windows and Unix paths.
       await expect(generate('.', { initRuleDocs: true })).rejects.toThrow(
         '--init-rule-docs was enabled, but no rule doc file needed to be created.'
       );
