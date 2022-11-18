@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generate (--config-emoji) basic shows the correct emojis 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+🔥 Set in the \`recommended\` configuration.\\
+🎨 Set in the \`stylistic\` configuration.
+
+| Name                           | Description             | 💼                         |
+| :----------------------------- | :---------------------- | :------------------------- |
+| [no-bar](docs/rules/no-bar.md) | Description for no-bar. | 🔥 🎨                      |
+| [no-baz](docs/rules/no-baz.md) | Description for no-boz. | ![configWithoutEmoji][] 🎨 |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | 🔥                         |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (--config-emoji) basic shows the correct emojis 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+💼 This rule is enabled in the 🔥 \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (--config-emoji) basic shows the correct emojis 3`] = `
+"# Description for no-bar (\`test/no-bar\`)
+
+💼 This rule is enabled in the following configs: 🔥 \`recommended\`, 🎨 \`stylistic\`.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (--config-emoji) basic shows the correct emojis 4`] = `
+"# Description for no-boz (\`test/no-baz\`)
+
+💼 This rule is enabled in the following configs: \`configWithoutEmoji\`, 🎨 \`stylistic\`.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (--config-emoji) removing default emoji for a config reverts to using a badge for the config 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.
+
+| Name                           | Description             | 💼               |
+| :----------------------------- | :---------------------- | :--------------- |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ![recommended][] |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (--config-emoji) removing default emoji for a config reverts to using a badge for the config 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+💼 This rule is enabled in the \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (--config-emoji) with one config that does not have emoji shows the default config emoji 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.
+
+| Name                           | Description             | 💼                      |
+| :----------------------------- | :---------------------- | :---------------------- |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ![configWithoutEmoji][] |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (--config-emoji) with one config that does not have emoji shows the default config emoji 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+💼 This rule is enabled in the \`configWithoutEmoji\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;

@@ -1,0 +1,266 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generate (configs) config with overrides generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description            | 💼 |
+| :----------------------------- | :--------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (configs) config with overrides generates the documentation 2`] = `
+"# Description of no-foo (\`test/no-foo\`)
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) only a \`recommended\` config updates the documentation 1`] = `
+"<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description  | 💼 |
+| :----------------------------- | :----------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description. | ✅  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (configs) only a \`recommended\` config updates the documentation 2`] = `
+"# Description (\`test/no-foo\`)
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) rule config with options generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description            | 💼 |
+| :----------------------------- | :--------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (configs) rule config with options generates the documentation 2`] = `
+"# Description of no-foo (\`test/no-foo\`)
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) rules that are disabled or set to warn generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+⚠️ Configurations set to warn in.\\
+🚫 Configurations disabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description            | 💼 | ⚠️           | 🚫           |
+| :----------------------------- | :--------------------- | :- | :----------- | :----------- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. |    |              | ![other][] ✅ |
+| [no-baz](docs/rules/no-baz.md) | Description of no-baz. | ✅  |              | ![other][]   |
+| [no-bez](docs/rules/no-bez.md) | Description of no-bez. |    | ![other][]   |              |
+| [no-biz](docs/rules/no-biz.md) | Description of no-biz. |    |              | ![other][]   |
+| [no-boz](docs/rules/no-boz.md) | Description of no-boz. |    | ✅            |              |
+| [no-buz](docs/rules/no-buz.md) | Description of no-buz. |    | ![other][] ✅ |              |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |    |              | ✅            |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (configs) rules that are disabled or set to warn generates the documentation 2`] = `
+"# Description of no-foo (\`test/no-foo\`)
+
+🚫 This rule is _disabled_ in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) rules that are disabled or set to warn generates the documentation 3`] = `
+"# Description of no-bar (\`test/no-bar\`)
+
+🚫 This rule is _disabled_ in the following configs: \`other\`, ✅ \`recommended\`.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) rules that are disabled or set to warn generates the documentation 4`] = `
+"# Description of no-baz (\`test/no-baz\`)
+
+💼🚫 This rule is enabled in the ✅ \`recommended\` config. This rule is _disabled_ in the \`other\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) rules that are disabled or set to warn generates the documentation 5`] = `
+"# Description of no-biz (\`test/no-biz\`)
+
+🚫 This rule is _disabled_ in the \`other\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) rules that are disabled or set to warn generates the documentation 6`] = `
+"# Description of no-boz (\`test/no-boz\`)
+
+⚠️ This rule _warns_ in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) rules that are disabled or set to warn generates the documentation 7`] = `
+"# Description of no-buz (\`test/no-buz\`)
+
+⚠️ This rule _warns_ in the following configs: \`other\`, ✅ \`recommended\`.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) rules that are disabled or set to warn generates the documentation 8`] = `
+"# Description of no-bez (\`test/no-bez\`)
+
+⚠️ This rule _warns_ in the \`other\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) rules that are disabled or set to warn, only one config present generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+⚠️ Configurations set to warn in.\\
+🚫 Configurations disabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description            | ⚠️ | 🚫 |
+| :----------------------------- | :--------------------- | :- | :- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. |    | ✅  |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |    |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (configs) rules that are disabled or set to warn, only one config present generates the documentation 2`] = `
+"# Description of no-foo (\`test/no-foo\`)
+
+⚠️ This rule _warns_ in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) rules that are disabled or set to warn, only one config present generates the documentation 3`] = `
+"# Description of no-bar (\`test/no-bar\`)
+
+🚫 This rule is _disabled_ in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) rules that are disabled or set to warn, two configs present generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+⚠️ Configurations set to warn in.\\
+🚫 Configurations disabled in.\\
+✅ Set in the \`recommended\` configuration.\\
+⌨️ Set in the \`typescript\` configuration.
+
+| Name                           | Description            | ⚠️ | 🚫 |
+| :----------------------------- | :--------------------- | :- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  | ⌨️ |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (configs) rules that are disabled or set to warn, two configs present generates the documentation 2`] = `
+"# Description of no-foo (\`test/no-foo\`)
+
+⚠️🚫 This rule _warns_ in the ✅ \`recommended\` config. This rule is _disabled_ in the ⌨️ \`typescript\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) with --ignore-config hides the ignored config 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description             | 💼 |
+| :----------------------------- | :---------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅  |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (configs) with --ignore-config hides the ignored config 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) with config that does not have any rules uses recommended config emoji since it is the only relevant config 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description             | 💼 |
+| :----------------------------- | :---------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅  |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (configs) with config that does not have any rules uses recommended config emoji since it is the only relevant config 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;

@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generate (--url-configs) basic includes the config link 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+💼 [Configurations](http://example.com/configs) enabled in.\\
+✅ Set in the \`recommended\` [configuration](http://example.com/configs).
+
+| Name                           | Description             | 💼                |
+| :----------------------------- | :---------------------- | :---------------- |
+| [no-bar](docs/rules/no-bar.md) | Description for no-bar. | ![customConfig][] |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅                 |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (--url-configs) basic includes the config link 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+💼 This rule is enabled in the ✅ \`recommended\` [config](http://example.com/configs).
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (--url-configs) basic includes the config link 3`] = `
+"# Description for no-bar (\`test/no-bar\`)
+
+💼 This rule is enabled in the \`customConfig\` [config](http://example.com/configs).
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (--url-configs) with only recommended config includes the config link 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+💼 [Configurations](http://example.com/configs) enabled in.\\
+✅ Set in the \`recommended\` [configuration](http://example.com/configs).
+
+| Name                           | Description             | 💼 |
+| :----------------------------- | :---------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅  |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (--url-configs) with only recommended config includes the config link 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+💼 This rule is enabled in the ✅ \`recommended\` [config](http://example.com/configs).
+
+<!-- end auto-generated rule header -->
+"
+`;
