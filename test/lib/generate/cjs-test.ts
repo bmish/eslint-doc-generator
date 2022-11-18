@@ -1,7 +1,7 @@
 // This file uses actual test fixtures on the file system instead of mock-fs due to
 // trouble with the combination of require() for loading CJS plugins, jest, and mock-fs.
 
-import { generate } from '../../lib/generator.js';
+import { generate } from '../../../lib/generator.js';
 import { join } from 'node:path';
 import { readFileSync } from 'node:fs';
 

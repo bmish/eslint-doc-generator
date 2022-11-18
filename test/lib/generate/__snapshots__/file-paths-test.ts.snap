@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generate (file paths) custom path to rule docs and rules list generates the documentation 1`] = `
+"<!-- begin auto-generated rules list -->
+
+| Name                             |
+| :------------------------------- |
+| [no-foo](rules/no-foo/no-foo.md) |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (file paths) custom path to rule docs and rules list generates the documentation 2`] = `
+"# test/no-foo
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (file paths) lowercase README file generates the documentation 1`] = `
+"<!-- begin auto-generated rules list -->
+
+| Name                           |
+| :----------------------------- |
+| [no-foo](docs/rules/no-foo.md) |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (file paths) missing rule doc when initRuleDocs is true creates the rule doc 1`] = `
+"# test/no-foo
+
+<!-- end auto-generated rule header -->
+"
+`;
