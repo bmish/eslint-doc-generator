@@ -1,4 +1,4 @@
--# eslint-doc-generator
+# eslint-doc-generator
 
 [![npm version][npm-image]][npm-url]
 
