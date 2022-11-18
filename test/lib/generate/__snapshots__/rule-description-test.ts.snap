@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generate (rule descriptions) Rule description needs to be formatted capitalizes the first letter and removes the trailing period from the description 1`] = `
+"# Disallow foo (\`test/no-foo\`)
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (rule descriptions) no rules with description generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           |
+| :----------------------------- |
+| [no-foo](docs/rules/no-foo.md) |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (rule descriptions) no rules with description generates the documentation 2`] = `
+"# test/no-foo
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (rule descriptions) one rule missing description generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           | Description             |
+| :----------------------------- | :---------------------- |
+| [no-bar](docs/rules/no-bar.md) |                         |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (rule descriptions) one rule missing description generates the documentation 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (rule descriptions) one rule missing description generates the documentation 3`] = `
+"# test/no-bar
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (rule descriptions) rule with long-enough description to require name column wrapping avoidance adds spaces to the name column 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           | Description                                                                         |
+| :----------------------------- | :---------------------------------------------------------------------------------- |
+| [no-foo](docs/rules/no-foo.md) | over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (rule descriptions) rule with long-enough description to require name column wrapping avoidance adds spaces to the name column 2`] = `
+"# Over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars (\`test/no-foo\`)
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (rule descriptions) rule with long-enough description to require name column wrapping avoidance but rule name too short does not add spaces to name column 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                     | Description                                                                         |
+| :----------------------- | :---------------------------------------------------------------------------------- |
+| [foo](docs/rules/foo.md) | over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (rule descriptions) rule with long-enough description to require name column wrapping avoidance but rule name too short does not add spaces to name column 2`] = `
+"# Over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars (\`test/foo\`)
+
+<!-- end auto-generated rule header -->
+"
+`;

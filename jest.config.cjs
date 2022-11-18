@@ -1,7 +1,8 @@
+/* eslint filenames/match-exported:"off" -- trouble matching given period in filename */
 // https://kulshekhar.github.io/ts-jest/docs/guides/esm-support/
 
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
-module.exports = {
+const jestConfig = {
   preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
   testMatch: ['<rootDir>/test/**/*-test.ts'],
@@ -22,3 +23,13 @@ module.exports = {
     },
   },
 };
+
+if (process.version.startsWith('v14.')) {
+  // TODO: remove this workaround after dropping support for Node 14.
+  // Use number greater than number of test suites to avoid: "You are trying to `import` a file after the Jest environment has been torn down."
+  // https://github.com/facebook/jest/issues/11438#issuecomment-954155180
+  jestConfig.maxConcurrency = 30;
+  jestConfig.maxWorkers = 30;
+}
+
+module.exports = jestConfig;

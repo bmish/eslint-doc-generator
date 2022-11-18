@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generate (rule type) rule with type, type column enabled displays the type 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+🗂️ The type of rule.\\
+❗ Identifies problems that could cause errors or unexpected behavior.\\
+📖 Identifies potential improvements.\\
+📏 Focuses on code formatting.
+
+| Name                           | 🗂️ |
+| :----------------------------- | :-- |
+| [no-bar](docs/rules/no-bar.md) | 📖  |
+| [no-biz](docs/rules/no-biz.md) | 📏  |
+| [no-boz](docs/rules/no-boz.md) |     |
+| [no-buz](docs/rules/no-buz.md) |     |
+| [no-foo](docs/rules/no-foo.md) | ❗   |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (rule type) rule with type, type column enabled displays the type 2`] = `
+"# test/no-foo
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (rule type) rule with type, type column enabled displays the type 3`] = `
+"# test/no-bar
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (rule type) rule with type, type column enabled displays the type 4`] = `
+"# test/no-biz
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (rule type) rule with type, type column enabled displays the type 5`] = `
+"# test/no-boz
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (rule type) rule with type, type column enabled displays the type 6`] = `
+"# test/no-buz
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (rule type) rule with type, type column enabled, but only an unknown type hides the type column and notice 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           |
+| :----------------------------- |
+| [no-foo](docs/rules/no-foo.md) |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (rule type) rule with type, type column enabled, but only an unknown type hides the type column and notice 2`] = `
+"# test/no-foo
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (rule type) rule with type, type column not enabled hides the type column 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           |
+| :----------------------------- |
+| [no-foo](docs/rules/no-foo.md) |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (rule type) rule with type, type column not enabled hides the type column 2`] = `
+"# test/no-foo
+
+<!-- end auto-generated rule header -->
+"
+`;
