@@ -85,7 +85,7 @@ export function getPluginPrefix(path: string): string {
   }
   return pluginPackageJson.name.endsWith('/eslint-plugin')
     ? pluginPackageJson.name.split('/')[0] // Scoped plugin name like @my-scope/eslint-plugin.
-    : pluginPackageJson.name.replace('eslint-plugin-', ''); // Unscoped name like eslint-plugin-foo.
+    : pluginPackageJson.name.replace('eslint-plugin-', ''); // Unscoped name like eslint-plugin-foo or scoped name like @my-scope/eslint-plugin-foo.
 }
 
 /**
