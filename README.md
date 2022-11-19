@@ -1,6 +1,6 @@
 # eslint-doc-generator
 
-[![npm version][npm-image]][npm-url]
+[![npm version][npm-image]][npm-url] ![test coverage](./badges/badge-lines.svg)
 
 Automatic documentation generator for [ESLint](https://eslint.org/) plugins and rules.
 

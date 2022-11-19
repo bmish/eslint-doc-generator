@@ -14,6 +14,7 @@ const jestConfig = {
     '#(.*)': '<rootDir>/node_modules/$1',
   },
   coveragePathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/test/'],
+  coverageReporters: ['json-summary', 'text', 'lcov'],
   coverageThreshold: {
     global: {
       branches: 100,
