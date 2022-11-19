@@ -31,6 +31,25 @@
 
 
 
+
+## v0.24.0 (2022-11-19)
+
+#### :boom: Breaking Change
+* [#259](https://github.com/bmish/eslint-doc-generator/pull/259) Add prefix to link name for readme config badge ([@bmish](https://github.com/bmish))
+
+#### :memo: Documentation
+* [#243](https://github.com/bmish/eslint-doc-generator/pull/243) Add test code coverage badge ([@bmish](https://github.com/bmish))
+
+#### :house: Internal
+* [#256](https://github.com/bmish/eslint-doc-generator/pull/256) Add test for variation of scoped plugin name ([@bmish](https://github.com/bmish))
+* [#251](https://github.com/bmish/eslint-doc-generator/pull/251) Add test that external rules are ignored ([@bmish](https://github.com/bmish))
+* [#249](https://github.com/bmish/eslint-doc-generator/pull/249) Use TypeScript `satisfies` operator for option defaults ([@bmish](https://github.com/bmish))
+* [#241](https://github.com/bmish/eslint-doc-generator/pull/241) Ensure tests are type-checked but not published ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.23.0 (2022-11-18)
 
 #### :rocket: Enhancement
