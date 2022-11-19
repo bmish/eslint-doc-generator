@@ -32,6 +32,28 @@ exports[`generate (package.json) Scoped plugin name determines the correct plugi
 "
 `;
 
+exports[`generate (package.json) Scoped plugin with custom plugin name determines the correct plugin prefix 1`] = `
+"<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description   | 💼 |
+| :----------------------------- | :------------ | :- |
+| [no-foo](docs/rules/no-foo.md) | disallow foo. | ✅  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (package.json) Scoped plugin with custom plugin name determines the correct plugin prefix 2`] = `
+"# Disallow foo (\`@my-scope/foo/no-foo\`)
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
 exports[`generate (package.json) plugin entry point in JSON format generates the documentation 1`] = `
 "<!-- begin auto-generated rules list -->
 
