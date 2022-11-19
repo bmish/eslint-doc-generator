@@ -56,7 +56,6 @@ export enum OPTION_TYPE {
 const DEFAULT_RULE_DOC_TITLE_FORMAT: RuleDocTitleFormat =
   'desc-parens-prefix-name'; // Using this variable ensures this default has the correct type (not just a plain string).
 
-// TODO: use TypeScript 4.9 satisfies keyword ([key in OPTION_TYPE]...) to ensure all options are included without losing type information.
 export const OPTION_DEFAULTS = {
   [OPTION_TYPE.CHECK]: false,
   [OPTION_TYPE.CONFIG_EMOJI]: [],
@@ -83,7 +82,8 @@ export const OPTION_DEFAULTS = {
     .join(','),
   [OPTION_TYPE.SPLIT_BY]: undefined,
   [OPTION_TYPE.URL_CONFIGS]: undefined,
-};
+  // eslint-disable-next-line prettier/prettier -- TODO: waiting on prettier support for TypeScript 4.9: https://github.com/prettier/prettier/issues/13516.
+} satisfies Record<OPTION_TYPE, unknown>; // Satisfies is used to ensure all options are included, but without losing type information.
 
 export type GenerateOptions = {
   check?: boolean;
@@ -99,6 +99,6 @@ export type GenerateOptions = {
   ruleDocSectionOptions?: boolean;
   ruleDocTitleFormat?: RuleDocTitleFormat;
   ruleListColumns?: string;
-  urlConfigs?: string;
   splitBy?: string;
+  urlConfigs?: string;
 };
