@@ -7,10 +7,10 @@ exports[`generate (--url-configs) basic includes the config link 1`] = `
 💼 [Configurations](http://example.com/configs) enabled in.\\
 ✅ Set in the \`recommended\` [configuration](http://example.com/configs).
 
-| Name                           | Description             | 💼                |
-| :----------------------------- | :---------------------- | :---------------- |
-| [no-bar](docs/rules/no-bar.md) | Description for no-bar. | ![customConfig][] |
-| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅                 |
+| Name                           | Description             | 💼                      |
+| :----------------------------- | :---------------------- | :---------------------- |
+| [no-bar](docs/rules/no-bar.md) | Description for no-bar. | ![badge-customConfig][] |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅                       |
 
 <!-- end auto-generated rules list -->
 "

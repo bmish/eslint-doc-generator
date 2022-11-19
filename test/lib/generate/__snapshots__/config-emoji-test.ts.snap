@@ -8,11 +8,11 @@ exports[`generate (--config-emoji) basic shows the correct emojis 1`] = `
 🔥 Set in the \`recommended\` configuration.\\
 🎨 Set in the \`stylistic\` configuration.
 
-| Name                           | Description             | 💼                         |
-| :----------------------------- | :---------------------- | :------------------------- |
-| [no-bar](docs/rules/no-bar.md) | Description for no-bar. | 🔥 🎨                      |
-| [no-baz](docs/rules/no-baz.md) | Description for no-boz. | ![configWithoutEmoji][] 🎨 |
-| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | 🔥                         |
+| Name                           | Description             | 💼                               |
+| :----------------------------- | :---------------------- | :------------------------------- |
+| [no-bar](docs/rules/no-bar.md) | Description for no-bar. | 🔥 🎨                            |
+| [no-baz](docs/rules/no-baz.md) | Description for no-boz. | ![badge-configWithoutEmoji][] 🎨 |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | 🔥                               |
 
 <!-- end auto-generated rules list -->
 "
@@ -51,9 +51,9 @@ exports[`generate (--config-emoji) removing default emoji for a config reverts t
 
 💼 Configurations enabled in.
 
-| Name                           | Description             | 💼               |
-| :----------------------------- | :---------------------- | :--------------- |
-| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ![recommended][] |
+| Name                           | Description             | 💼                     |
+| :----------------------------- | :---------------------- | :--------------------- |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ![badge-recommended][] |
 
 <!-- end auto-generated rules list -->
 "
@@ -74,9 +74,9 @@ exports[`generate (--config-emoji) with one config that does not have emoji show
 
 💼 Configurations enabled in.
 
-| Name                           | Description             | 💼                      |
-| :----------------------------- | :---------------------- | :---------------------- |
-| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ![configWithoutEmoji][] |
+| Name                           | Description             | 💼                            |
+| :----------------------------- | :---------------------- | :---------------------------- |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ![badge-configWithoutEmoji][] |
 
 <!-- end auto-generated rules list -->
 "
