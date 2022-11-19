@@ -351,6 +351,51 @@ describe('generate (configs)', function () {
     });
   });
 
+  describe('with external rules in config', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
+            },
+            configs: {
+              recommended: {
+                plugins: ['external', 'test'],
+                rules: {
+                  'test/no-foo': 'error',
+                  'external/no-bar': 'error',
+                }
+              },
+            }
+          };`,
+
+        'README.md': '## Rules\n',
+
+        'docs/rules/no-foo.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('ignores external rules', async function () {
+      await generate('.');
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
   describe('only a `recommended` config', function () {
     beforeEach(function () {
       mockFs({
