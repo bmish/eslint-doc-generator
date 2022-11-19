@@ -103,14 +103,14 @@ While config emojis are the recommended representations of configs that a rule b
 Here's a badge for a custom `fun` config that displays in blue:
 
 ```md
-[fun]: https://img.shields.io/badge/-fun-blue.svg
+[badge-fun]: https://img.shields.io/badge/-fun-blue.svg
 ```
 
 And how it looks:
 
-![fun][]
+![badge-fun][]
 
-[fun]: https://img.shields.io/badge/-fun-blue.svg
+[badge-fun]: https://img.shields.io/badge/-fun-blue.svg
 
 ## Configuration options
 

@@ -94,7 +94,7 @@ export function findConfigEmoji(
   )?.emoji;
   if (!emoji) {
     if (options?.fallback === 'badge') {
-      emoji = `![${configName}][]`;
+      emoji = `![badge-${configName}][]`;
     } else {
       // No fallback.
       return undefined; // eslint-disable-line unicorn/no-useless-undefined
