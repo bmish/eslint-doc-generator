@@ -1,6 +1,6 @@
 # eslint-doc-generator
 
-[![npm version][npm-image]][npm-url]
+[![npm version][npm-image]][npm-url] ![test coverage](https://img.shields.io/badge/test%20coverage-100%25-green)
 
 Automatic documentation generator for [ESLint](https://eslint.org/) plugins and rules.
 
