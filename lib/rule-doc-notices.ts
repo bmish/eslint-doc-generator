@@ -1,4 +1,4 @@
-import { END_RULE_HEADER_MARKER } from './markers.js';
+import { END_RULE_HEADER_MARKER } from './comment-markers.js';
 import {
   EMOJI_DEPRECATED,
   EMOJI_FIXABLE,
@@ -7,7 +7,7 @@ import {
   EMOJI_CONFIG_FROM_SEVERITY,
   EMOJI_OPTIONS,
 } from './emojis.js';
-import { findConfigEmoji, getConfigsForRule } from './configs.js';
+import { findConfigEmoji, getConfigsForRule } from './plugin-configs.js';
 import {
   RuleModule,
   Plugin,
@@ -382,7 +382,7 @@ function removeTrailingPeriod(str: string) {
   return str.replace(/\.$/, '');
 }
 
-function makeTitle(
+function makeRuleDocTitle(
   name: string,
   description: string | undefined,
   pluginPrefix: string,
@@ -451,7 +451,7 @@ export function generateRuleHeaderLines(
   urlRuleDoc?: string
 ): string {
   return [
-    makeTitle(name, description, pluginPrefix, ruleDocTitleFormat),
+    makeRuleDocTitle(name, description, pluginPrefix, ruleDocTitleFormat),
     ...getRuleNoticeLines(
       name,
       plugin,

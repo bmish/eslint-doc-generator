@@ -1,3 +1,4 @@
+import type { RuleDocTitleFormat } from './rule-doc-title-format.js';
 import type { TSESLint, JSONSchema } from '@typescript-eslint/utils';
 
 // Standard ESLint types.
@@ -81,3 +82,42 @@ export enum COLUMN_TYPE {
   REQUIRES_TYPE_CHECKING = 'requiresTypeChecking',
   TYPE = 'type',
 }
+
+export enum OPTION_TYPE {
+  CHECK = 'check',
+  CONFIG_EMOJI = 'configEmoji',
+  IGNORE_CONFIG = 'ignoreConfig',
+  IGNORE_DEPRECATED_RULES = 'ignoreDeprecatedRules',
+  INIT_RULE_DOCS = 'initRuleDocs',
+  PATH_RULE_DOC = 'pathRuleDoc',
+  PATH_RULE_LIST = 'pathRuleList',
+  RULE_DOC_NOTICES = 'ruleDocNotices',
+  RULE_DOC_SECTION_EXCLUDE = 'ruleDocSectionExclude',
+  RULE_DOC_SECTION_INCLUDE = 'ruleDocSectionInclude',
+  RULE_DOC_SECTION_OPTIONS = 'ruleDocSectionOptions',
+  RULE_DOC_TITLE_FORMAT = 'ruleDocTitleFormat',
+  RULE_LIST_COLUMNS = 'ruleListColumns',
+  SPLIT_BY = 'splitBy',
+  URL_CONFIGS = 'urlConfigs',
+  URL_RULE_DOC = 'urlRuleDoc',
+}
+
+/** The type for the config file and internal generate() function. */
+export type GenerateOptions = {
+  check?: boolean;
+  configEmoji?: string[];
+  ignoreConfig?: string[];
+  ignoreDeprecatedRules?: boolean;
+  initRuleDocs?: boolean;
+  pathRuleDoc?: string;
+  pathRuleList?: string;
+  ruleDocNotices?: string;
+  ruleDocSectionExclude?: string[];
+  ruleDocSectionInclude?: string[];
+  ruleDocSectionOptions?: boolean;
+  ruleDocTitleFormat?: RuleDocTitleFormat;
+  ruleListColumns?: string;
+  splitBy?: string;
+  urlConfigs?: string;
+  urlRuleDoc?: string;
+};

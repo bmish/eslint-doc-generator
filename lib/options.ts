@@ -1,5 +1,5 @@
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
-import { COLUMN_TYPE, NOTICE_TYPE } from './types.js';
+import { COLUMN_TYPE, NOTICE_TYPE,OPTION_TYPE } from './types.js';
 
 export const COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
   [key in COLUMN_TYPE]: boolean;
@@ -35,25 +35,6 @@ export const NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
   [NOTICE_TYPE.TYPE]: false,
 };
 
-export enum OPTION_TYPE {
-  CHECK = 'check',
-  CONFIG_EMOJI = 'configEmoji',
-  IGNORE_CONFIG = 'ignoreConfig',
-  IGNORE_DEPRECATED_RULES = 'ignoreDeprecatedRules',
-  INIT_RULE_DOCS = 'initRuleDocs',
-  PATH_RULE_DOC = 'pathRuleDoc',
-  PATH_RULE_LIST = 'pathRuleList',
-  RULE_DOC_NOTICES = 'ruleDocNotices',
-  RULE_DOC_SECTION_EXCLUDE = 'ruleDocSectionExclude',
-  RULE_DOC_SECTION_INCLUDE = 'ruleDocSectionInclude',
-  RULE_DOC_SECTION_OPTIONS = 'ruleDocSectionOptions',
-  RULE_DOC_TITLE_FORMAT = 'ruleDocTitleFormat',
-  RULE_LIST_COLUMNS = 'ruleListColumns',
-  SPLIT_BY = 'splitBy',
-  URL_CONFIGS = 'urlConfigs',
-  URL_RULE_DOC = 'urlRuleDoc',
-}
-
 const DEFAULT_RULE_DOC_TITLE_FORMAT: RuleDocTitleFormat =
   'desc-parens-prefix-name'; // Using this variable ensures this default has the correct type (not just a plain string).
 
@@ -87,21 +68,3 @@ export const OPTION_DEFAULTS = {
   // eslint-disable-next-line prettier/prettier -- TODO: waiting on prettier support for TypeScript 4.9: https://github.com/prettier/prettier/issues/13516.
 } satisfies Record<OPTION_TYPE, unknown>; // Satisfies is used to ensure all options are included, but without losing type information.
 
-export type GenerateOptions = {
-  check?: boolean;
-  configEmoji?: string[];
-  ignoreConfig?: string[];
-  ignoreDeprecatedRules?: boolean;
-  initRuleDocs?: boolean;
-  pathRuleDoc?: string;
-  pathRuleList?: string;
-  ruleDocNotices?: string;
-  ruleDocSectionExclude?: string[];
-  ruleDocSectionInclude?: string[];
-  ruleDocSectionOptions?: boolean;
-  ruleDocTitleFormat?: RuleDocTitleFormat;
-  ruleListColumns?: string;
-  splitBy?: string;
-  urlConfigs?: string;
-  urlRuleDoc?: string;
-};

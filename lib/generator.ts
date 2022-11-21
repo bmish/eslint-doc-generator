@@ -8,18 +8,19 @@ import {
   getPathWithExactFileNameCasing,
 } from './package-json.js';
 import { updateRulesList } from './rule-list.js';
-import { generateRuleHeaderLines } from './rule-notices.js';
+import { generateRuleHeaderLines } from './rule-doc-notices.js';
 import {
   parseRuleDocNoticesOption,
   parseRuleListColumnsOption,
   parseConfigEmojiOptions,
 } from './option-parsers.js';
-import { END_RULE_HEADER_MARKER } from './markers.js';
+import { END_RULE_HEADER_MARKER } from './comment-markers.js';
 import { findSectionHeader, replaceOrCreateHeader } from './markdown.js';
-import { resolveConfigsToRules } from './config-resolution.js';
-import { OPTION_DEFAULTS, OPTION_TYPE, GenerateOptions } from './options.js';
+import { resolveConfigsToRules } from './plugin-config-resolution.js';
+import { OPTION_DEFAULTS } from './options.js';
 import { diff } from 'jest-diff';
-import type { RuleDetails } from './types.js';
+import type { RuleDetails, GenerateOptions } from './types.js';
+import { OPTION_TYPE } from './types.js';
 
 /**
  * Ensure a rule doc contains (or doesn't contain) some particular content.

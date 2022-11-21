@@ -7,7 +7,7 @@ import {
   EMOJI_TYPE,
   EMOJI_CONFIG_FROM_SEVERITY,
 } from './emojis.js';
-import { findConfigEmoji, getConfigsThatSetARule } from './configs.js';
+import { findConfigEmoji, getConfigsThatSetARule } from './plugin-configs.js';
 import {
   COLUMN_TYPE,
   ConfigEmojis,

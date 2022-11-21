@@ -1,7 +1,7 @@
 import * as sinon from 'sinon';
 import { run } from '../../lib/cli.js';
 import mockFs from 'mock-fs';
-import { OPTION_TYPE } from '../../lib/options.js';
+import { OPTION_TYPE } from '../../lib/types.js';
 
 const configFileOptionsAll: { [key in OPTION_TYPE]: unknown } = {
   check: true,

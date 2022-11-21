@@ -105,3 +105,19 @@ export function getPathWithExactFileNameCasing(path: string) {
   }
   return undefined; // eslint-disable-line unicorn/no-useless-undefined
 }
+
+export function getCurrentPackageVersion(): string {
+  // When running as compiled code, use path relative to compiled version of this file in the dist folder.
+  // When running as TypeScript (in a test), use path relative to this file.
+  const pathToPackageJson = import.meta.url.endsWith('.ts')
+    ? '../package.json'
+    : /* istanbul ignore next -- can't test the compiled version in test */
+      '../../package.json';
+  const packageJson: PackageJson = JSON.parse(
+    readFileSync(new URL(pathToPackageJson, import.meta.url), 'utf8')
+  );
+  if (!packageJson.version) {
+    throw new Error('Could not find package.json `version`.');
+  }
+  return packageJson.version;
+}
