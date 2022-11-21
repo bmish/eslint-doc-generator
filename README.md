@@ -158,10 +158,10 @@ There are a few ways to create a config file:
 
 Config files support all the [CLI options](#configuration-options) but in camelCase. CLI options take precedence over config file options.
 
-Example:
+Example `.eslint-doc-generatorrc.js`:
 
 ```js
-// .eslint-doc-generatorrc.js
+/** @type {import('eslint-doc-generator').GenerateOptions} */
 module.exports = {
   ignoreConfig: ['all'],
 };
