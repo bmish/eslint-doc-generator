@@ -83,6 +83,7 @@ const RULE_NOTICES: {
         replacedBy: readonly string[] | undefined;
         pluginPrefix: string;
         type?: RULE_TYPE;
+        urlRuleDoc?: string;
       }) => string);
 } = {
   // Configs notice varies based on whether the rule is configured in one or more configs.
@@ -152,7 +153,12 @@ const RULE_NOTICES: {
   },
 
   // Deprecated notice has optional "replaced by" rules list.
-  [NOTICE_TYPE.DEPRECATED]: ({ replacedBy, pluginPrefix, ruleName }) => {
+  [NOTICE_TYPE.DEPRECATED]: ({
+    replacedBy,
+    pluginPrefix,
+    ruleName,
+    urlRuleDoc,
+  }) => {
     // Determine the relative path to the rule doc root so that any replacement rule links can account for this.
     const slashesInCurrentRuleName = ruleName.match(/\//g);
     const nestingDepthOfCurrentRule = slashesInCurrentRuleName?.length ?? 0;
@@ -163,7 +169,8 @@ const RULE_NOTICES: {
         ? ` It was replaced by ${ruleNamesToList(
             replacedBy,
             pluginPrefix,
-            relativePathToRuleDocRoot
+            relativePathToRuleDocRoot,
+            urlRuleDoc
           )}.`
         : ''
     }`;
@@ -206,7 +213,8 @@ const RULE_NOTICES: {
 function ruleNamesToList(
   ruleNames: readonly string[],
   pluginPrefix: string,
-  relativePathToRuleDocRoot: string
+  relativePathToRuleDocRoot: string,
+  urlRuleDoc?: string
 ) {
   return ruleNames
     .map((ruleName) => {
@@ -218,8 +226,10 @@ function ruleNamesToList(
         ? ruleName.slice(pluginPrefix.length + 1)
         : ruleName;
       return `[\`${ruleNameWithoutPluginPrefix}\`](${
-        relativePathToRuleDocRoot + ruleNameWithoutPluginPrefix
-      }.md)`;
+        urlRuleDoc
+          ? urlRuleDoc.replace(/{name}/g, ruleName)
+          : `${relativePathToRuleDocRoot + ruleNameWithoutPluginPrefix}.md`
+      })`;
     })
     .join(', ');
 }
@@ -273,7 +283,8 @@ function getRuleNoticeLines(
   configEmojis: ConfigEmojis,
   ignoreConfig: string[],
   ruleDocNotices: NOTICE_TYPE[],
-  urlConfigs?: string
+  urlConfigs?: string,
+  urlRuleDoc?: string
 ) {
   const lines: string[] = [];
 
@@ -352,6 +363,7 @@ function getRuleNoticeLines(
             replacedBy: rule.meta?.replacedBy,
             pluginPrefix,
             type: rule.meta?.type as RULE_TYPE, // Convert union type to enum.
+            urlRuleDoc,
           })
         : ruleNoticeStrOrFn
     );
@@ -435,7 +447,8 @@ export function generateRuleHeaderLines(
   ignoreConfig: string[],
   ruleDocNotices: NOTICE_TYPE[],
   ruleDocTitleFormat: RuleDocTitleFormat,
-  urlConfigs?: string
+  urlConfigs?: string,
+  urlRuleDoc?: string
 ): string {
   return [
     makeTitle(name, description, pluginPrefix, ruleDocTitleFormat),
@@ -447,7 +460,8 @@ export function generateRuleHeaderLines(
       configEmojis,
       ignoreConfig,
       ruleDocNotices,
-      urlConfigs
+      urlConfigs,
+      urlRuleDoc
     ),
     '',
     END_RULE_HEADER_MARKER,

@@ -123,6 +123,8 @@ export async function generate(path: string, options?: GenerateOptions) {
   const splitBy = options?.splitBy ?? OPTION_DEFAULTS[OPTION_TYPE.SPLIT_BY];
   const urlConfigs =
     options?.urlConfigs ?? OPTION_DEFAULTS[OPTION_TYPE.URL_CONFIGS];
+  const urlRuleDoc =
+    options?.urlRuleDoc ?? OPTION_DEFAULTS[OPTION_TYPE.URL_RULE_DOC];
 
   // Gather details about rules.
   const details: RuleDetails[] = Object.entries(plugin.rules)
@@ -188,7 +190,8 @@ export async function generate(path: string, options?: GenerateOptions) {
       ignoreConfig,
       ruleDocNotices,
       ruleDocTitleFormat,
-      urlConfigs
+      urlConfigs,
+      urlRuleDoc
     );
 
     const contents = readFileSync(pathToDoc).toString();
@@ -260,6 +263,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     ignoreConfig,
     ruleListColumns,
     urlConfigs,
+    urlRuleDoc,
     splitBy
   );
 

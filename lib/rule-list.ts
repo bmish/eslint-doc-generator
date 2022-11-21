@@ -125,7 +125,8 @@ function buildRuleRow(
   pluginPrefix: string,
   pathRuleDoc: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: string[]
+  ignoreConfig: string[],
+  urlRuleDoc?: string
 ): string[] {
   const columns: {
     [key in COLUMN_TYPE]: string;
@@ -164,7 +165,7 @@ function buildRuleRow(
     [COLUMN_TYPE.HAS_SUGGESTIONS]: rule.hasSuggestions
       ? EMOJI_HAS_SUGGESTIONS
       : '',
-    [COLUMN_TYPE.NAME]: `[${rule.name}](${pathRuleDoc.replace(
+    [COLUMN_TYPE.NAME]: `[${rule.name}](${(urlRuleDoc ?? pathRuleDoc).replace(
       /{name}/g,
       rule.name
     )})`,
@@ -190,7 +191,8 @@ function generateRulesListMarkdown(
   pluginPrefix: string,
   pathRuleDoc: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: string[]
+  ignoreConfig: string[],
+  urlRuleDoc?: string
 ): string {
   const listHeaderRow = (
     Object.entries(columns) as [COLUMN_TYPE, boolean][]
@@ -221,7 +223,8 @@ function generateRulesListMarkdown(
             pluginPrefix,
             pathRuleDoc,
             configEmojis,
-            ignoreConfig
+            ignoreConfig,
+            urlRuleDoc
           )
         ),
     ],
@@ -241,7 +244,8 @@ function generateRulesListMarkdownWithSplitBy(
   pathRuleDoc: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: string[],
-  splitBy: string
+  splitBy: string,
+  urlRuleDoc?: string
 ): string {
   const values = new Set(
     details.map((detail) => getPropertyFromRule(plugin, detail.name, splitBy))
@@ -278,7 +282,8 @@ function generateRulesListMarkdownWithSplitBy(
         pluginPrefix,
         pathRuleDoc,
         configEmojis,
-        ignoreConfig
+        ignoreConfig,
+        urlRuleDoc
       )
     );
   }
@@ -309,7 +314,8 @@ function generateRulesListMarkdownWithSplitBy(
         pluginPrefix,
         pathRuleDoc,
         configEmojis,
-        ignoreConfig
+        ignoreConfig,
+        urlRuleDoc
       )
     );
   }
@@ -330,6 +336,7 @@ export function updateRulesList(
   ignoreConfig: string[],
   ruleListColumns: COLUMN_TYPE[],
   urlConfigs?: string,
+  urlRuleDoc?: string,
   splitBy?: string
 ): string {
   let listStartIndex = markdown.indexOf(BEGIN_RULE_LIST_MARKER);
@@ -399,7 +406,8 @@ export function updateRulesList(
         pathRuleDoc,
         configEmojis,
         ignoreConfig,
-        splitBy
+        splitBy,
+        urlRuleDoc
       )
     : generateRulesListMarkdown(
         columns,
@@ -408,7 +416,8 @@ export function updateRulesList(
         pluginPrefix,
         pathRuleDoc,
         configEmojis,
-        ignoreConfig
+        ignoreConfig,
+        urlRuleDoc
       );
 
   const newContent = `${legend ? `${legend}\n\n` : ''}${list}`;

@@ -56,7 +56,7 @@ describe('generate (--url-configs)', function () {
 
     it('includes the config link', async function () {
       await generate('.', {
-        urlConfigs: 'http://example.com/configs',
+        urlConfigs: 'https://example.com/configs',
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
@@ -103,7 +103,7 @@ describe('generate (--url-configs)', function () {
 
     it('includes the config link', async function () {
       await generate('.', {
-        urlConfigs: 'http://example.com/configs',
+        urlConfigs: 'https://example.com/configs',
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
