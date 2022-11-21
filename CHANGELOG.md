@@ -32,6 +32,16 @@
 
 
 
+
+## v0.25.0 (2022-11-21)
+
+#### :rocket: Enhancement
+* [#262](https://github.com/bmish/eslint-doc-generator/pull/262) Add new option `--url-rule-doc` ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.24.0 (2022-11-19)
 
 #### :boom: Breaking Change
