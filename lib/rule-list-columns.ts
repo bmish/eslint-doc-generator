@@ -9,7 +9,7 @@ import {
 } from './emojis.js';
 import { RULE_TYPES } from './rule-type.js';
 import { COLUMN_TYPE, SEVERITY_TYPE } from './types.js';
-import { getConfigsThatSetARule } from './configs.js';
+import { getConfigsThatSetARule } from './plugin-configs.js';
 import { hasOptions } from './rule-options.js';
 import type { RuleDetails, ConfigsToRules, Plugin } from './types.js';
 

@@ -1,28 +1,16 @@
 import { Command, Argument, Option } from 'commander';
-import { readFileSync } from 'node:fs';
 import { RULE_DOC_TITLE_FORMATS } from './rule-doc-title-format.js';
-import { OPTION_DEFAULTS, OPTION_TYPE, GenerateOptions } from './options.js';
+import { OPTION_DEFAULTS } from './options.js';
 import { cosmiconfig } from 'cosmiconfig';
 import Ajv from 'ajv';
 import merge from 'deepmerge';
-import { COLUMN_TYPE, NOTICE_TYPE } from './types.js';
-import type { PackageJson } from 'type-fest';
-
-function getCurrentPackageVersion(): string {
-  // When running as compiled code, use path relative to compiled version of this file in the dist folder.
-  // When running as TypeScript (in a test), use path relative to this file.
-  const pathToPackageJson = import.meta.url.endsWith('.ts')
-    ? '../package.json'
-    : /* istanbul ignore next -- can't test the compiled version in test */
-      '../../package.json';
-  const packageJson: PackageJson = JSON.parse(
-    readFileSync(new URL(pathToPackageJson, import.meta.url), 'utf8')
-  );
-  if (!packageJson.version) {
-    throw new Error('Could not find package.json `version`.');
-  }
-  return packageJson.version;
-}
+import {
+  COLUMN_TYPE,
+  NOTICE_TYPE,
+  GenerateOptions,
+  OPTION_TYPE,
+} from './types.js';
+import { getCurrentPackageVersion } from './package-json.js';
 
 /** Used for collecting repeated CLI options into an array. */
 function collect(value: string, previous: string[]) {
@@ -37,7 +25,7 @@ function parseBoolean(value: string | undefined): boolean {
  * Load and validate the config file.
  * Cosmiconfig supports many possible filenames/formats.
  */
-async function loadConfigFileOptions() {
+async function loadConfigFileOptions(): Promise<GenerateOptions> {
   const explorer = cosmiconfig('eslint-doc-generator');
   const explorerResults = await explorer.search();
   if (explorerResults && !explorerResults.isEmpty) {

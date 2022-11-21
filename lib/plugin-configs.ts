@@ -103,3 +103,36 @@ export function findConfigEmoji(
 
   return emoji;
 }
+
+/**
+ * Get the emojis for the configs that set a rule to a certain severity.
+ */
+export function getEmojisForConfigsSettingRuleToSeverity(
+  ruleName: string,
+  configsToRulesWithoutIgnored: ConfigsToRules,
+  pluginPrefix: string,
+  configEmojis: ConfigEmojis,
+  severityType: SEVERITY_TYPE
+) {
+  const configsOfThisSeverity = getConfigsForRule(
+    ruleName,
+    configsToRulesWithoutIgnored,
+    pluginPrefix,
+    severityType
+  );
+
+  const emojis: string[] = [];
+  for (const configName of configsOfThisSeverity) {
+    // Find the emoji for each config or otherwise use a badge that can be defined in markdown.
+    const emoji = findConfigEmoji(configEmojis, configName, {
+      fallback: 'badge',
+    });
+    /* istanbul ignore next -- this shouldn't happen */
+    if (typeof emoji !== 'string') {
+      throw new TypeError('Emoji will always be a string thanks to fallback');
+    }
+    emojis.push(emoji);
+  }
+
+  return emojis;
+}
