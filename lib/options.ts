@@ -51,6 +51,7 @@ export enum OPTION_TYPE {
   RULE_LIST_COLUMNS = 'ruleListColumns',
   SPLIT_BY = 'splitBy',
   URL_CONFIGS = 'urlConfigs',
+  URL_RULE_DOC = 'urlRuleDoc',
 }
 
 const DEFAULT_RULE_DOC_TITLE_FORMAT: RuleDocTitleFormat =
@@ -82,6 +83,7 @@ export const OPTION_DEFAULTS = {
     .join(','),
   [OPTION_TYPE.SPLIT_BY]: undefined,
   [OPTION_TYPE.URL_CONFIGS]: undefined,
+  [OPTION_TYPE.URL_RULE_DOC]: undefined,
   // eslint-disable-next-line prettier/prettier -- TODO: waiting on prettier support for TypeScript 4.9: https://github.com/prettier/prettier/issues/13516.
 } satisfies Record<OPTION_TYPE, unknown>; // Satisfies is used to ensure all options are included, but without losing type information.
 
@@ -101,4 +103,5 @@ export type GenerateOptions = {
   ruleListColumns?: string;
   splitBy?: string;
   urlConfigs?: string;
+  urlRuleDoc?: string;
 };

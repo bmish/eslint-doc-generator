@@ -67,6 +67,7 @@ async function loadConfigFileOptions() {
       ruleListColumns: { type: 'string' },
       splitBy: { type: 'string' },
       urlConfigs: { type: 'string' },
+      urlRuleDoc: { type: 'string' },
     };
     const schema = {
       type: 'object',
@@ -203,6 +204,10 @@ export async function run(
     .option(
       '--url-configs <url>',
       '(optional) Link to documentation about the ESLint configurations exported by the plugin.'
+    )
+    .option(
+      '--url-rule-doc <url>',
+      '(optional) Link to documentation for each rule. Useful when it differs from the rule doc path on disk (e.g. custom documentation site in use). Use `{name}` placeholder for the rule name.'
     )
     .action(async function (path, options: GenerateOptions) {
       // Load config file options and merge with CLI options.

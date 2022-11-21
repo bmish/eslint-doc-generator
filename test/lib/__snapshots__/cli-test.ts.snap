@@ -36,7 +36,8 @@ exports[`cli all CLI options and all config files options merges correctly, with
     "ruleDocTitleFormat": "name",
     "ruleListColumns": "type",
     "splitBy": "meta.docs.foo-from-cli",
-    "urlConfigs": "www.example.com/configs-from-cli",
+    "urlConfigs": "https://example.com/configs-url-from-cli",
+    "urlRuleDoc": "https://example.com/rule-doc-url-from-cli",
   },
 ]
 `;
@@ -70,7 +71,8 @@ exports[`cli all CLI options, no config file options is called correctly 1`] = `
     "ruleDocTitleFormat": "name",
     "ruleListColumns": "type",
     "splitBy": "meta.docs.foo-from-cli",
-    "urlConfigs": "www.example.com/configs-from-cli",
+    "urlConfigs": "https://example.com/configs-url-from-cli",
+    "urlRuleDoc": "https://example.com/rule-doc-url-from-cli",
   },
 ]
 `;
@@ -104,7 +106,8 @@ exports[`cli all config files options, no CLI options is called correctly 1`] = 
     "ruleDocTitleFormat": "desc",
     "ruleListColumns": "fixable,hasSuggestions",
     "splitBy": "meta.docs.foo-from-config-file",
-    "urlConfigs": "www.example.com/configs-from-config-file",
+    "urlConfigs": "https://example.com/configs-url-from-config-file",
+    "urlRuleDoc": "https://example.com/rule-doc-url-from-config-file",
   },
 ]
 `;
