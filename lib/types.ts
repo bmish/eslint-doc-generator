@@ -110,7 +110,7 @@ export type GenerateOptions = {
   ignoreDeprecatedRules?: boolean;
   initRuleDocs?: boolean;
   pathRuleDoc?: string;
-  pathRuleList?: string;
+  pathRuleList?: string | string[];
   ruleDocNotices?: string;
   ruleDocSectionExclude?: string[];
   ruleDocSectionInclude?: string[];

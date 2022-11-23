@@ -194,6 +194,45 @@ describe('cli', function () {
     });
   });
 
+  describe('pathRuleList as array in config file and CLI', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          main: 'index.js',
+          type: 'module',
+          version: '1.0.0',
+        }),
+
+        '.eslint-doc-generatorrc.json': JSON.stringify({
+          pathRuleList: ['listFromConfigFile1.md', 'listFromConfigFile2.md'],
+        }),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+    });
+
+    it('merges correctly', async function () {
+      const stub = sinon.stub().resolves();
+      await run(
+        [
+          'node', // Path to node.
+          'eslint-doc-generator.js', // Path to this binary.
+
+          '--path-rule-list',
+          'listFromCli1.md',
+          '--path-rule-list',
+          'listFromCli2.md',
+        ],
+        stub
+      );
+      expect(stub.callCount).toBe(1);
+      expect(stub.firstCall.args).toMatchSnapshot();
+    });
+  });
+
   describe('boolean option - false (explicit)', function () {
     it('is called correctly', async function () {
       const stub = sinon.stub().resolves();

@@ -18,7 +18,10 @@ exports[`cli all CLI options and all config files options merges correctly, with
     "ignoreDeprecatedRules": true,
     "initRuleDocs": false,
     "pathRuleDoc": "www.example.com/rule-doc-from-cli",
-    "pathRuleList": "www.example.com/rule-list-from-cli",
+    "pathRuleList": [
+      "www.example.com/rule-list-from-config-file",
+      "www.example.com/rule-list-from-cli",
+    ],
     "ruleDocNotices": "type",
     "ruleDocSectionExclude": [
       "excludedSectionFromConfigFile1",
@@ -57,7 +60,9 @@ exports[`cli all CLI options, no config file options is called correctly 1`] = `
     "ignoreDeprecatedRules": true,
     "initRuleDocs": false,
     "pathRuleDoc": "www.example.com/rule-doc-from-cli",
-    "pathRuleList": "www.example.com/rule-list-from-cli",
+    "pathRuleList": [
+      "www.example.com/rule-list-from-cli",
+    ],
     "ruleDocNotices": "type",
     "ruleDocSectionExclude": [
       "excludedSectionFromCli1",
@@ -92,7 +97,9 @@ exports[`cli all config files options, no CLI options is called correctly 1`] = 
     "ignoreDeprecatedRules": true,
     "initRuleDocs": true,
     "pathRuleDoc": "www.example.com/rule-doc-from-config-file",
-    "pathRuleList": "www.example.com/rule-list-from-config-file",
+    "pathRuleList": [
+      "www.example.com/rule-list-from-config-file",
+    ],
     "ruleDocNotices": "type",
     "ruleDocSectionExclude": [
       "excludedSectionFromConfigFile1",
@@ -119,6 +126,7 @@ exports[`cli boolean option - false (explicit) is called correctly 1`] = `
     "configEmoji": [],
     "ignoreConfig": [],
     "ignoreDeprecatedRules": false,
+    "pathRuleList": [],
     "ruleDocSectionExclude": [],
     "ruleDocSectionInclude": [],
   },
@@ -132,6 +140,7 @@ exports[`cli boolean option - true (explicit) is called correctly 1`] = `
     "configEmoji": [],
     "ignoreConfig": [],
     "ignoreDeprecatedRules": true,
+    "pathRuleList": [],
     "ruleDocSectionExclude": [],
     "ruleDocSectionInclude": [],
   },
@@ -145,6 +154,7 @@ exports[`cli boolean option - true (implicit) is called correctly 1`] = `
     "configEmoji": [],
     "ignoreConfig": [],
     "ignoreDeprecatedRules": true,
+    "pathRuleList": [],
     "ruleDocSectionExclude": [],
     "ruleDocSectionInclude": [],
   },
@@ -157,6 +167,25 @@ exports[`cli no options is called correctly 1`] = `
   {
     "configEmoji": [],
     "ignoreConfig": [],
+    "pathRuleList": [],
+    "ruleDocSectionExclude": [],
+    "ruleDocSectionInclude": [],
+  },
+]
+`;
+
+exports[`cli pathRuleList as array in config file and CLI merges correctly 1`] = `
+[
+  ".",
+  {
+    "configEmoji": [],
+    "ignoreConfig": [],
+    "pathRuleList": [
+      "listFromConfigFile1.md",
+      "listFromConfigFile2.md",
+      "listFromCli1.md",
+      "listFromCli2.md",
+    ],
     "ruleDocSectionExclude": [],
     "ruleDocSectionInclude": [],
   },

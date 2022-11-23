@@ -46,7 +46,7 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
       ignoreDeprecatedRules: { type: 'boolean' },
       initRuleDocs: { type: 'boolean' },
       pathRuleDoc: { type: 'string' },
-      pathRuleList: { type: 'string' },
+      pathRuleList: { anyOf: [{ type: 'string' }, schemaStringArray] },
       ruleDocNotices: { type: 'string' },
       ruleDocSectionExclude: schemaStringArray,
       ruleDocSectionInclude: schemaStringArray,
@@ -138,9 +138,11 @@ export async function run(
     )
     .option(
       '--path-rule-list <path>',
-      `(optional) Path to markdown file with a rules section where the rules table list should live. (default: ${
+      `(optional) Path to markdown file where the rules table list should live. Option can be repeated. Defaults to ${
         OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_LIST]
-      })`
+      } if not provided.`,
+      collect,
+      []
     )
     .option(
       '--rule-doc-notices <notices>',
@@ -203,6 +205,12 @@ export async function run(
       // For this to work, we can't have any default values from the CLI options that will override the config file options (except empty arrays, as arrays will be merged).
       // Default values should be handled in the callback function.
       const configFileOptions = await loadConfigFileOptions();
+
+      // Perform any normalization needed ahead of merging.
+      if (typeof configFileOptions.pathRuleList === 'string') {
+        configFileOptions.pathRuleList = [configFileOptions.pathRuleList];
+      }
+
       const generateOptions = merge(configFileOptions, options); // Recursive merge.
 
       // Invoke callback.
