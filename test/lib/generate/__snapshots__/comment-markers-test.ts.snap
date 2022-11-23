@@ -46,6 +46,24 @@ exports[`generate (comment markers) no existing comment markers - minimal doc co
 "
 `;
 
+exports[`generate (comment markers) no existing comment markers - rule doc with YAML-formatted metadata (front matter) above title updates the documentation 1`] = `
+"---
+pageClass: "rule-details"
+sidebarDepth: 0
+title: "plugin/rule-name"
+description: "disallow foo"
+since: "v0.12.0"
+---
+# Description (\`test/no-foo\`)
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+Pre-existing notice about the rule being recommended.
+## Rule details
+Details."
+`;
+
 exports[`generate (comment markers) no existing comment markers - with no blank lines in existing content generates the documentation 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
@@ -92,6 +110,39 @@ exports[`generate (comment markers) no existing comment markers - with one blank
 <!-- end auto-generated rule header -->
 
 Existing rule doc content."
+`;
+
+exports[`generate (comment markers) rule doc with YAML-formatted metadata (front matter) above title and comment marker updates the documentation 1`] = `
+"---
+pageClass: "rule-details"
+sidebarDepth: 0
+title: "plugin/rule-name"
+description: "disallow foo"
+since: "v0.12.0"
+---
+# Description (\`test/no-foo\`)
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+## Rule details
+Details."
+`;
+
+exports[`generate (comment markers) rule doc with YAML-formatted metadata (front matter) and nothing else updates the documentation 1`] = `
+"---
+pageClass: "rule-details"
+sidebarDepth: 0
+title: "plugin/rule-name"
+description: "disallow foo"
+since: "v0.12.0"
+---
+# Description (\`test/no-foo\`)
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
 `;
 
 exports[`generate (comment markers) rule doc without header marker but pre-existing header updates the documentation 1`] = `

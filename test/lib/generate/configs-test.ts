@@ -407,12 +407,7 @@ describe('generate (configs)', function () {
 
         'index.js': `
           export default {
-            rules: {
-              'no-foo': {
-                meta: { docs: { description: 'Description.' }, },
-                create(context) {}
-              },
-            },
+            rules: { 'no-foo': { meta: { docs: { description: 'Description.' }, }, create(context) {} }, },
             configs: {
               recommended: {
                 rules: {
