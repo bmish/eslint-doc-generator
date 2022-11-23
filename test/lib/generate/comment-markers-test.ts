@@ -260,6 +260,55 @@ describe('generate (comment markers)', function () {
     });
   });
 
+  describe('no existing comment markers - rule doc with YAML-formatted metadata (front matter) above title', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: { 'no-foo': { meta: { docs: { description: 'Description.' }, }, create(context) {} }, },
+            configs: { recommended: { rules: { 'test/no-foo': 'error', } } }
+          };`,
+
+        'README.md': '## Rules\n',
+
+        // YAML-formatted metadata (front matter) content above title.
+        'docs/rules/no-foo.md': outdent`
+          ---
+          pageClass: "rule-details"
+          sidebarDepth: 0
+          title: "plugin/rule-name"
+          description: "disallow foo"
+          since: "v0.12.0"
+          ---
+          # Some pre-existing title.
+          Pre-existing notice about the rule being recommended.
+          ## Rule details
+          Details.
+        `,
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('updates the documentation', async function () {
+      await generate('.');
+
+      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
   describe('README missing rule list markers but with rules section', function () {
     beforeEach(function () {
       mockFs({
@@ -357,19 +406,8 @@ describe('generate (comment markers)', function () {
 
         'index.js': `
           export default {
-            rules: {
-              'no-foo': {
-                meta: { docs: { description: 'Description.' }, },
-                create(context) {}
-              },
-            },
-            configs: {
-              recommended: {
-                rules: {
-                  'test/no-foo': 'error',
-                }
-              }
-            }
+            rules: { 'no-foo': { meta: { docs: { description: 'Description.' }, }, create(context) {} }, },
+            configs: { recommended: { rules: { 'test/no-foo': 'error', } } }
           };`,
 
         'README.md':
@@ -380,6 +418,101 @@ describe('generate (comment markers)', function () {
           Pre-existing notice about the rule being recommended.
           ## Rule details
           Details.
+        `,
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('updates the documentation', async function () {
+      await generate('.');
+
+      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
+  describe('rule doc with YAML-formatted metadata (front matter) above title and comment marker', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: { 'no-foo': { meta: { docs: { description: 'Description.' }, }, create(context) {} }, },
+            configs: { recommended: { rules: { 'test/no-foo': 'error', } } }
+          };`,
+
+        'README.md': '## Rules\n',
+
+        // YAML-formatted metadata (front matter) above title.
+        'docs/rules/no-foo.md': outdent`
+          ---
+          pageClass: "rule-details"
+          sidebarDepth: 0
+          title: "plugin/rule-name"
+          description: "disallow foo"
+          since: "v0.12.0"
+          ---
+          # Outdated title.
+          Outdated content.
+          <!-- end auto-generated rule header -->
+          ## Rule details
+          Details.
+        `,
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('updates the documentation', async function () {
+      await generate('.');
+
+      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
+  describe('rule doc with YAML-formatted metadata (front matter) and nothing else', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: { 'no-foo': { meta: { docs: { description: 'Description.' }, }, create(context) {} }, },
+            configs: { recommended: { rules: { 'test/no-foo': 'error', } } }
+          };`,
+
+        'README.md': '## Rules\n',
+
+        // YAML-formatted metadata (front matter) only.
+        'docs/rules/no-foo.md': outdent`
+          ---
+          pageClass: "rule-details"
+          sidebarDepth: 0
+          title: "plugin/rule-name"
+          description: "disallow foo"
+          since: "v0.12.0"
+          ---
         `,
 
         // Needed for some of the test infrastructure to work.

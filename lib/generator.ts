@@ -162,9 +162,8 @@ export async function generate(path: string, options?: GenerateOptions) {
       (details) => !ignoreDeprecatedRules || !details.deprecated
     );
 
-  let initializedRuleDoc = false;
-
   // Update rule doc for each rule.
+  let initializedRuleDoc = false;
   for (const { name, description, schema } of details) {
     const pathToDoc = join(path, pathRuleDoc).replace(/{name}/g, name);
 
@@ -243,6 +242,12 @@ export async function generate(path: string, options?: GenerateOptions) {
     }
   }
 
+  if (initRuleDocs && !initializedRuleDoc) {
+    throw new Error(
+      '--init-rule-docs was enabled, but no rule doc file needed to be created.'
+    );
+  }
+
   // Find the README.
   const pathToReadme = getPathWithExactFileNameCasing(join(path, pathRuleList));
   if (!pathToReadme || !existsSync(pathToReadme)) {
@@ -281,11 +286,5 @@ export async function generate(path: string, options?: GenerateOptions) {
     }
   } else {
     writeFileSync(pathToReadme, readmeContentsNew, 'utf8');
-  }
-
-  if (initRuleDocs && !initializedRuleDoc) {
-    throw new Error(
-      '--init-rule-docs was enabled, but no rule doc file needed to be created.'
-    );
   }
 }
