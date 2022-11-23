@@ -33,6 +33,22 @@
 
 
 
+
+## v0.26.0 (2022-11-23)
+
+#### :rocket: Enhancement
+* [#271](https://github.com/bmish/eslint-doc-generator/pull/271) Use correct header level when splitting rules list into sub-lists with `--split-by` ([@bmish](https://github.com/bmish))
+* [#270](https://github.com/bmish/eslint-doc-generator/pull/270) Allow specifying multiple rules lists with `--path-rule-list` ([@bmish](https://github.com/bmish))
+* [#269](https://github.com/bmish/eslint-doc-generator/pull/269) Allow content above rule doc title ([@bmish](https://github.com/bmish))
+* [#264](https://github.com/bmish/eslint-doc-generator/pull/264) Export type for config file ([@bmish](https://github.com/bmish))
+
+#### :house: Internal
+* [#263](https://github.com/bmish/eslint-doc-generator/pull/263) Reorganize files and functions ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.25.0 (2022-11-21)
 
 #### :rocket: Enhancement
