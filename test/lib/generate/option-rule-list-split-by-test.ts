@@ -175,6 +175,88 @@ describe('generate (--split-by)', function () {
     });
   });
 
+  describe('with no existing headers in file', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+              export default {
+                rules: {
+                  'no-foo': { meta: { docs: { category: 'fruits' } }, create(context) {} },
+                  'no-bar': { meta: { docs: { category: 'candy' } }, create(context) {} },
+                  'no-baz': { meta: { /* no nested object */ }, create(context) {} },
+                },
+              };`,
+
+        'README.md':
+          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+        'docs/rules/no-foo.md': '',
+        'docs/rules/no-bar.md': '',
+        'docs/rules/no-baz.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('uses the proper sub-list header level', async function () {
+      await generate('.', { splitBy: 'meta.docs.category' });
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
+  describe('with only a title in the rules file', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+              export default {
+                rules: {
+                  'no-foo': { meta: { docs: { category: 'fruits' } }, create(context) {} },
+                  'no-bar': { meta: { docs: { category: 'candy' } }, create(context) {} },
+                  'no-baz': { meta: { /* no nested object */ }, create(context) {} },
+                },
+              };`,
+
+        'README.md':
+          '# Rules\n<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+        'docs/rules/no-foo.md': '',
+        'docs/rules/no-bar.md': '',
+        'docs/rules/no-baz.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('uses the proper sub-list header level', async function () {
+      await generate('.', { splitBy: 'meta.docs.category' });
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
   describe('ignores case', function () {
     beforeEach(function () {
       mockFs({

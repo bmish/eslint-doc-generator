@@ -18,28 +18,16 @@ export function replaceOrCreateHeader(
   const markerLineIndex = lines.indexOf(marker);
   const dashesLineIndex1 = lines.indexOf('---');
   const dashesLineIndex2 = lines.indexOf('---', dashesLineIndex1 + 1);
-  const hasTitle = titleLineIndex !== -1;
-  const hasMarker = markerLineIndex !== -1;
-  const hasYamlFrontMatter = dashesLineIndex1 === 0 && dashesLineIndex2 !== -1;
 
   // Any YAML front matter or anything else above the title should be kept as-is ahead of the new header.
   const preHeader = lines
-    .slice(
-      0,
-      hasTitle ? titleLineIndex : hasYamlFrontMatter ? dashesLineIndex2 + 1 : 0
-    )
+    .slice(0, Math.max(titleLineIndex, dashesLineIndex2 + 1))
     .join('\n');
 
   // Anything after the marker comment, title, or YAML front matter should be kept as-is after the new header.
   const postHeader = lines
     .slice(
-      hasMarker
-        ? markerLineIndex + 1
-        : hasTitle
-        ? titleLineIndex + 1
-        : hasYamlFrontMatter
-        ? dashesLineIndex2 + 1
-        : 0
+      Math.max(markerLineIndex + 1, titleLineIndex + 1, dashesLineIndex2 + 1)
     )
     .join('\n');
 
@@ -73,4 +61,10 @@ export function findSectionHeader(
   return sectionPotentialMatches.sort(
     (a: string, b: string) => a.length - b.length
   )[0];
+}
+
+export function findFinalHeaderLevel(str: string) {
+  const lines = str.split('\n');
+  const finalHeader = lines.reverse().find((line) => line.match('^(#+) .+$'));
+  return finalHeader ? finalHeader.indexOf(' ') : undefined;
 }

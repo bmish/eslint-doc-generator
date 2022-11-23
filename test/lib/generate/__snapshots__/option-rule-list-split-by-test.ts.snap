@@ -96,6 +96,28 @@ exports[`generate (--split-by) with boolean splits the list 1`] = `
 "
 `;
 
+exports[`generate (--split-by) with no existing headers in file uses the proper sub-list header level 1`] = `
+"<!-- begin auto-generated rules list -->
+
+| Name                           |
+| :----------------------------- |
+| [no-baz](docs/rules/no-baz.md) |
+
+# candy
+
+| Name                           |
+| :----------------------------- |
+| [no-bar](docs/rules/no-bar.md) |
+
+# fruits
+
+| Name                           |
+| :----------------------------- |
+| [no-foo](docs/rules/no-foo.md) |
+
+<!-- end auto-generated rules list -->"
+`;
+
 exports[`generate (--split-by) with one sub-list having no rules enabled by the config splits the list and still uses recommended config emoji in both lists 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
@@ -117,6 +139,29 @@ exports[`generate (--split-by) with one sub-list having no rules enabled by the 
 
 <!-- end auto-generated rules list -->
 "
+`;
+
+exports[`generate (--split-by) with only a title in the rules file uses the proper sub-list header level 1`] = `
+"# Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           |
+| :----------------------------- |
+| [no-baz](docs/rules/no-baz.md) |
+
+## candy
+
+| Name                           |
+| :----------------------------- |
+| [no-bar](docs/rules/no-bar.md) |
+
+## fruits
+
+| Name                           |
+| :----------------------------- |
+| [no-foo](docs/rules/no-foo.md) |
+
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`generate (--split-by) with unknown variable type splits the list but does not attempt to convert variable name to title 1`] = `

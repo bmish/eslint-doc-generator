@@ -11,7 +11,7 @@ import {
 } from './emojis.js';
 import { getEmojisForConfigsSettingRuleToSeverity } from './plugin-configs.js';
 import { getColumns, COLUMN_HEADER } from './rule-list-columns.js';
-import { findSectionHeader } from './markdown.js';
+import { findSectionHeader, findFinalHeaderLevel } from './markdown.js';
 import { getPluginRoot } from './package-json.js';
 import { generateLegend } from './rule-list-legend.js';
 import { relative } from 'node:path';
@@ -215,6 +215,7 @@ function generateRulesListMarkdownWithSplitBy(
   configEmojis: ConfigEmojis,
   ignoreConfig: string[],
   splitBy: string,
+  headerLevel: number,
   urlRuleDoc?: string
 ): string {
   const values = new Set(
@@ -276,7 +277,9 @@ function generateRulesListMarkdownWithSplitBy(
       : splitByFinalPart;
 
     parts.push(
-      `### ${ENABLED_VALUES.has(value) ? splitByTitle : value}`,
+      `${'#'.repeat(headerLevel)} ${
+        ENABLED_VALUES.has(value) ? splitByTitle : value
+      }`,
       generateRulesListMarkdown(
         columns,
         rulesForThisValue,
@@ -344,6 +347,12 @@ export function updateRulesList(
   const preList = markdown.slice(0, Math.max(0, listStartIndex));
   const postList = markdown.slice(Math.max(0, listEndIndex));
 
+  // Determine what header level to use for sub-lists based on the last seen header level.
+  const preListFinalHeaderLevel = findFinalHeaderLevel(preList);
+  const splitByHeaderLevel = preListFinalHeaderLevel
+    ? preListFinalHeaderLevel + 1
+    : 1;
+
   // Determine columns to include in the rules list.
   const columns = getColumns(
     plugin,
@@ -377,6 +386,7 @@ export function updateRulesList(
         configEmojis,
         ignoreConfig,
         splitBy,
+        splitByHeaderLevel,
         urlRuleDoc
       )
     : generateRulesListMarkdown(
