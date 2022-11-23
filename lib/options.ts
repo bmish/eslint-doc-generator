@@ -1,5 +1,5 @@
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
-import { COLUMN_TYPE, NOTICE_TYPE,OPTION_TYPE } from './types.js';
+import { COLUMN_TYPE, NOTICE_TYPE, OPTION_TYPE } from './types.js';
 
 export const COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
   [key in COLUMN_TYPE]: boolean;
@@ -65,6 +65,4 @@ export const OPTION_DEFAULTS = {
   [OPTION_TYPE.SPLIT_BY]: undefined,
   [OPTION_TYPE.URL_CONFIGS]: undefined,
   [OPTION_TYPE.URL_RULE_DOC]: undefined,
-  // eslint-disable-next-line prettier/prettier -- TODO: waiting on prettier support for TypeScript 4.9: https://github.com/prettier/prettier/issues/13516.
 } satisfies Record<OPTION_TYPE, unknown>; // Satisfies is used to ensure all options are included, but without losing type information.
-
