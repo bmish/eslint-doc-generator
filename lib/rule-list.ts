@@ -300,7 +300,7 @@ export function updateRulesList(
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   pathRuleDoc: string,
-  pathToReadme: string,
+  pathRuleList: string,
   pathToPlugin: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: string[],
@@ -336,7 +336,7 @@ export function updateRulesList(
     throw new Error(
       `${relative(
         getPluginRoot(pathToPlugin),
-        pathToReadme
+        pathRuleList
       )} is missing rules list markers: ${BEGIN_RULE_LIST_MARKER}${END_RULE_LIST_MARKER}`
     );
   }

@@ -33,3 +33,23 @@ exports[`generate (file paths) missing rule doc when initRuleDocs is true create
 <!-- end auto-generated rule header -->
 "
 `;
+
+exports[`generate (file paths) multiple rules lists generates the documentation 1`] = `
+"<!-- begin auto-generated rules list -->
+
+| Name                           |
+| :----------------------------- |
+| [no-foo](docs/rules/no-foo.md) |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (file paths) multiple rules lists generates the documentation 2`] = `
+"<!-- begin auto-generated rules list -->
+
+| Name                           |
+| :----------------------------- |
+| [no-foo](docs/rules/no-foo.md) |
+
+<!-- end auto-generated rules list -->"
+`;

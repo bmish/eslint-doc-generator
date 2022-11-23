@@ -213,4 +213,45 @@ describe('generate (file paths)', function () {
       expect(readFileSync('rules/no-foo/no-foo.md', 'utf8')).toMatchSnapshot();
     });
   });
+
+  describe('multiple rules lists', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': { meta: { }, create(context) {} },
+            },
+          };`,
+
+        'rules/list1.md':
+          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+        'rules/list2.md':
+          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+        'docs/rules/no-foo.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('generates the documentation', async function () {
+      await generate('.', {
+        pathRuleList: ['rules/list1.md', 'rules/list2.md'],
+      });
+      expect(readFileSync('rules/list1.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('rules/list2.md', 'utf8')).toMatchSnapshot();
+    });
+  });
 });

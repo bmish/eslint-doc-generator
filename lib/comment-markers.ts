@@ -1,4 +1,4 @@
-// Markers so that the README rules list can be automatically updated.
+// Markers so that the rules table list can be automatically updated.
 export const BEGIN_RULE_LIST_MARKER =
   '<!-- begin auto-generated rules list -->';
 export const END_RULE_LIST_MARKER = '<!-- end auto-generated rules list -->';

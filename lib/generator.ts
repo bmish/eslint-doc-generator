@@ -248,43 +248,49 @@ export async function generate(path: string, options?: GenerateOptions) {
     );
   }
 
-  // Find the README.
-  const pathToReadme = getPathWithExactFileNameCasing(join(path, pathRuleList));
-  if (!pathToReadme || !existsSync(pathToReadme)) {
-    throw new Error(`Could not find ${pathRuleList} in ESLint plugin.`);
-  }
-
-  // Update the rules list in the README.
-  const readmeContents = readFileSync(pathToReadme, 'utf8');
-  const readmeContentsNew = updateRulesList(
-    details,
-    readmeContents,
-    plugin,
-    configsToRules,
-    pluginPrefix,
-    pathRuleDoc,
-    pathToReadme,
-    path,
-    configEmojis,
-    ignoreConfig,
-    ruleListColumns,
-    urlConfigs,
-    urlRuleDoc,
-    splitBy
-  );
-
-  if (check) {
-    if (readmeContentsNew !== readmeContents) {
-      console.error(
-        `Please run eslint-doc-generator. ${relative(
-          getPluginRoot(path),
-          pathToReadme
-        )} is out-of-date.`
-      );
-      console.error(diff(readmeContentsNew, readmeContents, { expand: false }));
-      process.exitCode = 1;
+  for (const pathRuleListItem of Array.isArray(pathRuleList)
+    ? pathRuleList
+    : [pathRuleList]) {
+    // Find the exact filename.
+    const pathToFile = getPathWithExactFileNameCasing(
+      join(path, pathRuleListItem)
+    );
+    if (!pathToFile || !existsSync(pathToFile)) {
+      throw new Error(`Could not find ${pathRuleList} in ESLint plugin.`);
     }
-  } else {
-    writeFileSync(pathToReadme, readmeContentsNew, 'utf8');
+
+    // Update the rules list in this file.
+    const fileContents = readFileSync(pathToFile, 'utf8');
+    const fileContentsNew = updateRulesList(
+      details,
+      fileContents,
+      plugin,
+      configsToRules,
+      pluginPrefix,
+      pathRuleDoc,
+      pathToFile,
+      path,
+      configEmojis,
+      ignoreConfig,
+      ruleListColumns,
+      urlConfigs,
+      urlRuleDoc,
+      splitBy
+    );
+
+    if (check) {
+      if (fileContentsNew !== fileContents) {
+        console.error(
+          `Please run eslint-doc-generator. The rules table in ${relative(
+            getPluginRoot(path),
+            pathToFile
+          )} is out-of-date.`
+        );
+        console.error(diff(fileContentsNew, fileContents, { expand: false }));
+        process.exitCode = 1;
+      }
+    } else {
+      writeFileSync(pathToFile, fileContentsNew, 'utf8');
+    }
   }
 }

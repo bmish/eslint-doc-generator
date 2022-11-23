@@ -55,7 +55,7 @@ describe('generate (--check)', function () {
       ]);
       expect(consoleErrorStub.secondCall.args).toMatchSnapshot(); // Diff
       expect(consoleErrorStub.thirdCall.args).toStrictEqual([
-        'Please run eslint-doc-generator. README.md is out-of-date.',
+        'Please run eslint-doc-generator. The rules table in README.md is out-of-date.',
       ]);
       expect(consoleErrorStub.getCall(3).args).toMatchSnapshot(); // Diff
       consoleErrorStub.restore();
