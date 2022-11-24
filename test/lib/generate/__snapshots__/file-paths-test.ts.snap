@@ -3,9 +3,9 @@
 exports[`generate (file paths) custom path to rule docs and rules list generates the documentation 1`] = `
 "<!-- begin auto-generated rules list -->
 
-| Name                             |
-| :------------------------------- |
-| [no-foo](rules/no-foo/no-foo.md) |
+| Name                                |
+| :---------------------------------- |
+| [no-foo](../rules/no-foo/no-foo.md) |
 
 <!-- end auto-generated rules list -->"
 `;
@@ -47,9 +47,19 @@ exports[`generate (file paths) multiple rules lists generates the documentation 
 exports[`generate (file paths) multiple rules lists generates the documentation 2`] = `
 "<!-- begin auto-generated rules list -->
 
-| Name                           |
-| :----------------------------- |
-| [no-foo](docs/rules/no-foo.md) |
+| Name                              |
+| :-------------------------------- |
+| [no-foo](../docs/rules/no-foo.md) |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (file paths) multiple rules lists generates the documentation 3`] = `
+"<!-- begin auto-generated rules list -->
+
+| Name                                 |
+| :----------------------------------- |
+| [no-foo](../../docs/rules/no-foo.md) |
 
 <!-- end auto-generated rules list -->"
 `;

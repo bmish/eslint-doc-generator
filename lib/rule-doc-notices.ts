@@ -19,6 +19,8 @@ import {
 import { RULE_TYPE, RULE_TYPE_MESSAGES_NOTICES } from './rule-type.js';
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
 import { hasOptions } from './rule-options.js';
+import { replaceRulePlaceholder, goUpLevel, pathToUrl } from './rule-link.js';
+import { countOccurrencesInString } from './string.js';
 
 function severityToTerminology(severity: SEVERITY_TYPE) {
   switch (severity) {
@@ -160,9 +162,8 @@ const RULE_NOTICES: {
     urlRuleDoc,
   }) => {
     // Determine the relative path to the rule doc root so that any replacement rule links can account for this.
-    const slashesInCurrentRuleName = ruleName.match(/\//g);
-    const nestingDepthOfCurrentRule = slashesInCurrentRuleName?.length ?? 0;
-    const relativePathToRuleDocRoot = '../'.repeat(nestingDepthOfCurrentRule);
+    const nestingDepthOfCurrentRule = countOccurrencesInString(ruleName, '/'); // Nested rule names always use forward slashes.
+    const relativePathToRuleDocRoot = goUpLevel(nestingDepthOfCurrentRule);
 
     return `${EMOJI_DEPRECATED} This rule is deprecated.${
       replacedBy && replacedBy.length > 0
@@ -227,8 +228,10 @@ function ruleNamesToList(
         : ruleName;
       return `[\`${ruleNameWithoutPluginPrefix}\`](${
         urlRuleDoc
-          ? urlRuleDoc.replace(/{name}/g, ruleName)
-          : `${relativePathToRuleDocRoot + ruleNameWithoutPluginPrefix}.md`
+          ? replaceRulePlaceholder(urlRuleDoc, ruleName)
+          : `${
+              pathToUrl(relativePathToRuleDocRoot) + ruleNameWithoutPluginPrefix
+            }.md`
       })`;
     })
     .join(', ');
