@@ -29,6 +29,7 @@ const configFileOptionsAll: { [key in OPTION_TYPE]: unknown } = {
   splitBy: 'meta.docs.foo-from-config-file',
   urlConfigs: 'https://example.com/configs-url-from-config-file',
   urlRuleDoc: 'https://example.com/rule-doc-url-from-config-file',
+  postprocess: (content: string) => content,
 };
 
 const cliOptionsAll: { [key in OPTION_TYPE]: string[] } = {
@@ -93,6 +94,7 @@ const cliOptionsAll: { [key in OPTION_TYPE]: string[] } = {
     '--url-rule-doc',
     'https://example.com/rule-doc-url-from-cli',
   ],
+  [OPTION_TYPE.POSTPROCESS]: [],
 };
 
 describe('cli', function () {

@@ -56,6 +56,7 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
       splitBy: { type: 'string' },
       urlConfigs: { type: 'string' },
       urlRuleDoc: { type: 'string' },
+      postprocess: {},
     };
     const schema = {
       type: 'object',
@@ -73,6 +74,13 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
           : /* istanbul ignore next -- this shouldn't happen */
             'Invalid config file'
       );
+    }
+
+    if (
+      explorerResults.config.postprocess &&
+      typeof explorerResults.config.postprocess !== 'function'
+    ) {
+      throw new Error('postprocess must be a function');
     }
 
     return explorerResults.config;
