@@ -17,6 +17,16 @@ exports[`generate (file paths) custom path to rule docs and rules list generates
 "
 `;
 
+exports[`generate (file paths) empty array of rule lists (happens when CLI option is not passed) falls back to default rules list 1`] = `
+"<!-- begin auto-generated rules list -->
+
+| Name                           |
+| :----------------------------- |
+| [no-foo](docs/rules/no-foo.md) |
+
+<!-- end auto-generated rules list -->"
+`;
+
 exports[`generate (file paths) lowercase README file generates the documentation 1`] = `
 "<!-- begin auto-generated rules list -->
 
