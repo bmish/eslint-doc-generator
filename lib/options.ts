@@ -1,3 +1,4 @@
+import { join } from 'node:path';
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
 import { COLUMN_TYPE, NOTICE_TYPE, OPTION_TYPE } from './types.js';
 
@@ -44,7 +45,7 @@ export const OPTION_DEFAULTS = {
   [OPTION_TYPE.IGNORE_CONFIG]: [],
   [OPTION_TYPE.IGNORE_DEPRECATED_RULES]: false,
   [OPTION_TYPE.INIT_RULE_DOCS]: false,
-  [OPTION_TYPE.PATH_RULE_DOC]: 'docs/rules/{name}.md',
+  [OPTION_TYPE.PATH_RULE_DOC]: join('docs', 'rules', '{name}.md'),
   [OPTION_TYPE.PATH_RULE_LIST]: 'README.md',
   [OPTION_TYPE.RULE_DOC_NOTICES]: Object.entries(
     NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING

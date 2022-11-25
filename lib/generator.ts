@@ -21,6 +21,7 @@ import { OPTION_DEFAULTS } from './options.js';
 import { diff } from 'jest-diff';
 import type { RuleDetails, GenerateOptions } from './types.js';
 import { OPTION_TYPE } from './types.js';
+import { replaceRulePlaceholder } from './rule-link.js';
 
 /**
  * Ensure a rule doc contains (or doesn't contain) some particular content.
@@ -165,7 +166,7 @@ export async function generate(path: string, options?: GenerateOptions) {
   // Update rule doc for each rule.
   let initializedRuleDoc = false;
   for (const { name, description, schema } of details) {
-    const pathToDoc = join(path, pathRuleDoc).replace(/{name}/g, name);
+    const pathToDoc = replaceRulePlaceholder(join(path, pathRuleDoc), name);
 
     if (!existsSync(pathToDoc)) {
       if (!initRuleDocs) {

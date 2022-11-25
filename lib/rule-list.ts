@@ -14,7 +14,7 @@ import { getColumns, COLUMN_HEADER } from './rule-list-columns.js';
 import { findSectionHeader, findFinalHeaderLevel } from './markdown.js';
 import { getPluginRoot } from './package-json.js';
 import { generateLegend } from './rule-list-legend.js';
-import { relative } from 'node:path';
+import { relative, join, sep } from 'node:path';
 import { COLUMN_TYPE, SEVERITY_TYPE } from './types.js';
 import { markdownTable } from 'markdown-table';
 import camelCase from 'camelcase';
@@ -26,6 +26,8 @@ import type {
 } from './types.js';
 import { EMOJIS_TYPE, RULE_TYPE } from './rule-type.js';
 import { hasOptions } from './rule-options.js';
+import { replaceRulePlaceholder, goUpLevel, pathToUrl } from './rule-link.js';
+import { countOccurrencesInString } from './string.js';
 
 // Example: theWeatherIsNice => The Weather Is Nice
 function camelCaseStringToTitle(str: string) {
@@ -93,13 +95,15 @@ function buildRuleRow(
   rule: RuleDetails,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
+  pathPlugin: string,
   pathRuleDoc: string,
+  pathRuleList: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: string[],
   urlRuleDoc?: string
 ): string[] {
   const columns: {
-    [key in COLUMN_TYPE]: string;
+    [key in COLUMN_TYPE]: string | (() => string);
   } = {
     // Alphabetical order.
     [COLUMN_TYPE.CONFIGS_ERROR]: getConfigurationColumnValueForRule(
@@ -135,10 +139,24 @@ function buildRuleRow(
     [COLUMN_TYPE.HAS_SUGGESTIONS]: rule.hasSuggestions
       ? EMOJI_HAS_SUGGESTIONS
       : '',
-    [COLUMN_TYPE.NAME]: `[${rule.name}](${(urlRuleDoc ?? pathRuleDoc).replace(
-      /{name}/g,
-      rule.name
-    )})`,
+    [COLUMN_TYPE.NAME]() {
+      // Determine the relative path to the plugin root from the current rule list file so that the rule link can account for this.
+      const nestingDepthOfCurrentRuleList = countOccurrencesInString(
+        relative(pathPlugin, pathRuleList),
+        sep
+      );
+      const relativePathPluginRoot = goUpLevel(nestingDepthOfCurrentRuleList);
+      return `[${rule.name}](${
+        urlRuleDoc
+          ? replaceRulePlaceholder(urlRuleDoc, rule.name)
+          : pathToUrl(
+              join(
+                relativePathPluginRoot,
+                replaceRulePlaceholder(pathRuleDoc, rule.name)
+              )
+            )
+      })`;
+    },
     [COLUMN_TYPE.OPTIONS]: hasOptions(rule.schema) ? EMOJI_OPTIONS : '',
     [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: rule.requiresTypeChecking
       ? EMOJI_REQUIRES_TYPE_CHECKING
@@ -147,11 +165,16 @@ function buildRuleRow(
   };
 
   // List columns using the ordering and presence of columns specified in columnsEnabled.
-  return Object.keys(columnsEnabled).flatMap((column) =>
-    columnsEnabled[column as COLUMN_TYPE]
-      ? [columns[column as COLUMN_TYPE]]
-      : []
-  );
+  return Object.keys(columnsEnabled).flatMap((column) => {
+    const columnValueOrFn = columns[column as COLUMN_TYPE];
+    return columnsEnabled[column as COLUMN_TYPE]
+      ? [
+          typeof columnValueOrFn === 'function'
+            ? columnValueOrFn()
+            : columnValueOrFn,
+        ]
+      : [];
+  });
 }
 
 function generateRulesListMarkdown(
@@ -159,7 +182,9 @@ function generateRulesListMarkdown(
   details: RuleDetails[],
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
+  pathPlugin: string,
   pathRuleDoc: string,
+  pathRuleList: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: string[],
   urlRuleDoc?: string
@@ -191,7 +216,9 @@ function generateRulesListMarkdown(
             rule,
             configsToRules,
             pluginPrefix,
+            pathPlugin,
             pathRuleDoc,
+            pathRuleList,
             configEmojis,
             ignoreConfig,
             urlRuleDoc
@@ -211,7 +238,9 @@ function generateRulesListMarkdownWithSplitBy(
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
+  pathPlugin: string,
   pathRuleDoc: string,
+  pathRuleList: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: string[],
   splitBy: string,
@@ -251,7 +280,9 @@ function generateRulesListMarkdownWithSplitBy(
         rulesForThisValue,
         configsToRules,
         pluginPrefix,
+        pathPlugin,
         pathRuleDoc,
+        pathRuleList,
         configEmojis,
         ignoreConfig,
         urlRuleDoc
@@ -285,7 +316,9 @@ function generateRulesListMarkdownWithSplitBy(
         rulesForThisValue,
         configsToRules,
         pluginPrefix,
+        pathPlugin,
         pathRuleDoc,
+        pathRuleList,
         configEmojis,
         ignoreConfig,
         urlRuleDoc
@@ -304,7 +337,7 @@ export function updateRulesList(
   pluginPrefix: string,
   pathRuleDoc: string,
   pathRuleList: string,
-  pathToPlugin: string,
+  pathPlugin: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: string[],
   ruleListColumns: COLUMN_TYPE[],
@@ -338,7 +371,7 @@ export function updateRulesList(
   if (listStartIndex === -1 || listEndIndex === -1) {
     throw new Error(
       `${relative(
-        getPluginRoot(pathToPlugin),
+        getPluginRoot(pathPlugin),
         pathRuleList
       )} is missing rules list markers: ${BEGIN_RULE_LIST_MARKER}${END_RULE_LIST_MARKER}`
     );
@@ -382,7 +415,9 @@ export function updateRulesList(
         plugin,
         configsToRules,
         pluginPrefix,
+        pathPlugin,
         pathRuleDoc,
+        pathRuleList,
         configEmojis,
         ignoreConfig,
         splitBy,
@@ -394,7 +429,9 @@ export function updateRulesList(
         details,
         configsToRules,
         pluginPrefix,
+        pathPlugin,
         pathRuleDoc,
+        pathRuleList,
         configEmojis,
         ignoreConfig,
         urlRuleDoc

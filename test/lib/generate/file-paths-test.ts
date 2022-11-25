@@ -206,8 +206,8 @@ describe('generate (file paths)', function () {
 
     it('generates the documentation', async function () {
       await generate('.', {
-        pathRuleDoc: 'rules/{name}/{name}.md',
-        pathRuleList: 'rules/list.md',
+        pathRuleDoc: join('rules', '{name}', '{name}.md'),
+        pathRuleList: join('rules', 'list.md'),
       });
       expect(readFileSync('rules/list.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('rules/no-foo/no-foo.md', 'utf8')).toMatchSnapshot();
@@ -230,9 +230,11 @@ describe('generate (file paths)', function () {
             },
           };`,
 
-        'rules/list1.md':
+        'README.md':
           '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
-        'rules/list2.md':
+        'rules/list.md':
+          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+        'docs/rules/index.md':
           '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
         'docs/rules/no-foo.md': '',
 
@@ -248,10 +250,15 @@ describe('generate (file paths)', function () {
 
     it('generates the documentation', async function () {
       await generate('.', {
-        pathRuleList: ['rules/list1.md', 'rules/list2.md'],
+        pathRuleList: [
+          'README.md',
+          join('rules', 'list.md'),
+          join('docs', 'rules', 'index.md'),
+        ],
       });
-      expect(readFileSync('rules/list1.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('rules/list2.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('rules/list.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/index.md', 'utf8')).toMatchSnapshot();
     });
   });
 });
