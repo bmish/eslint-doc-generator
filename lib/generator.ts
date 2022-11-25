@@ -84,6 +84,13 @@ function expectSectionHeader(
   }
 }
 
+function stringOrArrayWithFallback<T extends string | string[]>(
+  stringOrArray: undefined | T,
+  fallback: T
+): T {
+  return stringOrArray && stringOrArray.length > 0 ? stringOrArray : fallback;
+}
+
 // eslint-disable-next-line complexity
 export async function generate(path: string, options?: GenerateOptions) {
   const plugin = await loadPlugin(path);
@@ -97,8 +104,10 @@ export async function generate(path: string, options?: GenerateOptions) {
   // Options. Add default values as needed.
   const check = options?.check ?? OPTION_DEFAULTS[OPTION_TYPE.CHECK];
   const configEmojis = parseConfigEmojiOptions(plugin, options?.configEmoji);
-  const ignoreConfig =
-    options?.ignoreConfig ?? OPTION_DEFAULTS[OPTION_TYPE.IGNORE_CONFIG];
+  const ignoreConfig = stringOrArrayWithFallback(
+    options?.ignoreConfig,
+    OPTION_DEFAULTS[OPTION_TYPE.IGNORE_CONFIG]
+  );
   const ignoreDeprecatedRules =
     options?.ignoreDeprecatedRules ??
     OPTION_DEFAULTS[OPTION_TYPE.IGNORE_DEPRECATED_RULES];
@@ -106,15 +115,19 @@ export async function generate(path: string, options?: GenerateOptions) {
     options?.initRuleDocs ?? OPTION_DEFAULTS[OPTION_TYPE.INIT_RULE_DOCS];
   const pathRuleDoc =
     options?.pathRuleDoc ?? OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_DOC];
-  const pathRuleList =
-    options?.pathRuleList ?? OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_LIST];
+  const pathRuleList = stringOrArrayWithFallback(
+    options?.pathRuleList,
+    OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_LIST]
+  );
   const ruleDocNotices = parseRuleDocNoticesOption(options?.ruleDocNotices);
-  const ruleDocSectionExclude =
-    options?.ruleDocSectionExclude ??
-    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_EXCLUDE];
-  const ruleDocSectionInclude =
-    options?.ruleDocSectionInclude ??
-    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_INCLUDE];
+  const ruleDocSectionExclude = stringOrArrayWithFallback(
+    options?.ruleDocSectionExclude,
+    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_EXCLUDE]
+  );
+  const ruleDocSectionInclude = stringOrArrayWithFallback(
+    options?.ruleDocSectionInclude,
+    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_INCLUDE]
+  );
   const ruleDocSectionOptions =
     options?.ruleDocSectionOptions ??
     OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_OPTIONS];
