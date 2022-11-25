@@ -376,13 +376,13 @@ function getRuleNoticeLines(
 }
 
 function toSentenceCase(str: string) {
-  return str.replace(/^\w/, function (txt) {
+  return str.replace(/^\w/u, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase();
   });
 }
 
 function removeTrailingPeriod(str: string) {
-  return str.replace(/\.$/, '');
+  return str.replace(/\.$/u, '');
 }
 
 function makeRuleDocTitle(

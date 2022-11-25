@@ -1,7 +1,7 @@
 import { join, sep } from 'node:path';
 
 export function replaceRulePlaceholder(pathOrUrl: string, ruleName: string) {
-  return pathOrUrl.replace(/{name}/g, ruleName);
+  return pathOrUrl.replace(/\{name\}/gu, ruleName);
 }
 
 /**
