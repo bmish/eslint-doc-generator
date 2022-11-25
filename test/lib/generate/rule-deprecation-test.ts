@@ -148,6 +148,68 @@ describe('generate (deprecated rules)', function () {
     });
   });
 
+  describe('with --path-rule-doc', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'category/no-foo': {
+                meta: {
+                  docs: { description: 'Description.' },
+                  deprecated: true,
+                  replacedBy: ['category/no-bar'], // without plugin prefix
+                },
+                create(context) {}
+              },
+              'category/no-bar': {
+                meta: {
+                  docs: { description: 'Description.' },
+                  deprecated: true,
+                  replacedBy: ['test/category/no-foo'], // with plugin prefix
+                },
+                create(context) {}
+              },
+            },
+            configs: {}
+          };`,
+
+        'README.md':
+          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+        'docs/category/no-foo/README.md': '',
+        'docs/category/no-bar/README.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('has the correct links, especially replacement rule link', async function () {
+      await generate('.', { pathRuleDoc: 'docs/{name}/README.md' });
+
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+
+      expect(
+        readFileSync('docs/category/no-foo/README.md', 'utf8')
+      ).toMatchSnapshot();
+      expect(
+        readFileSync('docs/category/no-bar/README.md', 'utf8')
+      ).toMatchSnapshot();
+    });
+  });
+
   describe('using prefix ahead of replacement rule name', function () {
     beforeEach(function () {
       mockFs({
@@ -158,23 +220,23 @@ describe('generate (deprecated rules)', function () {
         }),
 
         'index.js': `
-              export default {
-                rules: {
-                  'no-foo': {
-                    meta: {
-                      docs: { description: 'Description.' },
-                      deprecated: true,
-                      replacedBy: ['test/no-bar'],
-                    },
-                    create(context) {}
-                  },
-                  'no-bar': {
-                    meta: { docs: { description: 'Description.' }, },
-                    create(context) {}
-                  },
+          export default {
+            rules: {
+              'no-foo': {
+                meta: {
+                  docs: { description: 'Description.' },
+                  deprecated: true,
+                  replacedBy: ['test/no-bar'],
                 },
-                configs: {}
-              };`,
+                create(context) {}
+              },
+              'no-bar': {
+                meta: { docs: { description: 'Description.' }, },
+                create(context) {}
+              },
+            },
+            configs: {}
+          };`,
 
         'README.md':
           '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',

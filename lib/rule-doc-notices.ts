@@ -19,8 +19,8 @@ import {
 import { RULE_TYPE, RULE_TYPE_MESSAGES_NOTICES } from './rule-type.js';
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
 import { hasOptions } from './rule-options.js';
-import { replaceRulePlaceholder, goUpLevel, pathToUrl } from './rule-link.js';
-import { countOccurrencesInString } from './string.js';
+import { getLinkToRule, getUrlToRule } from './rule-link.js';
+import { toSentenceCase, removeTrailingPeriod } from './string.js';
 
 function severityToTerminology(severity: SEVERITY_TYPE) {
   switch (severity) {
@@ -84,6 +84,8 @@ const RULE_NOTICES: {
         urlConfigs?: string;
         replacedBy: readonly string[] | undefined;
         pluginPrefix: string;
+        pathPlugin: string;
+        pathRuleDoc: string;
         type?: RULE_TYPE;
         urlRuleDoc?: string;
       }) => string);
@@ -158,21 +160,33 @@ const RULE_NOTICES: {
   [NOTICE_TYPE.DEPRECATED]: ({
     replacedBy,
     pluginPrefix,
+    pathPlugin,
+    pathRuleDoc,
     ruleName,
     urlRuleDoc,
   }) => {
-    // Determine the relative path to the rule doc root so that any replacement rule links can account for this.
-    const nestingDepthOfCurrentRule = countOccurrencesInString(ruleName, '/'); // Nested rule names always use forward slashes.
-    const relativePathToRuleDocRoot = goUpLevel(nestingDepthOfCurrentRule);
-
+    const urlCurrentPage = getUrlToRule(
+      ruleName,
+      pluginPrefix,
+      pathPlugin,
+      pathRuleDoc,
+      pathPlugin,
+      urlRuleDoc
+    );
+    const replacementRuleList = (replacedBy ?? []).map((replacementRuleName) =>
+      getLinkToRule(
+        replacementRuleName,
+        pluginPrefix,
+        pathPlugin,
+        pathRuleDoc,
+        urlCurrentPage,
+        true,
+        urlRuleDoc
+      )
+    );
     return `${EMOJI_DEPRECATED} This rule is deprecated.${
       replacedBy && replacedBy.length > 0
-        ? ` It was replaced by ${ruleNamesToList(
-            replacedBy,
-            pluginPrefix,
-            relativePathToRuleDocRoot,
-            urlRuleDoc
-          )}.`
+        ? ` It was replaced by ${replacementRuleList}.`
         : ''
     }`;
   },
@@ -207,35 +221,6 @@ const RULE_NOTICES: {
   [NOTICE_TYPE.OPTIONS]: `${EMOJI_OPTIONS} This rule is configurable.`,
   [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]: `${EMOJI_REQUIRES_TYPE_CHECKING} This rule requires type information.`,
 };
-
-/**
- * Convert list of rule names to string list of links.
- */
-function ruleNamesToList(
-  ruleNames: readonly string[],
-  pluginPrefix: string,
-  relativePathToRuleDocRoot: string,
-  urlRuleDoc?: string
-) {
-  return ruleNames
-    .map((ruleName) => {
-      // Ignore plugin prefix if it's included in rule name.
-      // While we could display the prefix if we wanted, it definitely cannot be part of the link.
-      const ruleNameWithoutPluginPrefix = ruleName.startsWith(
-        `${pluginPrefix}/`
-      )
-        ? ruleName.slice(pluginPrefix.length + 1)
-        : ruleName;
-      return `[\`${ruleNameWithoutPluginPrefix}\`](${
-        urlRuleDoc
-          ? replaceRulePlaceholder(urlRuleDoc, ruleName)
-          : `${
-              pathToUrl(relativePathToRuleDocRoot) + ruleNameWithoutPluginPrefix
-            }.md`
-      })`;
-    })
-    .join(', ');
-}
 
 /**
  * Determine which notices should and should not be included at the top of a rule doc.
@@ -283,6 +268,8 @@ function getRuleNoticeLines(
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
+  pathPlugin: string,
+  pathRuleDoc: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: string[],
   ruleDocNotices: NOTICE_TYPE[],
@@ -365,6 +352,8 @@ function getRuleNoticeLines(
             urlConfigs,
             replacedBy: rule.meta?.replacedBy,
             pluginPrefix,
+            pathPlugin,
+            pathRuleDoc,
             type: rule.meta?.type as RULE_TYPE, // Convert union type to enum.
             urlRuleDoc,
           })
@@ -373,16 +362,6 @@ function getRuleNoticeLines(
   }
 
   return lines;
-}
-
-function toSentenceCase(str: string) {
-  return str.replace(/^\w/u, function (txt) {
-    return txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase();
-  });
-}
-
-function removeTrailingPeriod(str: string) {
-  return str.replace(/\.$/u, '');
 }
 
 function makeRuleDocTitle(
@@ -446,6 +425,8 @@ export function generateRuleHeaderLines(
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
+  pathPlugin: string,
+  pathRuleDoc: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: string[],
   ruleDocNotices: NOTICE_TYPE[],
@@ -460,6 +441,8 @@ export function generateRuleHeaderLines(
       plugin,
       configsToRules,
       pluginPrefix,
+      pathPlugin,
+      pathRuleDoc,
       configEmojis,
       ignoreConfig,
       ruleDocNotices,

@@ -14,10 +14,9 @@ import { getColumns, COLUMN_HEADER } from './rule-list-columns.js';
 import { findSectionHeader, findFinalHeaderLevel } from './markdown.js';
 import { getPluginRoot } from './package-json.js';
 import { generateLegend } from './rule-list-legend.js';
-import { relative, join, sep } from 'node:path';
+import { relative } from 'node:path';
 import { COLUMN_TYPE, SEVERITY_TYPE } from './types.js';
 import { markdownTable } from 'markdown-table';
-import camelCase from 'camelcase';
 import type {
   Plugin,
   RuleDetails,
@@ -26,18 +25,8 @@ import type {
 } from './types.js';
 import { EMOJIS_TYPE, RULE_TYPE } from './rule-type.js';
 import { hasOptions } from './rule-options.js';
-import { replaceRulePlaceholder, goUpLevel, pathToUrl } from './rule-link.js';
-import { countOccurrencesInString } from './string.js';
-
-// Example: theWeatherIsNice => The Weather Is Nice
-function camelCaseStringToTitle(str: string) {
-  const text = str.replace(/([A-Z])/gu, ' $1');
-  return text.charAt(0).toUpperCase() + text.slice(1);
-}
-
-function isCamelCase(str: string) {
-  return camelCase(str) === str;
-}
+import { getLinkToRule } from './rule-link.js';
+import { camelCaseStringToTitle, isCamelCase } from './string.js';
 
 function getPropertyFromRule(
   plugin: Plugin,
@@ -140,22 +129,15 @@ function buildRuleRow(
       ? EMOJI_HAS_SUGGESTIONS
       : '',
     [COLUMN_TYPE.NAME]() {
-      // Determine the relative path to the plugin root from the current rule list file so that the rule link can account for this.
-      const nestingDepthOfCurrentRuleList = countOccurrencesInString(
-        relative(pathPlugin, pathRuleList),
-        sep
-      );
-      const relativePathPluginRoot = goUpLevel(nestingDepthOfCurrentRuleList);
-      return `[${rule.name}](${
+      return getLinkToRule(
+        rule.name,
+        pluginPrefix,
+        pathPlugin,
+        pathRuleDoc,
+        pathRuleList,
+        false,
         urlRuleDoc
-          ? replaceRulePlaceholder(urlRuleDoc, rule.name)
-          : pathToUrl(
-              join(
-                relativePathPluginRoot,
-                replaceRulePlaceholder(pathRuleDoc, rule.name)
-              )
-            )
-      })`;
+      );
     },
     [COLUMN_TYPE.OPTIONS]: hasOptions(rule.schema) ? EMOJI_OPTIONS : '',
     [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: rule.requiresTypeChecking

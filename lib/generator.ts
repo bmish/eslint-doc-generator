@@ -200,6 +200,8 @@ export async function generate(path: string, options?: GenerateOptions) {
       plugin,
       configsToRules,
       pluginPrefix,
+      path,
+      pathRuleDoc,
       configEmojis,
       ignoreConfig,
       ruleDocNotices,
