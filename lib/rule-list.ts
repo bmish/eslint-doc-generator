@@ -31,7 +31,7 @@ import { countOccurrencesInString } from './string.js';
 
 // Example: theWeatherIsNice => The Weather Is Nice
 function camelCaseStringToTitle(str: string) {
-  const text = str.replace(/([A-Z])/g, ' $1');
+  const text = str.replace(/([A-Z])/gu, ' $1');
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
