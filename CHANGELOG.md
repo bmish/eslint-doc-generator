@@ -34,6 +34,25 @@
 
 
 
+
+## v0.26.1 (2022-11-25)
+
+#### :bug: Bug Fix
+* [#279](https://github.com/bmish/eslint-doc-generator/pull/279) Ensure deprecated rule replacement link respects `--path-rule-doc` ([@bmish](https://github.com/bmish))
+* [#280](https://github.com/bmish/eslint-doc-generator/pull/280) Fix default rules list path of `README.md` ([@bmish](https://github.com/bmish))
+* [#275](https://github.com/bmish/eslint-doc-generator/pull/275) Fix rule links when specifying a rule list file in a subdirectory with `--path-rule-list` ([@bmish](https://github.com/bmish))
+
+#### :house: Internal
+* [#283](https://github.com/bmish/eslint-doc-generator/pull/283) Add empty `prettier` config ([@G-Rath](https://github.com/G-Rath))
+* [#282](https://github.com/bmish/eslint-doc-generator/pull/282) Harden CI workflows ([@G-Rath](https://github.com/G-Rath))
+* [#281](https://github.com/bmish/eslint-doc-generator/pull/281) Ensure TypeScript is checked by CodeQL ([@G-Rath](https://github.com/G-Rath))
+* [#278](https://github.com/bmish/eslint-doc-generator/pull/278) Enable unicode regexp flag ([@G-Rath](https://github.com/G-Rath))
+
+#### Committers: 2
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+- Gareth Jones ([@G-Rath](https://github.com/G-Rath))
+
+
 ## v0.26.0 (2022-11-23)
 
 #### :rocket: Enhancement
