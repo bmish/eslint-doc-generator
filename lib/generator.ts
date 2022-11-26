@@ -166,8 +166,8 @@ export async function generate(path: string, options?: GenerateOptions) {
             fixable: false,
             hasSuggestions: false,
             requiresTypeChecking: false,
-            deprecated: false, // TODO: figure out how to access `deprecated` property that can be exported from function-style rules.
-            schema: [], // TODO: figure out how to access `schema` property that can be exported from function-style rules.
+            deprecated: false, // TODO: figure out how to access `deprecated` property that can be exported from function-style rules: https://github.com/bmish/eslint-doc-generator/issues/71
+            schema: [], // TODO: figure out how to access `schema` property that can be exported from function-style rules: https://github.com/bmish/eslint-doc-generator/issues/71
             type: undefined,
           };
     })
