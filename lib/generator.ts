@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { dirname, join, relative } from 'node:path';
+import { dirname, join, relative, resolve } from 'node:path';
 import { getAllNamedOptions, hasOptions } from './rule-options.js';
 import {
   loadPlugin,
@@ -215,7 +215,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     const contents = readFileSync(pathToDoc).toString();
     const contentsNew = await postprocess(
       replaceOrCreateHeader(contents, newHeaderLines, END_RULE_HEADER_MARKER),
-      pathToDoc
+      resolve(pathToDoc)
     );
 
     if (check) {
@@ -295,7 +295,7 @@ export async function generate(path: string, options?: GenerateOptions) {
         urlRuleDoc,
         splitBy
       ),
-      pathToFile
+      resolve(pathToFile)
     );
 
     if (check) {
