@@ -1,6 +1,6 @@
 import { generate } from '../../../lib/generator.js';
 import mockFs from 'mock-fs';
-import { dirname, resolve, posix } from 'node:path';
+import { dirname, resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
 import { jest } from '@jest/globals';
@@ -46,7 +46,11 @@ describe('generate (postprocess option)', function () {
     it('calls the postprocessor', async function () {
       await generate('.', {
         postprocess: (content, path) =>
-          [content, '', `Located at ${posix.relative('.', path)}`].join('\n'),
+          [
+            content,
+            '',
+            `Located at ${relative('.', path).replace(/\\/gu, '/')}`,
+          ].join('\n'),
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
