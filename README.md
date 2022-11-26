@@ -199,6 +199,16 @@ const config = {
 module.exports = config;
 ```
 
+Alternatively, you can configure your scripts to run `prettier` after this tool:
+
+```json
+{
+  "format": "prettier --write .",
+  "lint:eslint-docs": "npm run update:eslint-docs && git diff --exit-code",
+  "update:eslint-docs": "eslint-doc-generator && npm run format"
+}
+```
+
 ## Related
 
 - [eslint-plugin-eslint-plugin](https://github.com/eslint-community/eslint-plugin-eslint-plugin) - Linter for ESLint plugins ([related list](https://eslint.org/docs/latest/developer-guide/working-with-plugins#linting))
