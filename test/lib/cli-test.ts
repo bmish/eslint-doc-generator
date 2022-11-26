@@ -331,7 +331,10 @@ describe('cli', function () {
           version: '1.0.0',
         }),
 
-        '.eslint-doc-generatorrc.json': '{ "unknown": true }', // Doesn't match schema.
+        '.eslint-doc-generatorrc.json': JSON.stringify({
+          // Doesn't match schema.
+          unknown: true,
+        }),
       });
 
       const stub = sinon.stub().resolves();
@@ -355,7 +358,10 @@ describe('cli', function () {
           version: '1.0.0',
         }),
 
-        '.eslint-doc-generatorrc.json': '{ "postprocess": "./my-file.js" }', // Doesn't match schema.
+        '.eslint-doc-generatorrc.json': JSON.stringify({
+          // Doesn't match schema.
+          postprocess: './my-file.js',
+        }),
       });
 
       const stub = sinon.stub().resolves();
