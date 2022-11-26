@@ -9,7 +9,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const PATH_NODE_MODULES = resolve(__dirname, '..', '..', '..', 'node_modules');
 
-describe('generate (--postprocess)', function () {
+describe('generate (postprocess option)', function () {
   describe('basic', function () {
     beforeEach(function () {
       mockFs({
@@ -23,12 +23,7 @@ describe('generate (--postprocess)', function () {
               export default {
                 rules: {
                   'no-foo': {
-                    meta: {
-                      docs: { description: 'Description for no-foo.' },
-                      hasSuggestions: true,
-                      fixable: 'code',
-                      deprecated: true,
-                    },
+                    meta: {},
                     create(context) {}
                   },
                 },
