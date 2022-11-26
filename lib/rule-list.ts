@@ -246,7 +246,7 @@ function generateRulesListMarkdownWithSplitBy(
   ]);
 
   if (values.size === 1 && DISABLED_VALUES.has([...values.values()][0])) {
-    throw new Error(`No rules found with --split-by property "${splitBy}"."`);
+    throw new Error(`No rules found with --split-by property "${splitBy}".`);
   }
 
   const parts: string[] = [];
