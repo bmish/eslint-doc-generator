@@ -121,5 +121,8 @@ export type GenerateOptions = {
   splitBy?: string;
   urlConfigs?: string;
   urlRuleDoc?: string;
-  postprocess?: (content: string, pathToFile: string) => Promise<string>;
+  postprocess?: (
+    content: string,
+    pathToFile: string
+  ) => string | Promise<string>;
 };
