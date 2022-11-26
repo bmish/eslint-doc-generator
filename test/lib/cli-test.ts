@@ -14,6 +14,7 @@ const configFileOptionsAll: { [key in OPTION_TYPE]: unknown } = {
   initRuleDocs: true,
   pathRuleDoc: 'www.example.com/rule-doc-from-config-file',
   pathRuleList: 'www.example.com/rule-list-from-config-file',
+  postprocess: (content: string) => content,
   ruleDocNotices: 'type',
   ruleDocSectionExclude: [
     'excludedSectionFromConfigFile1',
@@ -29,7 +30,6 @@ const configFileOptionsAll: { [key in OPTION_TYPE]: unknown } = {
   splitBy: 'meta.docs.foo-from-config-file',
   urlConfigs: 'https://example.com/configs-url-from-config-file',
   urlRuleDoc: 'https://example.com/rule-doc-url-from-config-file',
-  postprocess: (content: string) => content,
 };
 
 const cliOptionsAll: { [key in OPTION_TYPE]: string[] } = {

@@ -112,6 +112,10 @@ export type GenerateOptions = {
   initRuleDocs?: boolean;
   pathRuleDoc?: string;
   pathRuleList?: string | string[];
+  postprocess?: (
+    content: string,
+    pathToFile: string
+  ) => string | Promise<string>;
   ruleDocNotices?: string;
   ruleDocSectionExclude?: string[];
   ruleDocSectionInclude?: string[];
@@ -121,8 +125,4 @@ export type GenerateOptions = {
   splitBy?: string;
   urlConfigs?: string;
   urlRuleDoc?: string;
-  postprocess?: (
-    content: string,
-    pathToFile: string
-  ) => string | Promise<string>;
 };

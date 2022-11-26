@@ -47,6 +47,7 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
       initRuleDocs: { type: 'boolean' },
       pathRuleDoc: { type: 'string' },
       pathRuleList: { anyOf: [{ type: 'string' }, schemaStringArray] },
+      postprocess: {},
       ruleDocNotices: { type: 'string' },
       ruleDocSectionExclude: schemaStringArray,
       ruleDocSectionInclude: schemaStringArray,
@@ -56,7 +57,6 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
       splitBy: { type: 'string' },
       urlConfigs: { type: 'string' },
       urlRuleDoc: { type: 'string' },
-      postprocess: {},
     };
     const schema = {
       type: 'object',
