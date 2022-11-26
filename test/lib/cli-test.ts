@@ -318,7 +318,11 @@ describe('cli', function () {
   });
 
   describe('invalid config file', function () {
-    beforeEach(function () {
+    afterEach(function () {
+      mockFs.restore();
+    });
+
+    it('throws an error', async function () {
       mockFs({
         'package.json': JSON.stringify({
           name: 'eslint-plugin-test',
@@ -329,13 +333,7 @@ describe('cli', function () {
 
         '.eslint-doc-generatorrc.json': '{ "unknown": true }', // Doesn't match schema.
       });
-    });
 
-    afterEach(function () {
-      mockFs.restore();
-    });
-
-    it('throws an error', async function () {
       const stub = sinon.stub().resolves();
       await expect(
         run(
@@ -346,6 +344,30 @@ describe('cli', function () {
           stub
         )
       ).rejects.toThrow('config file must NOT have additional properties');
+    });
+
+    it('requires that postprocess be a function', async function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          main: 'index.js',
+          type: 'module',
+          version: '1.0.0',
+        }),
+
+        '.eslint-doc-generatorrc.json': '{ "postprocess": "./my-file.js" }', // Doesn't match schema.
+      });
+
+      const stub = sinon.stub().resolves();
+      await expect(
+        run(
+          [
+            'node', // Path to node.
+            'eslint-doc-generator.js', // Path to this binary.
+          ],
+          stub
+        )
+      ).rejects.toThrow('postprocess must be a function');
     });
   });
 });
