@@ -162,9 +162,11 @@ Example `.eslint-doc-generatorrc.js`:
 
 ```js
 /** @type {import('eslint-doc-generator').GenerateOptions} */
-module.exports = {
+const config = {
   ignoreConfig: ['all'],
 };
+
+module.exports = config;
 ```
 
 ## Compatibility
