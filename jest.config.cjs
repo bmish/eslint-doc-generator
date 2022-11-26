@@ -13,11 +13,18 @@ const jestConfig = {
     '^(\\.{1,2}/.*)\\.js$': '$1',
     '#(.*)': '<rootDir>/node_modules/$1',
   },
-  coveragePathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/test/'],
+  coveragePathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/test/',
+    // these files are created by the test suite in the in-memory fs,
+    // which test has access to and so counts in coverage by default
+    '<rootDir>/index.js',
+    '<rootDir>/index-foo.js',
+  ],
   coverageThreshold: {
     global: {
       branches: 100,
-      functions: 80, // TODO: Should be 100% but unclear what function is missing coverage.
+      functions: 100,
       lines: 100,
       statements: 100,
     },
