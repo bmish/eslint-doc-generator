@@ -49,7 +49,7 @@ describe('generate (postprocess option)', function () {
           [
             content,
             '',
-            `Located at ${relative('.', path).replace(/\\/gu, '/')}`,
+            `Located at ${relative('.', path).replace(/\\/gu, '/')}`, // Always use forward slashes in the path so the snapshot is right even when testing on Windows.
           ].join('\n'),
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
