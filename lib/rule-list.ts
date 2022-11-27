@@ -136,6 +136,7 @@ function buildRuleRow(
         pathRuleDoc,
         pathRuleList,
         false,
+        false,
         urlRuleDoc
       );
     },
