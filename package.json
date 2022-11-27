@@ -21,7 +21,7 @@
   "license": "ISC",
   "author": "Bryan Mishkin",
   "type": "module",
-  "types": "./dist/lib/index.js",
+  "types": "./dist/lib/index.d.ts",
   "bin": {
     "eslint-doc-generator": "./dist/bin/eslint-doc-generator.js"
   },
