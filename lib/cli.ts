@@ -100,6 +100,7 @@ export async function run(
 ) {
   const program = new Command();
 
+  // Documentation for options should be kept in sync with README.md and the JSDocs for the `GenerateOptions` type.
   await program
     .version(getCurrentPackageVersion())
     .addArgument(
