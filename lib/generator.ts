@@ -119,6 +119,8 @@ export async function generate(path: string, options?: GenerateOptions) {
     options?.pathRuleList,
     OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_LIST]
   );
+  const postprocess =
+    options?.postprocess ?? OPTION_DEFAULTS[OPTION_TYPE.POSTPROCESS];
   const ruleDocNotices = parseRuleDocNoticesOption(options?.ruleDocNotices);
   const ruleDocSectionExclude = stringOrArrayWithFallback(
     options?.ruleDocSectionExclude,
@@ -140,8 +142,6 @@ export async function generate(path: string, options?: GenerateOptions) {
     options?.urlConfigs ?? OPTION_DEFAULTS[OPTION_TYPE.URL_CONFIGS];
   const urlRuleDoc =
     options?.urlRuleDoc ?? OPTION_DEFAULTS[OPTION_TYPE.URL_RULE_DOC];
-  const postprocess =
-    options?.postprocess ?? OPTION_DEFAULTS[OPTION_TYPE.POSTPROCESS];
 
   // Gather details about rules.
   const details: RuleDetails[] = Object.entries(plugin.rules)

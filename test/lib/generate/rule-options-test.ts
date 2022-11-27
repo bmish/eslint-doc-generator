@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
 import { jest } from '@jest/globals';
 import * as sinon from 'sinon';
+import { COLUMN_TYPE, NOTICE_TYPE } from '../../../lib/types.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -357,8 +358,8 @@ describe('generate (rule options)', function () {
 
     it('displays the column and notice', async function () {
       await generate('.', {
-        ruleListColumns: 'name,options',
-        ruleDocNotices: 'options',
+        ruleListColumns: [COLUMN_TYPE.NAME, COLUMN_TYPE.OPTIONS],
+        ruleDocNotices: [NOTICE_TYPE.OPTIONS],
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();

@@ -91,6 +91,7 @@ export enum OPTION_TYPE {
   INIT_RULE_DOCS = 'initRuleDocs',
   PATH_RULE_DOC = 'pathRuleDoc',
   PATH_RULE_LIST = 'pathRuleList',
+  POSTPROCESS = 'postprocess',
   RULE_DOC_NOTICES = 'ruleDocNotices',
   RULE_DOC_SECTION_EXCLUDE = 'ruleDocSectionExclude',
   RULE_DOC_SECTION_INCLUDE = 'ruleDocSectionInclude',
@@ -100,7 +101,6 @@ export enum OPTION_TYPE {
   SPLIT_BY = 'splitBy',
   URL_CONFIGS = 'urlConfigs',
   URL_RULE_DOC = 'urlRuleDoc',
-  POSTPROCESS = 'postprocess',
 }
 
 // JSDocs for options should be kept in sync with README.md and the CLI runner in cli.ts.
@@ -111,11 +111,11 @@ export type GenerateOptions = {
   check?: boolean;
   /**
    * List of configs and their associated emojis.
-   * Format is `config-name,emoji`.
+   * Array of `[configName, emoji]`.
    * Default emojis are provided for common configs.
    * To remove a default emoji and rely on a badge instead, provide the config name without an emoji.
    */
-  configEmoji?: string[];
+  configEmoji?: string[][];
   /** Configs to ignore from being displayed. Often used for an `all` config. */
   ignoreConfig?: string[];
   /** Whether to ignore deprecated rules from being checked, displayed, or updated. Default: `false`. */
@@ -135,12 +135,12 @@ export type GenerateOptions = {
     pathToFile: string
   ) => string | Promise<string>;
   /**
-   * Ordered, comma-separated list of notices to display in rule doc.
+   * Ordered list of notices to display in rule doc.
    * Non-applicable notices will be hidden.
    * Choices: `configs`, `deprecated`, `fixable` (off by default), `fixableAndHasSuggestions`, `hasSuggestions` (off by default), `options` (off by default), `requiresTypeChecking`, `type` (off by default).
-   * Default: `deprecated,configs,fixableAndHasSuggestions,requiresTypeChecking`.
+   * Default: `['deprecated', 'configs', 'fixableAndHasSuggestions', 'requiresTypeChecking']`.
    */
-  ruleDocNotices?: string;
+  ruleDocNotices?: NOTICE_TYPE[];
   /** Disallowed sections in each rule doc. Exit with failure if present. */
   ruleDocSectionExclude?: string[];
   /** Required sections in each rule doc. Exit with failure if missing. */
@@ -150,12 +150,12 @@ export type GenerateOptions = {
   /** The format to use for rule doc titles. Default: `desc-parens-prefix-name`. */
   ruleDocTitleFormat?: RuleDocTitleFormat;
   /**
-   * Ordered, comma-separated list of columns to display in rule list.
+   * Ordered list of columns to display in rule list.
    * Empty columns will be hidden.
    * Choices: `configsError`, `configsOff`, `configsWarn`, `deprecated`, `description`, `fixable`, `fixableAndHasSuggestions` (off by default), `hasSuggestions`, `name`, `options` (off by default), `requiresTypeChecking`, `type` (off by default).
-   * Default: `name,description,configsError,configsWarn,configsOff,fixable,hasSuggestions,requiresTypeChecking,deprecated`.
+   * Default: `['name', 'description', 'configsError', 'configsWarn', 'configsOff', 'fixable', 'hasSuggestions', 'requiresTypeChecking', 'deprecated']`.
    */
-  ruleListColumns?: string;
+  ruleListColumns?: COLUMN_TYPE[];
   /**
    * Rule property to split the rules list by.
    * A separate list and header will be created for each value.

@@ -6,8 +6,14 @@ exports[`cli all CLI options and all config files options merges correctly, with
   {
     "check": true,
     "configEmoji": [
-      "recommended-from-config-file,🚲",
-      "recommended-from-cli,🚲",
+      [
+        "recommended-from-config-file",
+        "🚲",
+      ],
+      [
+        "recommended-from-cli",
+        "🚲",
+      ],
     ],
     "ignoreConfig": [
       "ignoredConfigFromConfigFile1",
@@ -22,7 +28,10 @@ exports[`cli all CLI options and all config files options merges correctly, with
       "www.example.com/rule-list-from-config-file",
       "www.example.com/rule-list-from-cli",
     ],
-    "ruleDocNotices": "type",
+    "ruleDocNotices": [
+      "fixable",
+      "type",
+    ],
     "ruleDocSectionExclude": [
       "excludedSectionFromConfigFile1",
       "excludedSectionFromConfigFile2",
@@ -37,7 +46,11 @@ exports[`cli all CLI options and all config files options merges correctly, with
     ],
     "ruleDocSectionOptions": true,
     "ruleDocTitleFormat": "name",
-    "ruleListColumns": "type",
+    "ruleListColumns": [
+      "fixable",
+      "hasSuggestions",
+      "type",
+    ],
     "splitBy": "meta.docs.foo-from-cli",
     "urlConfigs": "https://example.com/configs-url-from-cli",
     "urlRuleDoc": "https://example.com/rule-doc-url-from-cli",
@@ -51,7 +64,10 @@ exports[`cli all CLI options, no config file options is called correctly 1`] = `
   {
     "check": true,
     "configEmoji": [
-      "recommended-from-cli,🚲",
+      [
+        "recommended-from-cli",
+        "🚲",
+      ],
     ],
     "ignoreConfig": [
       "ignoredConfigFromCli1",
@@ -63,7 +79,9 @@ exports[`cli all CLI options, no config file options is called correctly 1`] = `
     "pathRuleList": [
       "www.example.com/rule-list-from-cli",
     ],
-    "ruleDocNotices": "type",
+    "ruleDocNotices": [
+      "type",
+    ],
     "ruleDocSectionExclude": [
       "excludedSectionFromCli1",
       "excludedSectionFromCli2",
@@ -74,7 +92,9 @@ exports[`cli all CLI options, no config file options is called correctly 1`] = `
     ],
     "ruleDocSectionOptions": true,
     "ruleDocTitleFormat": "name",
-    "ruleListColumns": "type",
+    "ruleListColumns": [
+      "type",
+    ],
     "splitBy": "meta.docs.foo-from-cli",
     "urlConfigs": "https://example.com/configs-url-from-cli",
     "urlRuleDoc": "https://example.com/rule-doc-url-from-cli",
@@ -88,7 +108,10 @@ exports[`cli all config files options, no CLI options is called correctly 1`] = 
   {
     "check": true,
     "configEmoji": [
-      "recommended-from-config-file,🚲",
+      [
+        "recommended-from-config-file",
+        "🚲",
+      ],
     ],
     "ignoreConfig": [
       "ignoredConfigFromConfigFile1",
@@ -100,7 +123,9 @@ exports[`cli all config files options, no CLI options is called correctly 1`] = 
     "pathRuleList": [
       "www.example.com/rule-list-from-config-file",
     ],
-    "ruleDocNotices": "type",
+    "ruleDocNotices": [
+      "fixable",
+    ],
     "ruleDocSectionExclude": [
       "excludedSectionFromConfigFile1",
       "excludedSectionFromConfigFile2",
@@ -111,7 +136,10 @@ exports[`cli all config files options, no CLI options is called correctly 1`] = 
     ],
     "ruleDocSectionOptions": false,
     "ruleDocTitleFormat": "desc",
-    "ruleListColumns": "fixable,hasSuggestions",
+    "ruleListColumns": [
+      "fixable",
+      "hasSuggestions",
+    ],
     "splitBy": "meta.docs.foo-from-config-file",
     "urlConfigs": "https://example.com/configs-url-from-config-file",
     "urlRuleDoc": "https://example.com/rule-doc-url-from-config-file",
@@ -127,8 +155,10 @@ exports[`cli boolean option - false (explicit) is called correctly 1`] = `
     "ignoreConfig": [],
     "ignoreDeprecatedRules": false,
     "pathRuleList": [],
+    "ruleDocNotices": [],
     "ruleDocSectionExclude": [],
     "ruleDocSectionInclude": [],
+    "ruleListColumns": [],
   },
 ]
 `;
@@ -141,8 +171,10 @@ exports[`cli boolean option - true (explicit) is called correctly 1`] = `
     "ignoreConfig": [],
     "ignoreDeprecatedRules": true,
     "pathRuleList": [],
+    "ruleDocNotices": [],
     "ruleDocSectionExclude": [],
     "ruleDocSectionInclude": [],
+    "ruleListColumns": [],
   },
 ]
 `;
@@ -155,8 +187,10 @@ exports[`cli boolean option - true (implicit) is called correctly 1`] = `
     "ignoreConfig": [],
     "ignoreDeprecatedRules": true,
     "pathRuleList": [],
+    "ruleDocNotices": [],
     "ruleDocSectionExclude": [],
     "ruleDocSectionInclude": [],
+    "ruleListColumns": [],
   },
 ]
 `;
@@ -168,8 +202,10 @@ exports[`cli no options is called correctly 1`] = `
     "configEmoji": [],
     "ignoreConfig": [],
     "pathRuleList": [],
+    "ruleDocNotices": [],
     "ruleDocSectionExclude": [],
     "ruleDocSectionInclude": [],
+    "ruleListColumns": [],
   },
 ]
 `;
@@ -186,8 +222,10 @@ exports[`cli pathRuleList as array in config file and CLI merges correctly 1`] =
       "listFromCli1.md",
       "listFromCli2.md",
     ],
+    "ruleDocNotices": [],
     "ruleDocSectionExclude": [],
     "ruleDocSectionInclude": [],
+    "ruleListColumns": [],
   },
 ]
 `;

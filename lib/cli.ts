@@ -12,9 +12,28 @@ import {
 } from './types.js';
 import { getCurrentPackageVersion } from './package-json.js';
 
-/** Used for collecting repeated CLI options into an array. */
-function collect(value: string, previous: string[]) {
+/**
+ * Used for collecting repeated CLI options into an array.
+ * Example: --foo bar --foo baz => ['bar', 'baz']
+ */
+function collect(value: string, previous: string[]): string[] {
   return [...previous, value];
+}
+
+/**
+ * Used for collecting CSV CLI options into an array.
+ * Example: --foo bar,baz,buz => ['bar', 'baz', 'buz']
+ * */
+function collectCSV(value: string, previous: string[]): string[] {
+  return [...previous, ...value.split(',')];
+}
+
+/**
+ * Used for collecting repeated, nested CSV CLI options into an array of arrays.
+ * Example: --foo baz,bar --foo biz,buz => [['baz', 'bar'], ['biz', 'buz']]
+ * */
+function collectCSVNested(value: string, previous: string[][]): string[][] {
+  return [...previous, value.split(',')];
 }
 
 function parseBoolean(value: string | undefined): boolean {
@@ -39,21 +58,42 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
         minLength: 1,
       },
     };
+
+    const schemaConfigEmoji = {
+      // Top-level array.
+      type: 'array',
+      uniqueItems: true,
+      minItems: 1,
+      items: {
+        // Nested array (config/emoji tuple).
+        type: 'array',
+        uniqueItems: true,
+        minItems: 1, // Allowed to pass only config name to remove default emoji.
+        maxItems: 2, // Normally, two items will be passed.
+        items: {
+          type: 'string',
+          minLength: 1,
+        },
+      },
+    };
+
     const properties: { [key in OPTION_TYPE]: unknown } = {
       check: { type: 'boolean' },
-      configEmoji: schemaStringArray,
+      configEmoji: schemaConfigEmoji,
       ignoreConfig: schemaStringArray,
       ignoreDeprecatedRules: { type: 'boolean' },
       initRuleDocs: { type: 'boolean' },
       pathRuleDoc: { type: 'string' },
       pathRuleList: { anyOf: [{ type: 'string' }, schemaStringArray] },
-      postprocess: {},
-      ruleDocNotices: { type: 'string' },
+      postprocess: {
+        /* JSON Schema can't validate functions so check this later */
+      },
+      ruleDocNotices: schemaStringArray,
       ruleDocSectionExclude: schemaStringArray,
       ruleDocSectionInclude: schemaStringArray,
       ruleDocSectionOptions: { type: 'boolean' },
       ruleDocTitleFormat: { type: 'string' },
-      ruleListColumns: { type: 'string' },
+      ruleListColumns: schemaStringArray,
       splitBy: { type: 'string' },
       urlConfigs: { type: 'string' },
       urlRuleDoc: { type: 'string' },
@@ -116,7 +156,7 @@ export async function run(
     .option(
       '--config-emoji <config-emoji>',
       '(optional) Custom emoji to use for a config. Format is `config-name,emoji`. Default emojis are provided for common configs. To remove a default emoji and rely on a badge instead, provide the config name without an emoji. Option can be repeated.',
-      collect,
+      collectCSVNested,
       []
     )
     .option(
@@ -159,7 +199,9 @@ export async function run(
         NOTICE_TYPE
       ).join('", "')}") (default: ${
         OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_NOTICES]
-      })`
+      })`,
+      collectCSV,
+      []
     )
     .option(
       '--rule-doc-section-exclude <section>',
@@ -194,7 +236,9 @@ export async function run(
         COLUMN_TYPE
       ).join('", "')})" (default: ${
         OPTION_DEFAULTS[OPTION_TYPE.RULE_LIST_COLUMNS]
-      })`
+      })`,
+      collectCSV,
+      []
     )
     .option(
       '--split-by <property>',
