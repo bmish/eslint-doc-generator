@@ -133,7 +133,7 @@ There's also an optional path argument if you need to point the CLI to an ESLint
 | `--rule-doc-section-options` | Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options. Default: `true`. |
 | `--rule-doc-title-format` | The format to use for rule doc titles. Defaults to `desc-parens-prefix-name`. See choices in below [table](#--rule-doc-title-format). |
 | `--rule-list-columns` | Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. Choices: `configsError`, `configsOff`, `configsWarn`, `deprecated`, `description`, `fixable`, `fixableAndHasSuggestions` (off by default), `hasSuggestions`, `name`, `options` (off by default), `requiresTypeChecking`, `type` (off by default). Default: `name,description,configsError,configsWarn,configsOff,fixable,hasSuggestions,requiresTypeChecking,deprecated`. |
-| `--split-by` | Rule property to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`. |
+| `--rule-list-split` | Rule property to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`. |
 | `--url-configs` | Link to documentation about the ESLint configurations exported by the plugin. |
 | `--url-rule-doc` | Link to documentation for each rule. Useful when it differs from the rule doc path on disk (e.g. custom documentation site in use). Use `{name}` placeholder for the rule name. |
 

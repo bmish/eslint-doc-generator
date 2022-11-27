@@ -27,7 +27,7 @@ const configFileOptionsAll: { [key in OPTION_TYPE]: unknown } = {
   ruleDocSectionOptions: false,
   ruleDocTitleFormat: 'desc',
   ruleListColumns: ['fixable', 'hasSuggestions'],
-  splitBy: 'meta.docs.foo-from-config-file',
+  ruleListSplit: 'meta.docs.foo-from-config-file',
   urlConfigs: 'https://example.com/configs-url-from-config-file',
   urlRuleDoc: 'https://example.com/rule-doc-url-from-config-file',
 };
@@ -85,7 +85,10 @@ const cliOptionsAll: { [key in OPTION_TYPE]: string[] } = {
 
   [OPTION_TYPE.RULE_LIST_COLUMNS]: ['--rule-list-columns', 'type'],
 
-  [OPTION_TYPE.SPLIT_BY]: ['--split-by', 'meta.docs.foo-from-cli'],
+  [OPTION_TYPE.RULE_LIST_SPLIT]: [
+    '--rule-list-split',
+    'meta.docs.foo-from-cli',
+  ],
 
   [OPTION_TYPE.URL_CONFIGS]: [
     '--url-configs',
