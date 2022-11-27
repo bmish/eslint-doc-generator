@@ -120,17 +120,17 @@ There's also an optional path argument if you need to point the CLI to an ESLint
 
 | Name | Description |
 | :-- | :-- |
-| `--check` | Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. |
+| `--check` | Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. Default: `false`. |
 | `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Default emojis are provided for [common configs](./lib/emojis.ts). To remove a default emoji and rely on a [badge](#badge) instead, provide the config name without an emoji. Option can be repeated. |
 | `--ignore-config` | Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. |
-| `--ignore-deprecated-rules` | Whether to ignore deprecated rules from being checked, displayed, or updated (default: `false`). |
-| `--init-rule-docs` | Whether to create rule doc files if they don't yet exist (default: `false`). |
-| `--path-rule-doc` | Path to markdown file for each rule doc. Use `{name}` placeholder for the rule name (default: `docs/rules/{name}.md`). |
+| `--ignore-deprecated-rules` | Whether to ignore deprecated rules from being checked, displayed, or updated. Default: `false`. |
+| `--init-rule-docs` | Whether to create rule doc files if they don't yet exist. Default: `false`. |
+| `--path-rule-doc` | Path to markdown file for each rule doc. Use `{name}` placeholder for the rule name. Default: `docs/rules/{name}.md`. |
 | `--path-rule-list` | Path to markdown file where the rules table list should live. Default: `README.md`. Option can be repeated. |
 | `--rule-doc-notices` | Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. Choices: `configs`, `deprecated`, `fixable` (off by default), `fixableAndHasSuggestions`, `hasSuggestions` (off by default), `options` (off by default), `requiresTypeChecking`, `type` (off by default). Default: `deprecated,configs,fixableAndHasSuggestions,requiresTypeChecking`. |
 | `--rule-doc-section-exclude` | Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. |
 | `--rule-doc-section-include` | Required section in each rule doc. Exit with failure if missing. Option can be repeated. |
-| `--rule-doc-section-options` | Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options (default: `true`). |
+| `--rule-doc-section-options` | Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options. Default: `true`. |
 | `--rule-doc-title-format` | The format to use for rule doc titles. Defaults to `desc-parens-prefix-name`. See choices in below [table](#--rule-doc-title-format). |
 | `--rule-list-columns` | Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. Choices: `configsError`, `configsOff`, `configsWarn`, `deprecated`, `description`, `fixable`, `fixableAndHasSuggestions` (off by default), `hasSuggestions`, `name`, `options` (off by default), `requiresTypeChecking`, `type` (off by default). Default: `name,description,configsError,configsWarn,configsOff,fixable,hasSuggestions,requiresTypeChecking,deprecated`. |
 | `--split-by` | Rule property to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`. |
@@ -156,9 +156,9 @@ There are a few ways to create a config file:
 - An object exported by `.eslint-doc-generatorrc.js`, `.eslint-doc-generatorrc.json`, or any other config file format/name supported by [cosmiconfig](https://github.com/davidtheclark/cosmiconfig#searchplaces)
 - An object under the `eslint-doc-generator` key in `package.json`
 
-Config files support all the [CLI options](#configuration-options) but in camelCase. CLI options take precedence over config file options.
+Config files support all the [CLI options](#configuration-options) but in camelCase.
 
-Using a JavaScript-based config also allows you to provide a `postprocess` function which gets called with the generated content and path to each file as they're processed, to make it easy to apply any custom transformations such as formatting - this is useful if you are using formatting tools such as [`prettier`](#prettier).
+Using a JavaScript-based config file also allows you to provide a `postprocess` function to be called with the generated content and file path for each processed file. Useful for applying custom transformations such as formatting with tools like [`prettier`](#prettier).
 
 Example `.eslint-doc-generatorrc.js`:
 
