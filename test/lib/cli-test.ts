@@ -14,6 +14,7 @@ const configFileOptionsAll: { [key in OPTION_TYPE]: unknown } = {
   initRuleDocs: true,
   pathRuleDoc: 'www.example.com/rule-doc-from-config-file',
   pathRuleList: 'www.example.com/rule-list-from-config-file',
+  postprocess: (content: string) => content,
   ruleDocNotices: 'type',
   ruleDocSectionExclude: [
     'excludedSectionFromConfigFile1',
@@ -93,6 +94,7 @@ const cliOptionsAll: { [key in OPTION_TYPE]: string[] } = {
     '--url-rule-doc',
     'https://example.com/rule-doc-url-from-cli',
   ],
+  [OPTION_TYPE.POSTPROCESS]: [],
 };
 
 describe('cli', function () {
@@ -316,7 +318,11 @@ describe('cli', function () {
   });
 
   describe('invalid config file', function () {
-    beforeEach(function () {
+    afterEach(function () {
+      mockFs.restore();
+    });
+
+    it('throws an error', async function () {
       mockFs({
         'package.json': JSON.stringify({
           name: 'eslint-plugin-test',
@@ -325,15 +331,12 @@ describe('cli', function () {
           version: '1.0.0',
         }),
 
-        '.eslint-doc-generatorrc.json': '{ "unknown": true }', // Doesn't match schema.
+        '.eslint-doc-generatorrc.json': JSON.stringify({
+          // Doesn't match schema.
+          unknown: true,
+        }),
       });
-    });
 
-    afterEach(function () {
-      mockFs.restore();
-    });
-
-    it('throws an error', async function () {
       const stub = sinon.stub().resolves();
       await expect(
         run(
@@ -344,6 +347,33 @@ describe('cli', function () {
           stub
         )
       ).rejects.toThrow('config file must NOT have additional properties');
+    });
+
+    it('requires that postprocess be a function', async function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          main: 'index.js',
+          type: 'module',
+          version: '1.0.0',
+        }),
+
+        '.eslint-doc-generatorrc.json': JSON.stringify({
+          // Doesn't match schema.
+          postprocess: './my-file.js',
+        }),
+      });
+
+      const stub = sinon.stub().resolves();
+      await expect(
+        run(
+          [
+            'node', // Path to node.
+            'eslint-doc-generator.js', // Path to this binary.
+          ],
+          stub
+        )
+      ).rejects.toThrow('postprocess must be a function');
     });
   });
 });

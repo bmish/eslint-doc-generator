@@ -47,6 +47,7 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
       initRuleDocs: { type: 'boolean' },
       pathRuleDoc: { type: 'string' },
       pathRuleList: { anyOf: [{ type: 'string' }, schemaStringArray] },
+      postprocess: {},
       ruleDocNotices: { type: 'string' },
       ruleDocSectionExclude: schemaStringArray,
       ruleDocSectionInclude: schemaStringArray,
@@ -73,6 +74,13 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
           : /* istanbul ignore next -- this shouldn't happen */
             'Invalid config file'
       );
+    }
+
+    if (
+      explorerResults.config.postprocess &&
+      typeof explorerResults.config.postprocess !== 'function'
+    ) {
+      throw new Error('postprocess must be a function');
     }
 
     return explorerResults.config;

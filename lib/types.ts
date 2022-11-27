@@ -100,6 +100,7 @@ export enum OPTION_TYPE {
   SPLIT_BY = 'splitBy',
   URL_CONFIGS = 'urlConfigs',
   URL_RULE_DOC = 'urlRuleDoc',
+  POSTPROCESS = 'postprocess',
 }
 
 /** The type for the config file and internal generate() function. */
@@ -111,6 +112,10 @@ export type GenerateOptions = {
   initRuleDocs?: boolean;
   pathRuleDoc?: string;
   pathRuleList?: string | string[];
+  postprocess?: (
+    content: string,
+    pathToFile: string
+  ) => string | Promise<string>;
   ruleDocNotices?: string;
   ruleDocSectionExclude?: string[];
   ruleDocSectionInclude?: string[];

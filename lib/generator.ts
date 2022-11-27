@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { dirname, join, relative } from 'node:path';
+import { dirname, join, relative, resolve } from 'node:path';
 import { getAllNamedOptions, hasOptions } from './rule-options.js';
 import {
   loadPlugin,
@@ -140,6 +140,8 @@ export async function generate(path: string, options?: GenerateOptions) {
     options?.urlConfigs ?? OPTION_DEFAULTS[OPTION_TYPE.URL_CONFIGS];
   const urlRuleDoc =
     options?.urlRuleDoc ?? OPTION_DEFAULTS[OPTION_TYPE.URL_RULE_DOC];
+  const postprocess =
+    options?.postprocess ?? OPTION_DEFAULTS[OPTION_TYPE.POSTPROCESS];
 
   // Gather details about rules.
   const details: RuleDetails[] = Object.entries(plugin.rules)
@@ -211,10 +213,9 @@ export async function generate(path: string, options?: GenerateOptions) {
     );
 
     const contents = readFileSync(pathToDoc).toString();
-    const contentsNew = replaceOrCreateHeader(
-      contents,
-      newHeaderLines,
-      END_RULE_HEADER_MARKER
+    const contentsNew = await postprocess(
+      replaceOrCreateHeader(contents, newHeaderLines, END_RULE_HEADER_MARKER),
+      resolve(pathToDoc)
     );
 
     if (check) {
@@ -277,21 +278,24 @@ export async function generate(path: string, options?: GenerateOptions) {
 
     // Update the rules list in this file.
     const fileContents = readFileSync(pathToFile, 'utf8');
-    const fileContentsNew = updateRulesList(
-      details,
-      fileContents,
-      plugin,
-      configsToRules,
-      pluginPrefix,
-      pathRuleDoc,
-      pathToFile,
-      path,
-      configEmojis,
-      ignoreConfig,
-      ruleListColumns,
-      urlConfigs,
-      urlRuleDoc,
-      splitBy
+    const fileContentsNew = await postprocess(
+      updateRulesList(
+        details,
+        fileContents,
+        plugin,
+        configsToRules,
+        pluginPrefix,
+        pathRuleDoc,
+        pathToFile,
+        path,
+        configEmojis,
+        ignoreConfig,
+        ruleListColumns,
+        urlConfigs,
+        urlRuleDoc,
+        splitBy
+      ),
+      resolve(pathToFile)
     );
 
     if (check) {

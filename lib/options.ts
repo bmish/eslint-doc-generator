@@ -66,4 +66,5 @@ export const OPTION_DEFAULTS = {
   [OPTION_TYPE.SPLIT_BY]: undefined,
   [OPTION_TYPE.URL_CONFIGS]: undefined,
   [OPTION_TYPE.URL_RULE_DOC]: undefined,
+  [OPTION_TYPE.POSTPROCESS]: (content: string) => content,
 } satisfies Record<OPTION_TYPE, unknown>; // Satisfies is used to ensure all options are included, but without losing type information.
