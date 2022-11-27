@@ -37,6 +37,20 @@
 
 
 
+
+## v0.28.0 (2022-11-27)
+
+#### :boom: Breaking Change
+* [#301](https://github.com/bmish/eslint-doc-generator/pull/301) Rename `--split-by` option to `--rule-list-split` ([@bmish](https://github.com/bmish))
+* [#300](https://github.com/bmish/eslint-doc-generator/pull/300) Use arrays instead of CSV strings for config file types ([@bmish](https://github.com/bmish))
+
+#### :memo: Documentation
+* [#299](https://github.com/bmish/eslint-doc-generator/pull/299) Add JSDocs for exported `GenerateOptions` type ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.27.1 (2022-11-27)
 
 #### :bug: Bug Fix
