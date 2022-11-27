@@ -35,6 +35,24 @@
 
 
 
+
+## v0.27.0 (2022-11-27)
+
+#### :rocket: Enhancement
+* [#285](https://github.com/bmish/eslint-doc-generator/pull/285) Add `postprocess` config file option (useful for applying prettier formatting) ([@G-Rath](https://github.com/G-Rath))
+* [#296](https://github.com/bmish/eslint-doc-generator/pull/296) Always display plugin prefix in deprecated rule replacement rule name ([@bmish](https://github.com/bmish))
+
+#### :bug: Bug Fix
+* [#286](https://github.com/bmish/eslint-doc-generator/pull/286) Remove extra closing quote from error message ([@G-Rath](https://github.com/G-Rath))
+
+#### :house: Internal
+* [#287](https://github.com/bmish/eslint-doc-generator/pull/287) Require full function coverage ([@G-Rath](https://github.com/G-Rath))
+
+#### Committers: 2
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+- Gareth Jones ([@G-Rath](https://github.com/G-Rath))
+
+
 ## v0.26.1 (2022-11-25)
 
 #### :bug: Bug Fix
