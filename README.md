@@ -158,7 +158,7 @@ There are a few ways to create a config file:
 
 Config files support all the [CLI options](#configuration-options) but in camelCase. CLI options take precedence over config file options.
 
-Using a JavaScript based config also allowed you to provide a `postprocess` function which gets called with the generated content and path to each file as they're processed, to make it easy to apply any custom transformations such as formatting - this is useful if you are using formatting tools such as [`prettier`](#prettier).
+Using a JavaScript-based config also allows you to provide a `postprocess` function which gets called with the generated content and path to each file as they're processed, to make it easy to apply any custom transformations such as formatting - this is useful if you are using formatting tools such as [`prettier`](#prettier).
 
 Example `.eslint-doc-generatorrc.js`:
 
