@@ -47,12 +47,12 @@ export const OPTION_DEFAULTS = {
   [OPTION_TYPE.INIT_RULE_DOCS]: false,
   [OPTION_TYPE.PATH_RULE_DOC]: join('docs', 'rules', '{name}.md'),
   [OPTION_TYPE.PATH_RULE_LIST]: 'README.md',
+  [OPTION_TYPE.POSTPROCESS]: (content: string) => content,
   [OPTION_TYPE.RULE_DOC_NOTICES]: Object.entries(
     NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING
   )
     .filter(([_col, enabled]) => enabled)
-    .map(([col]) => col)
-    .join(','),
+    .map(([col]) => col),
   [OPTION_TYPE.RULE_DOC_SECTION_EXCLUDE]: [],
   [OPTION_TYPE.RULE_DOC_SECTION_INCLUDE]: [],
   [OPTION_TYPE.RULE_DOC_SECTION_OPTIONS]: true,
@@ -61,10 +61,8 @@ export const OPTION_DEFAULTS = {
     COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING
   )
     .filter(([_col, enabled]) => enabled)
-    .map(([col]) => col)
-    .join(','),
+    .map(([col]) => col),
   [OPTION_TYPE.SPLIT_BY]: undefined,
   [OPTION_TYPE.URL_CONFIGS]: undefined,
   [OPTION_TYPE.URL_RULE_DOC]: undefined,
-  [OPTION_TYPE.POSTPROCESS]: (content: string) => content,
 } satisfies Record<OPTION_TYPE, unknown>; // Satisfies is used to ensure all options are included, but without losing type information.

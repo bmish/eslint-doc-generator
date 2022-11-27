@@ -5,7 +5,7 @@ import { OPTION_TYPE } from '../../lib/types.js';
 
 const configFileOptionsAll: { [key in OPTION_TYPE]: unknown } = {
   check: true,
-  configEmoji: ['recommended-from-config-file,🚲'],
+  configEmoji: [['recommended-from-config-file', '🚲']],
   ignoreConfig: [
     'ignoredConfigFromConfigFile1',
     'ignoredConfigFromConfigFile2',
@@ -15,7 +15,7 @@ const configFileOptionsAll: { [key in OPTION_TYPE]: unknown } = {
   pathRuleDoc: 'www.example.com/rule-doc-from-config-file',
   pathRuleList: 'www.example.com/rule-list-from-config-file',
   postprocess: (content: string) => content,
-  ruleDocNotices: 'type',
+  ruleDocNotices: ['fixable'],
   ruleDocSectionExclude: [
     'excludedSectionFromConfigFile1',
     'excludedSectionFromConfigFile2',
@@ -26,7 +26,7 @@ const configFileOptionsAll: { [key in OPTION_TYPE]: unknown } = {
   ],
   ruleDocSectionOptions: false,
   ruleDocTitleFormat: 'desc',
-  ruleListColumns: 'fixable,hasSuggestions',
+  ruleListColumns: ['fixable', 'hasSuggestions'],
   splitBy: 'meta.docs.foo-from-config-file',
   urlConfigs: 'https://example.com/configs-url-from-config-file',
   urlRuleDoc: 'https://example.com/rule-doc-url-from-config-file',
@@ -57,6 +57,8 @@ const cliOptionsAll: { [key in OPTION_TYPE]: string[] } = {
     '--path-rule-list',
     'www.example.com/rule-list-from-cli',
   ],
+
+  [OPTION_TYPE.POSTPROCESS]: [], // This option is not supported by the CLI.
 
   [OPTION_TYPE.RULE_DOC_NOTICES]: ['--rule-doc-notices', 'type'],
 
@@ -94,7 +96,6 @@ const cliOptionsAll: { [key in OPTION_TYPE]: string[] } = {
     '--url-rule-doc',
     'https://example.com/rule-doc-url-from-cli',
   ],
-  [OPTION_TYPE.POSTPROCESS]: [],
 };
 
 describe('cli', function () {

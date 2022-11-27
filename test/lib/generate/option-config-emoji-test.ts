@@ -58,7 +58,10 @@ describe('generate (--config-emoji)', function () {
 
     it('shows the correct emojis', async function () {
       await generate('.', {
-        configEmoji: ['recommended,🔥', 'stylistic,🎨'],
+        configEmoji: [
+          ['recommended', '🔥'],
+          ['stylistic', '🎨'],
+        ],
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
@@ -99,7 +102,7 @@ describe('generate (--config-emoji)', function () {
 
     it('throws an error', async function () {
       await expect(
-        generate('.', { configEmoji: ['foo,bar,baz'] })
+        generate('.', { configEmoji: [['foo', 'bar', 'baz']] })
       ).rejects.toThrow(
         'Invalid configEmoji option: foo,bar,baz. Expected format: config,emoji'
       );
@@ -138,7 +141,7 @@ describe('generate (--config-emoji)', function () {
 
     it('throws an error', async function () {
       await expect(
-        generate('.', { configEmoji: ['config-without-default-emoji'] })
+        generate('.', { configEmoji: [['config-without-default-emoji']] })
       ).rejects.toThrow(
         'Invalid configEmoji option: config-without-default-emoji. Expected format: config,emoji'
       );
@@ -180,7 +183,7 @@ describe('generate (--config-emoji)', function () {
 
     it('reverts to using a badge for the config', async function () {
       await generate('.', {
-        configEmoji: ['recommended'],
+        configEmoji: [['recommended']],
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
@@ -220,7 +223,7 @@ describe('generate (--config-emoji)', function () {
 
     it('throws an error', async function () {
       await expect(
-        generate('.', { configEmoji: ['config-does-not-exist,🔥'] })
+        generate('.', { configEmoji: [['config-does-not-exist', '🔥']] })
       ).rejects.toThrow(
         'Invalid configEmoji option: config-does-not-exist config not found.'
       );
@@ -263,7 +266,7 @@ describe('generate (--config-emoji)', function () {
 
     it('throws an error', async function () {
       await expect(
-        generate('.', { configEmoji: [`recommended,${EMOJI_CONFIG_ERROR}`] })
+        generate('.', { configEmoji: [['recommended', EMOJI_CONFIG_ERROR]] })
       ).rejects.toThrow(`Cannot specify reserved emoji ${EMOJI_CONFIG_ERROR}.`);
     });
   });
@@ -303,7 +306,12 @@ describe('generate (--config-emoji)', function () {
 
     it('throws an error', async function () {
       await expect(
-        generate('.', { configEmoji: ['recommended,🔥', 'recommended,😋'] })
+        generate('.', {
+          configEmoji: [
+            ['recommended', '🔥'],
+            ['recommended', '😋'],
+          ],
+        })
       ).rejects.toThrow(
         'Duplicate config name in configEmoji options: recommended'
       );

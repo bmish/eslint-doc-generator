@@ -4,6 +4,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
 import { jest } from '@jest/globals';
+import { COLUMN_TYPE } from '../../../lib/types.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -86,7 +87,9 @@ describe('generate (rule type)', function () {
     });
 
     it('displays the type', async function () {
-      await generate('.', { ruleListColumns: 'name,type' });
+      await generate('.', {
+        ruleListColumns: [COLUMN_TYPE.NAME, COLUMN_TYPE.TYPE],
+      });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
@@ -127,7 +130,9 @@ describe('generate (rule type)', function () {
     });
 
     it('hides the type column and notice', async function () {
-      await generate('.', { ruleListColumns: 'name,type' });
+      await generate('.', {
+        ruleListColumns: [COLUMN_TYPE.NAME, COLUMN_TYPE.TYPE],
+      });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
     });
