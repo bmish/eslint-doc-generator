@@ -94,7 +94,7 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
       ruleDocSectionOptions: { type: 'boolean' },
       ruleDocTitleFormat: { type: 'string' },
       ruleListColumns: schemaStringArray,
-      splitBy: { type: 'string' },
+      ruleListSplit: { type: 'string' },
       urlConfigs: { type: 'string' },
       urlRuleDoc: { type: 'string' },
     };
@@ -241,7 +241,7 @@ export async function run(
       []
     )
     .option(
-      '--split-by <property>',
+      '--rule-list-split <property>',
       '(optional) Rule property to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`.'
     )
     .option(

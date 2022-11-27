@@ -213,9 +213,9 @@ function generateRulesListMarkdown(
 }
 
 /**
- * Generate multiple rule lists given the `splitBy` property.
+ * Generate multiple rule lists given the `ruleListSplit` property.
  */
-function generateRulesListMarkdownWithSplitBy(
+function generateRulesListMarkdownWithRuleListSplit(
   columns: Record<COLUMN_TYPE, boolean>,
   details: RuleDetails[],
   plugin: Plugin,
@@ -226,12 +226,14 @@ function generateRulesListMarkdownWithSplitBy(
   pathRuleList: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: string[],
-  splitBy: string,
+  ruleListSplit: string,
   headerLevel: number,
   urlRuleDoc?: string
 ): string {
   const values = new Set(
-    details.map((detail) => getPropertyFromRule(plugin, detail.name, splitBy))
+    details.map((detail) =>
+      getPropertyFromRule(plugin, detail.name, ruleListSplit)
+    )
   );
 
   // Common values for boolean properties.
@@ -247,15 +249,19 @@ function generateRulesListMarkdownWithSplitBy(
   ]);
 
   if (values.size === 1 && DISABLED_VALUES.has([...values.values()][0])) {
-    throw new Error(`No rules found with --split-by property "${splitBy}".`);
+    throw new Error(
+      `No rules found with --rule-list-split property "${ruleListSplit}".`
+    );
   }
 
   const parts: string[] = [];
 
-  // Show any rules that don't have a value for this split-by property first, or for which the boolean property is off.
+  // Show any rules that don't have a value for this rule-list-split property first, or for which the boolean property is off.
   if ([...DISABLED_VALUES.values()].some((val) => values.has(val))) {
     const rulesForThisValue = details.filter((detail) =>
-      DISABLED_VALUES.has(getPropertyFromRule(plugin, detail.name, splitBy))
+      DISABLED_VALUES.has(
+        getPropertyFromRule(plugin, detail.name, ruleListSplit)
+      )
     );
     parts.push(
       generateRulesListMarkdown(
@@ -278,21 +284,25 @@ function generateRulesListMarkdownWithSplitBy(
     .filter((value) => !DISABLED_VALUES.has(value))
     .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))) {
     const rulesForThisValue = details.filter(
-      (detail) => getPropertyFromRule(plugin, detail.name, splitBy) === value
+      (detail) =>
+        getPropertyFromRule(plugin, detail.name, ruleListSplit) === value
     );
 
-    // Turn splitBy into a title.
+    // Turn ruleListSplit into a title.
     // E.g. meta.docs.requiresTypeChecking to "Requires Type Checking".
     // TODO: handle other types of variable casing.
-    const splitByParts = splitBy.split('.');
-    const splitByFinalPart = splitByParts[splitByParts.length - 1];
-    const splitByTitle = isCamelCase(splitByFinalPart)
-      ? camelCaseStringToTitle(splitByParts[splitByParts.length - 1])
-      : splitByFinalPart;
+    const ruleListSplitParts = ruleListSplit.split('.');
+    const ruleListSplitFinalPart =
+      ruleListSplitParts[ruleListSplitParts.length - 1];
+    const ruleListSplitTitle = isCamelCase(ruleListSplitFinalPart)
+      ? camelCaseStringToTitle(
+          ruleListSplitParts[ruleListSplitParts.length - 1]
+        )
+      : ruleListSplitFinalPart;
 
     parts.push(
       `${'#'.repeat(headerLevel)} ${
-        ENABLED_VALUES.has(value) ? splitByTitle : value
+        ENABLED_VALUES.has(value) ? ruleListSplitTitle : value
       }`,
       generateRulesListMarkdown(
         columns,
@@ -324,9 +334,9 @@ export function updateRulesList(
   configEmojis: ConfigEmojis,
   ignoreConfig: string[],
   ruleListColumns: COLUMN_TYPE[],
+  ruleListSplit?: string,
   urlConfigs?: string,
-  urlRuleDoc?: string,
-  splitBy?: string
+  urlRuleDoc?: string
 ): string {
   let listStartIndex = markdown.indexOf(BEGIN_RULE_LIST_MARKER);
   let listEndIndex = markdown.indexOf(END_RULE_LIST_MARKER);
@@ -365,7 +375,7 @@ export function updateRulesList(
 
   // Determine what header level to use for sub-lists based on the last seen header level.
   const preListFinalHeaderLevel = findFinalHeaderLevel(preList);
-  const splitByHeaderLevel = preListFinalHeaderLevel
+  const ruleListSplitHeaderLevel = preListFinalHeaderLevel
     ? preListFinalHeaderLevel + 1
     : 1;
 
@@ -391,8 +401,8 @@ export function updateRulesList(
   );
 
   // New rule list.
-  const list = splitBy
-    ? generateRulesListMarkdownWithSplitBy(
+  const list = ruleListSplit
+    ? generateRulesListMarkdownWithRuleListSplit(
         columns,
         details,
         plugin,
@@ -403,8 +413,8 @@ export function updateRulesList(
         pathRuleList,
         configEmojis,
         ignoreConfig,
-        splitBy,
-        splitByHeaderLevel,
+        ruleListSplit,
+        ruleListSplitHeaderLevel,
         urlRuleDoc
       )
     : generateRulesListMarkdown(

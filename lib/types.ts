@@ -98,7 +98,7 @@ export enum OPTION_TYPE {
   RULE_DOC_SECTION_OPTIONS = 'ruleDocSectionOptions',
   RULE_DOC_TITLE_FORMAT = 'ruleDocTitleFormat',
   RULE_LIST_COLUMNS = 'ruleListColumns',
-  SPLIT_BY = 'splitBy',
+  RULE_LIST_SPLIT = 'ruleListSplit',
   URL_CONFIGS = 'urlConfigs',
   URL_RULE_DOC = 'urlRuleDoc',
 }
@@ -161,7 +161,7 @@ export type GenerateOptions = {
    * A separate list and header will be created for each value.
    * Example: `meta.type`.
    */
-  splitBy?: string;
+  ruleListSplit?: string;
   /** Link to documentation about the ESLint configurations exported by the plugin. */
   urlConfigs?: string;
   /**

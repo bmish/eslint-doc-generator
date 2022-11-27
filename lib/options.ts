@@ -62,7 +62,7 @@ export const OPTION_DEFAULTS = {
   )
     .filter(([_col, enabled]) => enabled)
     .map(([col]) => col),
-  [OPTION_TYPE.SPLIT_BY]: undefined,
+  [OPTION_TYPE.RULE_LIST_SPLIT]: undefined,
   [OPTION_TYPE.URL_CONFIGS]: undefined,
   [OPTION_TYPE.URL_RULE_DOC]: undefined,
 } satisfies Record<OPTION_TYPE, unknown>; // Satisfies is used to ensure all options are included, but without losing type information.

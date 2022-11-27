@@ -9,7 +9,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const PATH_NODE_MODULES = resolve(__dirname, '..', '..', '..', 'node_modules');
 
-describe('generate (--split-by)', function () {
+describe('generate (--rule-list-split)', function () {
   describe('by type', function () {
     beforeEach(function () {
       mockFs({
@@ -48,7 +48,7 @@ describe('generate (--split-by)', function () {
 
     it('splits the list', async function () {
       await generate('.', {
-        splitBy: 'meta.type',
+        ruleListSplit: 'meta.type',
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
     });
@@ -89,7 +89,7 @@ describe('generate (--split-by)', function () {
     });
 
     it('splits the list', async function () {
-      await generate('.', { splitBy: 'meta.docs.category' });
+      await generate('.', { ruleListSplit: 'meta.docs.category' });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
     });
   });
@@ -126,9 +126,9 @@ describe('generate (--split-by)', function () {
 
     it('throws an error', async function () {
       await expect(
-        generate('.', { splitBy: 'non-existent-property' })
+        generate('.', { ruleListSplit: 'non-existent-property' })
       ).rejects.toThrow(
-        'No rules found with --split-by property "non-existent-property".'
+        'No rules found with --rule-list-split property "non-existent-property".'
       );
     });
   });
@@ -169,7 +169,7 @@ describe('generate (--split-by)', function () {
 
     it('splits the list', async function () {
       await generate('.', {
-        splitBy: 'meta.hasSuggestions',
+        ruleListSplit: 'meta.hasSuggestions',
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
     });
@@ -211,7 +211,7 @@ describe('generate (--split-by)', function () {
     });
 
     it('uses the proper sub-list header level', async function () {
-      await generate('.', { splitBy: 'meta.docs.category' });
+      await generate('.', { ruleListSplit: 'meta.docs.category' });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
     });
   });
@@ -252,7 +252,7 @@ describe('generate (--split-by)', function () {
     });
 
     it('uses the proper sub-list header level', async function () {
-      await generate('.', { splitBy: 'meta.docs.category' });
+      await generate('.', { ruleListSplit: 'meta.docs.category' });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
     });
   });
@@ -293,7 +293,7 @@ describe('generate (--split-by)', function () {
 
     it('splits the list', async function () {
       await generate('.', {
-        splitBy: 'meta.foo',
+        ruleListSplit: 'meta.foo',
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
     });
@@ -333,7 +333,7 @@ describe('generate (--split-by)', function () {
 
     it('splits the list but does not attempt to convert variable name to title', async function () {
       await generate('.', {
-        splitBy: 'foo_barBIZ-baz3bOz',
+        ruleListSplit: 'foo_barBIZ-baz3bOz',
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
     });
@@ -376,7 +376,7 @@ describe('generate (--split-by)', function () {
 
     it('splits the list and still uses recommended config emoji in both lists', async function () {
       await generate('.', {
-        splitBy: 'type',
+        ruleListSplit: 'type',
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
     });
