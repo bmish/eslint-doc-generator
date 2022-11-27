@@ -36,6 +36,16 @@
 
 
 
+
+## v0.27.1 (2022-11-27)
+
+#### :bug: Bug Fix
+* [#298](https://github.com/bmish/eslint-doc-generator/pull/298) Use correct path for exported types ([@SimenB](https://github.com/SimenB))
+
+#### Committers: 1
+- Simen Bekkhus ([@SimenB](https://github.com/SimenB))
+
+
 ## v0.27.0 (2022-11-27)
 
 #### :rocket: Enhancement
