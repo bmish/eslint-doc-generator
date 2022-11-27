@@ -1,6 +1,6 @@
 # Require using baz (`test/require-baz`)
 
-❌ This rule is deprecated. It was replaced by [`prefer-bar`](prefer-bar.md).
+❌ This rule is deprecated. It was replaced by [`test/prefer-bar`](prefer-bar.md).
 
 🚫 This rule is _disabled_ in the ⌨️ `typescript` config.
 

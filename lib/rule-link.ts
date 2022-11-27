@@ -68,10 +68,12 @@ export function getLinkToRule(
   pathRuleDoc: string,
   urlCurrentPage: string,
   includeBackticks: boolean,
+  includePrefix: boolean,
   urlRuleDoc?: string
 ) {
-  // Ignore plugin prefix if it's included in rule name.
-  // While we could display the prefix if we wanted, it definitely cannot be part of the link.
+  const ruleNameWithPluginPrefix = ruleName.startsWith(`${pluginPrefix}/`)
+    ? ruleName
+    : `${pluginPrefix}/${ruleName}`;
   const ruleNameWithoutPluginPrefix = ruleName.startsWith(`${pluginPrefix}/`)
     ? ruleName.slice(pluginPrefix.length + 1)
     : ruleName;
@@ -83,7 +85,7 @@ export function getLinkToRule(
     urlCurrentPage,
     urlRuleDoc
   );
-  return `[${includeBackticks ? '`' : ''}${ruleNameWithoutPluginPrefix}${
-    includeBackticks ? '`' : ''
-  }](${urlToRule})`;
+  return `[${includeBackticks ? '`' : ''}${
+    includePrefix ? ruleNameWithPluginPrefix : ruleNameWithoutPluginPrefix
+  }${includeBackticks ? '`' : ''}](${urlToRule})`;
 }

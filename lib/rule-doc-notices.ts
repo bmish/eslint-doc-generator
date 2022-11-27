@@ -181,6 +181,7 @@ const RULE_NOTICES: {
         pathRuleDoc,
         urlCurrentPage,
         true,
+        true,
         urlRuleDoc
       )
     );
