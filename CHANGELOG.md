@@ -39,6 +39,11 @@
 
 
 
+## v1.0.0 (2022-11-28)
+
+Now considered stable and already successfully adopted in many of the top ESLint plugins.
+
+
 ## v0.28.1 (2022-11-28)
 
 #### :bug: Bug Fix
