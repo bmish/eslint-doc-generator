@@ -15,7 +15,7 @@ import type { Plugin, ConfigEmojis } from './types.js';
  */
 export function parseConfigEmojiOptions(
   plugin: Plugin,
-  configEmoji?: string[][]
+  configEmoji?: readonly string[][]
 ): ConfigEmojis {
   const configsSeen = new Set<string>();
   const configsWithDefaultEmojiRemoved: string[] = [];
@@ -75,9 +75,9 @@ export function parseConfigEmojiOptions(
  * Parse the option, check for errors, and set defaults.
  */
 export function parseRuleListColumnsOption(
-  ruleListColumns: string[] | undefined
-): COLUMN_TYPE[] {
-  const values = ruleListColumns ?? [];
+  ruleListColumns: readonly string[] | undefined
+): readonly COLUMN_TYPE[] {
+  const values = [...(ruleListColumns ?? [])];
   const VALUES_OF_TYPE = new Set(Object.values(COLUMN_TYPE).map(String));
 
   // Check for invalid.
@@ -98,16 +98,16 @@ export function parseRuleListColumnsOption(
     );
   }
 
-  return values as COLUMN_TYPE[];
+  return values as readonly COLUMN_TYPE[];
 }
 
 /**
  * Parse the option, check for errors, and set defaults.
  */
 export function parseRuleDocNoticesOption(
-  ruleDocNotices: string[] | undefined
-): NOTICE_TYPE[] {
-  const values = ruleDocNotices ?? [];
+  ruleDocNotices: readonly string[] | undefined
+): readonly NOTICE_TYPE[] {
+  const values = [...(ruleDocNotices ?? [])];
   const VALUES_OF_TYPE = new Set(Object.values(NOTICE_TYPE).map(String));
 
   // Check for invalid.
@@ -128,5 +128,5 @@ export function parseRuleDocNoticesOption(
     );
   }
 
-  return values as NOTICE_TYPE[];
+  return values as readonly NOTICE_TYPE[];
 }

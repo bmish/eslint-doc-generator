@@ -37,7 +37,7 @@ function severityToTerminology(severity: SEVERITY_TYPE) {
 }
 
 function configsToNoticeSentence(
-  configs: string[],
+  configs: readonly string[],
   severity: SEVERITY_TYPE,
   configsLinkOrWord: string,
   configLinkOrWord: string,
@@ -75,9 +75,9 @@ const RULE_NOTICES: {
     | undefined
     | ((data: {
         ruleName: string;
-        configsError: string[];
-        configsWarn: string[];
-        configsOff: string[];
+        configsError: readonly string[];
+        configsWarn: readonly string[];
+        configsOff: readonly string[];
         configEmojis: ConfigEmojis;
         fixable: boolean;
         hasSuggestions: boolean;
@@ -228,10 +228,10 @@ const RULE_NOTICES: {
  */
 function getNoticesForRule(
   rule: RuleModule,
-  configsError: string[],
-  configsWarn: string[],
-  configsOff: string[],
-  ruleDocNotices: NOTICE_TYPE[]
+  configsError: readonly string[],
+  configsWarn: readonly string[],
+  configsOff: readonly string[],
+  ruleDocNotices: readonly NOTICE_TYPE[]
 ) {
   const notices: {
     [key in NOTICE_TYPE]: boolean;
@@ -272,8 +272,8 @@ function getRuleNoticeLines(
   pathPlugin: string,
   pathRuleDoc: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: string[],
-  ruleDocNotices: NOTICE_TYPE[],
+  ignoreConfig: readonly string[],
+  ruleDocNotices: readonly NOTICE_TYPE[],
   urlConfigs?: string,
   urlRuleDoc?: string
 ) {
@@ -429,8 +429,8 @@ export function generateRuleHeaderLines(
   pathPlugin: string,
   pathRuleDoc: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: string[],
-  ruleDocNotices: NOTICE_TYPE[],
+  ignoreConfig: readonly string[],
+  ruleDocNotices: readonly NOTICE_TYPE[],
   ruleDocTitleFormat: RuleDocTitleFormat,
   urlConfigs?: string,
   urlRuleDoc?: string

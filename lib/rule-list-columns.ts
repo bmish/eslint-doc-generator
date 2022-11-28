@@ -17,7 +17,9 @@ import type { RuleDetails, ConfigsToRules, Plugin } from './types.js';
  * An object containing the column header for each column (as a string or function to generate the string).
  */
 export const COLUMN_HEADER: {
-  [key in COLUMN_TYPE]: string | ((data: { details: RuleDetails[] }) => string);
+  [key in COLUMN_TYPE]:
+    | string
+    | ((data: { details: readonly RuleDetails[] }) => string);
 } = {
   [COLUMN_TYPE.NAME]: ({ details }) => {
     const ruleNames = details.map((detail) => detail.name);
@@ -65,11 +67,11 @@ export const COLUMN_HEADER: {
  */
 export function getColumns(
   plugin: Plugin,
-  details: RuleDetails[],
+  details: readonly RuleDetails[],
   configsToRules: ConfigsToRules,
-  ruleListColumns: COLUMN_TYPE[],
+  ruleListColumns: readonly COLUMN_TYPE[],
   pluginPrefix: string,
-  ignoreConfig: string[]
+  ignoreConfig: readonly string[]
 ): Record<COLUMN_TYPE, boolean> {
   const columns: {
     [key in COLUMN_TYPE]: boolean;

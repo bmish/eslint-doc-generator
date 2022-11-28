@@ -3,7 +3,7 @@ import type { TSESLint, JSONSchema } from '@typescript-eslint/utils';
 
 // Standard ESLint types.
 
-export type RuleModule = TSESLint.RuleModule<string, unknown[]>;
+export type RuleModule = TSESLint.RuleModule<string, readonly unknown[]>;
 
 export type Rules = TSESLint.Linter.RulesRecord;
 
@@ -49,7 +49,7 @@ export interface RuleDetails {
 /**
  * Some configs may have an emoji defined.
  */
-export type ConfigEmojis = { config: string; emoji: string }[];
+export type ConfigEmojis = readonly { config: string; emoji: string }[];
 
 /**
  * Rule doc notices.
@@ -108,29 +108,29 @@ export enum OPTION_TYPE {
 /** The type for the config file (e.g. `.eslint-doc-generatorrc.js`) and internal `generate()` function. */
 export type GenerateOptions = {
   /** Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. Default: `false`. */
-  check?: boolean;
+  readonly check?: boolean;
   /**
    * List of configs and their associated emojis.
    * Array of `[configName, emoji]`.
    * Default emojis are provided for common configs.
    * To remove a default emoji and rely on a badge instead, provide the config name without an emoji.
    */
-  configEmoji?: string[][];
+  readonly configEmoji?: readonly string[][];
   /** Configs to ignore from being displayed. Often used for an `all` config. */
-  ignoreConfig?: string[];
+  readonly ignoreConfig?: readonly string[];
   /** Whether to ignore deprecated rules from being checked, displayed, or updated. Default: `false`. */
-  ignoreDeprecatedRules?: boolean;
+  readonly ignoreDeprecatedRules?: boolean;
   /** Whether to create rule doc files if they don't yet exist. Default: `false`. */
-  initRuleDocs?: boolean;
+  readonly initRuleDocs?: boolean;
   /** Path to markdown file for each rule doc. Use `{name}` placeholder for the rule name. Default: `docs/rules/{name}.md`. */
-  pathRuleDoc?: string;
+  readonly pathRuleDoc?: string;
   /** Path to markdown file(s) where the rules table list should live. Default: `README.md`. */
-  pathRuleList?: string | string[];
+  readonly pathRuleList?: string | readonly string[];
   /**
    * Function to be called with the generated content and file path for each processed file.
    * Useful for applying custom transformations such as formatting with tools like prettier.
    */
-  postprocess?: (
+  readonly postprocess?: (
     content: string,
     pathToFile: string
   ) => string | Promise<string>;
@@ -140,34 +140,34 @@ export type GenerateOptions = {
    * Choices: `configs`, `deprecated`, `fixable` (off by default), `fixableAndHasSuggestions`, `hasSuggestions` (off by default), `options` (off by default), `requiresTypeChecking`, `type` (off by default).
    * Default: `['deprecated', 'configs', 'fixableAndHasSuggestions', 'requiresTypeChecking']`.
    */
-  ruleDocNotices?: NOTICE_TYPE[];
+  readonly ruleDocNotices?: readonly NOTICE_TYPE[];
   /** Disallowed sections in each rule doc. Exit with failure if present. */
-  ruleDocSectionExclude?: string[];
+  readonly ruleDocSectionExclude?: readonly string[];
   /** Required sections in each rule doc. Exit with failure if missing. */
-  ruleDocSectionInclude?: string[];
+  readonly ruleDocSectionInclude?: readonly string[];
   /** Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options. Default: `true`. */
-  ruleDocSectionOptions?: boolean;
+  readonly ruleDocSectionOptions?: boolean;
   /** The format to use for rule doc titles. Default: `desc-parens-prefix-name`. */
-  ruleDocTitleFormat?: RuleDocTitleFormat;
+  readonly ruleDocTitleFormat?: RuleDocTitleFormat;
   /**
    * Ordered list of columns to display in rule list.
    * Empty columns will be hidden.
    * Choices: `configsError`, `configsOff`, `configsWarn`, `deprecated`, `description`, `fixable`, `fixableAndHasSuggestions` (off by default), `hasSuggestions`, `name`, `options` (off by default), `requiresTypeChecking`, `type` (off by default).
    * Default: `['name', 'description', 'configsError', 'configsWarn', 'configsOff', 'fixable', 'hasSuggestions', 'requiresTypeChecking', 'deprecated']`.
    */
-  ruleListColumns?: COLUMN_TYPE[];
+  readonly ruleListColumns?: readonly COLUMN_TYPE[];
   /**
    * Rule property to split the rules list by.
    * A separate list and header will be created for each value.
    * Example: `meta.type`.
    */
-  ruleListSplit?: string;
+  readonly ruleListSplit?: string;
   /** Link to documentation about the ESLint configurations exported by the plugin. */
-  urlConfigs?: string;
+  readonly urlConfigs?: string;
   /**
    * Link to documentation for each rule.
    * Useful when it differs from the rule doc path on disk (e.g. custom documentation site in use).
    * Use `{name}` placeholder for the rule name.
    */
-  urlRuleDoc?: string;
+  readonly urlRuleDoc?: string;
 };

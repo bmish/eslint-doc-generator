@@ -43,13 +43,8 @@ export async function loadPlugin(path: string): Promise<Plugin> {
     ) {
       // Check various properties on the `exports` object.
       // https://nodejs.org/api/packages.html#conditional-exports
-      const propertiesToCheck: (keyof PackageJson.ExportConditions)[] = [
-        '.',
-        'node',
-        'import',
-        'require',
-        'default',
-      ];
+      const propertiesToCheck: readonly (keyof PackageJson.ExportConditions)[] =
+        ['.', 'node', 'import', 'require', 'default'];
       for (const prop of propertiesToCheck) {
         // @ts-expect-error -- The union type for the object is causing trouble.
         const value = exports[prop];

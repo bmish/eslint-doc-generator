@@ -16,7 +16,10 @@ import { getCurrentPackageVersion } from './package-json.js';
  * Used for collecting repeated CLI options into an array.
  * Example: --foo bar --foo baz => ['bar', 'baz']
  */
-function collect(value: string, previous: string[]): string[] {
+function collect(
+  value: string,
+  previous: readonly string[]
+): readonly string[] {
   return [...previous, value];
 }
 
@@ -24,7 +27,10 @@ function collect(value: string, previous: string[]): string[] {
  * Used for collecting CSV CLI options into an array.
  * Example: --foo bar,baz,buz => ['bar', 'baz', 'buz']
  * */
-function collectCSV(value: string, previous: string[]): string[] {
+function collectCSV(
+  value: string,
+  previous: readonly string[]
+): readonly string[] {
   return [...previous, ...value.split(',')];
 }
 
@@ -32,7 +38,10 @@ function collectCSV(value: string, previous: string[]): string[] {
  * Used for collecting repeated, nested CSV CLI options into an array of arrays.
  * Example: --foo baz,bar --foo biz,buz => [['baz', 'bar'], ['biz', 'buz']]
  * */
-function collectCSVNested(value: string, previous: string[][]): string[][] {
+function collectCSVNested(
+  value: string,
+  previous: readonly string[][]
+): readonly string[][] {
   return [...previous, value.split(',')];
 }
 
@@ -116,11 +125,16 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
       );
     }
 
-    if (
-      explorerResults.config.postprocess &&
-      typeof explorerResults.config.postprocess !== 'function'
-    ) {
+    const config = explorerResults.config;
+
+    // Additional validation that couldn't be handled by ajv.
+    if (config.postprocess && typeof config.postprocess !== 'function') {
       throw new Error('postprocess must be a function');
+    }
+
+    // Perform any normalization.
+    if (typeof config.pathRuleList === 'string') {
+      config.pathRuleList = [config.pathRuleList];
     }
 
     return explorerResults.config;
@@ -135,7 +149,7 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
  * Note: Does not introduce default values. Default values should be handled in the callback function.
  */
 export async function run(
-  argv: string[],
+  argv: readonly string[],
   cb: (path: string, options: GenerateOptions) => Promise<void>
 ) {
   const program = new Command();
@@ -258,11 +272,6 @@ export async function run(
       // For this to work, we can't have any default values from the CLI options that will override the config file options (except empty arrays, as arrays will be merged).
       // Default values should be handled in the callback function.
       const configFileOptions = await loadConfigFileOptions();
-
-      // Perform any normalization needed ahead of merging.
-      if (typeof configFileOptions.pathRuleList === 'string') {
-        configFileOptions.pathRuleList = [configFileOptions.pathRuleList];
-      }
 
       const generateOptions = merge(configFileOptions, options); // Recursive merge.
 

@@ -34,16 +34,16 @@ const LEGEND_HAS_SUGGESTIONS = `${EMOJI_HAS_SUGGESTIONS} Manually fixable by [ed
  */
 const LEGENDS: {
   [key in COLUMN_TYPE]:
-    | string[]
+    | readonly string[]
     | undefined // For no legend.
     | ((data: {
         plugin: Plugin;
         configsToRules: ConfigsToRules;
         configEmojis: ConfigEmojis;
         pluginPrefix: string;
-        ignoreConfig: string[];
+        ignoreConfig: readonly string[];
         urlConfigs?: string;
-      }) => string[]);
+      }) => readonly string[]);
 } = {
   [COLUMN_TYPE.CONFIGS_ERROR]: ({
     plugin,
@@ -155,7 +155,7 @@ function getLegendForConfigColumnOfSeverity({
   configsToRules: ConfigsToRules;
   configEmojis: ConfigEmojis;
   pluginPrefix: string;
-  ignoreConfig: string[];
+  ignoreConfig: readonly string[];
   severityType: SEVERITY_TYPE;
   urlConfigs?: string;
 }): string {
@@ -186,9 +186,9 @@ function getLegendsForIndividualConfigs({
   configsToRules: ConfigsToRules;
   configEmojis: ConfigEmojis;
   pluginPrefix: string;
-  ignoreConfig: string[];
+  ignoreConfig: readonly string[];
   urlConfigs?: string;
-}): string[] {
+}): readonly string[] {
   /* istanbul ignore next -- this shouldn't happen */
   if (!plugin.configs || !plugin.rules) {
     throw new Error(
@@ -225,32 +225,32 @@ export function generateLegend(
   configsToRules: ConfigsToRules,
   configEmojis: ConfigEmojis,
   pluginPrefix: string,
-  ignoreConfig: string[],
+  ignoreConfig: readonly string[],
   urlConfigs?: string
 ) {
-  const legends = (Object.entries(columns) as [COLUMN_TYPE, boolean][]).flatMap(
-    ([columnType, enabled]) => {
-      if (!enabled) {
-        // This column is turned off.
-        return [];
-      }
-      const legendArrayOrFn = LEGENDS[columnType];
-      if (!legendArrayOrFn) {
-        // No legend specified for this column.
-        return [];
-      }
-      return typeof legendArrayOrFn === 'function'
-        ? legendArrayOrFn({
-            plugin,
-            configsToRules,
-            configEmojis,
-            pluginPrefix,
-            urlConfigs,
-            ignoreConfig,
-          })
-        : legendArrayOrFn;
+  const legends = (
+    Object.entries(columns) as readonly [COLUMN_TYPE, boolean][]
+  ).flatMap(([columnType, enabled]) => {
+    if (!enabled) {
+      // This column is turned off.
+      return [];
     }
-  );
+    const legendArrayOrFn = LEGENDS[columnType];
+    if (!legendArrayOrFn) {
+      // No legend specified for this column.
+      return [];
+    }
+    return typeof legendArrayOrFn === 'function'
+      ? legendArrayOrFn({
+          plugin,
+          configsToRules,
+          configEmojis,
+          pluginPrefix,
+          urlConfigs,
+          ignoreConfig,
+        })
+      : legendArrayOrFn;
+  });
 
   if (legends.some((legend) => legend.includes('Configurations'))) {
     // Add legends for individual configs after the config column legend(s).
