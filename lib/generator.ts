@@ -57,7 +57,7 @@ function expectContent(
 function expectSectionHeader(
   ruleName: string,
   contents: string,
-  possibleHeaders: string[],
+  possibleHeaders: readonly string[],
   expected: boolean
 ) {
   const found = possibleHeaders.some((header) =>
@@ -84,7 +84,7 @@ function expectSectionHeader(
   }
 }
 
-function stringOrArrayWithFallback<T extends string | string[]>(
+function stringOrArrayWithFallback<T extends string | readonly string[]>(
   stringOrArray: undefined | T,
   fallback: T
 ): T {
@@ -145,7 +145,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     options?.urlRuleDoc ?? OPTION_DEFAULTS[OPTION_TYPE.URL_RULE_DOC];
 
   // Gather details about rules.
-  const details: RuleDetails[] = Object.entries(plugin.rules)
+  const details: readonly RuleDetails[] = Object.entries(plugin.rules)
     .map(([name, rule]): RuleDetails => {
       return typeof rule === 'object'
         ? // Object-style rule.
@@ -177,6 +177,9 @@ export async function generate(path: string, options?: GenerateOptions) {
     .filter(
       // Filter out deprecated rules from being checked, displayed, or updated if the option is set.
       (details) => !ignoreDeprecatedRules || !details.deprecated
+    )
+    .sort(({ name: a }, { name: b }) =>
+      a.toLowerCase().localeCompare(b.toLowerCase())
     );
 
   // Update rule doc for each rule.

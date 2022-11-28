@@ -32,7 +32,7 @@ const configFileOptionsAll: { [key in OPTION_TYPE]: unknown } = {
   urlRuleDoc: 'https://example.com/rule-doc-url-from-config-file',
 };
 
-const cliOptionsAll: { [key in OPTION_TYPE]: string[] } = {
+const cliOptionsAll: { [key in OPTION_TYPE]: readonly string[] } = {
   [OPTION_TYPE.CHECK]: ['--check'],
 
   [OPTION_TYPE.CONFIG_EMOJI]: ['--config-emoji', 'recommended-from-cli,🚲'],

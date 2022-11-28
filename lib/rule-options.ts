@@ -7,7 +7,7 @@ import type { JSONSchema } from '@typescript-eslint/utils';
  */
 export function getAllNamedOptions(
   jsonSchema: JSONSchema.JSONSchema4
-): string[] {
+): readonly string[] {
   if (!jsonSchema) {
     return [];
   }

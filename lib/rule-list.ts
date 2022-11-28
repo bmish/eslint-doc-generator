@@ -60,7 +60,7 @@ function getConfigurationColumnValueForRule(
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: string[],
+  ignoreConfig: readonly string[],
   severityType: SEVERITY_TYPE
 ): string {
   const configsToRulesWithoutIgnored = Object.fromEntries(
@@ -88,9 +88,9 @@ function buildRuleRow(
   pathRuleDoc: string,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: string[],
+  ignoreConfig: readonly string[],
   urlRuleDoc?: string
-): string[] {
+): readonly string[] {
   const columns: {
     [key in COLUMN_TYPE]: string | (() => string);
   } = {
@@ -162,18 +162,18 @@ function buildRuleRow(
 
 function generateRulesListMarkdown(
   columns: Record<COLUMN_TYPE, boolean>,
-  details: RuleDetails[],
+  details: readonly RuleDetails[],
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   pathPlugin: string,
   pathRuleDoc: string,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: string[],
+  ignoreConfig: readonly string[],
   urlRuleDoc?: string
 ): string {
   const listHeaderRow = (
-    Object.entries(columns) as [COLUMN_TYPE, boolean][]
+    Object.entries(columns) as readonly [COLUMN_TYPE, boolean][]
   ).flatMap(([columnType, enabled]) => {
     if (!enabled) {
       return [];
@@ -189,24 +189,20 @@ function generateRulesListMarkdown(
   return markdownTable(
     [
       listHeaderRow,
-      ...details
-        .sort(({ name: a }, { name: b }) =>
-          a.toLowerCase().localeCompare(b.toLowerCase())
-        )
-        .map((rule: RuleDetails) =>
-          buildRuleRow(
-            columns,
-            rule,
-            configsToRules,
-            pluginPrefix,
-            pathPlugin,
-            pathRuleDoc,
-            pathRuleList,
-            configEmojis,
-            ignoreConfig,
-            urlRuleDoc
-          )
+      ...details.map((rule: RuleDetails) => [
+        ...buildRuleRow(
+          columns,
+          rule,
+          configsToRules,
+          pluginPrefix,
+          pathPlugin,
+          pathRuleDoc,
+          pathRuleList,
+          configEmojis,
+          ignoreConfig,
+          urlRuleDoc
         ),
+      ]),
     ],
     { align: 'l' } // Left-align headers.
   );
@@ -217,7 +213,7 @@ function generateRulesListMarkdown(
  */
 function generateRulesListMarkdownWithRuleListSplit(
   columns: Record<COLUMN_TYPE, boolean>,
-  details: RuleDetails[],
+  details: readonly RuleDetails[],
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
@@ -225,7 +221,7 @@ function generateRulesListMarkdownWithRuleListSplit(
   pathRuleDoc: string,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: string[],
+  ignoreConfig: readonly string[],
   ruleListSplit: string,
   headerLevel: number,
   urlRuleDoc?: string
@@ -323,7 +319,7 @@ function generateRulesListMarkdownWithRuleListSplit(
 }
 
 export function updateRulesList(
-  details: RuleDetails[],
+  details: readonly RuleDetails[],
   markdown: string,
   plugin: Plugin,
   configsToRules: ConfigsToRules,
@@ -332,8 +328,8 @@ export function updateRulesList(
   pathRuleList: string,
   pathPlugin: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: string[],
-  ruleListColumns: COLUMN_TYPE[],
+  ignoreConfig: readonly string[],
+  ruleListColumns: readonly COLUMN_TYPE[],
   ruleListSplit?: string,
   urlConfigs?: string,
   urlRuleDoc?: string

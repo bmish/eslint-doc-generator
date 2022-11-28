@@ -10,7 +10,7 @@ export function getConfigsThatSetARule(
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
-  ignoreConfig: string[],
+  ignoreConfig: readonly string[],
   severityType?: SEVERITY_TYPE
 ) {
   /* istanbul ignore next -- this shouldn't happen */

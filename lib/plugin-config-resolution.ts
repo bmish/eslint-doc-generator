@@ -33,7 +33,7 @@ async function resolveConfigRules(config: Config): Promise<Rules> {
 }
 
 async function resolveConfigExtends(
-  extendItems: string[] | string
+  extendItems: readonly string[] | string
 ): Promise<Rules> {
   const rules: Rules = {};
   for (const extend of Array.isArray(extendItems)
