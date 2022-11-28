@@ -38,6 +38,19 @@
 
 
 
+
+## v0.28.1 (2022-11-28)
+
+#### :bug: Bug Fix
+* [#303](https://github.com/bmish/eslint-doc-generator/pull/303) Use TypeScript `readonly` modifier for external/array types ([@bmish](https://github.com/bmish))
+
+#### :memo: Documentation
+* [#302](https://github.com/bmish/eslint-doc-generator/pull/302) Tweak README ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v0.28.0 (2022-11-27)
 
 #### :boom: Breaking Change
