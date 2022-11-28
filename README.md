@@ -46,7 +46,7 @@ npm i --save-dev eslint-doc-generator
 Add scripts to `package.json`:
 
 - Both a lint script to ensure everything is up-to-date in CI and an update script for contributors to run locally
-- Add any [config options](#configuration-options) in the `update:eslint-docs` script only
+- Add any [config options](#configuration-options) in the `update:eslint-docs` script only (or use a [config file](#configuration-file))
 - Alternative scripts may be needed with [build tools](#build-tools) or [prettier](#prettier)
 
 ```json
@@ -54,7 +54,7 @@ Add scripts to `package.json`:
   "scripts": {
     "lint": "npm-run-all \"lint:*\"",
     "lint:docs": "markdownlint \"**/*.md\"",
-    "lint:eslint-docs": "npm-run-all \"update:eslint-docs -- --check\"",
+    "lint:eslint-docs": "npm run update:eslint-docs -- --check",
     "lint:js": "eslint .",
     "update:eslint-docs": "eslint-doc-generator"
   }
@@ -68,7 +68,7 @@ Delete any old rules list from your `README.md`. A new one will be automatically
 <!-- end auto-generated rules list -->
 ```
 
-Delete any old recommended/fixable/etc. notices from your rule docs. A new title and notices will be automatically added to the top of each rule doc (along with a marker comment if it doesn't exist yet).
+Delete any old recommended/fixable/etc. notices from your rule docs. A new title and notices will be automatically added to the top of each rule doc (along with a marker comment if it doesn't already exist).
 
 ```md
 <!-- end auto-generated rule header -->
@@ -116,7 +116,9 @@ And how it looks:
 
 These can be provided as CLI options or as [config file](#configuration-file) options. All options are optional.
 
-There's also an optional path argument if you need to point the CLI to an ESLint plugin directory that isn't just the current directory.
+The CLI has an optional path argument if you need to point the CLI to an ESLint plugin directory that isn't just the current directory.
+
+There's also a `postprocess` option that's only available via a [config file](#configuration-file).
 
 | Name | Description |
 | :-- | :-- |
@@ -151,14 +153,14 @@ Where `no-foo` is the rule name, `Disallow use of foo` is the rule description, 
 
 ### Configuration file
 
-There are a few ways to create a config file:
+There are a few ways to create a config file (as an alternative to passing the options via CLI):
 
 - An object exported by `.eslint-doc-generatorrc.js`, `.eslint-doc-generatorrc.json`, or any other config file format/name supported by [cosmiconfig](https://github.com/davidtheclark/cosmiconfig#searchplaces)
 - An object under the `eslint-doc-generator` key in `package.json`
 
 Config files support all the [CLI options](#configuration-options) but in camelCase.
 
-Using a JavaScript-based config file also allows you to provide a `postprocess` function to be called with the generated content and file path for each processed file. Useful for applying custom transformations such as formatting with tools like [`prettier`](#prettier).
+Using a JavaScript-based config file also allows you to provide a `postprocess` function to be called with the generated content and file path for each processed file. This is useful for applying custom transformations such as formatting with tools like prettier (see [prettier example](#prettier)).
 
 Example `.eslint-doc-generatorrc.js`:
 
@@ -175,7 +177,7 @@ module.exports = config;
 
 ### Build tools
 
-If you have a build step for your code like [Babel](https://babeljs.io/) or [TypeScript](https://www.typescriptlang.org/), you may need to adjust your scripts to run your build before this tool:
+If you have a build step for your code like [Babel](https://babeljs.io/) or [TypeScript](https://www.typescriptlang.org/), you may need to adjust your scripts to run your build before this tool to ensure the documentation is generated from the latest plugin information:
 
 ```json
 {
@@ -194,7 +196,7 @@ const { prettier: prettierRC } = require('./package.json'); // or wherever your 
 
 /** @type {import('eslint-doc-generator').GenerateOptions} */
 const config = {
-  postprocess: content =>
+  postprocess: (content, path) =>
     prettier.format(content, { ...prettierRC, parser: 'markdown' }),
 };
 
