@@ -115,7 +115,7 @@ export type GenerateOptions = {
    * Default emojis are provided for common configs.
    * To remove a default emoji and rely on a badge instead, provide the config name without an emoji.
    */
-  readonly configEmoji?: readonly string[][];
+  readonly configEmoji?: readonly (readonly string[])[];
   /** Configs to ignore from being displayed. Often used for an `all` config. */
   readonly ignoreConfig?: readonly string[];
   /** Whether to ignore deprecated rules from being checked, displayed, or updated. Default: `false`. */

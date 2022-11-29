@@ -40,8 +40,8 @@ function collectCSV(
  * */
 function collectCSVNested(
   value: string,
-  previous: readonly string[][]
-): readonly string[][] {
+  previous: readonly (readonly string[])[]
+): readonly (readonly string[])[] {
   return [...previous, value.split(',')];
 }
 

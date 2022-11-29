@@ -15,7 +15,7 @@ import type { Plugin, ConfigEmojis } from './types.js';
  */
 export function parseConfigEmojiOptions(
   plugin: Plugin,
-  configEmoji?: readonly string[][]
+  configEmoji?: readonly (readonly string[])[]
 ): ConfigEmojis {
   const configsSeen = new Set<string>();
   const configsWithDefaultEmojiRemoved: string[] = [];
