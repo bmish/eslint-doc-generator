@@ -213,6 +213,21 @@ Alternatively, you can configure your scripts to run `prettier` after this tool:
 }
 ```
 
+## Semantic versioning policy
+
+This tool follows [semantic versioning](https://semver.org/).
+
+New features will be released as a minor version, while bug fixes will be released as a patch version.
+
+Breaking changes will be released as a major version and include:
+
+- Changing an option default
+- Renaming or removing an option
+- Other backwards-incompatible changes to the CLI / API
+- Raising Node or ESLint version requirements
+
+Tweaks to the generated documentation output can take place in any type of release including minor and patch versions. This can break your build, as even a small formatting change will cause a diff, but you can simply re-run the tool to fix.
+
 ## Related
 
 - [eslint-plugin-eslint-plugin](https://github.com/eslint-community/eslint-plugin-eslint-plugin) - Linter for ESLint plugins ([related list](https://eslint.org/docs/latest/developer-guide/working-with-plugins#linting))
