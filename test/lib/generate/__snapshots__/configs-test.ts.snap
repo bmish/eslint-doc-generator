@@ -114,7 +114,9 @@ exports[`generate (configs) rules that are disabled or set to warn generates the
 exports[`generate (configs) rules that are disabled or set to warn generates the documentation 4`] = `
 "# Description of no-baz (\`test/no-baz\`)
 
-💼🚫 This rule is enabled in the ✅ \`recommended\` config. This rule is _disabled_ in the \`other\` config.
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+🚫 This rule is _disabled_ in the \`other\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -211,7 +213,9 @@ exports[`generate (configs) rules that are disabled or set to warn, two configs 
 exports[`generate (configs) rules that are disabled or set to warn, two configs present generates the documentation 2`] = `
 "# Description of no-foo (\`test/no-foo\`)
 
-⚠️🚫 This rule _warns_ in the ✅ \`recommended\` config. This rule is _disabled_ in the ⌨️ \`typescript\` config.
+⚠️ This rule _warns_ in the ✅ \`recommended\` config.
+
+🚫 This rule is _disabled_ in the ⌨️ \`typescript\` config.
 
 <!-- end auto-generated rule header -->
 "
