@@ -189,8 +189,8 @@ function generateRulesListMarkdown(
   return markdownTable(
     [
       listHeaderRow,
-      ...details.map((rule: RuleDetails) => [
-        ...buildRuleRow(
+      ...details.map((rule: RuleDetails) =>
+        buildRuleRow(
           columns,
           rule,
           configsToRules,
@@ -201,8 +201,8 @@ function generateRulesListMarkdown(
           configEmojis,
           ignoreConfig,
           urlRuleDoc
-        ),
-      ]),
+        )
+      ),
     ],
     { align: 'l' } // Left-align headers.
   );
