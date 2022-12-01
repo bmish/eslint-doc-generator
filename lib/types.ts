@@ -83,6 +83,9 @@ export enum COLUMN_TYPE {
   TYPE = 'type',
 }
 
+/**
+ * CLI/config file options.
+ */
 export enum OPTION_TYPE {
   CHECK = 'check',
   CONFIG_EMOJI = 'configEmoji',
@@ -104,7 +107,6 @@ export enum OPTION_TYPE {
 }
 
 // JSDocs for options should be kept in sync with README.md and the CLI runner in cli.ts.
-
 /** The type for the config file (e.g. `.eslint-doc-generatorrc.js`) and internal `generate()` function. */
 export type GenerateOptions = {
   /** Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. Default: `false`. */
@@ -129,6 +131,7 @@ export type GenerateOptions = {
   /**
    * Function to be called with the generated content and file path for each processed file.
    * Useful for applying custom transformations such as formatting with tools like prettier.
+   * Only available via a JavaScript config file.
    */
   readonly postprocess?: (
     content: string,
