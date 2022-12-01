@@ -174,9 +174,7 @@ describe('generate (--rule-doc-notices)', function () {
     it('has no issues', async function () {
       await expect(
         generate('.', {
-          // @ts-expect-error -- testing string value instead of enum
           ruleDocNotices: ['type'],
-          // @ts-expect-error -- testing string value instead of enum
           ruleListColumns: ['name'],
         })
       ).resolves.toBeUndefined();
