@@ -51,6 +51,7 @@
     "commander": "^9.4.0",
     "cosmiconfig": "^8.0.0",
     "deepmerge": "^4.2.2",
+    "dot-prop": "^7.2.0",
     "jest-diff": "^29.2.1",
     "markdown-table": "^3.0.3",
     "type-fest": "^3.0.0"
