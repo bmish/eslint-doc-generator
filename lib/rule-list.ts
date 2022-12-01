@@ -26,7 +26,8 @@ import type {
 import { EMOJIS_TYPE, RULE_TYPE } from './rule-type.js';
 import { hasOptions } from './rule-options.js';
 import { getLinkToRule } from './rule-link.js';
-import { camelCaseStringToTitle, isCamelCase } from './string.js';
+import { capitalizeOnlyFirstLetter } from './string.js';
+import { noCase } from 'no-case';
 import { getProperty } from 'dot-prop';
 
 function getPropertyFromRule(
@@ -276,15 +277,12 @@ function generateRulesListMarkdownWithRuleListSplit(
 
     // Turn ruleListSplit into a title.
     // E.g. meta.docs.requiresTypeChecking to "Requires Type Checking".
-    // TODO: handle other types of variable casing.
     const ruleListSplitParts = ruleListSplit.split('.');
     const ruleListSplitFinalPart =
       ruleListSplitParts[ruleListSplitParts.length - 1];
-    const ruleListSplitTitle = isCamelCase(ruleListSplitFinalPart)
-      ? camelCaseStringToTitle(
-          ruleListSplitParts[ruleListSplitParts.length - 1]
-        )
-      : ruleListSplitFinalPart;
+    const ruleListSplitTitle = noCase(ruleListSplitFinalPart, {
+      transform: (str) => capitalizeOnlyFirstLetter(str),
+    });
 
     parts.push(
       `${'#'.repeat(headerLevel)} ${

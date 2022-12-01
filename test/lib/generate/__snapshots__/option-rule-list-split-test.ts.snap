@@ -49,7 +49,7 @@ exports[`generate (--rule-list-split) by type splits the list 1`] = `
 "
 `;
 
-exports[`generate (--rule-list-split) ignores case splits the list 1`] = `
+exports[`generate (--rule-list-split) ignores case when sorting headers splits the list 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -75,7 +75,45 @@ exports[`generate (--rule-list-split) ignores case splits the list 1`] = `
 "
 `;
 
-exports[`generate (--rule-list-split) with boolean splits the list 1`] = `
+exports[`generate (--rule-list-split) with boolean (CONSTANT_CASE) splits the list with the right header 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           |
+| :----------------------------- |
+| [no-bar](docs/rules/no-bar.md) |
+| [no-baz](docs/rules/no-baz.md) |
+
+### Hello World
+
+| Name                           |
+| :----------------------------- |
+| [no-foo](docs/rules/no-foo.md) |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (--rule-list-split) with boolean (PascalCase) splits the list with the right header 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           |
+| :----------------------------- |
+| [no-bar](docs/rules/no-bar.md) |
+| [no-baz](docs/rules/no-baz.md) |
+
+### Hello World
+
+| Name                           |
+| :----------------------------- |
+| [no-foo](docs/rules/no-foo.md) |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (--rule-list-split) with boolean (camelCase) splits the list with the right header 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -91,6 +129,43 @@ exports[`generate (--rule-list-split) with boolean splits the list 1`] = `
 | Name                           | 💡 |
 | :----------------------------- | :- |
 | [no-foo](docs/rules/no-foo.md) | 💡 |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (--rule-list-split) with boolean (snake_case) splits the list with the right header 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           |
+| :----------------------------- |
+| [no-bar](docs/rules/no-bar.md) |
+| [no-baz](docs/rules/no-baz.md) |
+
+### Hello World
+
+| Name                           |
+| :----------------------------- |
+| [no-foo](docs/rules/no-foo.md) |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (--rule-list-split) with boolean (unknown variable type) splits the list and does the best it can with the header 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           |
+| :----------------------------- |
+| [no-foo](docs/rules/no-foo.md) |
+
+### Foo Bar Biz Baz3b Oz
+
+| Name                           |
+| :----------------------------- |
+| [no-bar](docs/rules/no-bar.md) |
 
 <!-- end auto-generated rules list -->
 "
@@ -162,22 +237,4 @@ exports[`generate (--rule-list-split) with only a title in the rules file uses t
 | [no-foo](docs/rules/no-foo.md) |
 
 <!-- end auto-generated rules list -->"
-`;
-
-exports[`generate (--rule-list-split) with unknown variable type splits the list but does not attempt to convert variable name to title 1`] = `
-"## Rules
-<!-- begin auto-generated rules list -->
-
-| Name                           |
-| :----------------------------- |
-| [no-foo](docs/rules/no-foo.md) |
-
-### foo_barBIZ-baz3bOz
-
-| Name                           |
-| :----------------------------- |
-| [no-bar](docs/rules/no-bar.md) |
-
-<!-- end auto-generated rules list -->
-"
 `;
