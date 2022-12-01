@@ -40,6 +40,16 @@
 
 
 
+
+## v1.0.2 (2022-12-01)
+
+#### :bug: Bug Fix
+* [#322](https://github.com/bmish/eslint-doc-generator/pull/322) Use string union types instead of enums for better TypeScript compatibility with public config file type ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v1.0.1 (2022-12-01)
 
 #### :bug: Bug Fix
