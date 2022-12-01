@@ -39,6 +39,25 @@
 
 
 
+
+## v1.0.1 (2022-12-01)
+
+#### :bug: Bug Fix
+* [#317](https://github.com/bmish/eslint-doc-generator/pull/317) More robust handling of boolean-equivalent strings for parsing boolean CLI options and boolean properties in `--rule-list-split` ([@bmish](https://github.com/bmish))
+* [#314](https://github.com/bmish/eslint-doc-generator/pull/314) Handle additional types of variable casing when creating sub-list headers with `--rule-list-split` ([@bmish](https://github.com/bmish))
+* [#309](https://github.com/bmish/eslint-doc-generator/pull/309) Fully utilize `readonly` modifier for nested array types ([@bmish](https://github.com/bmish))
+
+#### :memo: Documentation
+* [#312](https://github.com/bmish/eslint-doc-generator/pull/312) Add semantic versioning policy ([@bmish](https://github.com/bmish))
+
+#### :house: Internal
+* [#316](https://github.com/bmish/eslint-doc-generator/pull/316) Use external library to retrieve an arbitrary property from a rule ([@bmish](https://github.com/bmish))
+* [#313](https://github.com/bmish/eslint-doc-generator/pull/313) Avoid recreating `readonly` array when passing to markdown-table ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v1.0.0 (2022-11-28)
 
 Now considered stable and already successfully adopted in many of the top ESLint plugins.
