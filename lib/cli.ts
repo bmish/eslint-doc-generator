@@ -11,6 +11,7 @@ import {
   OPTION_TYPE,
 } from './types.js';
 import { getCurrentPackageVersion } from './package-json.js';
+import { boolean, isBooleanable } from 'boolean';
 
 /**
  * Used for collecting repeated CLI options into an array.
@@ -46,7 +47,7 @@ function collectCSVNested(
 }
 
 function parseBoolean(value: string | undefined): boolean {
-  return ['true', undefined].includes(value);
+  return value === undefined || (isBooleanable(value) && boolean(value));
 }
 
 /**
