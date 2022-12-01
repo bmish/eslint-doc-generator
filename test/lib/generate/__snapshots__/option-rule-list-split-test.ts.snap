@@ -171,6 +171,34 @@ exports[`generate (--rule-list-split) with boolean (unknown variable type) split
 "
 `;
 
+exports[`generate (--rule-list-split) with boolean (various boolean equivalent values) splits the list 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                                         |
+| :------------------------------------------- |
+| [no](docs/rules/no.md)                       |
+| [noEmptyString](docs/rules/noEmptyString.md) |
+| [noFalse](docs/rules/noFalse.md)             |
+| [noFalseString](docs/rules/noFalseString.md) |
+| [noNo](docs/rules/noNo.md)                   |
+| [noNull](docs/rules/noNull.md)               |
+| [noOff](docs/rules/noOff.md)                 |
+| [noUndefined](docs/rules/noUndefined.md)     |
+
+### Foo
+
+| Name                                       |
+| :----------------------------------------- |
+| [noOn](docs/rules/noOn.md)                 |
+| [noTrue](docs/rules/noTrue.md)             |
+| [noTrueString](docs/rules/noTrueString.md) |
+| [noYes](docs/rules/noYes.md)               |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
 exports[`generate (--rule-list-split) with no existing headers in file uses the proper sub-list header level 1`] = `
 "<!-- begin auto-generated rules list -->
 

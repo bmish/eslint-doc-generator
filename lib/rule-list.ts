@@ -29,6 +29,24 @@ import { getLinkToRule } from './rule-link.js';
 import { capitalizeOnlyFirstLetter } from './string.js';
 import { noCase } from 'no-case';
 import { getProperty } from 'dot-prop';
+import { boolean, isBooleanable } from 'boolean';
+
+function isBooleanableTrue(value: unknown): boolean {
+  return isBooleanable(value) && boolean(value);
+}
+
+function isBooleanableFalse(value: unknown): boolean {
+  return isBooleanable(value) && !boolean(value);
+}
+
+function isConsideredFalse(value: unknown): boolean {
+  return (
+    value === undefined ||
+    value === null ||
+    value === '' ||
+    isBooleanableFalse(value)
+  );
+}
 
 function getPropertyFromRule(
   plugin: Plugin,
@@ -222,20 +240,9 @@ function generateRulesListMarkdownWithRuleListSplit(
       getPropertyFromRule(plugin, detail.name, ruleListSplit)
     )
   );
+  const valuesAll = [...values.values()];
 
-  // Common values for boolean properties.
-  const ENABLED_VALUES = new Set([true, 'true', 'on', 'yes']);
-  const DISABLED_VALUES = new Set([
-    undefined,
-    null, // eslint-disable-line unicorn/no-null
-    false,
-    '',
-    'false',
-    'no',
-    'off',
-  ]);
-
-  if (values.size === 1 && DISABLED_VALUES.has([...values.values()][0])) {
+  if (values.size === 1 && isConsideredFalse(valuesAll[0])) {
     throw new Error(
       `No rules found with --rule-list-split property "${ruleListSplit}".`
     );
@@ -244,11 +251,9 @@ function generateRulesListMarkdownWithRuleListSplit(
   const parts: string[] = [];
 
   // Show any rules that don't have a value for this rule-list-split property first, or for which the boolean property is off.
-  if ([...DISABLED_VALUES.values()].some((val) => values.has(val))) {
+  if (valuesAll.some((val) => isConsideredFalse(val))) {
     const rulesForThisValue = details.filter((detail) =>
-      DISABLED_VALUES.has(
-        getPropertyFromRule(plugin, detail.name, ruleListSplit)
-      )
+      isConsideredFalse(getPropertyFromRule(plugin, detail.name, ruleListSplit))
     );
     parts.push(
       generateRulesListMarkdown(
@@ -267,13 +272,23 @@ function generateRulesListMarkdownWithRuleListSplit(
   }
 
   // For each possible non-disabled value, show a header and list of corresponding rules.
-  for (const value of [...values.values()]
-    .filter((value) => !DISABLED_VALUES.has(value))
-    .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))) {
-    const rulesForThisValue = details.filter(
-      (detail) =>
-        getPropertyFromRule(plugin, detail.name, ruleListSplit) === value
-    );
+  const valuesNotFalseAndNotTrue = valuesAll.filter(
+    (val) => !isConsideredFalse(val) && !isBooleanableTrue(val)
+  );
+  const valuesTrue = valuesAll.filter((val) => isBooleanableTrue(val));
+  const valuesNew = [
+    ...valuesNotFalseAndNotTrue,
+    ...(valuesTrue.length > 0 ? [true] : []), // If there are multiple true values, combine them all into one.
+  ];
+  for (const value of valuesNew.sort((a, b) =>
+    String(a).toLowerCase().localeCompare(String(b).toLowerCase())
+  )) {
+    const rulesForThisValue = details.filter((detail) => {
+      const property = getPropertyFromRule(plugin, detail.name, ruleListSplit);
+      return (
+        property === value || (value === true && isBooleanableTrue(property))
+      );
+    });
 
     // Turn ruleListSplit into a title.
     // E.g. meta.docs.requiresTypeChecking to "Requires Type Checking".
@@ -286,7 +301,7 @@ function generateRulesListMarkdownWithRuleListSplit(
 
     parts.push(
       `${'#'.repeat(headerLevel)} ${
-        ENABLED_VALUES.has(value) ? ruleListSplitTitle : value
+        isBooleanableTrue(value) ? ruleListSplitTitle : value
       }`,
       generateRulesListMarkdown(
         columns,

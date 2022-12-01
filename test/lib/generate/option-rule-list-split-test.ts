@@ -341,6 +341,72 @@ describe('generate (--rule-list-split)', function () {
     });
   });
 
+  describe('with boolean (various boolean equivalent values)', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              // true
+              'noOn': { meta: { foo: 'on' }, create(context) {} },
+              'noYes': { meta: { foo: 'yes' }, create(context) {} },
+              'noTrueString': { meta: { foo: 'true' }, create(context) {} },
+              'noTrue': { meta: { foo: true }, create(context) {} },
+
+              // false
+              'no': { meta: {  }, create(context) {} },
+              'noUndefined': { meta: { foo: undefined }, create(context) {} },
+              'noOff': { meta: { foo: 'off' }, create(context) {} },
+              'noNo': { meta: { foo: 'no' }, create(context) {} },
+              'noFalseString': { meta: { foo: 'false' }, create(context) {} },
+              'noFalse': { meta: { foo: false }, create(context) {} },
+              'noNull': { meta: { foo: null }, create(context) {} },
+              'noEmptyString': { meta: { foo: '' }, create(context) {} },
+            },
+          };`,
+
+        'README.md': '## Rules\n',
+
+        // true
+        'docs/rules/noOn.md': '',
+        'docs/rules/noYes.md': '',
+        'docs/rules/noTrueString.md': '',
+        'docs/rules/noTrue.md': '',
+
+        // false
+        'docs/rules/no.md': '',
+        'docs/rules/noUndefined.md': '',
+        'docs/rules/noOff.md': '',
+        'docs/rules/noNo.md': '',
+        'docs/rules/noFalseString.md': '',
+        'docs/rules/noFalse.md': '',
+        'docs/rules/noNull.md': '',
+        'docs/rules/noEmptyString.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('splits the list', async function () {
+      await generate('.', {
+        ruleListSplit: 'meta.foo',
+      });
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
   describe('with no existing headers in file', function () {
     beforeEach(function () {
       mockFs({
