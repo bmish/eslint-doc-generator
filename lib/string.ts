@@ -1,5 +1,3 @@
-import camelCase from 'camelcase';
-
 export function countOccurrencesInString(str: string, substring: string) {
   return str.split(substring).length - 1;
 }
@@ -15,13 +13,8 @@ export function removeTrailingPeriod(str: string) {
 }
 
 /**
- * Example: theWeatherIsNice => The Weather Is Nice
+ * Example: FOO => Foo, foo => Foo
  */
-export function camelCaseStringToTitle(str: string) {
-  const text = str.replace(/([A-Z])/gu, ' $1');
-  return text.charAt(0).toUpperCase() + text.slice(1);
-}
-
-export function isCamelCase(str: string) {
-  return camelCase(str) === str;
+export function capitalizeOnlyFirstLetter(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }

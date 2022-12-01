@@ -133,7 +133,7 @@ describe('generate (--rule-list-split)', function () {
     });
   });
 
-  describe('with boolean', function () {
+  describe('with boolean (camelCase)', function () {
     beforeEach(function () {
       mockFs({
         'package.json': JSON.stringify({
@@ -143,13 +143,13 @@ describe('generate (--rule-list-split)', function () {
         }),
 
         'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { meta: { hasSuggestions: true }, create(context) {} },
-                  'no-bar': { meta: {  }, create(context) {} },
-                  'no-baz': { meta: { hasSuggestions: false }, create(context) {} },
-                },
-              };`,
+          export default {
+            rules: {
+              'no-foo': { meta: { hasSuggestions: true }, create(context) {} },
+              'no-bar': { meta: {  }, create(context) {} },
+              'no-baz': { meta: { hasSuggestions: false }, create(context) {} },
+            },
+          };`,
 
         'README.md': '## Rules\n',
 
@@ -167,9 +167,175 @@ describe('generate (--rule-list-split)', function () {
       jest.resetModules();
     });
 
-    it('splits the list', async function () {
+    it('splits the list with the right header', async function () {
       await generate('.', {
         ruleListSplit: 'meta.hasSuggestions',
+      });
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
+  describe('with boolean (snake_case)', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': { meta: { hello_world: true }, create(context) {} },
+              'no-bar': { meta: {  }, create(context) {} },
+              'no-baz': { meta: { hello_world: false }, create(context) {} },
+            },
+          };`,
+
+        'README.md': '## Rules\n',
+
+        'docs/rules/no-foo.md': '',
+        'docs/rules/no-bar.md': '',
+        'docs/rules/no-baz.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('splits the list with the right header', async function () {
+      await generate('.', {
+        ruleListSplit: 'meta.hello_world',
+      });
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
+  describe('with boolean (PascalCase)', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': { meta: { HelloWorld: true }, create(context) {} },
+              'no-bar': { meta: {  }, create(context) {} },
+              'no-baz': { meta: { HelloWorld: false }, create(context) {} },
+            },
+          };`,
+
+        'README.md': '## Rules\n',
+
+        'docs/rules/no-foo.md': '',
+        'docs/rules/no-bar.md': '',
+        'docs/rules/no-baz.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('splits the list with the right header', async function () {
+      await generate('.', {
+        ruleListSplit: 'meta.HelloWorld',
+      });
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
+  describe('with boolean (CONSTANT_CASE)', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': { meta: { HELLO_WORLD: true }, create(context) {} },
+              'no-bar': { meta: {  }, create(context) {} },
+              'no-baz': { meta: { HELLO_WORLD: false }, create(context) {} },
+            },
+          };`,
+
+        'README.md': '## Rules\n',
+
+        'docs/rules/no-foo.md': '',
+        'docs/rules/no-bar.md': '',
+        'docs/rules/no-baz.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('splits the list with the right header', async function () {
+      await generate('.', {
+        ruleListSplit: 'meta.HELLO_WORLD',
+      });
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
+  describe('with boolean (unknown variable type)', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': { 'foo_barBIZ-baz3bOz': false, meta: { }, create(context) {} },
+              'no-bar': { 'foo_barBIZ-baz3bOz': true, meta: { }, create(context) {} },
+            },
+          };`,
+
+        'README.md': '## Rules\n',
+
+        'docs/rules/no-foo.md': '',
+        'docs/rules/no-bar.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('splits the list and does the best it can with the header', async function () {
+      await generate('.', {
+        ruleListSplit: 'foo_barBIZ-baz3bOz',
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
     });
@@ -257,7 +423,7 @@ describe('generate (--rule-list-split)', function () {
     });
   });
 
-  describe('ignores case', function () {
+  describe('ignores case when sorting headers', function () {
     beforeEach(function () {
       mockFs({
         'package.json': JSON.stringify({
@@ -294,46 +460,6 @@ describe('generate (--rule-list-split)', function () {
     it('splits the list', async function () {
       await generate('.', {
         ruleListSplit: 'meta.foo',
-      });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-    });
-  });
-
-  describe('with unknown variable type', function () {
-    beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { 'foo_barBIZ-baz3bOz': false, meta: { }, create(context) {} },
-                  'no-bar': { 'foo_barBIZ-baz3bOz': true, meta: { }, create(context) {} },
-                },
-              };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
-    });
-
-    afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
-    });
-
-    it('splits the list but does not attempt to convert variable name to title', async function () {
-      await generate('.', {
-        ruleListSplit: 'foo_barBIZ-baz3bOz',
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
     });
