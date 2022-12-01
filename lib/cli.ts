@@ -58,6 +58,7 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
   const explorerResults = await explorer.search();
   if (explorerResults && !explorerResults.isEmpty) {
     // Validate schema for config file.
+
     const schemaStringArray = {
       type: 'array',
       uniqueItems: true,

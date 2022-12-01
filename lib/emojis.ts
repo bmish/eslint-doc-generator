@@ -55,6 +55,8 @@ export const EMOJI_TYPE = '🗂️';
 // Deprecated.
 export const EMOJI_DEPRECATED = '❌';
 
+// The user is not allowed to specify a reserved emoji to represent their config because we use these emojis for other purposes.
+// Note that the default emojis for common configs are intentionally not reserved.
 export const RESERVED_EMOJIS = [
   ...Object.values(EMOJI_CONFIG_FROM_SEVERITY),
   ...Object.values(EMOJIS_TYPE),
