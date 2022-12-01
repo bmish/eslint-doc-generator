@@ -27,6 +27,7 @@ import { EMOJIS_TYPE, RULE_TYPE } from './rule-type.js';
 import { hasOptions } from './rule-options.js';
 import { getLinkToRule } from './rule-link.js';
 import { camelCaseStringToTitle, isCamelCase } from './string.js';
+import { getProperty } from 'dot-prop';
 
 function getPropertyFromRule(
   plugin: Plugin,
@@ -41,18 +42,7 @@ function getPropertyFromRule(
   }
 
   const rule = plugin.rules[ruleName];
-
-  // Loop through all the nested property parts.
-  const parts = property.split('.');
-  // @ts-expect-error - Could be non-standard property on a function-style or object-style rule.
-  let result = rule[parts[0]];
-  for (const part of parts.slice(1)) {
-    if (typeof result !== 'object') {
-      return undefined; // eslint-disable-line unicorn/no-useless-undefined -- Rule doesn't have this property.
-    }
-    result = result[part];
-  }
-  return result;
+  return getProperty(rule, property) as any; // eslint-disable-line @typescript-eslint/no-explicit-any -- This could be any type, not just undefined (https://github.com/sindresorhus/dot-prop/issues/95).
 }
 
 function getConfigurationColumnValueForRule(
