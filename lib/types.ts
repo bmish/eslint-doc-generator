@@ -143,7 +143,7 @@ export type GenerateOptions = {
    * Choices: `configs`, `deprecated`, `fixable` (off by default), `fixableAndHasSuggestions`, `hasSuggestions` (off by default), `options` (off by default), `requiresTypeChecking`, `type` (off by default).
    * Default: `['deprecated', 'configs', 'fixableAndHasSuggestions', 'requiresTypeChecking']`.
    */
-  readonly ruleDocNotices?: readonly NOTICE_TYPE[];
+  readonly ruleDocNotices?: readonly `${NOTICE_TYPE}`[];
   /** Disallowed sections in each rule doc. Exit with failure if present. */
   readonly ruleDocSectionExclude?: readonly string[];
   /** Required sections in each rule doc. Exit with failure if missing. */
@@ -158,7 +158,7 @@ export type GenerateOptions = {
    * Choices: `configsError`, `configsOff`, `configsWarn`, `deprecated`, `description`, `fixable`, `fixableAndHasSuggestions` (off by default), `hasSuggestions`, `name`, `options` (off by default), `requiresTypeChecking`, `type` (off by default).
    * Default: `['name', 'description', 'configsError', 'configsWarn', 'configsOff', 'fixable', 'hasSuggestions', 'requiresTypeChecking', 'deprecated']`.
    */
-  readonly ruleListColumns?: readonly COLUMN_TYPE[];
+  readonly ruleListColumns?: readonly `${COLUMN_TYPE}`[];
   /**
    * Rule property to split the rules list by.
    * A separate list and header will be created for each value.
