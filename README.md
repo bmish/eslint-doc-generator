@@ -30,6 +30,7 @@ Also performs [configurable](#configuration-options) section consistency checks 
   - [Badges](#badges)
 - [Compatibility](#compatibility)
   - [Build tools](#build-tools)
+  - [markdownlint](#markdownlint)
   - [prettier](#prettier)
 - [Semantic versioning policy](#semantic-versioning-policy)
 - [Related](#related)
@@ -53,7 +54,7 @@ Add scripts to `package.json`:
 
 - Both a lint script to ensure everything is up-to-date in CI and an update script for contributors to run locally
 - Add any [config options](#configuration-options) in the `update:eslint-docs` script only (or use a [config file](#configuration-file))
-- Alternative scripts may be needed with [build tools](#build-tools) or [prettier](#prettier)
+- Alternative scripts may be needed with [build tools](#build-tools), [markdownlint](#markdownlint), or [prettier](#prettier)
 
 ```json
 {
@@ -285,6 +286,10 @@ If you have a build step for your code like [Babel](https://babeljs.io/) or [Typ
   "update:eslint-docs": "npm run build && eslint-doc-generator"
 }
 ```
+
+### markdownlint
+
+The output of this tool should be compatible with the default configuration of [markdownlint](https://github.com/DavidAnson/markdownlint), which you might use to lint your markdown. If it's not, you can follow the [prettier example](#prettier) to tweak your scripts or use the `postprocess` option. See [here](https://github.com/DavidAnson/markdownlint/blob/main/helpers/README.md#applying-recommended-fixes) for an example of markdownlint's Node API for applying fixes to use in your `postprocess` function.
 
 ### prettier
 
