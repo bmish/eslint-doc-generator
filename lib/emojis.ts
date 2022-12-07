@@ -1,12 +1,13 @@
 import { SEVERITY_TYPE } from './types.js';
 import { EMOJIS_TYPE } from './rule-type.js';
 
-// Default emojis for common configs.
+// Configs.
 const EMOJI_A11Y = '♿';
 const EMOJI_ERROR = '❗';
 const EMOJI_STYLE = '🎨';
 const EMOJI_TYPESCRIPT = '⌨️';
 const EMOJI_WARNING = '🚸';
+/** Default emojis for common configs. */
 export const EMOJI_CONFIGS = {
   a11y: EMOJI_A11Y,
   accessibility: EMOJI_A11Y,
@@ -26,10 +27,11 @@ export const EMOJI_CONFIGS = {
   warnings: EMOJI_WARNING,
 };
 
-//  General configs.
+// Severities.
 export const EMOJI_CONFIG_ERROR = '💼';
 export const EMOJI_CONFIG_WARN = '⚠️';
 export const EMOJI_CONFIG_OFF = '🚫';
+/** Emoji for each config severity. */
 export const EMOJI_CONFIG_FROM_SEVERITY: {
   [key in SEVERITY_TYPE]: string;
 } = {
@@ -38,25 +40,34 @@ export const EMOJI_CONFIG_FROM_SEVERITY: {
   [SEVERITY_TYPE.off]: EMOJI_CONFIG_OFF,
 };
 
-// Fixers.
+/** Rule has an autofixer (from `meta.fixable`). */
 export const EMOJI_FIXABLE = '🔧';
+
+/** Rule provides suggestions (`meta.hasSuggestions`). */
 export const EMOJI_HAS_SUGGESTIONS = '💡';
 
-// Options.
+/** Rule options (from `meta.schema`). */
 export const EMOJI_OPTIONS = '⚙️';
 
-// TypeScript.
+/**
+ * Rule requires type-checking (from `meta.docs.requiresTypeChecking`).
+ * Should match the emoji that @typescript-eslint/eslint-plugin uses for this (https://typescript-eslint.io/rules/).
+ */
 export const EMOJI_REQUIRES_TYPE_CHECKING = '💭';
 
-// Type.
+/**
+ * Rule type (from `meta.type`).
+ * Also see EMOJIS_TYPE defined in rule-type.ts.
+ */
 export const EMOJI_TYPE = '🗂️';
-// Also see EMOJIS_TYPE defined in rule-type.ts.
 
-// Deprecated.
+/** Rule is deprecated (from `meta.deprecated`). */
 export const EMOJI_DEPRECATED = '❌';
 
-// The user is not allowed to specify a reserved emoji to represent their config because we use these emojis for other purposes.
-// Note that the default emojis for common configs are intentionally not reserved.
+/**
+ * The user is not allowed to specify a reserved emoji to represent their config because we use these emojis for other purposes.
+ * Note that the default emojis for common configs are intentionally not reserved.
+ */
 export const RESERVED_EMOJIS = [
   ...Object.values(EMOJI_CONFIG_FROM_SEVERITY),
   ...Object.values(EMOJIS_TYPE),
