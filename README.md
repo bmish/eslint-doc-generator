@@ -2,16 +2,16 @@
 
 [![npm version][npm-image]][npm-url] ![test coverage](https://img.shields.io/badge/test%20coverage-100%25-green)
 
-Automatic documentation generator for [ESLint](https://eslint.org/) plugins and rules.
+Automatic documentation generator for [ESLint](https://eslint.org/) plugins and rules. Inspired by documentation conventions from ESLint and top [ESLint plugins](https://eslint.org/docs/latest/developer-guide/working-with-plugins).
 
-Generates the following documentation based on ESLint and top [ESLint plugin](https://eslint.org/docs/latest/developer-guide/working-with-plugins) conventions:
+Generates the following documentation covering a [wide variety](#column-and-notice-types) of rule metadata:
 
 - `README.md` rules table
-- Rule doc titles and config/fixable/etc. notices
+- Rule doc titles and notices
 
-Also performs some basic section consistency checks on rule docs:
+Also performs [configurable](#configuration-options) section consistency checks on rule docs:
 
-- Contains an `## Options` / `## Config` section and mentions each named option (for rules with options)
+- Contains an `## Options` or  `## Config` section and mentions each named option (for rules with options)
 
 ## Users
 
@@ -32,7 +32,7 @@ This tool is used by popular ESLint plugins like:
 
 - Standardize documentation across thousands of ESLint plugins and rules
 - Improve the discoverability of key rule information and thus rule usability
-- Streamline the process of adding new rules by automating part of the documentation
+- Streamline the process of adding/updating rules while ensuring documentation is kept up-to-date
 - Eliminate the custom documentation scripts and tests previously built and maintained by many ESLint plugins
 
 ## Setup
@@ -132,15 +132,35 @@ There's also a `postprocess` option that's only available via a [config file](#c
 | `--init-rule-docs` | Whether to create rule doc files if they don't yet exist. Default: `false`. |
 | `--path-rule-doc` | Path to markdown file for each rule doc. Use `{name}` placeholder for the rule name. Default: `docs/rules/{name}.md`. |
 | `--path-rule-list` | Path to markdown file where the rules table list should live. Default: `README.md`. Option can be repeated. |
-| `--rule-doc-notices` | Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. Choices: `configs`, `deprecated`, `fixable` (off by default), `fixableAndHasSuggestions`, `hasSuggestions` (off by default), `options` (off by default), `requiresTypeChecking`, `type` (off by default). Default: `deprecated,configs,fixableAndHasSuggestions,requiresTypeChecking`. |
+| `--rule-doc-notices` | Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. See choices in below [table](#column-and-notice-types). Default: `deprecated,configs,fixableAndHasSuggestions,requiresTypeChecking`. |
 | `--rule-doc-section-exclude` | Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. |
 | `--rule-doc-section-include` | Required section in each rule doc. Exit with failure if missing. Option can be repeated. |
 | `--rule-doc-section-options` | Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options. Default: `true`. |
 | `--rule-doc-title-format` | The format to use for rule doc titles. Defaults to `desc-parens-prefix-name`. See choices in below [table](#--rule-doc-title-format). |
-| `--rule-list-columns` | Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. Choices: `configsError`, `configsOff`, `configsWarn`, `deprecated`, `description`, `fixable`, `fixableAndHasSuggestions` (off by default), `hasSuggestions`, `name`, `options` (off by default), `requiresTypeChecking`, `type` (off by default). Default: `name,description,configsError,configsWarn,configsOff,fixable,hasSuggestions,requiresTypeChecking,deprecated`. |
+| `--rule-list-columns` | Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. See choices in below [table](#column-and-notice-types). Default: `name,description,configsError,configsWarn,configsOff,fixable,hasSuggestions,requiresTypeChecking,deprecated`. |
 | `--rule-list-split` | Rule property to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`. |
 | `--url-configs` | Link to documentation about the ESLint configurations exported by the plugin. |
 | `--url-rule-doc` | Link to documentation for each rule. Useful when it differs from the rule doc path on disk (e.g. custom documentation site in use). Use `{name}` placeholder for the rule name. |
+
+### Column and notice types
+
+These are the types of rule metadata that are available for display in rule list columns (`--rule-list-columns`) and/or rule doc notices (`--rule-doc-notices`).
+
+| Emoji | Type | Column? | Notice? | Description |
+| --- | --- | --- | --- | --- |
+| 💼 | `configsError` | Yes | No | Whether a rule is set to `error` in a config. |
+| ⚠️ | `configsOff` | Yes | No | Whether a rule is set to `off` in a config. |
+| 🚫 | `configsWarn` | Yes | No | Whether a rule is set to `warn` in a config. |
+| 💼 | `configs` | No | Yes | What configs set a rule to what [severities](https://eslint.org/docs/latest/user-guide/configuring/rules#rule-severities). |
+| ❌ | `deprecated`  | Yes | Yes | Whether a rule is deprecated (i.e. likely to be removed/renamed in a future major version). |
+| | `description`  | Yes | No | The rule description. |
+| 🔧💡 | `fixableAndHasSuggestions` | Yes | Yes | Whether a rule is [fixable](https://eslint.org/docs/latest/developer-guide/working-with-rules#applying-fixes) and/or has [suggestions](https://eslint.org/docs/latest/developer-guide/working-with-rules#providing-suggestions). |
+| 🔧 | `fixable` | Yes | Yes | Whether a rule is [fixable](https://eslint.org/docs/latest/developer-guide/working-with-rules#applying-fixes). |
+| 💡 | `hasSuggestions` | Yes | Yes | Whether a rule has [suggestions](https://eslint.org/docs/latest/developer-guide/working-with-rules#providing-suggestions). |
+| | `name` | Yes | No | The rule name. |
+| ⚙️ | `options` | Yes | Yes | Whether a rule has [options](https://eslint.org/docs/latest/developer-guide/working-with-rules#options-schemas). |
+| 💭 | `requiresTypeChecking` | Yes | Yes | Whether a rule requires [type checking](https://typescript-eslint.io/linting/typed-linting/). |
+| 🗂️ | `type` | Yes | Yes | The rule [type](https://eslint.org/docs/latest/developer-guide/working-with-rules#rule-basics) (`problem`, `suggestion`, or `layout`). |
 
 ### `--rule-doc-title-format`
 
