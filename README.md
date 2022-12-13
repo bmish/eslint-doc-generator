@@ -16,12 +16,12 @@ Also performs [configurable](#configuration-options) section consistency checks 
 ## Table of contents<!-- omit from toc -->
 
 - [Motivation](#motivation)
-- [Users](#users)
 - [Setup](#setup)
 - [Usage](#usage)
 - [Examples](#examples)
   - [Rules list table](#rules-list-table)
   - [Rule doc notices](#rule-doc-notices)
+  - [Users](#users)
 - [Configuration options](#configuration-options)
   - [Column and notice types](#column-and-notice-types)
   - [`--rule-doc-title-format`](#--rule-doc-title-format)
@@ -39,21 +39,6 @@ Also performs [configurable](#configuration-options) section consistency checks 
 - Improve the discoverability of key rule information and thus rule usability
 - Streamline the process of adding/updating rules while ensuring documentation is kept up-to-date
 - Eliminate the custom documentation scripts and tests previously built and maintained by many ESLint plugins
-
-## Users
-
-This tool is used by popular ESLint plugins like:
-
-- [eslint-plugin-ava](https://github.com/avajs/eslint-plugin-ava#rules)
-- [eslint-plugin-ember](https://github.com/ember-cli/eslint-plugin-ember#-rules)
-- [eslint-plugin-eslint-plugin](https://github.com/eslint-community/eslint-plugin-eslint-plugin#rules)
-- [eslint-plugin-import](https://github.com/import-js/eslint-plugin-import#rules)
-- [eslint-plugin-jest](https://github.com/jest-community/eslint-plugin-jest#rules)
-- [eslint-plugin-jsx-a11y](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y#supported-rules)
-- [eslint-plugin-promise](https://github.com/eslint-community/eslint-plugin-promise#rules)
-- [eslint-plugin-qunit](https://github.com/platinumazure/eslint-plugin-qunit#rules)
-- [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react#list-of-supported-rules)
-- [eslint-plugin-unicorn](https://github.com/sindresorhus/eslint-plugin-unicorn#rules)
 
 ## Setup
 
@@ -118,6 +103,21 @@ See the generated rules table and legend in our example [`README.md`](./docs/exa
 ### Rule doc notices
 
 See the generated rule doc title and notices in our example rule docs [`no-foo.md`](./docs/examples/eslint-plugin-test/docs/rules/no-foo.md), [`prefer-bar.md`](./docs/examples/eslint-plugin-test/docs/rules/prefer-bar.md), [`require-baz.md`](./docs/examples/eslint-plugin-test/docs/rules/require-baz.md).
+
+### Users
+
+This tool is used by popular ESLint plugins like:
+
+- [eslint-plugin-ava](https://github.com/avajs/eslint-plugin-ava#rules)
+- [eslint-plugin-ember](https://github.com/ember-cli/eslint-plugin-ember#-rules)
+- [eslint-plugin-eslint-plugin](https://github.com/eslint-community/eslint-plugin-eslint-plugin#rules)
+- [eslint-plugin-import](https://github.com/import-js/eslint-plugin-import#rules)
+- [eslint-plugin-jest](https://github.com/jest-community/eslint-plugin-jest#rules)
+- [eslint-plugin-jsx-a11y](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y#supported-rules)
+- [eslint-plugin-promise](https://github.com/eslint-community/eslint-plugin-promise#rules)
+- [eslint-plugin-qunit](https://github.com/platinumazure/eslint-plugin-qunit#rules)
+- [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react#list-of-supported-rules)
+- [eslint-plugin-unicorn](https://github.com/sindresorhus/eslint-plugin-unicorn#rules)
 
 ## Configuration options
 
