@@ -1,8 +1,8 @@
-# eslint-doc-generator
+# eslint-doc-generator<!-- omit from toc -->
 
 [![npm version][npm-image]][npm-url] ![test coverage](https://img.shields.io/badge/test%20coverage-100%25-green)
 
-Automatic documentation generator for [ESLint](https://eslint.org/) plugins and rules. Inspired by documentation conventions from ESLint and top [ESLint plugins](https://eslint.org/docs/latest/developer-guide/working-with-plugins).
+Automatic documentation generator for [ESLint](https://eslint.org/) plugins and rules. Inspired by documentation conventions from ESLint and [top](#users) ESLint [plugins](https://eslint.org/docs/latest/developer-guide/working-with-plugins).
 
 Generates the following documentation covering a [wide variety](#column-and-notice-types) of rule metadata:
 
@@ -12,6 +12,33 @@ Generates the following documentation covering a [wide variety](#column-and-noti
 Also performs [configurable](#configuration-options) section consistency checks on rule docs:
 
 - Contains an `## Options` or  `## Config` section and mentions each named option (for rules with options)
+
+## Table of contents<!-- omit from toc -->
+
+- [Motivation](#motivation)
+- [Users](#users)
+- [Setup](#setup)
+- [Usage](#usage)
+- [Examples](#examples)
+  - [Rules list table](#rules-list-table)
+  - [Rule doc notices](#rule-doc-notices)
+- [Configuration options](#configuration-options)
+  - [Column and notice types](#column-and-notice-types)
+  - [`--rule-doc-title-format`](#--rule-doc-title-format)
+  - [Configuration file](#configuration-file)
+  - [Badges](#badges)
+- [Compatibility](#compatibility)
+  - [Build tools](#build-tools)
+  - [prettier](#prettier)
+- [Semantic versioning policy](#semantic-versioning-policy)
+- [Related](#related)
+
+## Motivation
+
+- Standardize documentation across thousands of ESLint plugins and rules
+- Improve the discoverability of key rule information and thus rule usability
+- Streamline the process of adding/updating rules while ensuring documentation is kept up-to-date
+- Eliminate the custom documentation scripts and tests previously built and maintained by many ESLint plugins
 
 ## Users
 
@@ -27,13 +54,6 @@ This tool is used by popular ESLint plugins like:
 - [eslint-plugin-qunit](https://github.com/platinumazure/eslint-plugin-qunit#rules)
 - [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react#list-of-supported-rules)
 - [eslint-plugin-unicorn](https://github.com/sindresorhus/eslint-plugin-unicorn#rules)
-
-## Motivation
-
-- Standardize documentation across thousands of ESLint plugins and rules
-- Improve the discoverability of key rule information and thus rule usability
-- Streamline the process of adding/updating rules while ensuring documentation is kept up-to-date
-- Eliminate the custom documentation scripts and tests previously built and maintained by many ESLint plugins
 
 ## Setup
 
@@ -87,7 +107,7 @@ Run the script from `package.json` to start out or any time you add a rule or up
 npm run update:eslint-docs
 ```
 
-## Example
+## Examples
 
 For examples, see our [users](#users) or the in-house examples below. Note that the in-house examples intentionally show all possible columns and notices.
 
@@ -98,22 +118,6 @@ See the generated rules table and legend in our example [`README.md`](./docs/exa
 ### Rule doc notices
 
 See the generated rule doc title and notices in our example rule docs [`no-foo.md`](./docs/examples/eslint-plugin-test/docs/rules/no-foo.md), [`prefer-bar.md`](./docs/examples/eslint-plugin-test/docs/rules/prefer-bar.md), [`require-baz.md`](./docs/examples/eslint-plugin-test/docs/rules/require-baz.md).
-
-## Badge
-
-While config emojis are the recommended representations of configs that a rule belongs to (see [`--config-emoji`](#configuration-options)), you can alternatively define badges for configs at the bottom of your `README.md`.
-
-Here's a badge for a custom `fun` config that displays in blue:
-
-```md
-[badge-fun]: https://img.shields.io/badge/-fun-blue.svg
-```
-
-And how it looks:
-
-![badge-fun][]
-
-[badge-fun]: https://img.shields.io/badge/-fun-blue.svg
 
 ## Configuration options
 
@@ -126,7 +130,7 @@ There's also a `postprocess` option that's only available via a [config file](#c
 | Name | Description |
 | :-- | :-- |
 | `--check` | Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. Default: `false`. |
-| `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Default emojis are provided for [common configs](./lib/emojis.ts). To remove a default emoji and rely on a [badge](#badge) instead, provide the config name without an emoji. Option can be repeated. |
+| `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Default emojis are provided for [common configs](./lib/emojis.ts). To remove a default emoji and rely on a [badge](#badges) instead, provide the config name without an emoji. Option can be repeated. |
 | `--ignore-config` | Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. |
 | `--ignore-deprecated-rules` | Whether to ignore deprecated rules from being checked, displayed, or updated. Default: `false`. |
 | `--init-rule-docs` | Whether to create rule doc files if they don't yet exist. Default: `false`. |
@@ -195,6 +199,22 @@ const config = {
 
 module.exports = config;
 ```
+
+### Badges
+
+While config emojis are the recommended representations of configs that a rule belongs to (see [`--config-emoji`](#configuration-options)), you can alternatively define badges for configs at the bottom of your `README.md`.
+
+Here's a badge for a custom `fun` config that displays in blue:
+
+```md
+[badge-fun]: https://img.shields.io/badge/-fun-blue.svg
+```
+
+And how it looks:
+
+![badge-fun][]
+
+[badge-fun]: https://img.shields.io/badge/-fun-blue.svg
 
 ## Compatibility
 
