@@ -23,7 +23,7 @@ import type {
   ConfigsToRules,
   ConfigEmojis,
 } from './types.js';
-import { EMOJIS_TYPE, RULE_TYPE } from './rule-type.js';
+import { EMOJIS_TYPE } from './rule-type.js';
 import { hasOptions } from './rule-options.js';
 import { getLinkToRule } from './rule-link.js';
 import { capitalizeOnlyFirstLetter } from './string.js';
@@ -61,7 +61,7 @@ function getPropertyFromRule(
   }
 
   const rule = plugin.rules[ruleName];
-  return getProperty(rule, property) as any; // eslint-disable-line @typescript-eslint/no-explicit-any -- This could be any type, not just undefined (https://github.com/sindresorhus/dot-prop/issues/95).
+  return getProperty(rule, property) as unknown; // TODO: Incorrectly typed as undefined. This could be any type, not just undefined (https://github.com/sindresorhus/dot-prop/issues/95).
 }
 
 function getConfigurationColumnValueForRule(
@@ -153,7 +153,7 @@ function buildRuleRow(
     [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: rule.requiresTypeChecking
       ? EMOJI_REQUIRES_TYPE_CHECKING
       : '',
-    [COLUMN_TYPE.TYPE]: rule.type ? EMOJIS_TYPE[rule.type as RULE_TYPE] : '', // Convert union type to enum.
+    [COLUMN_TYPE.TYPE]: rule.type ? EMOJIS_TYPE[rule.type] : '',
   };
 
   // List columns using the ordering and presence of columns specified in columnsEnabled.
@@ -307,7 +307,7 @@ function generateRulesListMarkdownWithRuleListSplit(
 
     parts.push(
       `${'#'.repeat(headerLevel)} ${
-        isBooleanableTrue(value) ? ruleListSplitTitle : value
+        isBooleanableTrue(value) ? ruleListSplitTitle : value // eslint-disable-line @typescript-eslint/restrict-template-expressions -- TODO: better handling to ensure value is a string.
       }`,
       generateRulesListMarkdown(
         columns,

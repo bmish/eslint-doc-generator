@@ -17,9 +17,9 @@ function loadPackageJson(path: string): PackageJson {
   if (!existsSync(pluginPackageJsonPath)) {
     throw new Error('Could not find package.json of ESLint plugin.');
   }
-  const pluginPackageJson: PackageJson = JSON.parse(
+  const pluginPackageJson = JSON.parse(
     readFileSync(join(pluginRoot, 'package.json'), 'utf8')
-  );
+  ) as PackageJson;
 
   return pluginPackageJson;
 }
@@ -28,7 +28,7 @@ export async function loadPlugin(path: string): Promise<Plugin> {
   const pluginRoot = getPluginRoot(path);
   try {
     // Try require first which should work for CJS plugins.
-    return require(pluginRoot); // eslint-disable-line import/no-dynamic-require
+    return require(pluginRoot) as Plugin; // eslint-disable-line import/no-dynamic-require
   } catch {
     // Otherwise, for ESM plugins, we'll have to try to resolve the exact plugin entry point and import it.
     const pluginPackageJson = loadPackageJson(path);
@@ -47,6 +47,7 @@ export async function loadPlugin(path: string): Promise<Plugin> {
         ['.', 'node', 'import', 'require', 'default'];
       for (const prop of propertiesToCheck) {
         // @ts-expect-error -- The union type for the object is causing trouble.
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const value = exports[prop];
         if (typeof value === 'string') {
           pluginEntryPoint = value;
@@ -66,7 +67,9 @@ export async function loadPlugin(path: string): Promise<Plugin> {
       );
     }
 
-    const { default: plugin } = await importAbs(pluginEntryPointAbs);
+    const { default: plugin } = (await importAbs(pluginEntryPointAbs)) as {
+      default: Plugin;
+    };
     return plugin;
   }
 }
@@ -108,9 +111,9 @@ export function getCurrentPackageVersion(): string {
     ? '../package.json'
     : /* istanbul ignore next -- can't test the compiled version in test */
       '../../package.json';
-  const packageJson: PackageJson = JSON.parse(
+  const packageJson = JSON.parse(
     readFileSync(new URL(pathToPackageJson, import.meta.url), 'utf8')
-  );
+  ) as PackageJson;
   if (!packageJson.version) {
     throw new Error('Could not find package.json `version`.');
   }

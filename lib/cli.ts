@@ -127,19 +127,21 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
       );
     }
 
-    const config = explorerResults.config;
+    const config = explorerResults.config; // eslint-disable-line @typescript-eslint/no-unsafe-assignment -- Rules are disabled because we haven't applied the GenerateOptions type until after we finish validating/normalizing.
 
     // Additional validation that couldn't be handled by ajv.
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (config.postprocess && typeof config.postprocess !== 'function') {
       throw new Error('postprocess must be a function');
     }
 
     // Perform any normalization.
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (typeof config.pathRuleList === 'string') {
-      config.pathRuleList = [config.pathRuleList];
+      config.pathRuleList = [config.pathRuleList]; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
     }
 
-    return explorerResults.config;
+    return explorerResults.config as GenerateOptions;
   }
   return {};
 }
@@ -164,9 +166,9 @@ export async function run(
     )
     .option(
       '--check [boolean]',
-      `(optional) Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. (default: ${
+      `(optional) Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. (default: ${String(
         OPTION_DEFAULTS[OPTION_TYPE.CHECK]
-      })`,
+      )})`,
       parseBoolean
     )
     .option(
@@ -183,16 +185,16 @@ export async function run(
     )
     .option(
       '--ignore-deprecated-rules [boolean]',
-      `(optional) Whether to ignore deprecated rules from being checked, displayed, or updated. (default: ${
+      `(optional) Whether to ignore deprecated rules from being checked, displayed, or updated. (default: ${String(
         OPTION_DEFAULTS[OPTION_TYPE.IGNORE_DEPRECATED_RULES]
-      })`,
+      )})`,
       parseBoolean
     )
     .option(
       '--init-rule-docs [boolean]',
-      `(optional) Whether to create rule doc files if they don't yet exist. (default: ${
+      `(optional) Whether to create rule doc files if they don't yet exist. (default: ${String(
         OPTION_DEFAULTS[OPTION_TYPE.INIT_RULE_DOCS]
-      })`,
+      )})`,
       parseBoolean
     )
     .option(
@@ -213,9 +215,9 @@ export async function run(
       '--rule-doc-notices <notices>',
       `(optional) Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. (choices: "${Object.values(
         NOTICE_TYPE
-      ).join('", "')}") (default: ${
+      ).join('", "')}") (default: ${String(
         OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_NOTICES]
-      })`,
+      )})`,
       collectCSV,
       []
     )
@@ -233,9 +235,9 @@ export async function run(
     )
     .option(
       '--rule-doc-section-options [boolean]',
-      `(optional) Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options. (default: ${
+      `(optional) Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options. (default: ${String(
         OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_OPTIONS]
-      })`,
+      )})`,
       parseBoolean
     )
     .addOption(
@@ -250,9 +252,9 @@ export async function run(
       '--rule-list-columns <columns>',
       `(optional) Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. (choices: "${Object.values(
         COLUMN_TYPE
-      ).join('", "')})" (default: ${
+      ).join('", "')})" (default: ${String(
         OPTION_DEFAULTS[OPTION_TYPE.RULE_LIST_COLUMNS]
-      })`,
+      )})`,
       collectCSV,
       []
     )
@@ -268,7 +270,7 @@ export async function run(
       '--url-rule-doc <url>',
       '(optional) Link to documentation for each rule. Useful when it differs from the rule doc path on disk (e.g. custom documentation site in use). Use `{name}` placeholder for the rule name.'
     )
-    .action(async function (path, options: GenerateOptions) {
+    .action(async function (path: string, options: GenerateOptions) {
       // Load config file options and merge with CLI options.
       // CLI options take precedence.
       // For this to work, we can't have any default values from the CLI options that will override the config file options (except empty arrays, as arrays will be merged).

@@ -40,7 +40,9 @@ export function parseConfigEmojiOptions(
 
       if (!config || !emoji || extra.length > 0) {
         throw new Error(
-          `Invalid configEmoji option: ${configEmojiItem}. Expected format: config,emoji`
+          `Invalid configEmoji option: ${String(
+            configEmojiItem
+          )}. Expected format: config,emoji`
         );
       }
 

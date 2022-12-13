@@ -36,7 +36,8 @@ async function resolveConfigExtends(
   extendItems: readonly string[] | string
 ): Promise<Rules> {
   const rules: Rules = {};
-  for (const extend of Array.isArray(extendItems)
+  // eslint-disable-next-line unicorn/no-instanceof-array -- using Array.isArray() loses type information about the array.
+  for (const extend of extendItems instanceof Array
     ? extendItems
     : [extendItems]) {
     if (
@@ -47,7 +48,9 @@ async function resolveConfigExtends(
       continue;
     }
 
-    const { default: config } = await importAbs(extend);
+    const { default: config } = (await importAbs(extend)) as {
+      default: Config;
+    };
     const extendedRules = await resolveConfigRules(config);
     Object.assign(rules, extendedRules);
   }
