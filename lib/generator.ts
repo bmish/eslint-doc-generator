@@ -145,7 +145,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     options?.urlRuleDoc ?? OPTION_DEFAULTS[OPTION_TYPE.URL_RULE_DOC];
 
   // Gather details about rules.
-  const details: readonly RuleDetails[] = Object.entries(plugin.rules)
+  const ruleDetails: readonly RuleDetails[] = Object.entries(plugin.rules)
     .map(([name, rule]): RuleDetails => {
       return typeof rule === 'object'
         ? // Object-style rule.
@@ -176,7 +176,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     })
     .filter(
       // Filter out deprecated rules from being checked, displayed, or updated if the option is set.
-      (details) => !ignoreDeprecatedRules || !details.deprecated
+      (ruleDetails) => !ignoreDeprecatedRules || !ruleDetails.deprecated
     )
     .sort(({ name: a }, { name: b }) =>
       a.toLowerCase().localeCompare(b.toLowerCase())
@@ -184,7 +184,7 @@ export async function generate(path: string, options?: GenerateOptions) {
 
   // Update rule doc for each rule.
   let initializedRuleDoc = false;
-  for (const { name, description, schema } of details) {
+  for (const { name, description, schema } of ruleDetails) {
     const pathToDoc = replaceRulePlaceholder(join(path, pathRuleDoc), name);
 
     if (!existsSync(pathToDoc)) {
@@ -284,7 +284,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     const fileContents = readFileSync(pathToFile, 'utf8');
     const fileContentsNew = await postprocess(
       updateRulesList(
-        details,
+        ruleDetails,
         fileContents,
         plugin,
         configsToRules,
