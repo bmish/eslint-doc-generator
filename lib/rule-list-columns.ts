@@ -19,14 +19,16 @@ import type { RuleDetails, ConfigsToRules, Plugin } from './types.js';
 export const COLUMN_HEADER: {
   [key in COLUMN_TYPE]:
     | string
-    | ((data: { details: readonly RuleDetails[] }) => string);
+    | ((data: { ruleDetails: readonly RuleDetails[] }) => string);
 } = {
-  [COLUMN_TYPE.NAME]: ({ details }) => {
-    const ruleNames = details.map((detail) => detail.name);
+  [COLUMN_TYPE.NAME]: ({ ruleDetails }) => {
+    const ruleNames = ruleDetails.map((ruleDetail) => ruleDetail.name);
     const longestRuleNameLength = Math.max(
       ...ruleNames.map(({ length }) => length)
     );
-    const ruleDescriptions = details.map((detail) => detail.description);
+    const ruleDescriptions = ruleDetails.map(
+      (ruleDetail) => ruleDetail.description
+    );
     const longestRuleDescriptionLength = Math.max(
       ...ruleDescriptions.map((description) =>
         description ? description.length : 0
@@ -67,7 +69,7 @@ export const COLUMN_HEADER: {
  */
 export function getColumns(
   plugin: Plugin,
-  details: readonly RuleDetails[],
+  ruleDetails: readonly RuleDetails[],
   configsToRules: ConfigsToRules,
   ruleListColumns: readonly COLUMN_TYPE[],
   pluginPrefix: string,
@@ -101,23 +103,30 @@ export function getColumns(
         ignoreConfig,
         SEVERITY_TYPE.warn
       ).length > 0,
-    [COLUMN_TYPE.DEPRECATED]: details.some((detail) => detail.deprecated),
-    [COLUMN_TYPE.DESCRIPTION]: details.some((detail) => detail.description),
-    [COLUMN_TYPE.FIXABLE]: details.some((detail) => detail.fixable),
-    [COLUMN_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: details.some(
-      (detail) => detail.fixable || detail.hasSuggestions
+    [COLUMN_TYPE.DEPRECATED]: ruleDetails.some(
+      (ruleDetail) => ruleDetail.deprecated
     ),
-    [COLUMN_TYPE.HAS_SUGGESTIONS]: details.some(
-      (detail) => detail.hasSuggestions
+    [COLUMN_TYPE.DESCRIPTION]: ruleDetails.some(
+      (ruleDetail) => ruleDetail.description
+    ),
+    [COLUMN_TYPE.FIXABLE]: ruleDetails.some((ruleDetail) => ruleDetail.fixable),
+    [COLUMN_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: ruleDetails.some(
+      (ruleDetail) => ruleDetail.fixable || ruleDetail.hasSuggestions
+    ),
+    [COLUMN_TYPE.HAS_SUGGESTIONS]: ruleDetails.some(
+      (ruleDetail) => ruleDetail.hasSuggestions
     ),
     [COLUMN_TYPE.NAME]: true,
-    [COLUMN_TYPE.OPTIONS]: details.some((detail) => hasOptions(detail.schema)),
-    [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: details.some(
-      (detail) => detail.requiresTypeChecking
+    [COLUMN_TYPE.OPTIONS]: ruleDetails.some((ruleDetail) =>
+      hasOptions(ruleDetail.schema)
+    ),
+    [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: ruleDetails.some(
+      (ruleDetail) => ruleDetail.requiresTypeChecking
     ),
     // Show type column only if we found at least one rule with a standard type.
-    [COLUMN_TYPE.TYPE]: details.some(
-      (detail) => detail.type && RULE_TYPES.includes(detail.type as any) // eslint-disable-line @typescript-eslint/no-explicit-any
+    [COLUMN_TYPE.TYPE]: ruleDetails.some(
+      (ruleDetail) =>
+        ruleDetail.type && RULE_TYPES.includes(ruleDetail.type as any) // eslint-disable-line @typescript-eslint/no-explicit-any
     ),
   };
 

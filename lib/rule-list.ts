@@ -171,7 +171,7 @@ function buildRuleRow(
 
 function generateRulesListMarkdown(
   columns: Record<COLUMN_TYPE, boolean>,
-  details: readonly RuleDetails[],
+  ruleDetails: readonly RuleDetails[],
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   pathPlugin: string,
@@ -190,7 +190,7 @@ function generateRulesListMarkdown(
     const headerStrOrFn = COLUMN_HEADER[columnType];
     return [
       typeof headerStrOrFn === 'function'
-        ? headerStrOrFn({ details })
+        ? headerStrOrFn({ ruleDetails })
         : headerStrOrFn,
     ];
   });
@@ -198,7 +198,7 @@ function generateRulesListMarkdown(
   return markdownTable(
     [
       listHeaderRow,
-      ...details.map((rule: RuleDetails) =>
+      ...ruleDetails.map((rule: RuleDetails) =>
         buildRuleRow(
           columns,
           rule,
@@ -222,7 +222,7 @@ function generateRulesListMarkdown(
  */
 function generateRulesListMarkdownWithRuleListSplit(
   columns: Record<COLUMN_TYPE, boolean>,
-  details: readonly RuleDetails[],
+  ruleDetails: readonly RuleDetails[],
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
@@ -236,8 +236,8 @@ function generateRulesListMarkdownWithRuleListSplit(
   urlRuleDoc?: string
 ): string {
   const values = new Set(
-    details.map((detail) =>
-      getPropertyFromRule(plugin, detail.name, ruleListSplit)
+    ruleDetails.map((ruleDetail) =>
+      getPropertyFromRule(plugin, ruleDetail.name, ruleListSplit)
     )
   );
   const valuesAll = [...values.values()];
@@ -252,8 +252,10 @@ function generateRulesListMarkdownWithRuleListSplit(
 
   // Show any rules that don't have a value for this rule-list-split property first, or for which the boolean property is off.
   if (valuesAll.some((val) => isConsideredFalse(val))) {
-    const rulesForThisValue = details.filter((detail) =>
-      isConsideredFalse(getPropertyFromRule(plugin, detail.name, ruleListSplit))
+    const rulesForThisValue = ruleDetails.filter((ruleDetail) =>
+      isConsideredFalse(
+        getPropertyFromRule(plugin, ruleDetail.name, ruleListSplit)
+      )
     );
     parts.push(
       generateRulesListMarkdown(
@@ -283,8 +285,12 @@ function generateRulesListMarkdownWithRuleListSplit(
   for (const value of valuesNew.sort((a, b) =>
     String(a).toLowerCase().localeCompare(String(b).toLowerCase())
   )) {
-    const rulesForThisValue = details.filter((detail) => {
-      const property = getPropertyFromRule(plugin, detail.name, ruleListSplit);
+    const rulesForThisValue = ruleDetails.filter((ruleDetail) => {
+      const property = getPropertyFromRule(
+        plugin,
+        ruleDetail.name,
+        ruleListSplit
+      );
       return (
         property === value || (value === true && isBooleanableTrue(property))
       );
@@ -322,7 +328,7 @@ function generateRulesListMarkdownWithRuleListSplit(
 }
 
 export function updateRulesList(
-  details: readonly RuleDetails[],
+  ruleDetails: readonly RuleDetails[],
   markdown: string,
   plugin: Plugin,
   configsToRules: ConfigsToRules,
@@ -381,7 +387,7 @@ export function updateRulesList(
   // Determine columns to include in the rules list.
   const columns = getColumns(
     plugin,
-    details,
+    ruleDetails,
     configsToRules,
     ruleListColumns,
     pluginPrefix,
@@ -403,7 +409,7 @@ export function updateRulesList(
   const list = ruleListSplit
     ? generateRulesListMarkdownWithRuleListSplit(
         columns,
-        details,
+        ruleDetails,
         plugin,
         configsToRules,
         pluginPrefix,
@@ -418,7 +424,7 @@ export function updateRulesList(
       )
     : generateRulesListMarkdown(
         columns,
-        details,
+        ruleDetails,
         configsToRules,
         pluginPrefix,
         pathPlugin,
