@@ -125,8 +125,7 @@ export function getColumns(
     ),
     // Show type column only if we found at least one rule with a standard type.
     [COLUMN_TYPE.TYPE]: ruleDetails.some(
-      (ruleDetail) =>
-        ruleDetail.type && RULE_TYPES.includes(ruleDetail.type as any) // eslint-disable-line @typescript-eslint/no-explicit-any
+      (ruleDetail) => ruleDetail.type && RULE_TYPES.includes(ruleDetail.type)
     ),
   };
 

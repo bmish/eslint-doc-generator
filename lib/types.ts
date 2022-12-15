@@ -1,5 +1,6 @@
 import type { RuleDocTitleFormat } from './rule-doc-title-format.js';
 import type { TSESLint, JSONSchema } from '@typescript-eslint/utils';
+import type { RULE_TYPE } from './rule-type.js';
 
 // Standard ESLint types.
 
@@ -43,7 +44,7 @@ export interface RuleDetails {
   requiresTypeChecking: boolean;
   deprecated: boolean;
   schema: JSONSchema.JSONSchema4;
-  type?: string; // Rule might not have a type.
+  type?: `${RULE_TYPE}`; // Rule might not have a type.
 }
 
 /**

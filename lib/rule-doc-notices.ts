@@ -32,7 +32,7 @@ function severityToTerminology(severity: SEVERITY_TYPE) {
       return 'is _disabled_';
     /* istanbul ignore next -- this shouldn't happen */
     default:
-      throw new Error(`Unknown severity: ${severity}`);
+      throw new Error(`Unknown severity: ${String(severity)}`);
   }
 }
 
@@ -86,7 +86,7 @@ const RULE_NOTICES: {
         pluginPrefix: string;
         pathPlugin: string;
         pathRuleDoc: string;
-        type?: RULE_TYPE;
+        type?: `${RULE_TYPE}`;
         urlRuleDoc?: string;
       }) => string);
 } = {
@@ -187,7 +187,7 @@ const RULE_NOTICES: {
     );
     return `${EMOJI_DEPRECATED} This rule is deprecated.${
       replacedBy && replacedBy.length > 0
-        ? ` It was replaced by ${replacementRuleList}.`
+        ? ` It was replaced by ${String(replacementRuleList)}.`
         : ''
     }`;
   },
@@ -355,7 +355,7 @@ function getRuleNoticeLines(
             pluginPrefix,
             pathPlugin,
             pathRuleDoc,
-            type: rule.meta?.type as RULE_TYPE, // Convert union type to enum.
+            type: rule.meta?.type,
             urlRuleDoc,
           })
         : ruleNoticeStrOrFn
@@ -391,7 +391,9 @@ function makeRuleDocTitle(
       /* istanbul ignore next -- this shouldn't happen */
       default:
         throw new Error(
-          `Unhandled rule doc title format fallback: ${ruleDocTitleFormatWithFallback}`
+          `Unhandled rule doc title format fallback: ${String(
+            ruleDocTitleFormatWithFallback
+          )}`
         );
     }
   }
@@ -399,10 +401,28 @@ function makeRuleDocTitle(
   switch (ruleDocTitleFormatWithFallback) {
     // Backticks (code-style) only used around rule name to differentiate it when the rule description is also present.
     case 'desc':
+      /* istanbul ignore next -- this shouldn't happen */
+      if (!descriptionFormatted) {
+        throw new Error(
+          'Attempting to display non-existent description in rule doc title.'
+        );
+      }
       return `# ${descriptionFormatted}`;
     case 'desc-parens-name':
+      /* istanbul ignore next -- this shouldn't happen */
+      if (!descriptionFormatted) {
+        throw new Error(
+          'Attempting to display non-existent description in rule doc title.'
+        );
+      }
       return `# ${descriptionFormatted} (\`${name}\`)`;
     case 'desc-parens-prefix-name':
+      /* istanbul ignore next -- this shouldn't happen */
+      if (!descriptionFormatted) {
+        throw new Error(
+          'Attempting to display non-existent description in rule doc title.'
+        );
+      }
       return `# ${descriptionFormatted} (\`${pluginPrefix}/${name}\`)`;
     case 'name':
       return `# ${name}`;
@@ -411,7 +431,9 @@ function makeRuleDocTitle(
     /* istanbul ignore next -- this shouldn't happen */
     default:
       throw new Error(
-        `Unhandled rule doc title format: ${ruleDocTitleFormatWithFallback}`
+        `Unhandled rule doc title format: ${String(
+          ruleDocTitleFormatWithFallback
+        )}`
       );
   }
 }

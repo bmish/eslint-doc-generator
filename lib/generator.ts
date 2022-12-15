@@ -269,7 +269,8 @@ export async function generate(path: string, options?: GenerateOptions) {
     );
   }
 
-  for (const pathRuleListItem of Array.isArray(pathRuleList)
+  // eslint-disable-next-line unicorn/no-instanceof-array -- using Array.isArray() loses type information about the array.
+  for (const pathRuleListItem of pathRuleList instanceof Array
     ? pathRuleList
     : [pathRuleList]) {
     // Find the exact filename.
@@ -277,7 +278,9 @@ export async function generate(path: string, options?: GenerateOptions) {
       join(path, pathRuleListItem)
     );
     if (!pathToFile || !existsSync(pathToFile)) {
-      throw new Error(`Could not find ${pathRuleList} in ESLint plugin.`);
+      throw new Error(
+        `Could not find ${String(pathRuleList)} in ESLint plugin.`
+      );
     }
 
     // Update the rules list in this file.
