@@ -1,3 +1,4 @@
+import traverse from 'json-schema-traverse';
 import type { JSONSchema } from '@typescript-eslint/utils';
 
 /**
@@ -6,7 +7,7 @@ import type { JSONSchema } from '@typescript-eslint/utils';
  * @returns - list of named options we could detect from the schema
  */
 export function getAllNamedOptions(
-  jsonSchema: JSONSchema.JSONSchema4
+  jsonSchema: JSONSchema.JSONSchema4 | undefined | null
 ): readonly string[] {
   if (!jsonSchema) {
     return [];
@@ -18,15 +19,13 @@ export function getAllNamedOptions(
     );
   }
 
-  if (jsonSchema.items) {
-    return getAllNamedOptions(jsonSchema.items);
-  }
-
-  if (jsonSchema.properties) {
-    return Object.keys(jsonSchema.properties);
-  }
-
-  return [];
+  const options: string[] = [];
+  traverse(jsonSchema, (js: JSONSchema.JSONSchema4) => {
+    if (js.properties) {
+      options.push(...Object.keys(js.properties));
+    }
+  });
+  return options;
 }
 
 /**
