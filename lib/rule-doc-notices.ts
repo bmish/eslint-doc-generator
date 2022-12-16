@@ -20,7 +20,11 @@ import { RULE_TYPE, RULE_TYPE_MESSAGES_NOTICES } from './rule-type.js';
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
 import { hasOptions } from './rule-options.js';
 import { getLinkToRule, getUrlToRule } from './rule-link.js';
-import { toSentenceCase, removeTrailingPeriod } from './string.js';
+import {
+  toSentenceCase,
+  removeTrailingPeriod,
+  addTrailingPeriod,
+} from './string.js';
 
 function severityToTerminology(severity: SEVERITY_TYPE) {
   switch (severity) {
@@ -79,6 +83,7 @@ const RULE_NOTICES: {
         configsWarn: readonly string[];
         configsOff: readonly string[];
         configEmojis: ConfigEmojis;
+        description?: string;
         fixable: boolean;
         hasSuggestions: boolean;
         urlConfigs?: string;
@@ -192,6 +197,17 @@ const RULE_NOTICES: {
     }`;
   },
 
+  [NOTICE_TYPE.DESCRIPTION]: ({ description }) => {
+    /* istanbul ignore next -- this shouldn't happen */
+    if (!description) {
+      throw new Error(
+        'Should not be trying to display description notice for rule with no description.'
+      );
+    }
+    // Return the description like a normal body sentence.
+    return addTrailingPeriod(toSentenceCase(description));
+  },
+
   [NOTICE_TYPE.TYPE]: ({ type }) => {
     /* istanbul ignore next -- this shouldn't happen */
     if (!type) {
@@ -242,6 +258,7 @@ function getNoticesForRule(
       configsWarn.length > 0 ||
       configsOff.length > 0,
     [NOTICE_TYPE.DEPRECATED]: rule.meta?.deprecated || false,
+    [NOTICE_TYPE.DESCRIPTION]: Boolean(rule.meta?.docs?.description) || false,
 
     // Fixable/suggestions.
     [NOTICE_TYPE.FIXABLE]: Boolean(rule.meta?.fixable),
@@ -348,6 +365,7 @@ function getRuleNoticeLines(
             configsWarn,
             configsOff,
             configEmojis,
+            description: rule.meta?.docs?.description,
             fixable: Boolean(rule.meta?.fixable),
             hasSuggestions: Boolean(rule.meta?.hasSuggestions),
             urlConfigs,

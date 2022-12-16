@@ -56,8 +56,9 @@ describe('generate (--rule-doc-notices)', function () {
           NOTICE_TYPE.HAS_SUGGESTIONS,
           NOTICE_TYPE.FIXABLE,
           NOTICE_TYPE.DEPRECATED,
+          NOTICE_TYPE.DESCRIPTION,
           NOTICE_TYPE.TYPE,
-        ], // Random values including an optional notice.
+        ], // Random values including all the optional notices.
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();

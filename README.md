@@ -157,7 +157,7 @@ These are the types of rule metadata that are available for display in rule list
 | ⚠️ | `configsWarn` | Yes | No | Whether a rule is set to `warn` in a config. |
 | 💼 | `configs` | No | Yes | What configs set a rule to what [severities](https://eslint.org/docs/latest/user-guide/configuring/rules#rule-severities). |
 | ❌ | `deprecated`  | Yes | Yes | Whether a rule is deprecated (i.e. likely to be removed/renamed in a future major version). |
-| | `description`  | Yes | No | The rule description. |
+| | `description`  | Yes | Yes | The rule description. |
 | 🔧💡 | `fixableAndHasSuggestions` | Yes | Yes | Whether a rule is [fixable](https://eslint.org/docs/latest/developer-guide/working-with-rules#applying-fixes) and/or has [suggestions](https://eslint.org/docs/latest/developer-guide/working-with-rules#providing-suggestions). |
 | 🔧 | `fixable` | Yes | Yes | Whether a rule is [fixable](https://eslint.org/docs/latest/developer-guide/working-with-rules#applying-fixes). |
 | 💡 | `hasSuggestions` | Yes | Yes | Whether a rule has [suggestions](https://eslint.org/docs/latest/developer-guide/working-with-rules#providing-suggestions). |

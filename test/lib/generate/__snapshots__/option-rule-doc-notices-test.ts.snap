@@ -25,6 +25,8 @@ exports[`generate (--rule-doc-notices) basic shows the right rule doc notices 2`
 
 ❌ This rule is deprecated.
 
+Description for no-foo.
+
 ❗ This rule identifies problems that could cause errors or unexpected behavior.
 
 <!-- end auto-generated rule header -->
