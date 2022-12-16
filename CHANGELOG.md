@@ -41,6 +41,29 @@
 
 
 
+
+## v1.1.0 (2022-12-16)
+
+#### :rocket: Enhancement
+* [#350](https://github.com/bmish/eslint-doc-generator/pull/350) Add rule doc notice type for rule description ([@bmish](https://github.com/bmish))
+
+#### :bug: Bug Fix
+* [#349](https://github.com/bmish/eslint-doc-generator/pull/349) Improve detection of named options to be mentioned in rule docs ([@bmish](https://github.com/bmish))
+* [#344](https://github.com/bmish/eslint-doc-generator/pull/344) Hide stack trace when throwing exception ([@bmish](https://github.com/bmish))
+
+#### :memo: Documentation
+* [#342](https://github.com/bmish/eslint-doc-generator/pull/342) Add table of contents to readme ([@bmish](https://github.com/bmish))
+* [#336](https://github.com/bmish/eslint-doc-generator/pull/336) Add table documenting types of notices and columns ([@bmish](https://github.com/bmish))
+* [#332](https://github.com/bmish/eslint-doc-generator/pull/332) Mention complementary rule `eslint-plugin/require-meta-docs-url` ([@bmish](https://github.com/bmish))
+
+#### :house: Internal
+* [#345](https://github.com/bmish/eslint-doc-generator/pull/345) Enable type-aware linting ([@bmish](https://github.com/bmish))
+* [#333](https://github.com/bmish/eslint-doc-generator/pull/333) Improve comments for emoji definitions ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v1.0.2 (2022-12-01)
 
 #### :bug: Bug Fix
