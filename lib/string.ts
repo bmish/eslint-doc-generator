@@ -12,6 +12,10 @@ export function removeTrailingPeriod(str: string) {
   return str.replace(/\.$/u, '');
 }
 
+export function addTrailingPeriod(str: string) {
+  return str.replace(/\.?$/u, '.');
+}
+
 /**
  * Example: FOO => Foo, foo => Foo
  */

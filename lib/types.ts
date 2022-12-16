@@ -58,6 +58,7 @@ export type ConfigEmojis = readonly { config: string; emoji: string }[];
 export enum NOTICE_TYPE {
   CONFIGS = 'configs',
   DEPRECATED = 'deprecated',
+  DESCRIPTION = 'description',
   FIXABLE = 'fixable',
   FIXABLE_AND_HAS_SUGGESTIONS = 'fixableAndHasSuggestions', // Consolidated notice for space-saving.
   HAS_SUGGESTIONS = 'hasSuggestions',
