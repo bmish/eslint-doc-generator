@@ -91,6 +91,25 @@ function stringOrArrayWithFallback<T extends string | readonly string[]>(
   return stringOrArray && stringOrArray.length > 0 ? stringOrArray : fallback;
 }
 
+function stringOrArrayToArrayWithFallback(
+  stringOrArray: undefined | string | readonly string[],
+  fallback: readonly string[]
+): readonly string[] {
+  const asArray =
+    stringOrArray instanceof Array // eslint-disable-line unicorn/no-instanceof-array -- using Array.isArray() loses type information about the array.
+      ? stringOrArray
+      : stringOrArray
+      ? [stringOrArray]
+      : [];
+  const csvStringItem = asArray.find((item) => item.includes(','));
+  if (csvStringItem) {
+    throw new Error(
+      `Provide property as array, not a CSV string: ${csvStringItem}`
+    );
+  }
+  return asArray && asArray.length > 0 ? asArray : fallback;
+}
+
 // eslint-disable-next-line complexity
 export async function generate(path: string, options?: GenerateOptions) {
   const plugin = await loadPlugin(path);
@@ -115,7 +134,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     options?.initRuleDocs ?? OPTION_DEFAULTS[OPTION_TYPE.INIT_RULE_DOCS];
   const pathRuleDoc =
     options?.pathRuleDoc ?? OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_DOC];
-  const pathRuleList = stringOrArrayWithFallback(
+  const pathRuleList = stringOrArrayToArrayWithFallback(
     options?.pathRuleList,
     OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_LIST]
   );
@@ -269,10 +288,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     );
   }
 
-  // eslint-disable-next-line unicorn/no-instanceof-array -- using Array.isArray() loses type information about the array.
-  for (const pathRuleListItem of pathRuleList instanceof Array
-    ? pathRuleList
-    : [pathRuleList]) {
+  for (const pathRuleListItem of pathRuleList) {
     // Find the exact filename.
     const pathToFile = getPathWithExactFileNameCasing(
       join(path, pathRuleListItem)
