@@ -51,7 +51,10 @@ exports[`cli all CLI options and all config files options merges correctly, with
       "hasSuggestions",
       "type",
     ],
-    "ruleListSplit": "meta.docs.foo-from-cli",
+    "ruleListSplit": [
+      "meta.docs.foo-from-config-file",
+      "meta.docs.foo-from-cli",
+    ],
     "urlConfigs": "https://example.com/configs-url-from-cli",
     "urlRuleDoc": "https://example.com/rule-doc-url-from-cli",
   },
@@ -95,7 +98,9 @@ exports[`cli all CLI options, no config file options is called correctly 1`] = `
     "ruleListColumns": [
       "type",
     ],
-    "ruleListSplit": "meta.docs.foo-from-cli",
+    "ruleListSplit": [
+      "meta.docs.foo-from-cli",
+    ],
     "urlConfigs": "https://example.com/configs-url-from-cli",
     "urlRuleDoc": "https://example.com/rule-doc-url-from-cli",
   },
@@ -140,7 +145,9 @@ exports[`cli all config files options, no CLI options is called correctly 1`] = 
       "fixable",
       "hasSuggestions",
     ],
-    "ruleListSplit": "meta.docs.foo-from-config-file",
+    "ruleListSplit": [
+      "meta.docs.foo-from-config-file",
+    ],
     "urlConfigs": "https://example.com/configs-url-from-config-file",
     "urlRuleDoc": "https://example.com/rule-doc-url-from-config-file",
   },
@@ -159,6 +166,7 @@ exports[`cli boolean option - false (explicit) is called correctly 1`] = `
     "ruleDocSectionExclude": [],
     "ruleDocSectionInclude": [],
     "ruleListColumns": [],
+    "ruleListSplit": [],
   },
 ]
 `;
@@ -175,6 +183,7 @@ exports[`cli boolean option - true (explicit) is called correctly 1`] = `
     "ruleDocSectionExclude": [],
     "ruleDocSectionInclude": [],
     "ruleListColumns": [],
+    "ruleListSplit": [],
   },
 ]
 `;
@@ -191,6 +200,7 @@ exports[`cli boolean option - true (implicit) is called correctly 1`] = `
     "ruleDocSectionExclude": [],
     "ruleDocSectionInclude": [],
     "ruleListColumns": [],
+    "ruleListSplit": [],
   },
 ]
 `;
@@ -206,6 +216,7 @@ exports[`cli no options is called correctly 1`] = `
     "ruleDocSectionExclude": [],
     "ruleDocSectionInclude": [],
     "ruleListColumns": [],
+    "ruleListSplit": [],
   },
 ]
 `;
@@ -226,6 +237,7 @@ exports[`cli pathRuleList as array in config file and CLI merges correctly 1`] =
     "ruleDocSectionExclude": [],
     "ruleDocSectionInclude": [],
     "ruleListColumns": [],
+    "ruleListSplit": [],
   },
 ]
 `;

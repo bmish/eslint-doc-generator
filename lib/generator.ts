@@ -156,8 +156,10 @@ export async function generate(path: string, options?: GenerateOptions) {
     options?.ruleDocTitleFormat ??
     OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_TITLE_FORMAT];
   const ruleListColumns = parseRuleListColumnsOption(options?.ruleListColumns);
-  const ruleListSplit =
-    options?.ruleListSplit ?? OPTION_DEFAULTS[OPTION_TYPE.RULE_LIST_SPLIT];
+  const ruleListSplit = stringOrArrayToArrayWithFallback(
+    options?.ruleListSplit,
+    OPTION_DEFAULTS[OPTION_TYPE.RULE_LIST_SPLIT]
+  );
   const urlConfigs =
     options?.urlConfigs ?? OPTION_DEFAULTS[OPTION_TYPE.URL_CONFIGS];
   const urlRuleDoc =
