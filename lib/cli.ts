@@ -205,9 +205,9 @@ export async function run(
     )
     .option(
       '--path-rule-list <path>',
-      `(optional) Path to markdown file where the rules table list should live. Option can be repeated. Defaults to ${
+      `(optional) Path to markdown file where the rules table list should live. Option can be repeated. Defaults to ${String(
         OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_LIST]
-      } if not provided.`,
+      )} if not provided.`,
       collect,
       []
     )
