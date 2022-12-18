@@ -48,7 +48,7 @@ export interface RuleDetails {
 }
 
 /**
- * Some configs may have an emoji defined.
+ * The emoji for each config that has one after option parsing and defaults have been applied.
  */
 export type ConfigEmojis = readonly { config: string; emoji: string }[];
 
@@ -119,7 +119,10 @@ export type GenerateOptions = {
    * Default emojis are provided for common configs.
    * To remove a default emoji and rely on a badge instead, provide the config name without an emoji.
    */
-  readonly configEmoji?: readonly (readonly string[])[];
+  readonly configEmoji?: readonly (
+    | [configName: string, emoji: string]
+    | [configName: string]
+  )[];
   /** Configs to ignore from being displayed. Often used for an `all` config. */
   readonly ignoreConfig?: readonly string[];
   /** Whether to ignore deprecated rules from being checked, displayed, or updated. Default: `false`. */

@@ -15,7 +15,10 @@ import type { Plugin, ConfigEmojis } from './types.js';
  */
 export function parseConfigEmojiOptions(
   plugin: Plugin,
-  configEmoji?: readonly (readonly string[])[]
+  configEmoji?: readonly (
+    | [configName: string, emoji: string]
+    | [configName: string]
+  )[]
 ): ConfigEmojis {
   const configsSeen = new Set<string>();
   const configsWithDefaultEmojiRemoved: string[] = [];
