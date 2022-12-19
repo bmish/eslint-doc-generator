@@ -15,13 +15,13 @@ import { findSectionHeader, findFinalHeaderLevel } from './markdown.js';
 import { getPluginRoot } from './package-json.js';
 import { generateLegend } from './rule-list-legend.js';
 import { relative } from 'node:path';
-import { COLUMN_TYPE, SEVERITY_TYPE } from './types.js';
+import { COLUMN_TYPE, RuleModule, SEVERITY_TYPE } from './types.js';
 import { markdownTable } from 'markdown-table';
 import type {
   Plugin,
-  RuleDetails,
   ConfigsToRules,
   ConfigEmojis,
+  RuleNamesAndRules,
 } from './types.js';
 import { EMOJIS_TYPE } from './rule-type.js';
 import { hasOptions } from './rule-options.js';
@@ -65,7 +65,7 @@ function getPropertyFromRule(
 }
 
 function getConfigurationColumnValueForRule(
-  rule: RuleDetails,
+  ruleName: string,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   configEmojis: ConfigEmojis,
@@ -80,7 +80,7 @@ function getConfigurationColumnValueForRule(
 
   // Collect the emojis for the configs that set the rule to this severity level.
   return getEmojisForConfigsSettingRuleToSeverity(
-    rule.name,
+    ruleName,
     configsToRulesWithoutIgnored,
     pluginPrefix,
     configEmojis,
@@ -90,7 +90,8 @@ function getConfigurationColumnValueForRule(
 
 function buildRuleRow(
   columnsEnabled: Record<COLUMN_TYPE, boolean>,
-  rule: RuleDetails,
+  ruleName: string,
+  rule: RuleModule,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   pathPlugin: string,
@@ -105,7 +106,7 @@ function buildRuleRow(
   } = {
     // Alphabetical order.
     [COLUMN_TYPE.CONFIGS_ERROR]: getConfigurationColumnValueForRule(
-      rule,
+      ruleName,
       configsToRules,
       pluginPrefix,
       configEmojis,
@@ -113,7 +114,7 @@ function buildRuleRow(
       SEVERITY_TYPE.error
     ),
     [COLUMN_TYPE.CONFIGS_OFF]: getConfigurationColumnValueForRule(
-      rule,
+      ruleName,
       configsToRules,
       pluginPrefix,
       configEmojis,
@@ -121,25 +122,25 @@ function buildRuleRow(
       SEVERITY_TYPE.off
     ),
     [COLUMN_TYPE.CONFIGS_WARN]: getConfigurationColumnValueForRule(
-      rule,
+      ruleName,
       configsToRules,
       pluginPrefix,
       configEmojis,
       ignoreConfig,
       SEVERITY_TYPE.warn
     ),
-    [COLUMN_TYPE.DEPRECATED]: rule.deprecated ? EMOJI_DEPRECATED : '',
-    [COLUMN_TYPE.DESCRIPTION]: rule.description || '',
-    [COLUMN_TYPE.FIXABLE]: rule.fixable ? EMOJI_FIXABLE : '',
+    [COLUMN_TYPE.DEPRECATED]: rule.meta?.deprecated ? EMOJI_DEPRECATED : '',
+    [COLUMN_TYPE.DESCRIPTION]: rule.meta?.docs?.description || '',
+    [COLUMN_TYPE.FIXABLE]: rule.meta?.fixable ? EMOJI_FIXABLE : '',
     [COLUMN_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: `${
-      rule.fixable ? EMOJI_FIXABLE : ''
-    }${rule.hasSuggestions ? EMOJI_HAS_SUGGESTIONS : ''}`,
-    [COLUMN_TYPE.HAS_SUGGESTIONS]: rule.hasSuggestions
+      rule.meta?.fixable ? EMOJI_FIXABLE : ''
+    }${rule.meta?.hasSuggestions ? EMOJI_HAS_SUGGESTIONS : ''}`,
+    [COLUMN_TYPE.HAS_SUGGESTIONS]: rule.meta?.hasSuggestions
       ? EMOJI_HAS_SUGGESTIONS
       : '',
     [COLUMN_TYPE.NAME]() {
       return getLinkToRule(
-        rule.name,
+        ruleName,
         pluginPrefix,
         pathPlugin,
         pathRuleDoc,
@@ -149,11 +150,11 @@ function buildRuleRow(
         urlRuleDoc
       );
     },
-    [COLUMN_TYPE.OPTIONS]: hasOptions(rule.schema) ? EMOJI_OPTIONS : '',
-    [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: rule.requiresTypeChecking
+    [COLUMN_TYPE.OPTIONS]: hasOptions(rule.meta?.schema) ? EMOJI_OPTIONS : '',
+    [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: rule.meta?.docs?.requiresTypeChecking
       ? EMOJI_REQUIRES_TYPE_CHECKING
       : '',
-    [COLUMN_TYPE.TYPE]: rule.type ? EMOJIS_TYPE[rule.type] : '',
+    [COLUMN_TYPE.TYPE]: rule.meta?.type ? EMOJIS_TYPE[rule.meta?.type] : '',
   };
 
   // List columns using the ordering and presence of columns specified in columnsEnabled.
@@ -171,7 +172,7 @@ function buildRuleRow(
 
 function generateRulesListMarkdown(
   columns: Record<COLUMN_TYPE, boolean>,
-  ruleDetails: readonly RuleDetails[],
+  ruleNamesAndRules: RuleNamesAndRules,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   pathPlugin: string,
@@ -190,7 +191,7 @@ function generateRulesListMarkdown(
     const headerStrOrFn = COLUMN_HEADER[columnType];
     return [
       typeof headerStrOrFn === 'function'
-        ? headerStrOrFn({ ruleDetails })
+        ? headerStrOrFn({ ruleNamesAndRules })
         : headerStrOrFn,
     ];
   });
@@ -198,9 +199,10 @@ function generateRulesListMarkdown(
   return markdownTable(
     [
       listHeaderRow,
-      ...ruleDetails.map((rule: RuleDetails) =>
+      ...ruleNamesAndRules.map(([name, rule]) =>
         buildRuleRow(
           columns,
+          name,
           rule,
           configsToRules,
           pluginPrefix,
@@ -222,7 +224,7 @@ function generateRulesListMarkdown(
  */
 function generateRulesListMarkdownWithRuleListSplit(
   columns: Record<COLUMN_TYPE, boolean>,
-  ruleDetails: readonly RuleDetails[],
+  ruleNamesAndRules: RuleNamesAndRules,
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
@@ -236,8 +238,8 @@ function generateRulesListMarkdownWithRuleListSplit(
   urlRuleDoc?: string
 ): string {
   const values = new Set(
-    ruleDetails.map((ruleDetail) =>
-      getPropertyFromRule(plugin, ruleDetail.name, ruleListSplit)
+    ruleNamesAndRules.map(([name]) =>
+      getPropertyFromRule(plugin, name, ruleListSplit)
     )
   );
   const valuesAll = [...values.values()];
@@ -252,10 +254,8 @@ function generateRulesListMarkdownWithRuleListSplit(
 
   // Show any rules that don't have a value for this rule-list-split property first, or for which the boolean property is off.
   if (valuesAll.some((val) => isConsideredFalse(val))) {
-    const rulesForThisValue = ruleDetails.filter((ruleDetail) =>
-      isConsideredFalse(
-        getPropertyFromRule(plugin, ruleDetail.name, ruleListSplit)
-      )
+    const rulesForThisValue = ruleNamesAndRules.filter(([name]) =>
+      isConsideredFalse(getPropertyFromRule(plugin, name, ruleListSplit))
     );
     parts.push(
       generateRulesListMarkdown(
@@ -285,12 +285,8 @@ function generateRulesListMarkdownWithRuleListSplit(
   for (const value of valuesNew.sort((a, b) =>
     String(a).toLowerCase().localeCompare(String(b).toLowerCase())
   )) {
-    const rulesForThisValue = ruleDetails.filter((ruleDetail) => {
-      const property = getPropertyFromRule(
-        plugin,
-        ruleDetail.name,
-        ruleListSplit
-      );
+    const rulesForThisValue = ruleNamesAndRules.filter(([name]) => {
+      const property = getPropertyFromRule(plugin, name, ruleListSplit);
       return (
         property === value || (value === true && isBooleanableTrue(property))
       );
@@ -328,7 +324,7 @@ function generateRulesListMarkdownWithRuleListSplit(
 }
 
 export function updateRulesList(
-  ruleDetails: readonly RuleDetails[],
+  ruleNamesAndRules: RuleNamesAndRules,
   markdown: string,
   plugin: Plugin,
   configsToRules: ConfigsToRules,
@@ -387,7 +383,7 @@ export function updateRulesList(
   // Determine columns to include in the rules list.
   const columns = getColumns(
     plugin,
-    ruleDetails,
+    ruleNamesAndRules,
     configsToRules,
     ruleListColumns,
     pluginPrefix,
@@ -409,7 +405,7 @@ export function updateRulesList(
   const list = ruleListSplit
     ? generateRulesListMarkdownWithRuleListSplit(
         columns,
-        ruleDetails,
+        ruleNamesAndRules,
         plugin,
         configsToRules,
         pluginPrefix,
@@ -424,7 +420,7 @@ export function updateRulesList(
       )
     : generateRulesListMarkdown(
         columns,
-        ruleDetails,
+        ruleNamesAndRules,
         configsToRules,
         pluginPrefix,
         pathPlugin,

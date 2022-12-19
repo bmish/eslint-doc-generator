@@ -1,6 +1,5 @@
 import type { RuleDocTitleFormat } from './rule-doc-title-format.js';
-import type { TSESLint, JSONSchema } from '@typescript-eslint/utils';
-import type { RULE_TYPE } from './rule-type.js';
+import type { TSESLint } from '@typescript-eslint/utils';
 
 // Standard ESLint types.
 
@@ -36,16 +35,10 @@ export const SEVERITY_TYPE_TO_SET: {
 
 export type ConfigsToRules = Record<string, Rules>;
 
-export interface RuleDetails {
-  name: string;
-  description?: string; // Rule might not have a description.
-  fixable: boolean;
-  hasSuggestions: boolean;
-  requiresTypeChecking: boolean;
-  deprecated: boolean;
-  schema: JSONSchema.JSONSchema4;
-  type?: `${RULE_TYPE}`; // Rule might not have a type.
-}
+/**
+ * Convenient way to pass around a list of rules (as tuples).
+ */
+export type RuleNamesAndRules = readonly [name: string, rule: RuleModule][];
 
 /**
  * The emoji for each config that has one after option parsing and defaults have been applied.
