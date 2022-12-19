@@ -105,7 +105,7 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
       ruleDocSectionOptions: { type: 'boolean' },
       ruleDocTitleFormat: { type: 'string' },
       ruleListColumns: schemaStringArray,
-      ruleListSplit: { type: 'string' },
+      ruleListSplit: { anyOf: [{ type: 'string' }, schemaStringArray] },
       urlConfigs: { type: 'string' },
       urlRuleDoc: { type: 'string' },
     };
@@ -139,6 +139,10 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (typeof config.pathRuleList === 'string') {
       config.pathRuleList = [config.pathRuleList]; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    if (typeof config.ruleListSplit === 'string') {
+      config.ruleListSplit = [config.ruleListSplit]; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
     }
 
     return explorerResults.config as GenerateOptions;
@@ -260,7 +264,9 @@ export async function run(
     )
     .option(
       '--rule-list-split <property>',
-      '(optional) Rule property to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`.'
+      '(optional) Rule property(s) to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`.',
+      collectCSV,
+      []
     )
     .option(
       '--url-configs <url>',

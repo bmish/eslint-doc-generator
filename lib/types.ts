@@ -162,7 +162,7 @@ export type GenerateOptions = {
    * A separate list and header will be created for each value.
    * Example: `meta.type`.
    */
-  readonly ruleListSplit?: string;
+  readonly ruleListSplit?: string | readonly string[];
   /** Link to documentation about the ESLint configurations exported by the plugin. */
   readonly urlConfigs?: string;
   /**

@@ -573,4 +573,131 @@ describe('generate (--rule-list-split)', function () {
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
     });
   });
+
+  describe('multiple properties', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': { meta: { deprecated: false, docs: { category: 'Hello' } }, create(context) {} },
+              'no-bar': { meta: { deprecated: true, docs: { category: 'Should Not Show Since Deprecated' } }, create(context) {} },
+              'no-baz': { meta: { deprecated: true, docs: { category: 'Should Not Show Since Deprecated' } }, create(context) {} },
+              'no-biz': { meta: { deprecated: false, docs: { category: 'World' } }, create(context) {} },
+            },
+          };`,
+
+        'README.md': '## Rules\n',
+
+        'docs/rules/no-foo.md': '',
+        'docs/rules/no-bar.md': '',
+        'docs/rules/no-baz.md': '',
+        'docs/rules/no-biz.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('splits the list by multiple properties', async function () {
+      await generate('.', {
+        ruleListSplit: ['meta.deprecated', 'meta.docs.category'],
+      });
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
+  describe('multiple properties and no rules left for second property (already shown for first property)', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': { meta: { deprecated: true, docs: { category: 'Apples' } }, create(context) {} },
+              'no-bar': { meta: { deprecated: true, docs: { category: 'Bananas' } }, create(context) {} },
+            },
+          };`,
+
+        'README.md': '## Rules\n',
+
+        'docs/rules/no-foo.md': '',
+        'docs/rules/no-bar.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('does not show the property with no rules left and does not throw', async function () {
+      await generate('.', {
+        ruleListSplit: ['meta.deprecated', 'meta.docs.category'],
+      });
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
+  describe('multiple properties and no rules could exist for second property', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': { meta: { deprecated: true, }, create(context) {} },
+              'no-bar': { meta: { deprecated: true, }, create(context) {} },
+            },
+          };`,
+
+        'README.md': '## Rules\n',
+
+        'docs/rules/no-foo.md': '',
+        'docs/rules/no-bar.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('throws an error', async function () {
+      await expect(
+        generate('.', {
+          ruleListSplit: ['meta.deprecated', 'non-existent-property'],
+        })
+      ).rejects.toThrow(
+        'No rules found with --rule-list-split property "non-existent-property".'
+      );
+    });
+  });
 });

@@ -75,6 +75,52 @@ exports[`generate (--rule-list-split) ignores case when sorting headers splits t
 "
 `;
 
+exports[`generate (--rule-list-split) multiple properties and no rules left for second property (already shown for first property) does not show the property with no rules left and does not throw 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+❌ Deprecated.
+
+### Deprecated
+
+| Name                           | ❌  |
+| :----------------------------- | :- |
+| [no-bar](docs/rules/no-bar.md) | ❌  |
+| [no-foo](docs/rules/no-foo.md) | ❌  |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (--rule-list-split) multiple properties splits the list by multiple properties 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+❌ Deprecated.
+
+### Hello
+
+| Name                           | ❌  |
+| :----------------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) |    |
+
+### World
+
+| Name                           | ❌  |
+| :----------------------------- | :- |
+| [no-biz](docs/rules/no-biz.md) |    |
+
+### Deprecated
+
+| Name                           | ❌  |
+| :----------------------------- | :- |
+| [no-bar](docs/rules/no-bar.md) | ❌  |
+| [no-baz](docs/rules/no-baz.md) | ❌  |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
 exports[`generate (--rule-list-split) with boolean (CONSTANT_CASE) splits the list with the right header 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
