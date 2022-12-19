@@ -115,7 +115,7 @@ const LEGENDS: {
     let hasAnyRuleType = false;
     for (const ruleType of RULE_TYPES) {
       const hasThisRuleType = Object.values(rules).some(
-        (rule) => typeof rule === 'object' && rule.meta.type === ruleType
+        (rule) => typeof rule === 'object' && rule.meta?.type === ruleType
       );
       if (hasThisRuleType) {
         if (!hasAnyRuleType) {

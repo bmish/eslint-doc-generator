@@ -19,8 +19,8 @@ import { findSectionHeader, replaceOrCreateHeader } from './markdown.js';
 import { resolveConfigsToRules } from './plugin-config-resolution.js';
 import { OPTION_DEFAULTS } from './options.js';
 import { diff } from 'jest-diff';
-import type { RuleDetails, GenerateOptions } from './types.js';
-import { OPTION_TYPE } from './types.js';
+import type { GenerateOptions } from './types.js';
+import { OPTION_TYPE, RuleModule } from './types.js';
 import { replaceRulePlaceholder } from './rule-link.js';
 
 /**
@@ -163,47 +163,36 @@ export async function generate(path: string, options?: GenerateOptions) {
   const urlRuleDoc =
     options?.urlRuleDoc ?? OPTION_DEFAULTS[OPTION_TYPE.URL_RULE_DOC];
 
-  // Gather details about rules.
-  const ruleDetails: readonly RuleDetails[] = Object.entries(plugin.rules)
-    .map(([name, rule]): RuleDetails => {
-      return typeof rule === 'object'
-        ? // Object-style rule.
-          {
-            name,
-            description: rule.meta?.docs?.description,
-            fixable: rule.meta?.fixable
-              ? ['code', 'whitespace'].includes(rule.meta.fixable)
-              : false,
-            hasSuggestions: rule.meta?.hasSuggestions ?? false,
-            requiresTypeChecking:
-              rule.meta?.docs?.requiresTypeChecking ?? false,
-            deprecated: rule.meta?.deprecated ?? false,
-            schema: rule.meta?.schema,
-            type: rule.meta?.type,
-          }
-        : // Deprecated function-style rule (does not support most of these features).
-          {
-            name,
-            description: undefined,
-            fixable: false,
-            hasSuggestions: false,
-            requiresTypeChecking: false,
-            deprecated: false, // TODO: figure out how to access `deprecated` property that can be exported from function-style rules: https://github.com/bmish/eslint-doc-generator/issues/71
-            schema: [], // TODO: figure out how to access `schema` property that can be exported from function-style rules: https://github.com/bmish/eslint-doc-generator/issues/71
-            type: undefined,
-          };
+  // Gather normalized list of rules.
+  const ruleNamesAndRules = Object.entries(plugin.rules)
+    .map(([name, ruleModule]) => {
+      // Convert deprecated function-style rules to object-style rules so that we don't have to handle function-style rules everywhere throughout the codebase.
+      // @ts-expect-error -- this type unfortunately requires us to choose a `meta.type` even though the deprecated function-style rule won't have one.
+      const ruleModuleAsObject: RuleModule =
+        typeof ruleModule === 'function'
+          ? {
+              // Deprecated function-style rule don't support most of the properties that object-style rules support, so we'll just use the bare minimum.
+              meta: {
+                schema: [], // TODO: figure out how to access `schema` property that can be exported from function-style rules: https://github.com/bmish/eslint-doc-generator/issues/71
+                deprecated: false, // TODO: figure out how to access `deprecated` property that can be exported from function-style rules: https://github.com/bmish/eslint-doc-generator/issues/71
+              },
+              create: ruleModule,
+            }
+          : ruleModule;
+      const tuple: [string, RuleModule] = [name, ruleModuleAsObject];
+      return tuple;
     })
     .filter(
       // Filter out deprecated rules from being checked, displayed, or updated if the option is set.
-      (ruleDetails) => !ignoreDeprecatedRules || !ruleDetails.deprecated
+      ([, rule]) => !ignoreDeprecatedRules || !rule.meta.deprecated
     )
-    .sort(({ name: a }, { name: b }) =>
-      a.toLowerCase().localeCompare(b.toLowerCase())
-    );
+    .sort(([a], [b]) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
   // Update rule doc for each rule.
   let initializedRuleDoc = false;
-  for (const { name, description, schema } of ruleDetails) {
+  for (const [name, rule] of ruleNamesAndRules) {
+    const schema = rule.meta?.schema;
+    const description = rule.meta?.docs?.description;
     const pathToDoc = replaceRulePlaceholder(join(path, pathRuleDoc), name);
 
     if (!existsSync(pathToDoc)) {
@@ -303,7 +292,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     const fileContents = readFileSync(pathToFile, 'utf8');
     const fileContentsNew = await postprocess(
       updateRulesList(
-        ruleDetails,
+        ruleNamesAndRules,
         fileContents,
         plugin,
         configsToRules,

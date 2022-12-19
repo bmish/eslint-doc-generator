@@ -11,7 +11,7 @@ import { RULE_TYPES } from './rule-type.js';
 import { COLUMN_TYPE, SEVERITY_TYPE } from './types.js';
 import { getConfigsThatSetARule } from './plugin-configs.js';
 import { hasOptions } from './rule-options.js';
-import type { RuleDetails, ConfigsToRules, Plugin } from './types.js';
+import type { ConfigsToRules, Plugin, RuleNamesAndRules } from './types.js';
 
 /**
  * An object containing the column header for each column (as a string or function to generate the string).
@@ -19,15 +19,15 @@ import type { RuleDetails, ConfigsToRules, Plugin } from './types.js';
 export const COLUMN_HEADER: {
   [key in COLUMN_TYPE]:
     | string
-    | ((data: { ruleDetails: readonly RuleDetails[] }) => string);
+    | ((data: { ruleNamesAndRules: RuleNamesAndRules }) => string);
 } = {
-  [COLUMN_TYPE.NAME]: ({ ruleDetails }) => {
-    const ruleNames = ruleDetails.map((ruleDetail) => ruleDetail.name);
+  [COLUMN_TYPE.NAME]: ({ ruleNamesAndRules }) => {
+    const ruleNames = ruleNamesAndRules.map(([name]) => name);
     const longestRuleNameLength = Math.max(
       ...ruleNames.map(({ length }) => length)
     );
-    const ruleDescriptions = ruleDetails.map(
-      (ruleDetail) => ruleDetail.description
+    const ruleDescriptions = ruleNamesAndRules.map(
+      ([, rule]) => rule.meta?.docs?.description
     );
     const longestRuleDescriptionLength = Math.max(
       ...ruleDescriptions.map((description) =>
@@ -69,7 +69,7 @@ export const COLUMN_HEADER: {
  */
 export function getColumns(
   plugin: Plugin,
-  ruleDetails: readonly RuleDetails[],
+  ruleNamesAndRules: RuleNamesAndRules,
   configsToRules: ConfigsToRules,
   ruleListColumns: readonly COLUMN_TYPE[],
   pluginPrefix: string,
@@ -103,29 +103,31 @@ export function getColumns(
         ignoreConfig,
         SEVERITY_TYPE.warn
       ).length > 0,
-    [COLUMN_TYPE.DEPRECATED]: ruleDetails.some(
-      (ruleDetail) => ruleDetail.deprecated
+    [COLUMN_TYPE.DEPRECATED]: ruleNamesAndRules.some(
+      ([, rule]) => rule.meta?.deprecated
     ),
-    [COLUMN_TYPE.DESCRIPTION]: ruleDetails.some(
-      (ruleDetail) => ruleDetail.description
+    [COLUMN_TYPE.DESCRIPTION]: ruleNamesAndRules.some(
+      ([, rule]) => rule.meta?.docs?.description
     ),
-    [COLUMN_TYPE.FIXABLE]: ruleDetails.some((ruleDetail) => ruleDetail.fixable),
-    [COLUMN_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: ruleDetails.some(
-      (ruleDetail) => ruleDetail.fixable || ruleDetail.hasSuggestions
+    [COLUMN_TYPE.FIXABLE]: ruleNamesAndRules.some(
+      ([, rule]) => rule.meta?.fixable
     ),
-    [COLUMN_TYPE.HAS_SUGGESTIONS]: ruleDetails.some(
-      (ruleDetail) => ruleDetail.hasSuggestions
+    [COLUMN_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: ruleNamesAndRules.some(
+      ([, rule]) => rule.meta?.fixable || rule.meta?.hasSuggestions
+    ),
+    [COLUMN_TYPE.HAS_SUGGESTIONS]: ruleNamesAndRules.some(
+      ([, rule]) => rule.meta?.hasSuggestions
     ),
     [COLUMN_TYPE.NAME]: true,
-    [COLUMN_TYPE.OPTIONS]: ruleDetails.some((ruleDetail) =>
-      hasOptions(ruleDetail.schema)
+    [COLUMN_TYPE.OPTIONS]: ruleNamesAndRules.some(([, rule]) =>
+      hasOptions(rule.meta?.schema)
     ),
-    [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: ruleDetails.some(
-      (ruleDetail) => ruleDetail.requiresTypeChecking
+    [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: ruleNamesAndRules.some(
+      ([, rule]) => rule.meta?.docs?.requiresTypeChecking
     ),
     // Show type column only if we found at least one rule with a standard type.
-    [COLUMN_TYPE.TYPE]: ruleDetails.some(
-      (ruleDetail) => ruleDetail.type && RULE_TYPES.includes(ruleDetail.type)
+    [COLUMN_TYPE.TYPE]: ruleNamesAndRules.some(
+      ([, rule]) => rule.meta?.type && RULE_TYPES.includes(rule.meta?.type)
     ),
   };
 
