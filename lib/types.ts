@@ -138,7 +138,7 @@ export type GenerateOptions = {
   /**
    * Ordered list of notices to display in rule doc.
    * Non-applicable notices will be hidden.
-   * Choices: `configs`, `deprecated`, `fixable` (off by default), `fixableAndHasSuggestions`, `hasSuggestions` (off by default), `options` (off by default), `requiresTypeChecking`, `type` (off by default).
+   * Choices: `configs`, `deprecated`, `description` (off by default), `fixable` (off by default), `fixableAndHasSuggestions`, `hasSuggestions` (off by default), `options` (off by default), `requiresTypeChecking`, `type` (off by default).
    * Default: `['deprecated', 'configs', 'fixableAndHasSuggestions', 'requiresTypeChecking']`.
    */
   readonly ruleDocNotices?: readonly `${NOTICE_TYPE}`[];
