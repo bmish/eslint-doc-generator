@@ -89,9 +89,9 @@ function getConfigurationColumnValueForRule(
 }
 
 function buildRuleRow(
-  columnsEnabled: Record<COLUMN_TYPE, boolean>,
   ruleName: string,
   rule: RuleModule,
+  columnsEnabled: Record<COLUMN_TYPE, boolean>,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   pathPlugin: string,
@@ -171,8 +171,8 @@ function buildRuleRow(
 }
 
 function generateRulesListMarkdown(
-  columns: Record<COLUMN_TYPE, boolean>,
   ruleNamesAndRules: RuleNamesAndRules,
+  columns: Record<COLUMN_TYPE, boolean>,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   pathPlugin: string,
@@ -201,9 +201,9 @@ function generateRulesListMarkdown(
       listHeaderRow,
       ...ruleNamesAndRules.map(([name, rule]) =>
         buildRuleRow(
-          columns,
           name,
           rule,
+          columns,
           configsToRules,
           pluginPrefix,
           pathPlugin,
@@ -219,13 +219,16 @@ function generateRulesListMarkdown(
   );
 }
 
-/**
- * Generate multiple rule lists given the `ruleListSplit` property.
- */
-function generateRulesListMarkdownWithRuleListSplit(
+type RulesAndHeaders = { header?: string; rules: RuleNamesAndRules }[];
+type RulesAndHeadersReadOnly = readonly {
+  header?: string;
+  rules: RuleNamesAndRules;
+}[];
+
+function generateRuleListMarkdownForRulesAndHeaders(
+  rulesAndHeaders: RulesAndHeadersReadOnly,
+  headerLevel: number,
   columns: Record<COLUMN_TYPE, boolean>,
-  ruleNamesAndRules: RuleNamesAndRules,
-  plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   pathPlugin: string,
@@ -233,10 +236,43 @@ function generateRulesListMarkdownWithRuleListSplit(
   pathRuleList: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: readonly string[],
-  ruleListSplit: string,
-  headerLevel: number,
   urlRuleDoc?: string
 ): string {
+  const parts: string[] = [];
+
+  for (const { header, rules } of rulesAndHeaders) {
+    if (header) {
+      parts.push(`${'#'.repeat(headerLevel)} ${header}`);
+    }
+    parts.push(
+      generateRulesListMarkdown(
+        rules,
+        columns,
+        configsToRules,
+        pluginPrefix,
+        pathPlugin,
+        pathRuleDoc,
+        pathRuleList,
+        configEmojis,
+        ignoreConfig,
+        urlRuleDoc
+      )
+    );
+  }
+
+  return parts.join('\n\n');
+}
+
+/**
+ * Get the pairs of rules and headers for a given split property.
+ */
+function getRulesAndHeadersForSplit(
+  ruleNamesAndRules: RuleNamesAndRules,
+  plugin: Plugin,
+  ruleListSplit: string
+): RulesAndHeadersReadOnly {
+  const rulesAndHeaders: RulesAndHeaders = [];
+
   const values = new Set(
     ruleNamesAndRules.map(([name]) =>
       getPropertyFromRule(plugin, name, ruleListSplit)
@@ -250,27 +286,15 @@ function generateRulesListMarkdownWithRuleListSplit(
     );
   }
 
-  const parts: string[] = [];
-
   // Show any rules that don't have a value for this rule-list-split property first, or for which the boolean property is off.
   if (valuesAll.some((val) => isConsideredFalse(val))) {
     const rulesForThisValue = ruleNamesAndRules.filter(([name]) =>
       isConsideredFalse(getPropertyFromRule(plugin, name, ruleListSplit))
     );
-    parts.push(
-      generateRulesListMarkdown(
-        columns,
-        rulesForThisValue,
-        configsToRules,
-        pluginPrefix,
-        pathPlugin,
-        pathRuleDoc,
-        pathRuleList,
-        configEmojis,
-        ignoreConfig,
-        urlRuleDoc
-      )
-    );
+
+    rulesAndHeaders.push({
+      rules: rulesForThisValue,
+    });
   }
 
   // For each possible non-disabled value, show a header and list of corresponding rules.
@@ -301,26 +325,13 @@ function generateRulesListMarkdownWithRuleListSplit(
       transform: (str) => capitalizeOnlyFirstLetter(str),
     });
 
-    parts.push(
-      `${'#'.repeat(headerLevel)} ${
-        isBooleanableTrue(value) ? ruleListSplitTitle : value // eslint-disable-line @typescript-eslint/restrict-template-expressions -- TODO: better handling to ensure value is a string.
-      }`,
-      generateRulesListMarkdown(
-        columns,
-        rulesForThisValue,
-        configsToRules,
-        pluginPrefix,
-        pathPlugin,
-        pathRuleDoc,
-        pathRuleList,
-        configEmojis,
-        ignoreConfig,
-        urlRuleDoc
-      )
-    );
+    rulesAndHeaders.push({
+      header: String(isBooleanableTrue(value) ? ruleListSplitTitle : value),
+      rules: rulesForThisValue,
+    });
   }
 
-  return parts.join('\n\n');
+  return rulesAndHeaders;
 }
 
 export function updateRulesList(
@@ -401,35 +412,30 @@ export function updateRulesList(
     urlConfigs
   );
 
+  // Determine the pairs of rules and headers based on any split property.
+  const rulesAndHeaders: RulesAndHeaders = [];
+  if (ruleListSplit) {
+    rulesAndHeaders.push(
+      ...getRulesAndHeadersForSplit(ruleNamesAndRules, plugin, ruleListSplit)
+    );
+  } else {
+    rulesAndHeaders.push({ rules: ruleNamesAndRules });
+  }
+
   // New rule list.
-  const list = ruleListSplit
-    ? generateRulesListMarkdownWithRuleListSplit(
-        columns,
-        ruleNamesAndRules,
-        plugin,
-        configsToRules,
-        pluginPrefix,
-        pathPlugin,
-        pathRuleDoc,
-        pathRuleList,
-        configEmojis,
-        ignoreConfig,
-        ruleListSplit,
-        ruleListSplitHeaderLevel,
-        urlRuleDoc
-      )
-    : generateRulesListMarkdown(
-        columns,
-        ruleNamesAndRules,
-        configsToRules,
-        pluginPrefix,
-        pathPlugin,
-        pathRuleDoc,
-        pathRuleList,
-        configEmojis,
-        ignoreConfig,
-        urlRuleDoc
-      );
+  const list = generateRuleListMarkdownForRulesAndHeaders(
+    rulesAndHeaders,
+    ruleListSplitHeaderLevel,
+    columns,
+    configsToRules,
+    pluginPrefix,
+    pathPlugin,
+    pathRuleDoc,
+    pathRuleList,
+    configEmojis,
+    ignoreConfig,
+    urlRuleDoc
+  );
 
   const newContent = `${legend ? `${legend}\n\n` : ''}${list}`;
 
