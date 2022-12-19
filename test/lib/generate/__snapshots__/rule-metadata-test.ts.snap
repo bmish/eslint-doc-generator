@@ -22,6 +22,29 @@ exports[`generate (rule metadata) deprecated function-style rule generates the d
 "
 `;
 
+exports[`generate (rule metadata) deprecated function-style rule with deprecated/schema properties generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+❌ Deprecated.\\
+⚙️ Has configuration options.
+
+| Name                           | ❌  | ⚙️ |
+| :----------------------------- | :- | :- |
+| [no-foo](docs/rules/no-foo.md) | ❌  | ⚙️ |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (rule metadata) deprecated function-style rule with deprecated/schema properties generates the documentation 2`] = `
+"# test/no-foo
+
+<!-- end auto-generated rule header -->
+## Options
+optionToDoSomething"
+`;
+
 exports[`generate (rule metadata) rule with no meta object generates the documentation 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->

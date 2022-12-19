@@ -173,8 +173,10 @@ export async function generate(path: string, options?: GenerateOptions) {
           ? {
               // Deprecated function-style rule don't support most of the properties that object-style rules support, so we'll just use the bare minimum.
               meta: {
-                schema: [], // TODO: figure out how to access `schema` property that can be exported from function-style rules: https://github.com/bmish/eslint-doc-generator/issues/71
-                deprecated: false, // TODO: figure out how to access `deprecated` property that can be exported from function-style rules: https://github.com/bmish/eslint-doc-generator/issues/71
+                // @ts-expect-error -- type is missing for this property
+                schema: ruleModule.schema, // eslint-disable-line @typescript-eslint/no-unsafe-assignment -- type is missing for this property
+                // @ts-expect-error -- type is missing for this property
+                deprecated: ruleModule.deprecated, // eslint-disable-line @typescript-eslint/no-unsafe-assignment -- type is missing for this property
               },
               create: ruleModule,
             }
