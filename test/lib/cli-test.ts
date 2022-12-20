@@ -377,7 +377,94 @@ describe('cli', function () {
           ],
           stub
         )
-      ).rejects.toThrow('postprocess must be a function');
+      ).rejects.toThrow('postprocess must be a function.');
+    });
+
+    it('ruleListSplit is the wrong primitive type', async function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          main: 'index.js',
+          type: 'module',
+          version: '1.0.0',
+        }),
+
+        '.eslint-doc-generatorrc.json': JSON.stringify({
+          // Doesn't match schema.
+          ruleListSplit: 123,
+        }),
+      });
+
+      const stub = sinon.stub().resolves();
+      await expect(
+        run(
+          [
+            'node', // Path to node.
+            'eslint-doc-generator.js', // Path to this binary.
+          ],
+          stub
+        )
+      ).rejects.toThrow(
+        'config file/ruleListSplit must be string, config file/ruleListSplit must be array, config file/ruleListSplit must match a schema in anyOf'
+      );
+    });
+
+    it('ruleListSplit is the wrong array type', async function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          main: 'index.js',
+          type: 'module',
+          version: '1.0.0',
+        }),
+
+        '.eslint-doc-generatorrc.json': JSON.stringify({
+          // Doesn't match schema.
+          ruleListSplit: [123],
+        }),
+      });
+
+      const stub = sinon.stub().resolves();
+      await expect(
+        run(
+          [
+            'node', // Path to node.
+            'eslint-doc-generator.js', // Path to this binary.
+          ],
+          stub
+        )
+      ).rejects.toThrow(
+        'config file/ruleListSplit must be string, config file/ruleListSplit/0 must be string, config file/ruleListSplit must match a schema in anyOf'
+      );
+    });
+
+    it('ruleListSplit is an empty array', async function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          main: 'index.js',
+          type: 'module',
+          version: '1.0.0',
+        }),
+
+        '.eslint-doc-generatorrc.json': JSON.stringify({
+          // Doesn't match schema.
+          ruleListSplit: [],
+        }),
+      });
+
+      const stub = sinon.stub().resolves();
+      await expect(
+        run(
+          [
+            'node', // Path to node.
+            'eslint-doc-generator.js', // Path to this binary.
+          ],
+          stub
+        )
+      ).rejects.toThrow(
+        'config file/ruleListSplit must be string, config file/ruleListSplit must NOT have fewer than 1 items, config file/ruleListSplit must match a schema in anyOf'
+      );
     });
   });
 });

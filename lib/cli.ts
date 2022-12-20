@@ -105,7 +105,14 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
       ruleDocSectionOptions: { type: 'boolean' },
       ruleDocTitleFormat: { type: 'string' },
       ruleListColumns: schemaStringArray,
-      ruleListSplit: { anyOf: [{ type: 'string' }, schemaStringArray] },
+      ruleListSplit:
+        /* istanbul ignore next -- TODO: haven't tested JavaScript config files yet https://github.com/bmish/eslint-doc-generator/issues/366 */
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        typeof explorerResults.config.ruleListSplit === 'function'
+          ? {
+              /* Functions are allowed but JSON Schema can't validate them so no-op in this case. */
+            }
+          : { anyOf: [{ type: 'string' }, schemaStringArray] },
       urlConfigs: { type: 'string' },
       urlRuleDoc: { type: 'string' },
     };
@@ -130,23 +137,22 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
     const config = explorerResults.config; // eslint-disable-line @typescript-eslint/no-unsafe-assignment -- Rules are disabled because we haven't applied the GenerateOptions type until after we finish validating/normalizing.
 
     // Additional validation that couldn't be handled by ajv.
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    /* eslint-disable @typescript-eslint/no-unsafe-member-access -- disabled for same reason above */
     if (config.postprocess && typeof config.postprocess !== 'function') {
-      throw new Error('postprocess must be a function');
+      throw new Error('postprocess must be a function.');
     }
 
     // Perform any normalization.
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (typeof config.pathRuleList === 'string') {
-      config.pathRuleList = [config.pathRuleList]; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
+      config.pathRuleList = [config.pathRuleList];
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (typeof config.ruleListSplit === 'string') {
-      config.ruleListSplit = [config.ruleListSplit]; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
+      config.ruleListSplit = [config.ruleListSplit];
     }
 
     return explorerResults.config as GenerateOptions;
   }
+  /* eslint-enable @typescript-eslint/no-unsafe-member-access */
   return {};
 }
 
@@ -264,7 +270,7 @@ export async function run(
     )
     .option(
       '--rule-list-split <property>',
-      '(optional) Rule property(s) to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`.',
+      '(optional) Rule property(s) to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`. To specify a function, use a JavaScript-based config file.',
       collectCSV,
       []
     )
@@ -284,6 +290,14 @@ export async function run(
       const configFileOptions = await loadConfigFileOptions();
 
       const generateOptions = merge(configFileOptions, options); // Recursive merge.
+
+      // Options with both a CLI/config-file variant will lose the function value during the merge, so restore it here.
+      // TODO: figure out a better way to handle this.
+      /* istanbul ignore next -- TODO: haven't tested JavaScript config files yet https://github.com/bmish/eslint-doc-generator/issues/366 */
+      if (typeof configFileOptions.ruleListSplit === 'function') {
+        // @ts-expect-error -- The array is supposed to be read-only at this point.
+        generateOptions.ruleListSplit = configFileOptions.ruleListSplit;
+      }
 
       // Invoke callback.
       await cb(path, generateOptions);
