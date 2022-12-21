@@ -15,6 +15,15 @@ export type Plugin = TSESLint.Linter.Plugin;
 
 // Custom types.
 
+/**
+ * Where a rule comes from (where it's defined).
+ */
+export enum RULE_SOURCE {
+  'self' = 'self', // From this plugin.
+  'eslintCore' = 'eslintCore',
+  'thirdPartyPlugin' = 'thirdPartyPlugin',
+}
+
 export const SEVERITY_ERROR = new Set<RuleSeverity>([2, 'error']);
 export const SEVERITY_WARN = new Set<RuleSeverity>([1, 'warn']);
 export const SEVERITY_OFF = new Set<RuleSeverity>([0, 'off']);

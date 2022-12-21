@@ -1,5 +1,68 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`generate (deprecated rules) replaced by ESLint core rule uses correct replacement rule link 1`] = `
+"<!-- begin auto-generated rules list -->
+
+❌ Deprecated.
+
+| Name                           | Description  | ❌  |
+| :----------------------------- | :----------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description. | ❌  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (deprecated rules) replaced by ESLint core rule uses correct replacement rule link 2`] = `
+"# Description (\`test/no-foo\`)
+
+❌ This rule is deprecated. It was replaced by [\`no-unused-vars\`](https://eslint.org/docs/latest/rules/no-unused-vars).
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (deprecated rules) replaced by third-party plugin rule uses correct replacement rule link 1`] = `
+"<!-- begin auto-generated rules list -->
+
+❌ Deprecated.
+
+| Name                           | Description  | ❌  |
+| :----------------------------- | :----------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description. | ❌  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (deprecated rules) replaced by third-party plugin rule uses correct replacement rule link 2`] = `
+"# Description (\`test/no-foo\`)
+
+❌ This rule is deprecated. It was replaced by \`other-plugin/no-unused-vars\`.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (deprecated rules) replaced by third-party plugin rule with same rule name as one of our rules uses correct replacement rule link 1`] = `
+"<!-- begin auto-generated rules list -->
+
+❌ Deprecated.
+
+| Name                           | Description  | ❌  |
+| :----------------------------- | :----------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description. | ❌  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (deprecated rules) replaced by third-party plugin rule with same rule name as one of our rules uses correct replacement rule link 2`] = `
+"# Description (\`test/no-foo\`)
+
+❌ This rule is deprecated. It was replaced by \`other-plugin/no-foo\`.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
 exports[`generate (deprecated rules) several deprecated rules updates the documentation 1`] = `
 "<!-- begin auto-generated rules list -->
 
