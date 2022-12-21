@@ -15,7 +15,12 @@ import { findSectionHeader, findFinalHeaderLevel } from './markdown.js';
 import { getPluginRoot } from './package-json.js';
 import { generateLegend } from './rule-list-legend.js';
 import { relative } from 'node:path';
-import { COLUMN_TYPE, RuleModule, SEVERITY_TYPE } from './types.js';
+import {
+  COLUMN_TYPE,
+  RuleListSplitFunction,
+  RuleModule,
+  SEVERITY_TYPE,
+} from './types.js';
 import { markdownTable } from 'markdown-table';
 import type {
   Plugin,
@@ -30,6 +35,7 @@ import { capitalizeOnlyFirstLetter } from './string.js';
 import { noCase } from 'no-case';
 import { getProperty } from 'dot-prop';
 import { boolean, isBooleanable } from 'boolean';
+import Ajv from 'ajv';
 
 function isBooleanableTrue(value: unknown): boolean {
   return isBooleanable(value) && boolean(value);
@@ -219,7 +225,7 @@ function generateRulesListMarkdown(
   );
 }
 
-type RulesAndHeaders = { header?: string; rules: RuleNamesAndRules }[];
+type RulesAndHeaders = { title?: string; rules: RuleNamesAndRules }[];
 type RulesAndHeadersReadOnly = Readonly<RulesAndHeaders>;
 
 function generateRuleListMarkdownForRulesAndHeaders(
@@ -237,9 +243,9 @@ function generateRuleListMarkdownForRulesAndHeaders(
 ): string {
   const parts: string[] = [];
 
-  for (const { header, rules } of rulesAndHeaders) {
-    if (header) {
-      parts.push(`${'#'.repeat(headerLevel)} ${header}`);
+  for (const { title, rules } of rulesAndHeaders) {
+    if (title) {
+      parts.push(`${'#'.repeat(headerLevel)} ${title}`);
     }
     parts.push(
       generateRulesListMarkdown(
@@ -338,7 +344,7 @@ function getRulesAndHeadersForSplit(
 
       // Add a list for the rules with property set to this value.
       rulesAndHeadersForThisSplit.push({
-        header: String(isBooleanableTrue(value) ? ruleListSplitTitle : value),
+        title: String(isBooleanableTrue(value) ? ruleListSplitTitle : value),
         rules: rulesForThisValue,
       });
 
@@ -372,7 +378,7 @@ export function updateRulesList(
   configEmojis: ConfigEmojis,
   ignoreConfig: readonly string[],
   ruleListColumns: readonly COLUMN_TYPE[],
-  ruleListSplit: readonly string[],
+  ruleListSplit: readonly string[] | RuleListSplitFunction,
   urlConfigs?: string,
   urlRuleDoc?: string
 ): string {
@@ -440,7 +446,56 @@ export function updateRulesList(
 
   // Determine the pairs of rules and headers based on any split property.
   const rulesAndHeaders: RulesAndHeaders = [];
-  if (ruleListSplit.length > 0) {
+  if (typeof ruleListSplit === 'function') {
+    const userDefinedLists = ruleListSplit(ruleNamesAndRules);
+
+    // Schema for the user-defined lists.
+    const schema = {
+      // Array of rule lists.
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          title: { type: 'string' },
+          rules: {
+            type: 'array',
+            items: {
+              type: 'array',
+              items: [
+                { type: 'string' }, // The rule name.
+                { type: 'object' }, // The rule object (won't bother trying to validate deeper than this).
+              ],
+              minItems: 2,
+              maxItems: 2,
+            },
+            minItems: 1,
+            uniqueItems: true,
+          },
+        },
+        required: ['rules'],
+        additionalProperties: false,
+      },
+      minItems: 1,
+      uniqueItems: true,
+    };
+
+    // Validate the user-defined lists.
+    const ajv = new Ajv();
+    const validate = ajv.compile(schema);
+    const valid = validate(userDefinedLists);
+    if (!valid) {
+      throw new Error(
+        validate.errors
+          ? ajv.errorsText(validate.errors, {
+              dataVar: 'ruleListSplit return value',
+            })
+          : /* istanbul ignore next -- this shouldn't happen */
+            'Invalid ruleListSplit return value'
+      );
+    }
+
+    rulesAndHeaders.push(...userDefinedLists);
+  } else if (ruleListSplit.length > 0) {
     rulesAndHeaders.push(
       ...getRulesAndHeadersForSplit(ruleNamesAndRules, plugin, ruleListSplit)
     );

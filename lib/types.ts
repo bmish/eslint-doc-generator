@@ -36,9 +36,12 @@ export const SEVERITY_TYPE_TO_SET: {
 export type ConfigsToRules = Record<string, Rules>;
 
 /**
- * Convenient way to pass around a list of rules (as tuples).
+ * List of rules in the form of tuples (rule name and the actual rule).
  */
-export type RuleNamesAndRules = readonly [name: string, rule: RuleModule][];
+export type RuleNamesAndRules = readonly (readonly [
+  name: string,
+  rule: RuleModule
+])[];
 
 /**
  * The emoji for each config that has one after option parsing and defaults have been applied.
@@ -101,6 +104,17 @@ export enum OPTION_TYPE {
   URL_RULE_DOC = 'urlRuleDoc',
 }
 
+/**
+ * Function for splitting the rule list into multiple sections.
+ * Can be provided via a JavaScript-based config file using the `ruleListSplit` option.
+ * @param rules - all rules from the plugin
+ * @returns an array of sections, each with a title (optional) and list of rules
+ */
+export type RuleListSplitFunction = (rules: RuleNamesAndRules) => readonly {
+  title?: string;
+  rules: RuleNamesAndRules;
+}[];
+
 // JSDocs for options should be kept in sync with README.md and the CLI runner in cli.ts.
 /** The type for the config file (e.g. `.eslint-doc-generatorrc.js`) and internal `generate()` function. */
 export type GenerateOptions = {
@@ -129,7 +143,7 @@ export type GenerateOptions = {
   /**
    * Function to be called with the generated content and file path for each processed file.
    * Useful for applying custom transformations such as formatting with tools like prettier.
-   * Only available via a JavaScript config file.
+   * Only available via a JavaScript-based config file.
    */
   readonly postprocess?: (
     content: string,
@@ -158,11 +172,12 @@ export type GenerateOptions = {
    */
   readonly ruleListColumns?: readonly `${COLUMN_TYPE}`[];
   /**
-   * Rule property to split the rules list by.
+   * Rule property(s) or function to split the rules list by.
    * A separate list and header will be created for each value.
    * Example: `meta.type`.
    */
-  readonly ruleListSplit?: string | readonly string[];
+  readonly ruleListSplit?: string | readonly string[] | RuleListSplitFunction;
+
   /** Link to documentation about the ESLint configurations exported by the plugin. */
   readonly urlConfigs?: string;
   /**

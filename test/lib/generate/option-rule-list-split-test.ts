@@ -700,4 +700,165 @@ describe('generate (--rule-list-split)', function () {
       );
     });
   });
+
+  describe('as a function', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': { meta: { deprecated: true, }, create(context) {} },
+              'no-bar': { meta: { deprecated: false, }, create(context) {} },
+              'no-baz': { meta: { deprecated: false, }, create(context) {} },
+              'no-biz': { meta: { type: 'suggestion' }, create(context) {} },
+            },
+          };`,
+
+        'README.md': '## Rules\n',
+
+        'docs/rules/no-foo.md': '',
+        'docs/rules/no-bar.md': '',
+        'docs/rules/no-baz.md': '',
+        'docs/rules/no-biz.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('generates the documentation', async function () {
+      await generate('.', {
+        ruleListSplit: (rules) => {
+          const list1 = {
+            rules: rules.filter(([, rule]) => rule.meta.type === 'suggestion'),
+          };
+          const list2 = {
+            title: 'Not Deprecated',
+            rules: rules.filter(([, rule]) => !rule.meta.deprecated),
+          };
+          const list3 = {
+            title: 'Deprecated',
+            rules: rules.filter(([, rule]) => rule.meta.deprecated),
+          };
+          const list4 = {
+            title: 'Name = "no-baz"',
+            rules: rules.filter(([name]) => name === 'no-baz'),
+          };
+          return [list1, list2, list3, list4];
+        },
+      });
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
+  describe('as a function but invalid return value', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': { meta: { deprecated: true, }, create(context) {} },
+            },
+          };`,
+
+        'README.md': '## Rules\n',
+
+        'docs/rules/no-foo.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('throws an error when no return value', async function () {
+      await expect(
+        generate('.', {
+          // @ts-expect-error -- intentionally invalid return value
+          ruleListSplit: () => {
+            return null; // eslint-disable-line unicorn/no-null -- intentionally invalid return value
+          },
+        })
+      ).rejects.toThrow('ruleListSplit return value must be array');
+    });
+
+    it('throws an error when returning an empty array', async function () {
+      await expect(
+        generate('.', {
+          ruleListSplit: () => {
+            return [];
+          },
+        })
+      ).rejects.toThrow(
+        'ruleListSplit return value must NOT have fewer than 1 items'
+      );
+    });
+
+    it('throws an error when a sub-list has wrong type for rules', async function () {
+      await expect(
+        generate('.', {
+          // @ts-expect-error -- intentionally invalid return value
+          ruleListSplit: () => {
+            return [{ title: 'Foo', rules: null }]; // eslint-disable-line unicorn/no-null -- intentionally invalid return value
+          },
+        })
+      ).rejects.toThrow('ruleListSplit return value/0/rules must be array');
+    });
+
+    it('throws an error when a sub-list has no rules', async function () {
+      await expect(
+        generate('.', {
+          ruleListSplit: () => {
+            return [{ title: 'Foo', rules: [] }];
+          },
+        })
+      ).rejects.toThrow(
+        'ruleListSplit return value/0/rules must NOT have fewer than 1 items'
+      );
+    });
+
+    it('throws an error when a sub-list has a non-string title', async function () {
+      await expect(
+        generate('.', {
+          // @ts-expect-error -- intentionally invalid type
+          ruleListSplit: (rules) => {
+            return [{ title: 123, rules }];
+          },
+        })
+      ).rejects.toThrow('ruleListSplit return value/0/title must be string');
+    });
+
+    it('throws an error when same rule in list twice', async function () {
+      await expect(
+        generate('.', {
+          ruleListSplit: (rules) => {
+            return [{ title: 'Foo', rules: [rules[0], rules[0]] }];
+          },
+        })
+      ).rejects.toThrow(
+        'ruleListSplit return value/0/rules must NOT have duplicate items (items ## 0 and 1 are identical)'
+      );
+    });
+  });
 });
