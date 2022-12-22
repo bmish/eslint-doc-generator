@@ -15,6 +15,7 @@ import {
   ConfigEmojis,
   SEVERITY_TYPE,
   NOTICE_TYPE,
+  RULE_SOURCE,
 } from './types.js';
 import { RULE_TYPE, RULE_TYPE_MESSAGES_NOTICES } from './rule-type.js';
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
@@ -88,6 +89,7 @@ const RULE_NOTICES: {
         hasSuggestions: boolean;
         urlConfigs?: string;
         replacedBy: readonly string[] | undefined;
+        plugin: Plugin;
         pluginPrefix: string;
         pathPlugin: string;
         pathRuleDoc: string;
@@ -164,6 +166,7 @@ const RULE_NOTICES: {
   // Deprecated notice has optional "replaced by" rules list.
   [NOTICE_TYPE.DEPRECATED]: ({
     replacedBy,
+    plugin,
     pluginPrefix,
     pathPlugin,
     pathRuleDoc,
@@ -172,15 +175,21 @@ const RULE_NOTICES: {
   }) => {
     const urlCurrentPage = getUrlToRule(
       ruleName,
+      RULE_SOURCE.self,
       pluginPrefix,
       pathPlugin,
       pathRuleDoc,
       pathPlugin,
       urlRuleDoc
     );
+    /* istanbul ignore next -- this shouldn't happen */
+    if (!urlCurrentPage) {
+      throw new Error('Missing URL to our own rule');
+    }
     const replacementRuleList = (replacedBy ?? []).map((replacementRuleName) =>
       getLinkToRule(
         replacementRuleName,
+        plugin,
         pluginPrefix,
         pathPlugin,
         pathRuleDoc,
@@ -370,6 +379,7 @@ function getRuleNoticeLines(
             hasSuggestions: Boolean(rule.meta?.hasSuggestions),
             urlConfigs,
             replacedBy: rule.meta?.replacedBy,
+            plugin,
             pluginPrefix,
             pathPlugin,
             pathRuleDoc,
