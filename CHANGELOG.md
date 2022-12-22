@@ -43,6 +43,16 @@
 
 
 
+
+## v1.2.1 (2022-12-22)
+
+#### :bug: Bug Fix
+* [#367](https://github.com/bmish/eslint-doc-generator/pull/367) Ensure correct link used for deprecated rule replacement link when replacement rule is from ESLint core or third-party plugin ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v1.2.0 (2022-12-21)
 
 #### :rocket: Enhancement
