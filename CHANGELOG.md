@@ -44,6 +44,16 @@
 
 
 
+
+## v1.3.0 (2022-12-23)
+
+#### :bug: Bug Fix
+* [#368](https://github.com/bmish/eslint-doc-generator/pull/368) Add new option `--config-format` ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v1.2.1 (2022-12-22)
 
 #### :bug: Bug Fix
