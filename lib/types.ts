@@ -126,6 +126,18 @@ export type RuleListSplitFunction = (rules: RuleNamesAndRules) => readonly {
   rules: RuleNamesAndRules;
 }[];
 
+/**
+ * Function for generating the URL to a rule doc.
+ * Can be provided via a JavaScript-based config file using the `urlRuleDoc` option.
+ * @param name - the name of the rule
+ * @param path - the file path to the current page displaying the link, relative to the project root
+ * @returns the URL to the rule doc, or `undefined` to fallback to the default logic (relative URL)
+ */
+export type UrlRuleDocFunction = (
+  name: string,
+  path: string
+) => string | undefined;
+
 // JSDocs for options should be kept in sync with README.md and the CLI runner in cli.ts.
 /** The type for the config file (e.g. `.eslint-doc-generatorrc.js`) and internal `generate()` function. */
 export type GenerateOptions = {
@@ -194,9 +206,9 @@ export type GenerateOptions = {
   /** Link to documentation about the ESLint configurations exported by the plugin. */
   readonly urlConfigs?: string;
   /**
-   * Link to documentation for each rule.
+   * Link (or function to generate a link) to documentation for each rule.
    * Useful when it differs from the rule doc path on disk (e.g. custom documentation site in use).
-   * Use `{name}` placeholder for the rule name.
+   * For the string version, use `{name}` placeholder for the rule name.
    */
-  readonly urlRuleDoc?: string;
+  readonly urlRuleDoc?: string | UrlRuleDocFunction;
 };

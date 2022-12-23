@@ -15,12 +15,12 @@ import {
   ConfigEmojis,
   SEVERITY_TYPE,
   NOTICE_TYPE,
-  RULE_SOURCE,
+  UrlRuleDocFunction,
 } from './types.js';
 import { RULE_TYPE, RULE_TYPE_MESSAGES_NOTICES } from './rule-type.js';
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
 import { hasOptions } from './rule-options.js';
-import { getLinkToRule, getUrlToRule } from './rule-link.js';
+import { getLinkToRule, replaceRulePlaceholder } from './rule-link.js';
 import {
   toSentenceCase,
   removeTrailingPeriod,
@@ -102,7 +102,7 @@ const RULE_NOTICES: {
         pathPlugin: string;
         pathRuleDoc: string;
         type?: `${RULE_TYPE}`;
-        urlRuleDoc?: string;
+        urlRuleDoc?: string | UrlRuleDocFunction;
       }) => string);
 } = {
   // Configs notice varies based on whether the rule is configured in one or more configs.
@@ -189,19 +189,6 @@ const RULE_NOTICES: {
     ruleName,
     urlRuleDoc,
   }) => {
-    const urlCurrentPage = getUrlToRule(
-      ruleName,
-      RULE_SOURCE.self,
-      pluginPrefix,
-      pathPlugin,
-      pathRuleDoc,
-      pathPlugin,
-      urlRuleDoc
-    );
-    /* istanbul ignore next -- this shouldn't happen */
-    if (!urlCurrentPage) {
-      throw new Error('Missing URL to our own rule');
-    }
     const replacementRuleList = (replacedBy ?? []).map((replacementRuleName) =>
       getLinkToRule(
         replacementRuleName,
@@ -209,7 +196,7 @@ const RULE_NOTICES: {
         pluginPrefix,
         pathPlugin,
         pathRuleDoc,
-        urlCurrentPage,
+        replaceRulePlaceholder(pathRuleDoc, ruleName),
         true,
         true,
         urlRuleDoc
@@ -318,7 +305,7 @@ function getRuleNoticeLines(
   ignoreConfig: readonly string[],
   ruleDocNotices: readonly NOTICE_TYPE[],
   urlConfigs?: string,
-  urlRuleDoc?: string
+  urlRuleDoc?: string | UrlRuleDocFunction
 ) {
   const lines: string[] = [];
 
@@ -502,7 +489,7 @@ export function generateRuleHeaderLines(
   ruleDocNotices: readonly NOTICE_TYPE[],
   ruleDocTitleFormat: RuleDocTitleFormat,
   urlConfigs?: string,
-  urlRuleDoc?: string
+  urlRuleDoc?: string | UrlRuleDocFunction
 ): string {
   return [
     makeRuleDocTitle(name, description, pluginPrefix, ruleDocTitleFormat),

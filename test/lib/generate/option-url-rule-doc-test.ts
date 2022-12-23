@@ -20,24 +20,24 @@ describe('generate (--url-rule-doc)', function () {
         }),
 
         'index.js': `
-              export default {
-                rules: {
-                  'no-foo': {
-                    meta: {
-                      docs: { description: 'Description for no-foo.' },
-                      deprecated: true,
-                      replacedBy: ['no-bar']
-                    },
-                    create(context) {}
-                  },
-                  'no-bar': {
-                    meta: {
-                      docs: { description: 'Description for no-bar.' }
-                    },
-                    create(context) {}
-                  },
+          export default {
+            rules: {
+              'no-foo': {
+                meta: {
+                  docs: { description: 'Description for no-foo.' },
+                  deprecated: true,
+                  replacedBy: ['no-bar']
                 },
-              };`,
+                create(context) {}
+              },
+              'no-bar': {
+                meta: {
+                  docs: { description: 'Description for no-bar.' }
+                },
+                create(context) {}
+              },
+            },
+          };`,
 
         'README.md': '## Rules\n',
 
@@ -59,6 +59,124 @@ describe('generate (--url-rule-doc)', function () {
         urlRuleDoc: 'https://example.com/rule-docs/{name}/',
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
+  describe('function', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: {
+                  docs: { description: 'Description for no-foo.' },
+                  deprecated: true,
+                  replacedBy: ['no-bar']
+                },
+                create(context) {}
+              },
+              'no-bar': {
+                meta: {
+                  docs: { description: 'Description for no-bar.' }
+                },
+                create(context) {}
+              },
+            },
+          };`,
+
+        'README.md': '## Rules\n',
+        'nested/README.md': '## Rules\n',
+
+        'docs/rules/no-foo.md': '',
+        'docs/rules/no-bar.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('uses the custom URL', async function () {
+      await generate('.', {
+        pathRuleList: ['README.md', 'nested/README.md'],
+        urlRuleDoc(name, path) {
+          return `https://example.com/rule-docs/name:${name}/path:${path}`;
+        },
+      });
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('nested/README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
+  describe('function returns undefined', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: {
+                  docs: { description: 'Description for no-foo.' },
+                  deprecated: true,
+                  replacedBy: ['no-bar']
+                },
+                create(context) {}
+              },
+              'no-bar': {
+                meta: {
+                  docs: { description: 'Description for no-bar.' }
+                },
+                create(context) {}
+              },
+            },
+          };`,
+
+        'README.md': '## Rules\n',
+        'nested/README.md': '## Rules\n',
+
+        'docs/rules/no-foo.md': '',
+        'docs/rules/no-bar.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('should fallback to the normal URL', async function () {
+      await generate('.', {
+        pathRuleList: ['README.md', 'nested/README.md'],
+        urlRuleDoc() {
+          return undefined; // eslint-disable-line unicorn/no-useless-undefined -- for testing
+        },
+      });
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('nested/README.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
     });
