@@ -24,6 +24,7 @@ Also performs [configurable](#configuration-options) section consistency checks 
   - [Users](#users)
 - [Configuration options](#configuration-options)
   - [Column and notice types](#column-and-notice-types)
+  - [`--config-format`](#--config-format)
   - [`--rule-doc-title-format`](#--rule-doc-title-format)
   - [Configuration file](#configuration-file)
   - [Badges](#badges)
@@ -131,6 +132,7 @@ There's also a `postprocess` option that's only available via a [config file](#c
 | :-- | :-- |
 | `--check` | Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. Default: `false`. |
 | `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Default emojis are provided for [common configs](./lib/emojis.ts). To remove a default emoji and rely on a [badge](#badges) instead, provide the config name without an emoji. Option can be repeated. |
+| `--config-format` | The format to use for config names. Defaults to `name`. See choices in below [table](#--config-format). |
 | `--ignore-config` | Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. |
 | `--ignore-deprecated-rules` | Whether to ignore deprecated rules from being checked, displayed, or updated. Default: `false`. |
 | `--init-rule-docs` | Whether to create rule doc files if they don't yet exist. Default: `false`. |
@@ -165,6 +167,16 @@ These are the types of rule metadata that are available for display in rule list
 | ⚙️ | `options` | Yes | Yes | Whether a rule has [options](https://eslint.org/docs/latest/developer-guide/working-with-rules#options-schemas). |
 | 💭 | `requiresTypeChecking` | Yes | Yes | Whether a rule requires [type checking](https://typescript-eslint.io/linting/typed-linting/). |
 | 🗂️ | `type` | Yes | Yes | The rule [type](https://eslint.org/docs/latest/developer-guide/working-with-rules#rule-basics) (`problem`, `suggestion`, or `layout`). |
+
+### `--config-format`
+
+Where `recommended` is the config name and `eslint-plugin-test` is the plugin name.
+
+| Value | Example |
+| :-- | :-- |
+| `name` (default) | `recommended` |
+| `plugin-colon-prefix-name` | `plugin:test/recommended` |
+| `prefix-name` | `test/recommended` |
 
 ### `--rule-doc-title-format`
 

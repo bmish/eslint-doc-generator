@@ -12,6 +12,7 @@ import {
 } from './types.js';
 import { getCurrentPackageVersion } from './package-json.js';
 import { boolean, isBooleanable } from 'boolean';
+import { CONFIG_FORMATS } from './config-format.js';
 
 /**
  * Used for collecting repeated CLI options into an array.
@@ -91,6 +92,7 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
     const properties: { [key in OPTION_TYPE]: unknown } = {
       check: { type: 'boolean' },
       configEmoji: schemaConfigEmoji,
+      configFormat: { type: 'string' },
       ignoreConfig: schemaStringArray,
       ignoreDeprecatedRules: { type: 'boolean' },
       initRuleDocs: { type: 'boolean' },
@@ -186,6 +188,14 @@ export async function run(
       '(optional) Custom emoji to use for a config. Format is `config-name,emoji`. Default emojis are provided for common configs. To remove a default emoji and rely on a badge instead, provide the config name without an emoji. Option can be repeated.',
       collectCSVNested,
       []
+    )
+    .addOption(
+      new Option(
+        '--config-format <config-format>',
+        `(optional) The format to use for the config name. (default: ${
+          OPTION_DEFAULTS[OPTION_TYPE.CONFIG_FORMAT]
+        })`
+      ).choices(CONFIG_FORMATS)
     )
     .option(
       '--ignore-config <config>',

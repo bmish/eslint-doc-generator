@@ -36,6 +36,7 @@ import { noCase } from 'no-case';
 import { getProperty } from 'dot-prop';
 import { boolean, isBooleanable } from 'boolean';
 import Ajv from 'ajv';
+import { ConfigFormat } from './config-format.js';
 
 function isBooleanableTrue(value: unknown): boolean {
   return isBooleanable(value) && boolean(value);
@@ -382,6 +383,7 @@ export function updateRulesList(
   pathRuleList: string,
   pathPlugin: string,
   configEmojis: ConfigEmojis,
+  configFormat: ConfigFormat,
   ignoreConfig: readonly string[],
   ruleListColumns: readonly COLUMN_TYPE[],
   ruleListSplit: readonly string[] | RuleListSplitFunction,
@@ -445,6 +447,7 @@ export function updateRulesList(
     plugin,
     configsToRules,
     configEmojis,
+    configFormat,
     pluginPrefix,
     ignoreConfig,
     urlConfigs

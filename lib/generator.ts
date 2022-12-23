@@ -123,6 +123,8 @@ export async function generate(path: string, options?: GenerateOptions) {
   // Options. Add default values as needed.
   const check = options?.check ?? OPTION_DEFAULTS[OPTION_TYPE.CHECK];
   const configEmojis = parseConfigEmojiOptions(plugin, options?.configEmoji);
+  const configFormat =
+    options?.configFormat ?? OPTION_DEFAULTS[OPTION_TYPE.CONFIG_FORMAT];
   const ignoreConfig = stringOrArrayWithFallback(
     options?.ignoreConfig,
     OPTION_DEFAULTS[OPTION_TYPE.IGNORE_CONFIG]
@@ -224,6 +226,7 @@ export async function generate(path: string, options?: GenerateOptions) {
       path,
       pathRuleDoc,
       configEmojis,
+      configFormat,
       ignoreConfig,
       ruleDocNotices,
       ruleDocTitleFormat,
@@ -308,6 +311,7 @@ export async function generate(path: string, options?: GenerateOptions) {
         pathToFile,
         path,
         configEmojis,
+        configFormat,
         ignoreConfig,
         ruleListColumns,
         ruleListSplit,
