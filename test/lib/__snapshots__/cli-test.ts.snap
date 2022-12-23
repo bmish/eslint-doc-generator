@@ -15,6 +15,7 @@ exports[`cli all CLI options and all config files options merges correctly, with
         "🚲",
       ],
     ],
+    "configFormat": "plugin-colon-prefix-name",
     "ignoreConfig": [
       "ignoredConfigFromConfigFile1",
       "ignoredConfigFromConfigFile2",
@@ -72,6 +73,7 @@ exports[`cli all CLI options, no config file options is called correctly 1`] = `
         "🚲",
       ],
     ],
+    "configFormat": "plugin-colon-prefix-name",
     "ignoreConfig": [
       "ignoredConfigFromCli1",
       "ignoredConfigFromCli2",
@@ -118,6 +120,7 @@ exports[`cli all config files options, no CLI options is called correctly 1`] = 
         "🚲",
       ],
     ],
+    "configFormat": "name",
     "ignoreConfig": [
       "ignoredConfigFromConfigFile1",
       "ignoredConfigFromConfigFile2",

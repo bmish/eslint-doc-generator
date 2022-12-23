@@ -6,6 +6,7 @@ import { OPTION_TYPE } from '../../lib/types.js';
 const configFileOptionsAll: { [key in OPTION_TYPE]: unknown } = {
   check: true,
   configEmoji: [['recommended-from-config-file', '🚲']],
+  configFormat: 'name',
   ignoreConfig: [
     'ignoredConfigFromConfigFile1',
     'ignoredConfigFromConfigFile2',
@@ -36,6 +37,8 @@ const cliOptionsAll: { [key in OPTION_TYPE]: readonly string[] } = {
   [OPTION_TYPE.CHECK]: ['--check'],
 
   [OPTION_TYPE.CONFIG_EMOJI]: ['--config-emoji', 'recommended-from-cli,🚲'],
+
+  [OPTION_TYPE.CONFIG_FORMAT]: ['--config-format', 'plugin-colon-prefix-name'],
 
   [OPTION_TYPE.IGNORE_CONFIG]: [
     '--ignore-config',

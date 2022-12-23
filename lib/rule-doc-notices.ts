@@ -26,6 +26,7 @@ import {
   removeTrailingPeriod,
   addTrailingPeriod,
 } from './string.js';
+import { ConfigFormat, configNameToDisplay } from './config-format.js';
 
 function severityToTerminology(severity: SEVERITY_TYPE) {
   switch (severity) {
@@ -46,13 +47,19 @@ function configsToNoticeSentence(
   severity: SEVERITY_TYPE,
   configsLinkOrWord: string,
   configLinkOrWord: string,
-  configEmojis: ConfigEmojis
+  configEmojis: ConfigEmojis,
+  configFormat: ConfigFormat,
+  pluginPrefix: string
 ): string | undefined {
   // Create CSV list of configs with their emojis.
   const csv = configs
     .map((config) => {
       const emoji = findConfigEmoji(configEmojis, config);
-      return `${emoji ? `${emoji} ` : ''}\`${config}\``;
+      return `${emoji ? `${emoji} ` : ''}\`${configNameToDisplay(
+        config,
+        configFormat,
+        pluginPrefix
+      )}\``;
     })
     .join(', ');
 
@@ -84,6 +91,7 @@ const RULE_NOTICES: {
         configsWarn: readonly string[];
         configsOff: readonly string[];
         configEmojis: ConfigEmojis;
+        configFormat: ConfigFormat;
         description?: string;
         fixable: boolean;
         hasSuggestions: boolean;
@@ -103,6 +111,8 @@ const RULE_NOTICES: {
     configsWarn,
     configsOff,
     configEmojis,
+    configFormat,
+    pluginPrefix,
     urlConfigs,
   }) => {
     // Add link to configs documentation if provided.
@@ -140,21 +150,27 @@ const RULE_NOTICES: {
         SEVERITY_TYPE.error,
         configsLinkOrWord,
         configLinkOrWord,
-        configEmojis
+        configEmojis,
+        configFormat,
+        pluginPrefix
       ),
       configsToNoticeSentence(
         configsWarn,
         SEVERITY_TYPE.warn,
         configsLinkOrWord,
         configLinkOrWord,
-        configEmojis
+        configEmojis,
+        configFormat,
+        pluginPrefix
       ),
       configsToNoticeSentence(
         configsOff,
         SEVERITY_TYPE.off,
         configsLinkOrWord,
         configLinkOrWord,
-        configEmojis
+        configEmojis,
+        configFormat,
+        pluginPrefix
       ),
     ]
       .filter(Boolean)
@@ -298,6 +314,7 @@ function getRuleNoticeLines(
   pathPlugin: string,
   pathRuleDoc: string,
   configEmojis: ConfigEmojis,
+  configFormat: ConfigFormat,
   ignoreConfig: readonly string[],
   ruleDocNotices: readonly NOTICE_TYPE[],
   urlConfigs?: string,
@@ -374,6 +391,7 @@ function getRuleNoticeLines(
             configsWarn,
             configsOff,
             configEmojis,
+            configFormat,
             description: rule.meta?.docs?.description,
             fixable: Boolean(rule.meta?.fixable),
             hasSuggestions: Boolean(rule.meta?.hasSuggestions),
@@ -479,6 +497,7 @@ export function generateRuleHeaderLines(
   pathPlugin: string,
   pathRuleDoc: string,
   configEmojis: ConfigEmojis,
+  configFormat: ConfigFormat,
   ignoreConfig: readonly string[],
   ruleDocNotices: readonly NOTICE_TYPE[],
   ruleDocTitleFormat: RuleDocTitleFormat,
@@ -495,6 +514,7 @@ export function generateRuleHeaderLines(
       pathPlugin,
       pathRuleDoc,
       configEmojis,
+      configFormat,
       ignoreConfig,
       ruleDocNotices,
       urlConfigs,

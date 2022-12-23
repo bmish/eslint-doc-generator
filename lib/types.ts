@@ -1,5 +1,6 @@
 import type { RuleDocTitleFormat } from './rule-doc-title-format.js';
 import type { TSESLint } from '@typescript-eslint/utils';
+import { ConfigFormat } from './config-format.js';
 
 // Standard ESLint types.
 
@@ -96,6 +97,7 @@ export enum COLUMN_TYPE {
 export enum OPTION_TYPE {
   CHECK = 'check',
   CONFIG_EMOJI = 'configEmoji',
+  CONFIG_FORMAT = 'configFormat',
   IGNORE_CONFIG = 'ignoreConfig',
   IGNORE_DEPRECATED_RULES = 'ignoreDeprecatedRules',
   INIT_RULE_DOCS = 'initRuleDocs',
@@ -139,6 +141,8 @@ export type GenerateOptions = {
     | [configName: string, emoji: string]
     | [configName: string]
   )[];
+  /** The format to use for config names. Default: `name`. */
+  readonly configFormat?: ConfigFormat;
   /** Configs to ignore from being displayed. Often used for an `all` config. */
   readonly ignoreConfig?: readonly string[];
   /** Whether to ignore deprecated rules from being checked, displayed, or updated. Default: `false`. */
