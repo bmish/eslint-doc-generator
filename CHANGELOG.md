@@ -45,6 +45,16 @@
 
 
 
+
+## v1.4.0 (2022-12-26)
+
+#### :rocket: Enhancement
+* [#369](https://github.com/bmish/eslint-doc-generator/pull/369) Support a user-defined function for `--url-rule-doc` option ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v1.3.0 (2022-12-23)
 
 #### :bug: Bug Fix
