@@ -116,7 +116,14 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
             }
           : { anyOf: [{ type: 'string' }, schemaStringArray] },
       urlConfigs: { type: 'string' },
-      urlRuleDoc: { type: 'string' },
+      urlRuleDoc:
+        /* istanbul ignore next -- TODO: haven't tested JavaScript config files yet https://github.com/bmish/eslint-doc-generator/issues/366 */
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        typeof explorerResults.config.urlRuleDoc === 'function'
+          ? {
+              /* Functions are allowed but JSON Schema can't validate them so no-op in this case. */
+            }
+          : { type: 'string' },
     };
     const schema = {
       type: 'object',
@@ -290,7 +297,7 @@ export async function run(
     )
     .option(
       '--url-rule-doc <url>',
-      '(optional) Link to documentation for each rule. Useful when it differs from the rule doc path on disk (e.g. custom documentation site in use). Use `{name}` placeholder for the rule name.'
+      '(optional) Link to documentation for each rule. Useful when it differs from the rule doc path on disk (e.g. custom documentation site in use). Use `{name}` placeholder for the rule name. To specify a function, use a JavaScript-based config file.'
     )
     .action(async function (path: string, options: GenerateOptions) {
       // Load config file options and merge with CLI options.

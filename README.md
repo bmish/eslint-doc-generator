@@ -146,7 +146,7 @@ There's also a `postprocess` option that's only available via a [config file](#c
 | `--rule-list-columns` | Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. See choices in below [table](#column-and-notice-types). Default: `name,description,configsError,configsWarn,configsOff,fixable,hasSuggestions,requiresTypeChecking,deprecated`. |
 | `--rule-list-split` | Rule property(s) to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`. A function can also be provided for this option via a [config file](#configuration-file). |
 | `--url-configs` | Link to documentation about the ESLint configurations exported by the plugin. |
-| `--url-rule-doc` | Link to documentation for each rule. Useful when it differs from the rule doc path on disk (e.g. custom documentation site in use). Use `{name}` placeholder for the rule name. |
+| `--url-rule-doc` | Link to documentation for each rule. Useful when it differs from the rule doc path on disk (e.g. custom documentation site in use). Use `{name}` placeholder for the rule name. A function can also be provided for this option via a [config file](#configuration-file). |
 
 ### Column and notice types
 
@@ -235,6 +235,22 @@ const config = {
         rules: rules.filter(([name, rule]) => rule.meta.someProp === 'bar'),
       },
     ];
+  },
+};
+
+module.exports = config;
+```
+
+Example `.eslint-doc-generatorrc.js` with `urlRuleDoc` function:
+
+```js
+/** @type {import('eslint-doc-generator').GenerateOptions} */
+const config = {
+  urlRuleDoc(name, page) {
+    if (page === 'README.md') {
+      // Use URLs only in the readme.
+      return `https://example.com/rules/${name}.html`;
+    }
   },
 };
 

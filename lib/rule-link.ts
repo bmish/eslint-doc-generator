@@ -1,6 +1,6 @@
 import { countOccurrencesInString } from './string.js';
 import { join, sep, relative } from 'node:path';
-import { Plugin, RULE_SOURCE } from './types.js';
+import { Plugin, RULE_SOURCE, UrlRuleDocFunction } from './types.js';
 
 export function replaceRulePlaceholder(pathOrUrl: string, ruleName: string) {
   return pathOrUrl.replace(/\{name\}/gu, ruleName);
@@ -35,8 +35,8 @@ export function getUrlToRule(
   pluginPrefix: string,
   pathPlugin: string,
   pathRuleDoc: string,
-  urlCurrentPage: string,
-  urlRuleDoc?: string
+  pathCurrentPage: string,
+  urlRuleDoc?: string | UrlRuleDocFunction
 ) {
   switch (ruleSource) {
     case RULE_SOURCE.eslintCore:
@@ -50,7 +50,7 @@ export function getUrlToRule(
   }
 
   const nestingDepthOfCurrentPage = countOccurrencesInString(
-    relative(pathPlugin, urlCurrentPage),
+    relative(pathPlugin, pathCurrentPage),
     sep
   );
   const relativePathPluginRoot = goUpLevel(nestingDepthOfCurrentPage);
@@ -61,14 +61,26 @@ export function getUrlToRule(
     ? ruleName.slice(pluginPrefix.length + 1)
     : ruleName;
 
-  return urlRuleDoc
-    ? replaceRulePlaceholder(urlRuleDoc, ruleNameWithoutPluginPrefix)
-    : pathToUrl(
-        join(
-          relativePathPluginRoot,
-          replaceRulePlaceholder(pathRuleDoc, ruleNameWithoutPluginPrefix)
-        )
-      );
+  // If the URL is a function, evaluate it.
+  const urlRuleDocFunctionEvaluated =
+    typeof urlRuleDoc === 'function'
+      ? urlRuleDoc(ruleName, pathToUrl(relative(pathPlugin, pathCurrentPage)))
+      : undefined;
+
+  return (
+    // If the function returned a URL, use it.
+    urlRuleDocFunctionEvaluated ??
+    (typeof urlRuleDoc === 'string'
+      ? // Otherwise, use the URL if it's a string.
+        replaceRulePlaceholder(urlRuleDoc, ruleNameWithoutPluginPrefix)
+      : // Finally, fallback to the relative path.
+        pathToUrl(
+          join(
+            relativePathPluginRoot,
+            replaceRulePlaceholder(pathRuleDoc, ruleNameWithoutPluginPrefix)
+          )
+        ))
+  );
 }
 
 /**
@@ -80,10 +92,10 @@ export function getLinkToRule(
   pluginPrefix: string,
   pathPlugin: string,
   pathRuleDoc: string,
-  urlCurrentPage: string,
+  pathCurrentPage: string,
   includeBackticks: boolean,
   includePrefix: boolean,
-  urlRuleDoc?: string
+  urlRuleDoc?: string | UrlRuleDocFunction
 ) {
   const ruleNameWithoutPluginPrefix = ruleName.startsWith(`${pluginPrefix}/`)
     ? ruleName.slice(pluginPrefix.length + 1)
@@ -112,7 +124,7 @@ export function getLinkToRule(
     pluginPrefix,
     pathPlugin,
     pathRuleDoc,
-    urlCurrentPage,
+    pathCurrentPage,
     urlRuleDoc
   );
 

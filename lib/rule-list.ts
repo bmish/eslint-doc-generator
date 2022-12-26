@@ -20,6 +20,7 @@ import {
   RuleListSplitFunction,
   RuleModule,
   SEVERITY_TYPE,
+  UrlRuleDocFunction,
 } from './types.js';
 import { markdownTable } from 'markdown-table';
 import type {
@@ -107,7 +108,7 @@ function buildRuleRow(
   pathRuleList: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: readonly string[],
-  urlRuleDoc?: string
+  urlRuleDoc?: string | UrlRuleDocFunction
 ): readonly string[] {
   const columns: {
     [key in COLUMN_TYPE]: string | (() => string);
@@ -190,7 +191,7 @@ function generateRulesListMarkdown(
   pathRuleList: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: readonly string[],
-  urlRuleDoc?: string
+  urlRuleDoc?: string | UrlRuleDocFunction
 ): string {
   const listHeaderRow = (
     Object.entries(columns) as readonly [COLUMN_TYPE, boolean][]
@@ -245,7 +246,7 @@ function generateRuleListMarkdownForRulesAndHeaders(
   pathRuleList: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: readonly string[],
-  urlRuleDoc?: string
+  urlRuleDoc?: string | UrlRuleDocFunction
 ): string {
   const parts: string[] = [];
 
@@ -388,7 +389,7 @@ export function updateRulesList(
   ruleListColumns: readonly COLUMN_TYPE[],
   ruleListSplit: readonly string[] | RuleListSplitFunction,
   urlConfigs?: string,
-  urlRuleDoc?: string
+  urlRuleDoc?: string | UrlRuleDocFunction
 ): string {
   let listStartIndex = markdown.indexOf(BEGIN_RULE_LIST_MARKER);
   let listEndIndex = markdown.indexOf(END_RULE_LIST_MARKER);
