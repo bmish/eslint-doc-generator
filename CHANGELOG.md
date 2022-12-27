@@ -46,6 +46,16 @@
 
 
 
+
+## v1.4.1 (2022-12-27)
+
+#### :bug: Bug Fix
+* [#375](https://github.com/bmish/eslint-doc-generator/pull/375) Use concise relative paths for rule links ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v1.4.0 (2022-12-26)
 
 #### :rocket: Enhancement
