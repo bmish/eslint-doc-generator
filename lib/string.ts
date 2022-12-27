@@ -1,7 +1,3 @@
-export function countOccurrencesInString(str: string, substring: string) {
-  return str.split(substring).length - 1;
-}
-
 export function toSentenceCase(str: string) {
   return str.replace(/^\w/u, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase();

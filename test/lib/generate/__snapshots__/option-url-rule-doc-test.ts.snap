@@ -64,7 +64,7 @@ exports[`generate (--url-rule-doc) function returns undefined should fallback to
 exports[`generate (--url-rule-doc) function returns undefined should fallback to the normal URL 3`] = `
 "# Description for no-foo (\`test/no-foo\`)
 
-❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](../../docs/rules/no-bar.md).
+❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](no-bar.md).
 
 <!-- end auto-generated rule header -->
 "

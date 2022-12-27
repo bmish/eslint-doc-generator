@@ -1,21 +1,9 @@
-import { countOccurrencesInString } from './string.js';
-import { join, sep, relative } from 'node:path';
+import { join, sep, relative, dirname } from 'node:path';
 import { Plugin, RULE_SOURCE, UrlRuleDocFunction } from './types.js';
+import { getPluginRoot } from './package-json.js';
 
 export function replaceRulePlaceholder(pathOrUrl: string, ruleName: string) {
   return pathOrUrl.replace(/\{name\}/gu, ruleName);
-}
-
-/**
- * 0 => "", 1 => "../", 2 => "../../", etc
- * @param level
- * @returns the relative path to go up the given number of directories
- */
-function goUpLevel(level: number): string {
-  if (level === 0) {
-    return '';
-  }
-  return `${join(...Array.from<string>({ length: level }).fill('..'))}/`;
 }
 
 /**
@@ -49,12 +37,6 @@ export function getUrlToRule(
       break;
   }
 
-  const nestingDepthOfCurrentPage = countOccurrencesInString(
-    relative(pathPlugin, pathCurrentPage),
-    sep
-  );
-  const relativePathPluginRoot = goUpLevel(nestingDepthOfCurrentPage);
-
   // Ignore plugin prefix if it's included in rule name.
   // While we could display the prefix if we wanted, it definitely cannot be part of the link.
   const ruleNameWithoutPluginPrefix = ruleName.startsWith(`${pluginPrefix}/`)
@@ -67,6 +49,11 @@ export function getUrlToRule(
       ? urlRuleDoc(ruleName, pathToUrl(relative(pathPlugin, pathCurrentPage)))
       : undefined;
 
+  const pathRuleDocEvaluated = join(
+    getPluginRoot(pathPlugin),
+    replaceRulePlaceholder(pathRuleDoc, ruleNameWithoutPluginPrefix)
+  );
+
   return (
     // If the function returned a URL, use it.
     urlRuleDocFunctionEvaluated ??
@@ -74,12 +61,7 @@ export function getUrlToRule(
       ? // Otherwise, use the URL if it's a string.
         replaceRulePlaceholder(urlRuleDoc, ruleNameWithoutPluginPrefix)
       : // Finally, fallback to the relative path.
-        pathToUrl(
-          join(
-            relativePathPluginRoot,
-            replaceRulePlaceholder(pathRuleDoc, ruleNameWithoutPluginPrefix)
-          )
-        ))
+        pathToUrl(relative(dirname(pathCurrentPage), pathRuleDocEvaluated)))
   );
 }
 
