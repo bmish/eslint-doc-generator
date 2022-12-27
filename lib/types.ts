@@ -1,6 +1,6 @@
 import type { RuleDocTitleFormat } from './rule-doc-title-format.js';
-import type { TSESLint, JSONSchema } from '@typescript-eslint/utils';
-import type { RULE_TYPE } from './rule-type.js';
+import type { TSESLint } from '@typescript-eslint/utils';
+import { ConfigFormat } from './config-format.js';
 
 // Standard ESLint types.
 
@@ -15,6 +15,15 @@ export type Config = TSESLint.Linter.Config;
 export type Plugin = TSESLint.Linter.Plugin;
 
 // Custom types.
+
+/**
+ * Where a rule comes from (where it's defined).
+ */
+export enum RULE_SOURCE {
+  'self' = 'self', // From this plugin.
+  'eslintCore' = 'eslintCore',
+  'thirdPartyPlugin' = 'thirdPartyPlugin',
+}
 
 export const SEVERITY_ERROR = new Set<RuleSeverity>([2, 'error']);
 export const SEVERITY_WARN = new Set<RuleSeverity>([1, 'warn']);
@@ -36,19 +45,16 @@ export const SEVERITY_TYPE_TO_SET: {
 
 export type ConfigsToRules = Record<string, Rules>;
 
-export interface RuleDetails {
-  name: string;
-  description?: string; // Rule might not have a description.
-  fixable: boolean;
-  hasSuggestions: boolean;
-  requiresTypeChecking: boolean;
-  deprecated: boolean;
-  schema: JSONSchema.JSONSchema4;
-  type?: `${RULE_TYPE}`; // Rule might not have a type.
-}
+/**
+ * List of rules in the form of tuples (rule name and the actual rule).
+ */
+export type RuleNamesAndRules = readonly (readonly [
+  name: string,
+  rule: RuleModule
+])[];
 
 /**
- * Some configs may have an emoji defined.
+ * The emoji for each config that has one after option parsing and defaults have been applied.
  */
 export type ConfigEmojis = readonly { config: string; emoji: string }[];
 
@@ -91,6 +97,7 @@ export enum COLUMN_TYPE {
 export enum OPTION_TYPE {
   CHECK = 'check',
   CONFIG_EMOJI = 'configEmoji',
+  CONFIG_FORMAT = 'configFormat',
   IGNORE_CONFIG = 'ignoreConfig',
   IGNORE_DEPRECATED_RULES = 'ignoreDeprecatedRules',
   INIT_RULE_DOCS = 'initRuleDocs',
@@ -108,6 +115,29 @@ export enum OPTION_TYPE {
   URL_RULE_DOC = 'urlRuleDoc',
 }
 
+/**
+ * Function for splitting the rule list into multiple sections.
+ * Can be provided via a JavaScript-based config file using the `ruleListSplit` option.
+ * @param rules - all rules from the plugin
+ * @returns an array of sections, each with a title (optional) and list of rules
+ */
+export type RuleListSplitFunction = (rules: RuleNamesAndRules) => readonly {
+  title?: string;
+  rules: RuleNamesAndRules;
+}[];
+
+/**
+ * Function for generating the URL to a rule doc.
+ * Can be provided via a JavaScript-based config file using the `urlRuleDoc` option.
+ * @param name - the name of the rule
+ * @param path - the file path to the current page displaying the link, relative to the project root
+ * @returns the URL to the rule doc, or `undefined` to fallback to the default logic (relative URL)
+ */
+export type UrlRuleDocFunction = (
+  name: string,
+  path: string
+) => string | undefined;
+
 // JSDocs for options should be kept in sync with README.md and the CLI runner in cli.ts.
 /** The type for the config file (e.g. `.eslint-doc-generatorrc.js`) and internal `generate()` function. */
 export type GenerateOptions = {
@@ -119,7 +149,12 @@ export type GenerateOptions = {
    * Default emojis are provided for common configs.
    * To remove a default emoji and rely on a badge instead, provide the config name without an emoji.
    */
-  readonly configEmoji?: readonly (readonly string[])[];
+  readonly configEmoji?: readonly (
+    | [configName: string, emoji: string]
+    | [configName: string]
+  )[];
+  /** The format to use for config names. Default: `name`. */
+  readonly configFormat?: ConfigFormat;
   /** Configs to ignore from being displayed. Often used for an `all` config. */
   readonly ignoreConfig?: readonly string[];
   /** Whether to ignore deprecated rules from being checked, displayed, or updated. Default: `false`. */
@@ -133,7 +168,7 @@ export type GenerateOptions = {
   /**
    * Function to be called with the generated content and file path for each processed file.
    * Useful for applying custom transformations such as formatting with tools like prettier.
-   * Only available via a JavaScript config file.
+   * Only available via a JavaScript-based config file.
    */
   readonly postprocess?: (
     content: string,
@@ -142,7 +177,7 @@ export type GenerateOptions = {
   /**
    * Ordered list of notices to display in rule doc.
    * Non-applicable notices will be hidden.
-   * Choices: `configs`, `deprecated`, `fixable` (off by default), `fixableAndHasSuggestions`, `hasSuggestions` (off by default), `options` (off by default), `requiresTypeChecking`, `type` (off by default).
+   * Choices: `configs`, `deprecated`, `description` (off by default), `fixable` (off by default), `fixableAndHasSuggestions`, `hasSuggestions` (off by default), `options` (off by default), `requiresTypeChecking`, `type` (off by default).
    * Default: `['deprecated', 'configs', 'fixableAndHasSuggestions', 'requiresTypeChecking']`.
    */
   readonly ruleDocNotices?: readonly `${NOTICE_TYPE}`[];
@@ -162,17 +197,18 @@ export type GenerateOptions = {
    */
   readonly ruleListColumns?: readonly `${COLUMN_TYPE}`[];
   /**
-   * Rule property to split the rules list by.
+   * Rule property(s) or function to split the rules list by.
    * A separate list and header will be created for each value.
    * Example: `meta.type`.
    */
-  readonly ruleListSplit?: string;
+  readonly ruleListSplit?: string | readonly string[] | RuleListSplitFunction;
+
   /** Link to documentation about the ESLint configurations exported by the plugin. */
   readonly urlConfigs?: string;
   /**
-   * Link to documentation for each rule.
+   * Link (or function to generate a link) to documentation for each rule.
    * Useful when it differs from the rule doc path on disk (e.g. custom documentation site in use).
-   * Use `{name}` placeholder for the rule name.
+   * For the string version, use `{name}` placeholder for the rule name.
    */
-  readonly urlRuleDoc?: string;
+  readonly urlRuleDoc?: string | UrlRuleDocFunction;
 };

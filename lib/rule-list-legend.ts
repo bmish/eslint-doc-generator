@@ -16,6 +16,7 @@ import {
   SEVERITY_TYPE,
 } from './types.js';
 import { RULE_TYPE_MESSAGES_LEGEND, RULE_TYPES } from './rule-type.js';
+import { ConfigFormat, configNameToDisplay } from './config-format.js';
 
 export const SEVERITY_TYPE_TO_WORD: {
   [key in SEVERITY_TYPE]: string;
@@ -40,6 +41,7 @@ const LEGENDS: {
         plugin: Plugin;
         configsToRules: ConfigsToRules;
         configEmojis: ConfigEmojis;
+        configFormat: ConfigFormat;
         pluginPrefix: string;
         ignoreConfig: readonly string[];
         urlConfigs?: string;
@@ -115,7 +117,7 @@ const LEGENDS: {
     let hasAnyRuleType = false;
     for (const ruleType of RULE_TYPES) {
       const hasThisRuleType = Object.values(rules).some(
-        (rule) => typeof rule === 'object' && rule.meta.type === ruleType
+        (rule) => typeof rule === 'object' && rule.meta?.type === ruleType
       );
       if (hasThisRuleType) {
         if (!hasAnyRuleType) {
@@ -178,6 +180,7 @@ function getLegendsForIndividualConfigs({
   plugin,
   configsToRules,
   configEmojis,
+  configFormat,
   pluginPrefix,
   urlConfigs,
   ignoreConfig,
@@ -185,6 +188,7 @@ function getLegendsForIndividualConfigs({
   plugin: Plugin;
   configsToRules: ConfigsToRules;
   configEmojis: ConfigEmojis;
+  configFormat: ConfigFormat;
   pluginPrefix: string;
   ignoreConfig: readonly string[];
   urlConfigs?: string;
@@ -215,7 +219,13 @@ function getLegendsForIndividualConfigs({
       return [];
     }
 
-    return [`${emoji} Set in the \`${configName}\` ${configLinkOrWord}.`];
+    return [
+      `${emoji} Set in the \`${configNameToDisplay(
+        configName,
+        configFormat,
+        pluginPrefix
+      )}\` ${configLinkOrWord}.`,
+    ];
   });
 }
 
@@ -224,6 +234,7 @@ export function generateLegend(
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   configEmojis: ConfigEmojis,
+  configFormat: ConfigFormat,
   pluginPrefix: string,
   ignoreConfig: readonly string[],
   urlConfigs?: string
@@ -245,6 +256,7 @@ export function generateLegend(
           plugin,
           configsToRules,
           configEmojis,
+          configFormat,
           pluginPrefix,
           urlConfigs,
           ignoreConfig,
@@ -258,6 +270,7 @@ export function generateLegend(
       plugin,
       configsToRules,
       configEmojis,
+      configFormat,
       pluginPrefix,
       urlConfigs,
       ignoreConfig,

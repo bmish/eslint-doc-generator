@@ -102,9 +102,17 @@ describe('generate (--config-emoji)', function () {
 
     it('throws an error', async function () {
       await expect(
+        // @ts-expect-error -- testing invalid input (too many items)
         generate('.', { configEmoji: [['foo', 'bar', 'baz']] })
       ).rejects.toThrow(
         'Invalid configEmoji option: foo,bar,baz. Expected format: config,emoji'
+      );
+
+      await expect(
+        // @ts-expect-error -- testing invalid input (too few items)
+        generate('.', { configEmoji: [[]] })
+      ).rejects.toThrow(
+        'Invalid configEmoji option: . Expected format: config,emoji'
       );
     });
   });

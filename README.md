@@ -24,6 +24,7 @@ Also performs [configurable](#configuration-options) section consistency checks 
   - [Users](#users)
 - [Configuration options](#configuration-options)
   - [Column and notice types](#column-and-notice-types)
+  - [`--config-format`](#--config-format)
   - [`--rule-doc-title-format`](#--rule-doc-title-format)
   - [Configuration file](#configuration-file)
   - [Badges](#badges)
@@ -131,6 +132,7 @@ There's also a `postprocess` option that's only available via a [config file](#c
 | :-- | :-- |
 | `--check` | Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. Default: `false`. |
 | `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Default emojis are provided for [common configs](./lib/emojis.ts). To remove a default emoji and rely on a [badge](#badges) instead, provide the config name without an emoji. Option can be repeated. |
+| `--config-format` | The format to use for config names. Defaults to `name`. See choices in below [table](#--config-format). |
 | `--ignore-config` | Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. |
 | `--ignore-deprecated-rules` | Whether to ignore deprecated rules from being checked, displayed, or updated. Default: `false`. |
 | `--init-rule-docs` | Whether to create rule doc files if they don't yet exist. Default: `false`. |
@@ -142,9 +144,9 @@ There's also a `postprocess` option that's only available via a [config file](#c
 | `--rule-doc-section-options` | Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options. Default: `true`. |
 | `--rule-doc-title-format` | The format to use for rule doc titles. Defaults to `desc-parens-prefix-name`. See choices in below [table](#--rule-doc-title-format). |
 | `--rule-list-columns` | Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. See choices in below [table](#column-and-notice-types). Default: `name,description,configsError,configsWarn,configsOff,fixable,hasSuggestions,requiresTypeChecking,deprecated`. |
-| `--rule-list-split` | Rule property to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`. |
+| `--rule-list-split` | Rule property(s) to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`. A function can also be provided for this option via a [config file](#configuration-file). |
 | `--url-configs` | Link to documentation about the ESLint configurations exported by the plugin. |
-| `--url-rule-doc` | Link to documentation for each rule. Useful when it differs from the rule doc path on disk (e.g. custom documentation site in use). Use `{name}` placeholder for the rule name. |
+| `--url-rule-doc` | Link to documentation for each rule. Useful when it differs from the rule doc path on disk (e.g. custom documentation site in use). Use `{name}` placeholder for the rule name. A function can also be provided for this option via a [config file](#configuration-file). |
 
 ### Column and notice types
 
@@ -165,6 +167,16 @@ These are the types of rule metadata that are available for display in rule list
 | ⚙️ | `options` | Yes | Yes | Whether a rule has [options](https://eslint.org/docs/latest/developer-guide/working-with-rules#options-schemas). |
 | 💭 | `requiresTypeChecking` | Yes | Yes | Whether a rule requires [type checking](https://typescript-eslint.io/linting/typed-linting/). |
 | 🗂️ | `type` | Yes | Yes | The rule [type](https://eslint.org/docs/latest/developer-guide/working-with-rules#rule-basics) (`problem`, `suggestion`, or `layout`). |
+
+### `--config-format`
+
+Where `recommended` is the config name and `eslint-plugin-test` is the plugin name.
+
+| Value | Example |
+| :-- | :-- |
+| `name` (default) | `recommended` |
+| `plugin-colon-prefix-name` | `plugin:test/recommended` |
+| `prefix-name` | `test/recommended` |
 
 ### `--rule-doc-title-format`
 
@@ -187,7 +199,10 @@ There are a few ways to create a config file (as an alternative to passing the o
 
 Config files support all the [CLI options](#configuration-options) but in camelCase.
 
-Using a JavaScript-based config file also allows you to provide a `postprocess` function to be called with the generated content and file path for each processed file. This is useful for applying custom transformations such as formatting with tools like prettier (see [prettier example](#prettier)).
+Some options are exclusive to a JavaScript-based config file:
+
+- `postprocess` - A function-only option useful for applying custom transformations such as formatting with tools like prettier. See [prettier example](#prettier).
+- [`ruleListSplit`](#configuration-options) with a function - This is useful for customizing the grouping of rules into lists.
 
 Example `.eslint-doc-generatorrc.js`:
 
@@ -195,6 +210,48 @@ Example `.eslint-doc-generatorrc.js`:
 /** @type {import('eslint-doc-generator').GenerateOptions} */
 const config = {
   ignoreConfig: ['all'],
+};
+
+module.exports = config;
+```
+
+Example `.eslint-doc-generatorrc.js` with `ruleListSplit` function:
+
+```js
+/** @type {import('eslint-doc-generator').GenerateOptions} */
+const config = {
+  ruleListSplit(rules) {
+    return [
+      {
+        // No header for this list.
+        rules: rules.filter(([name, rule]) => !rule.meta.someProp),
+      },
+      {
+        title: 'Foo',
+        rules: rules.filter(([name, rule]) => rule.meta.someProp === 'foo'),
+      },
+      {
+        title: 'Bar',
+        rules: rules.filter(([name, rule]) => rule.meta.someProp === 'bar'),
+      },
+    ];
+  },
+};
+
+module.exports = config;
+```
+
+Example `.eslint-doc-generatorrc.js` with `urlRuleDoc` function:
+
+```js
+/** @type {import('eslint-doc-generator').GenerateOptions} */
+const config = {
+  urlRuleDoc(name, page) {
+    if (page === 'README.md') {
+      // Use URLs only in the readme.
+      return `https://example.com/rules/${name}.html`;
+    }
+  },
 };
 
 module.exports = config;

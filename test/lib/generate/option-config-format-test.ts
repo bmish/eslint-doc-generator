@@ -9,8 +9,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const PATH_NODE_MODULES = resolve(__dirname, '..', '..', '..', 'node_modules');
 
-describe('generate (--url-rule-doc)', function () {
-  describe('basic', function () {
+describe('generate (--config-format)', function () {
+  describe('name', function () {
     beforeEach(function () {
       mockFs({
         'package.json': JSON.stringify({
@@ -22,27 +22,20 @@ describe('generate (--url-rule-doc)', function () {
         'index.js': `
           export default {
             rules: {
-              'no-foo': {
-                meta: {
-                  docs: { description: 'Description for no-foo.' },
-                  deprecated: true,
-                  replacedBy: ['no-bar']
-                },
-                create(context) {}
-              },
-              'no-bar': {
-                meta: {
-                  docs: { description: 'Description for no-bar.' }
-                },
-                create(context) {}
-              },
+              'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
             },
+            configs: {
+              recommended: {
+                rules: {
+                  'test/no-foo': 'error',
+                }
+              }
+            }
           };`,
 
         'README.md': '## Rules\n',
 
         'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
 
         // Needed for some of the test infrastructure to work.
         node_modules: mockFs.load(PATH_NODE_MODULES),
@@ -54,17 +47,16 @@ describe('generate (--url-rule-doc)', function () {
       jest.resetModules();
     });
 
-    it('uses the right URLs', async function () {
+    it('uses the right format', async function () {
       await generate('.', {
-        urlRuleDoc: 'https://example.com/rule-docs/{name}/',
+        configFormat: 'name',
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
     });
   });
 
-  describe('function', function () {
+  describe('plugin-colon-prefix-name', function () {
     beforeEach(function () {
       mockFs({
         'package.json': JSON.stringify({
@@ -76,28 +68,20 @@ describe('generate (--url-rule-doc)', function () {
         'index.js': `
           export default {
             rules: {
-              'no-foo': {
-                meta: {
-                  docs: { description: 'Description for no-foo.' },
-                  deprecated: true,
-                  replacedBy: ['no-bar']
-                },
-                create(context) {}
-              },
-              'no-bar': {
-                meta: {
-                  docs: { description: 'Description for no-bar.' }
-                },
-                create(context) {}
-              },
+              'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
             },
+            configs: {
+              recommended: {
+                rules: {
+                  'test/no-foo': 'error',
+                }
+              }
+            }
           };`,
 
         'README.md': '## Rules\n',
-        'nested/README.md': '## Rules\n',
 
         'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
 
         // Needed for some of the test infrastructure to work.
         node_modules: mockFs.load(PATH_NODE_MODULES),
@@ -109,21 +93,16 @@ describe('generate (--url-rule-doc)', function () {
       jest.resetModules();
     });
 
-    it('uses the custom URL', async function () {
+    it('uses the right format', async function () {
       await generate('.', {
-        pathRuleList: ['README.md', 'nested/README.md'],
-        urlRuleDoc(name, path) {
-          return `https://example.com/rule-docs/name:${name}/path:${path}`;
-        },
+        configFormat: 'plugin-colon-prefix-name',
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('nested/README.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
     });
   });
 
-  describe('function returns undefined', function () {
+  describe('prefix-name', function () {
     beforeEach(function () {
       mockFs({
         'package.json': JSON.stringify({
@@ -135,28 +114,20 @@ describe('generate (--url-rule-doc)', function () {
         'index.js': `
           export default {
             rules: {
-              'no-foo': {
-                meta: {
-                  docs: { description: 'Description for no-foo.' },
-                  deprecated: true,
-                  replacedBy: ['no-bar']
-                },
-                create(context) {}
-              },
-              'no-bar': {
-                meta: {
-                  docs: { description: 'Description for no-bar.' }
-                },
-                create(context) {}
-              },
+              'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
             },
+            configs: {
+              recommended: {
+                rules: {
+                  'test/no-foo': 'error',
+                }
+              }
+            }
           };`,
 
         'README.md': '## Rules\n',
-        'nested/README.md': '## Rules\n',
 
         'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
 
         // Needed for some of the test infrastructure to work.
         node_modules: mockFs.load(PATH_NODE_MODULES),
@@ -168,17 +139,12 @@ describe('generate (--url-rule-doc)', function () {
       jest.resetModules();
     });
 
-    it('should fallback to the normal URL', async function () {
+    it('uses the right format', async function () {
       await generate('.', {
-        pathRuleList: ['README.md', 'nested/README.md'],
-        urlRuleDoc() {
-          return undefined; // eslint-disable-line unicorn/no-useless-undefined -- for testing
-        },
+        configFormat: 'prefix-name',
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('nested/README.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
     });
   });
 });

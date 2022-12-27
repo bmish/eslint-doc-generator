@@ -1,4 +1,5 @@
 import { join } from 'node:path';
+import { ConfigFormat } from './config-format.js';
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
 import { COLUMN_TYPE, NOTICE_TYPE, OPTION_TYPE } from './types.js';
 
@@ -37,12 +38,15 @@ export const NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
   [NOTICE_TYPE.DESCRIPTION]: false,
 };
 
+// Using these variables ensures they have the correct type (not just a plain string).
 const DEFAULT_RULE_DOC_TITLE_FORMAT: RuleDocTitleFormat =
-  'desc-parens-prefix-name'; // Using this variable ensures this default has the correct type (not just a plain string).
+  'desc-parens-prefix-name';
+const DEFAULT_CONFIG_FORMAT: ConfigFormat = 'name';
 
 export const OPTION_DEFAULTS = {
   [OPTION_TYPE.CHECK]: false,
   [OPTION_TYPE.CONFIG_EMOJI]: [],
+  [OPTION_TYPE.CONFIG_FORMAT]: DEFAULT_CONFIG_FORMAT,
   [OPTION_TYPE.IGNORE_CONFIG]: [],
   [OPTION_TYPE.IGNORE_DEPRECATED_RULES]: false,
   [OPTION_TYPE.INIT_RULE_DOCS]: false,
@@ -63,7 +67,7 @@ export const OPTION_DEFAULTS = {
   )
     .filter(([_col, enabled]) => enabled)
     .map(([col]) => col),
-  [OPTION_TYPE.RULE_LIST_SPLIT]: undefined,
+  [OPTION_TYPE.RULE_LIST_SPLIT]: [],
   [OPTION_TYPE.URL_CONFIGS]: undefined,
   [OPTION_TYPE.URL_RULE_DOC]: undefined,
 } satisfies Record<OPTION_TYPE, unknown>; // Satisfies is used to ensure all options are included, but without losing type information.

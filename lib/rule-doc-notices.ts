@@ -15,16 +15,18 @@ import {
   ConfigEmojis,
   SEVERITY_TYPE,
   NOTICE_TYPE,
+  UrlRuleDocFunction,
 } from './types.js';
 import { RULE_TYPE, RULE_TYPE_MESSAGES_NOTICES } from './rule-type.js';
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
 import { hasOptions } from './rule-options.js';
-import { getLinkToRule, getUrlToRule } from './rule-link.js';
+import { getLinkToRule, replaceRulePlaceholder } from './rule-link.js';
 import {
   toSentenceCase,
   removeTrailingPeriod,
   addTrailingPeriod,
 } from './string.js';
+import { ConfigFormat, configNameToDisplay } from './config-format.js';
 
 function severityToTerminology(severity: SEVERITY_TYPE) {
   switch (severity) {
@@ -45,13 +47,19 @@ function configsToNoticeSentence(
   severity: SEVERITY_TYPE,
   configsLinkOrWord: string,
   configLinkOrWord: string,
-  configEmojis: ConfigEmojis
+  configEmojis: ConfigEmojis,
+  configFormat: ConfigFormat,
+  pluginPrefix: string
 ): string | undefined {
   // Create CSV list of configs with their emojis.
   const csv = configs
     .map((config) => {
       const emoji = findConfigEmoji(configEmojis, config);
-      return `${emoji ? `${emoji} ` : ''}\`${config}\``;
+      return `${emoji ? `${emoji} ` : ''}\`${configNameToDisplay(
+        config,
+        configFormat,
+        pluginPrefix
+      )}\``;
     })
     .join(', ');
 
@@ -83,16 +91,18 @@ const RULE_NOTICES: {
         configsWarn: readonly string[];
         configsOff: readonly string[];
         configEmojis: ConfigEmojis;
+        configFormat: ConfigFormat;
         description?: string;
         fixable: boolean;
         hasSuggestions: boolean;
         urlConfigs?: string;
         replacedBy: readonly string[] | undefined;
+        plugin: Plugin;
         pluginPrefix: string;
         pathPlugin: string;
         pathRuleDoc: string;
         type?: `${RULE_TYPE}`;
-        urlRuleDoc?: string;
+        urlRuleDoc?: string | UrlRuleDocFunction;
       }) => string);
 } = {
   // Configs notice varies based on whether the rule is configured in one or more configs.
@@ -101,6 +111,8 @@ const RULE_NOTICES: {
     configsWarn,
     configsOff,
     configEmojis,
+    configFormat,
+    pluginPrefix,
     urlConfigs,
   }) => {
     // Add link to configs documentation if provided.
@@ -138,21 +150,27 @@ const RULE_NOTICES: {
         SEVERITY_TYPE.error,
         configsLinkOrWord,
         configLinkOrWord,
-        configEmojis
+        configEmojis,
+        configFormat,
+        pluginPrefix
       ),
       configsToNoticeSentence(
         configsWarn,
         SEVERITY_TYPE.warn,
         configsLinkOrWord,
         configLinkOrWord,
-        configEmojis
+        configEmojis,
+        configFormat,
+        pluginPrefix
       ),
       configsToNoticeSentence(
         configsOff,
         SEVERITY_TYPE.off,
         configsLinkOrWord,
         configLinkOrWord,
-        configEmojis
+        configEmojis,
+        configFormat,
+        pluginPrefix
       ),
     ]
       .filter(Boolean)
@@ -164,27 +182,21 @@ const RULE_NOTICES: {
   // Deprecated notice has optional "replaced by" rules list.
   [NOTICE_TYPE.DEPRECATED]: ({
     replacedBy,
+    plugin,
     pluginPrefix,
     pathPlugin,
     pathRuleDoc,
     ruleName,
     urlRuleDoc,
   }) => {
-    const urlCurrentPage = getUrlToRule(
-      ruleName,
-      pluginPrefix,
-      pathPlugin,
-      pathRuleDoc,
-      pathPlugin,
-      urlRuleDoc
-    );
     const replacementRuleList = (replacedBy ?? []).map((replacementRuleName) =>
       getLinkToRule(
         replacementRuleName,
+        plugin,
         pluginPrefix,
         pathPlugin,
         pathRuleDoc,
-        urlCurrentPage,
+        replaceRulePlaceholder(pathRuleDoc, ruleName),
         true,
         true,
         urlRuleDoc
@@ -289,10 +301,11 @@ function getRuleNoticeLines(
   pathPlugin: string,
   pathRuleDoc: string,
   configEmojis: ConfigEmojis,
+  configFormat: ConfigFormat,
   ignoreConfig: readonly string[],
   ruleDocNotices: readonly NOTICE_TYPE[],
   urlConfigs?: string,
-  urlRuleDoc?: string
+  urlRuleDoc?: string | UrlRuleDocFunction
 ) {
   const lines: string[] = [];
 
@@ -365,11 +378,13 @@ function getRuleNoticeLines(
             configsWarn,
             configsOff,
             configEmojis,
+            configFormat,
             description: rule.meta?.docs?.description,
             fixable: Boolean(rule.meta?.fixable),
             hasSuggestions: Boolean(rule.meta?.hasSuggestions),
             urlConfigs,
             replacedBy: rule.meta?.replacedBy,
+            plugin,
             pluginPrefix,
             pathPlugin,
             pathRuleDoc,
@@ -469,11 +484,12 @@ export function generateRuleHeaderLines(
   pathPlugin: string,
   pathRuleDoc: string,
   configEmojis: ConfigEmojis,
+  configFormat: ConfigFormat,
   ignoreConfig: readonly string[],
   ruleDocNotices: readonly NOTICE_TYPE[],
   ruleDocTitleFormat: RuleDocTitleFormat,
   urlConfigs?: string,
-  urlRuleDoc?: string
+  urlRuleDoc?: string | UrlRuleDocFunction
 ): string {
   return [
     makeRuleDocTitle(name, description, pluginPrefix, ruleDocTitleFormat),
@@ -485,6 +501,7 @@ export function generateRuleHeaderLines(
       pathPlugin,
       pathRuleDoc,
       configEmojis,
+      configFormat,
       ignoreConfig,
       ruleDocNotices,
       urlConfigs,

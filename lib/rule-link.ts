@@ -1,20 +1,9 @@
-import { countOccurrencesInString } from './string.js';
-import { join, sep, relative } from 'node:path';
+import { join, sep, relative, dirname } from 'node:path';
+import { Plugin, RULE_SOURCE, UrlRuleDocFunction } from './types.js';
+import { getPluginRoot } from './package-json.js';
 
 export function replaceRulePlaceholder(pathOrUrl: string, ruleName: string) {
   return pathOrUrl.replace(/\{name\}/gu, ruleName);
-}
-
-/**
- * 0 => "", 1 => "../", 2 => "../../", etc
- * @param level
- * @returns the relative path to go up the given number of directories
- */
-function goUpLevel(level: number): string {
-  if (level === 0) {
-    return '';
-  }
-  return `${join(...Array.from<string>({ length: level }).fill('..'))}/`;
 }
 
 /**
@@ -30,17 +19,23 @@ function pathToUrl(path: string): string {
  */
 export function getUrlToRule(
   ruleName: string,
+  ruleSource: RULE_SOURCE,
   pluginPrefix: string,
   pathPlugin: string,
   pathRuleDoc: string,
-  urlCurrentPage: string,
-  urlRuleDoc?: string
+  pathCurrentPage: string,
+  urlRuleDoc?: string | UrlRuleDocFunction
 ) {
-  const nestingDepthOfCurrentPage = countOccurrencesInString(
-    relative(pathPlugin, urlCurrentPage),
-    sep
-  );
-  const relativePathPluginRoot = goUpLevel(nestingDepthOfCurrentPage);
+  switch (ruleSource) {
+    case RULE_SOURCE.eslintCore:
+      return `https://eslint.org/docs/latest/rules/${ruleName}`;
+    case RULE_SOURCE.thirdPartyPlugin:
+      // We don't know the documentation URL to third-party plugins.
+      return undefined; // eslint-disable-line unicorn/no-useless-undefined
+    default:
+      // Fallthrough to remaining logic in function.
+      break;
+  }
 
   // Ignore plugin prefix if it's included in rule name.
   // While we could display the prefix if we wanted, it definitely cannot be part of the link.
@@ -48,14 +43,26 @@ export function getUrlToRule(
     ? ruleName.slice(pluginPrefix.length + 1)
     : ruleName;
 
-  return urlRuleDoc
-    ? replaceRulePlaceholder(urlRuleDoc, ruleNameWithoutPluginPrefix)
-    : pathToUrl(
-        join(
-          relativePathPluginRoot,
-          replaceRulePlaceholder(pathRuleDoc, ruleNameWithoutPluginPrefix)
-        )
-      );
+  // If the URL is a function, evaluate it.
+  const urlRuleDocFunctionEvaluated =
+    typeof urlRuleDoc === 'function'
+      ? urlRuleDoc(ruleName, pathToUrl(relative(pathPlugin, pathCurrentPage)))
+      : undefined;
+
+  const pathRuleDocEvaluated = join(
+    getPluginRoot(pathPlugin),
+    replaceRulePlaceholder(pathRuleDoc, ruleNameWithoutPluginPrefix)
+  );
+
+  return (
+    // If the function returned a URL, use it.
+    urlRuleDocFunctionEvaluated ??
+    (typeof urlRuleDoc === 'string'
+      ? // Otherwise, use the URL if it's a string.
+        replaceRulePlaceholder(urlRuleDoc, ruleNameWithoutPluginPrefix)
+      : // Finally, fallback to the relative path.
+        pathToUrl(relative(dirname(pathCurrentPage), pathRuleDocEvaluated)))
+  );
 }
 
 /**
@@ -63,29 +70,51 @@ export function getUrlToRule(
  */
 export function getLinkToRule(
   ruleName: string,
+  plugin: Plugin,
   pluginPrefix: string,
   pathPlugin: string,
   pathRuleDoc: string,
-  urlCurrentPage: string,
+  pathCurrentPage: string,
   includeBackticks: boolean,
   includePrefix: boolean,
-  urlRuleDoc?: string
+  urlRuleDoc?: string | UrlRuleDocFunction
 ) {
-  const ruleNameWithPluginPrefix = ruleName.startsWith(`${pluginPrefix}/`)
-    ? ruleName
-    : `${pluginPrefix}/${ruleName}`;
   const ruleNameWithoutPluginPrefix = ruleName.startsWith(`${pluginPrefix}/`)
     ? ruleName.slice(pluginPrefix.length + 1)
     : ruleName;
+
+  // Determine what plugin this rule comes from.
+  let ruleSource: RULE_SOURCE;
+  if (plugin.rules?.[ruleNameWithoutPluginPrefix]) {
+    ruleSource = RULE_SOURCE.self;
+  } else if (ruleName.includes('/')) {
+    // Assume a slash is for the plugin prefix (ESLint core doesn't have any nested rules).
+    ruleSource = RULE_SOURCE.thirdPartyPlugin;
+  } else {
+    ruleSource = RULE_SOURCE.eslintCore;
+  }
+
+  const ruleNameWithPluginPrefix = ruleName.startsWith(`${pluginPrefix}/`)
+    ? ruleName
+    : ruleSource === RULE_SOURCE.self
+    ? `${pluginPrefix}/${ruleName}`
+    : undefined;
+
   const urlToRule = getUrlToRule(
     ruleName,
+    ruleSource,
     pluginPrefix,
     pathPlugin,
     pathRuleDoc,
-    urlCurrentPage,
+    pathCurrentPage,
     urlRuleDoc
   );
-  return `[${includeBackticks ? '`' : ''}${
-    includePrefix ? ruleNameWithPluginPrefix : ruleNameWithoutPluginPrefix
-  }${includeBackticks ? '`' : ''}](${urlToRule})`;
+
+  const ruleNameToDisplay = `${includeBackticks ? '`' : ''}${
+    includePrefix && ruleNameWithPluginPrefix
+      ? ruleNameWithPluginPrefix
+      : ruleNameWithoutPluginPrefix
+  }${includeBackticks ? '`' : ''}`;
+
+  return urlToRule ? `[${ruleNameToDisplay}](${urlToRule})` : ruleNameToDisplay;
 }

@@ -42,6 +42,66 @@
 
 
 
+
+
+
+
+
+## v1.4.1 (2022-12-27)
+
+#### :bug: Bug Fix
+* [#375](https://github.com/bmish/eslint-doc-generator/pull/375) Use concise relative paths for rule links ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
+## v1.4.0 (2022-12-26)
+
+#### :rocket: Enhancement
+* [#369](https://github.com/bmish/eslint-doc-generator/pull/369) Support a user-defined function for `--url-rule-doc` option ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
+## v1.3.0 (2022-12-23)
+
+#### :bug: Bug Fix
+* [#368](https://github.com/bmish/eslint-doc-generator/pull/368) Add new option `--config-format` ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
+## v1.2.1 (2022-12-22)
+
+#### :bug: Bug Fix
+* [#367](https://github.com/bmish/eslint-doc-generator/pull/367) Ensure correct link used for deprecated rule replacement link when replacement rule is from ESLint core or third-party plugin ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
+## v1.2.0 (2022-12-21)
+
+#### :rocket: Enhancement
+* [#365](https://github.com/bmish/eslint-doc-generator/pull/365) Support a user-defined function for `--rule-list-split` option ([@bmish](https://github.com/bmish))
+* [#351](https://github.com/bmish/eslint-doc-generator/pull/351) Support splitting by multiple properties in `--rule-list-split` option ([@bmish](https://github.com/bmish))
+
+#### :bug: Bug Fix
+* [#357](https://github.com/bmish/eslint-doc-generator/pull/357) Ensure `deprecated`/`schema` properties are detected from deprecated, function-style rules ([@bmish](https://github.com/bmish))
+* [#355](https://github.com/bmish/eslint-doc-generator/pull/355) Improve type for `configEmoji` option ([@bmish](https://github.com/bmish))
+
+#### :house: Internal
+* [#364](https://github.com/bmish/eslint-doc-generator/pull/364) Refactor functions for generating and splitting the rules list ([@bmish](https://github.com/bmish))
+* [#356](https://github.com/bmish/eslint-doc-generator/pull/356) Refactor how rules are passed around in codebase ([@bmish](https://github.com/bmish))
+* [#352](https://github.com/bmish/eslint-doc-generator/pull/352) Better normalize `pathRuleList` option internally ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v1.1.0 (2022-12-16)
 
 #### :rocket: Enhancement
