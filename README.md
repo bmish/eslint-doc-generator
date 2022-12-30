@@ -131,7 +131,7 @@ There's also a `postprocess` option that's only available via a [config file](#c
 
 | Name | Description |
 | :-- | :-- |
-| `--check` | Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. Default: `false`. |
+| `--check` | Whether to check for and fail if there is a diff. Any diff will be displayed but no output will be written to files. Typically used during CI. Default: `false`. |
 | `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Default emojis are provided for [common configs](./lib/emojis.ts). To remove a default emoji and rely on a [badge](#badges) instead, provide the config name without an emoji. Option can be repeated. |
 | `--config-format` | The format to use for config names. Defaults to `name`. See choices in below [table](#--config-format). |
 | `--ignore-config` | Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. |
