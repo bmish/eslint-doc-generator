@@ -185,7 +185,7 @@ export async function run(
     )
     .option(
       '--check [boolean]',
-      `(optional) Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. (default: ${String(
+      `(optional) Whether to check for and fail if there is a diff. Any diff will be displayed but no output will be written to files. Typically used during CI. (default: ${String(
         OPTION_DEFAULTS[OPTION_TYPE.CHECK]
       )})`,
       parseBoolean
