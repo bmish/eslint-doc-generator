@@ -30,6 +30,7 @@ Also performs [configurable](#configuration-options) section consistency checks 
   - [Badges](#badges)
 - [Compatibility](#compatibility)
   - [Build tools](#build-tools)
+  - [markdownlint](#markdownlint)
   - [prettier](#prettier)
 - [Semantic versioning policy](#semantic-versioning-policy)
 - [Related](#related)
@@ -53,7 +54,7 @@ Add scripts to `package.json`:
 
 - Both a lint script to ensure everything is up-to-date in CI and an update script for contributors to run locally
 - Add any [config options](#configuration-options) in the `update:eslint-docs` script only (or use a [config file](#configuration-file))
-- Alternative scripts may be needed with [build tools](#build-tools) or [prettier](#prettier)
+- Alternative scripts may be needed with [build tools](#build-tools), [markdownlint](#markdownlint), or [prettier](#prettier)
 
 ```json
 {
@@ -128,25 +129,25 @@ The CLI has an optional path argument if you need to point the CLI to an ESLint 
 
 There's also a `postprocess` option that's only available via a [config file](#configuration-file).
 
-| Name | Description |
-| :-- | :-- |
-| `--check` | Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. Default: `false`. |
-| `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Default emojis are provided for [common configs](./lib/emojis.ts). To remove a default emoji and rely on a [badge](#badges) instead, provide the config name without an emoji. Option can be repeated. |
-| `--config-format` | The format to use for config names. Defaults to `name`. See choices in below [table](#--config-format). |
-| `--ignore-config` | Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. |
-| `--ignore-deprecated-rules` | Whether to ignore deprecated rules from being checked, displayed, or updated. Default: `false`. |
-| `--init-rule-docs` | Whether to create rule doc files if they don't yet exist. Default: `false`. |
-| `--path-rule-doc` | Path to markdown file for each rule doc. Use `{name}` placeholder for the rule name. Default: `docs/rules/{name}.md`. |
-| `--path-rule-list` | Path to markdown file where the rules table list should live. Default: `README.md`. Option can be repeated. |
-| `--rule-doc-notices` | Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. See choices in below [table](#column-and-notice-types). Default: `deprecated,configs,fixableAndHasSuggestions,requiresTypeChecking`. |
+| Name | Description | Default |
+| :-- | :-- | :-- |
+| `--check` | Whether to check for and fail if there is a diff. Any diff will be displayed but no output will be written to files. Typically used during CI. | `false` |
+| `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Option can be repeated. | Default emojis are provided for [common configs](./lib/emojis.ts). To remove a default emoji and rely on a [badge](#badges) instead, provide the config name without an emoji. |
+| `--config-format` | The format to use for config names. See choices in below [table](#--config-format). | `name` |
+| `--ignore-config` | Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. | |
+| `--ignore-deprecated-rules` | Whether to ignore deprecated rules from being checked, displayed, or updated. | `false` |
+| `--init-rule-docs` | Whether to create rule doc files if they don't yet exist. | `false` |
+| `--path-rule-doc` | Path to markdown file for each rule doc. Use `{name}` placeholder for the rule name. | `docs/rules/{name}.md` |
+| `--path-rule-list` | Path to markdown file where the rules table list should live. Option can be repeated. | `README.md` |
+| `--rule-doc-notices` | Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. See choices in below [table](#column-and-notice-types). | `deprecated`, `configs`, `fixableAndHasSuggestions`, `requiresTypeChecking` |
 | `--rule-doc-section-exclude` | Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. |
 | `--rule-doc-section-include` | Required section in each rule doc. Exit with failure if missing. Option can be repeated. |
-| `--rule-doc-section-options` | Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options. Default: `true`. |
-| `--rule-doc-title-format` | The format to use for rule doc titles. Defaults to `desc-parens-prefix-name`. See choices in below [table](#--rule-doc-title-format). |
-| `--rule-list-columns` | Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. See choices in below [table](#column-and-notice-types). Default: `name,description,configsError,configsWarn,configsOff,fixable,hasSuggestions,requiresTypeChecking,deprecated`. |
-| `--rule-list-split` | Rule property(s) to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`. A function can also be provided for this option via a [config file](#configuration-file). |
-| `--url-configs` | Link to documentation about the ESLint configurations exported by the plugin. |
-| `--url-rule-doc` | Link to documentation for each rule. Useful when it differs from the rule doc path on disk (e.g. custom documentation site in use). Use `{name}` placeholder for the rule name. A function can also be provided for this option via a [config file](#configuration-file). |
+| `--rule-doc-section-options` | Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options. | `true` |
+| `--rule-doc-title-format` | The format to use for rule doc titles. See choices in below [table](#--rule-doc-title-format). | `desc-parens-prefix-name` |
+| `--rule-list-columns` | Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. See choices in below [table](#column-and-notice-types). | `name`, `description`, `configsError`, `configsWarn`, `configsOff`, `fixable`, `hasSuggestions`, `requiresTypeChecking`, `deprecated` |
+| `--rule-list-split` | Rule property(s) to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`. A function can also be provided for this option via a [config file](#configuration-file). | |
+| `--url-configs` | Link to documentation about the ESLint configurations exported by the plugin. | |
+| `--url-rule-doc` | Link to documentation for each rule. Useful when it differs from the rule doc path on disk (e.g. custom documentation site in use). Use `{name}` placeholder for the rule name. A function can also be provided for this option via a [config file](#configuration-file). | |
 
 ### Column and notice types
 
@@ -285,6 +286,10 @@ If you have a build step for your code like [Babel](https://babeljs.io/) or [Typ
   "update:eslint-docs": "npm run build && eslint-doc-generator"
 }
 ```
+
+### markdownlint
+
+The output of this tool should be compatible with the default configuration of [markdownlint](https://github.com/DavidAnson/markdownlint), which you might use to lint your markdown. If it's not, you can follow the [prettier example](#prettier) to tweak your scripts or use the `postprocess` option. See [here](https://github.com/DavidAnson/markdownlint/blob/main/helpers/README.md#applying-recommended-fixes) for an example of markdownlint's Node API for applying fixes to use in your `postprocess` function.
 
 ### prettier
 

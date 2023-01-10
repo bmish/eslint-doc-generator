@@ -141,7 +141,12 @@ export type UrlRuleDocFunction = (
 // JSDocs for options should be kept in sync with README.md and the CLI runner in cli.ts.
 /** The type for the config file (e.g. `.eslint-doc-generatorrc.js`) and internal `generate()` function. */
 export type GenerateOptions = {
-  /** Whether to check for and fail if there is a diff. No output will be written. Typically used during CI. Default: `false`. */
+  /**
+   * Whether to check for and fail if there is a diff.
+   * Any diff will be displayed but no output will be written to files.
+   * Typically used during CI.
+   * Default: `false`.
+   */
   readonly check?: boolean;
   /**
    * List of configs and their associated emojis.
