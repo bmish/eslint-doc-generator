@@ -314,7 +314,7 @@ describe('generate (rule options)', function () {
       await generate('.');
       expect(consoleErrorStub.callCount).toBe(1);
       expect(consoleErrorStub.firstCall.args).toStrictEqual([
-        '`no-foo` rule doc should have included: optionToDoSomething',
+        '`no-foo` rule doc should have included rule option: optionToDoSomething',
       ]);
       consoleErrorStub.restore();
     });

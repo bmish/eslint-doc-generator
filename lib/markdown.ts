@@ -68,3 +68,64 @@ export function findFinalHeaderLevel(str: string) {
   const finalHeader = lines.reverse().find((line) => line.match('^(#+) .+$'));
   return finalHeader ? finalHeader.indexOf(' ') : undefined;
 }
+
+/**
+ * Ensure a doc contains (or doesn't contain) some particular content.
+ * Upon failure, output the failure and set a failure exit code.
+ * @param docName - name of doc for error message
+ * @param contentName - name of content for error message
+ * @param contents - the doc's contents
+ * @param content - the content we are checking for
+ * @param expected - whether the content should be present or not present
+ */
+export function expectContentOrFail(
+  docName: string,
+  contentName: string,
+  contents: string,
+  content: string,
+  expected: boolean
+) {
+  // Check for the content and also the versions of the content with escaped quotes
+  // in case escaping is needed where the content is referenced.
+  const hasContent =
+    contents.includes(content) ||
+    contents.includes(content.replace(/"/gu, '\\"')) ||
+    contents.includes(content.replace(/'/gu, "\\'"));
+  if (hasContent !== expected) {
+    console.error(
+      `${docName} should ${
+        /* istanbul ignore next -- TODO: test !expected or remove parameter */
+        expected ? '' : 'not '
+      }have included ${contentName}: ${content}`
+    );
+    process.exitCode = 1;
+  }
+}
+
+export function expectSectionHeaderOrFail(
+  contentName: string,
+  contents: string,
+  possibleHeaders: readonly string[],
+  expected: boolean
+) {
+  const found = possibleHeaders.some((header) =>
+    findSectionHeader(contents, header)
+  );
+  if (found !== expected) {
+    if (possibleHeaders.length > 1) {
+      console.error(
+        `${contentName} should ${expected ? '' : 'not '}have included ${
+          expected ? 'one' : 'any'
+        } of these headers: ${possibleHeaders.join(', ')}`
+      );
+    } else {
+      console.error(
+        `${contentName} should ${
+          expected ? '' : 'not '
+        }have included the header: ${possibleHeaders.join(', ')}`
+      );
+    }
+
+    process.exitCode = 1;
+  }
+}
