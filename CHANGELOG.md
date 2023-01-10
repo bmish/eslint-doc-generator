@@ -47,6 +47,20 @@
 
 
 
+
+## v1.4.2 (2023-01-10)
+
+#### :bug: Bug Fix
+* [#388](https://github.com/bmish/eslint-doc-generator/pull/388) Clarify error message when rule option is missing from rule doc ([@bmish](https://github.com/bmish))
+
+#### :memo: Documentation
+* [#379](https://github.com/bmish/eslint-doc-generator/pull/379) Add column for default value to readme options table ([@bmish](https://github.com/bmish))
+* [#326](https://github.com/bmish/eslint-doc-generator/pull/326) Mention markdownlint compatibility ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v1.4.1 (2022-12-27)
 
 #### :bug: Bug Fix
