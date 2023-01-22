@@ -30,15 +30,19 @@ import { ConfigFormat, configNameToDisplay } from './config-format.js';
 
 function severityToTerminology(severity: SEVERITY_TYPE) {
   switch (severity) {
-    case SEVERITY_TYPE.error:
+    case SEVERITY_TYPE.error: {
       return 'is enabled';
-    case SEVERITY_TYPE.warn:
+    }
+    case SEVERITY_TYPE.warn: {
       return '_warns_';
-    case SEVERITY_TYPE.off:
+    }
+    case SEVERITY_TYPE.off: {
       return 'is _disabled_';
+    }
     /* istanbul ignore next -- this shouldn't happen */
-    default:
+    default: {
       throw new Error(`Unknown severity: ${String(severity)}`);
+    }
   }
 }
 
@@ -415,25 +419,28 @@ function makeRuleDocTitle(
     // fallback to the corresponding format without the description.
     switch (ruleDocTitleFormatWithFallback) {
       case 'desc':
-      case 'desc-parens-prefix-name':
+      case 'desc-parens-prefix-name': {
         ruleDocTitleFormatWithFallback = 'prefix-name';
         break;
-      case 'desc-parens-name':
+      }
+      case 'desc-parens-name': {
         ruleDocTitleFormatWithFallback = 'name';
         break;
+      }
       /* istanbul ignore next -- this shouldn't happen */
-      default:
+      default: {
         throw new Error(
           `Unhandled rule doc title format fallback: ${String(
             ruleDocTitleFormatWithFallback
           )}`
         );
+      }
     }
   }
 
   switch (ruleDocTitleFormatWithFallback) {
     // Backticks (code-style) only used around rule name to differentiate it when the rule description is also present.
-    case 'desc':
+    case 'desc': {
       /* istanbul ignore next -- this shouldn't happen */
       if (!descriptionFormatted) {
         throw new Error(
@@ -441,7 +448,8 @@ function makeRuleDocTitle(
         );
       }
       return `# ${descriptionFormatted}`;
-    case 'desc-parens-name':
+    }
+    case 'desc-parens-name': {
       /* istanbul ignore next -- this shouldn't happen */
       if (!descriptionFormatted) {
         throw new Error(
@@ -449,7 +457,8 @@ function makeRuleDocTitle(
         );
       }
       return `# ${descriptionFormatted} (\`${name}\`)`;
-    case 'desc-parens-prefix-name':
+    }
+    case 'desc-parens-prefix-name': {
       /* istanbul ignore next -- this shouldn't happen */
       if (!descriptionFormatted) {
         throw new Error(
@@ -457,17 +466,21 @@ function makeRuleDocTitle(
         );
       }
       return `# ${descriptionFormatted} (\`${pluginPrefix}/${name}\`)`;
-    case 'name':
+    }
+    case 'name': {
       return `# ${name}`;
-    case 'prefix-name':
+    }
+    case 'prefix-name': {
       return `# ${pluginPrefix}/${name}`;
+    }
     /* istanbul ignore next -- this shouldn't happen */
-    default:
+    default: {
       throw new Error(
         `Unhandled rule doc title format: ${String(
           ruleDocTitleFormatWithFallback
         )}`
       );
+    }
   }
 }
 

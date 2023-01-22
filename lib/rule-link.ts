@@ -27,14 +27,17 @@ export function getUrlToRule(
   urlRuleDoc?: string | UrlRuleDocFunction
 ) {
   switch (ruleSource) {
-    case RULE_SOURCE.eslintCore:
+    case RULE_SOURCE.eslintCore: {
       return `https://eslint.org/docs/latest/rules/${ruleName}`;
-    case RULE_SOURCE.thirdPartyPlugin:
+    }
+    case RULE_SOURCE.thirdPartyPlugin: {
       // We don't know the documentation URL to third-party plugins.
       return undefined; // eslint-disable-line unicorn/no-useless-undefined
-    default:
+    }
+    default: {
       // Fallthrough to remaining logic in function.
       break;
+    }
   }
 
   // Ignore plugin prefix if it's included in rule name.
