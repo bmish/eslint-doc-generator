@@ -12,14 +12,18 @@ export function configNameToDisplay(
   pluginPrefix: string
 ) {
   switch (configFormat) {
-    case 'name':
+    case 'name': {
       return configName;
-    case 'plugin-colon-prefix-name':
+    }
+    case 'plugin-colon-prefix-name': {
       return `plugin:${pluginPrefix}/${configName}`; // Exact format used in an ESLint config file under "extends".
-    case 'prefix-name':
+    }
+    case 'prefix-name': {
       return `${pluginPrefix}/${configName}`;
+    }
     /* istanbul ignore next -- this shouldn't happen */
-    default:
+    default: {
       throw new Error(`Unhandled config format: ${String(configFormat)}`);
+    }
   }
 }

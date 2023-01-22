@@ -15,74 +15,17 @@ import {
   parseConfigEmojiOptions,
 } from './option-parsers.js';
 import { END_RULE_HEADER_MARKER } from './comment-markers.js';
-import { findSectionHeader, replaceOrCreateHeader } from './markdown.js';
+import {
+  replaceOrCreateHeader,
+  expectContentOrFail,
+  expectSectionHeaderOrFail,
+} from './markdown.js';
 import { resolveConfigsToRules } from './plugin-config-resolution.js';
 import { OPTION_DEFAULTS } from './options.js';
 import { diff } from 'jest-diff';
 import type { GenerateOptions } from './types.js';
 import { OPTION_TYPE, RuleModule } from './types.js';
 import { replaceRulePlaceholder } from './rule-link.js';
-
-/**
- * Ensure a rule doc contains (or doesn't contain) some particular content.
- * Upon failure, output the failure and set a failure exit code.
- * @param ruleName - which rule we are checking
- * @param contents - the rule doc's contents
- * @param content - the content we are checking for
- * @param expected - whether the content should be present or not present
- */
-function expectContent(
-  ruleName: string,
-  contents: string,
-  content: string,
-  expected: boolean
-) {
-  // Check for the content and also the versions of the content with escaped quotes
-  // in case escaping is needed where the content is referenced.
-  const hasContent =
-    contents.includes(content) ||
-    contents.includes(content.replace(/"/gu, '\\"')) ||
-    contents.includes(content.replace(/'/gu, "\\'"));
-  if (hasContent !== expected) {
-    console.error(
-      `\`${ruleName}\` rule doc should ${
-        /* istanbul ignore next -- TODO: test !expected or remove parameter */
-        expected ? '' : 'not '
-      }have included: ${content}`
-    );
-    process.exitCode = 1;
-  }
-}
-
-function expectSectionHeader(
-  ruleName: string,
-  contents: string,
-  possibleHeaders: readonly string[],
-  expected: boolean
-) {
-  const found = possibleHeaders.some((header) =>
-    findSectionHeader(contents, header)
-  );
-  if (found !== expected) {
-    if (possibleHeaders.length > 1) {
-      console.error(
-        `\`${ruleName}\` rule doc should ${
-          expected ? '' : 'not '
-        }have included ${
-          expected ? 'one' : 'any'
-        } of these headers: ${possibleHeaders.join(', ')}`
-      );
-    } else {
-      console.error(
-        `\`${ruleName}\` rule doc should ${
-          expected ? '' : 'not '
-        }have included the header: ${possibleHeaders.join(', ')}`
-      );
-    }
-
-    process.exitCode = 1;
-  }
-}
 
 function stringOrArrayWithFallback<T extends string | readonly string[]>(
   stringOrArray: undefined | T,
@@ -259,24 +202,40 @@ export async function generate(path: string, options?: GenerateOptions) {
 
     // Check for required sections.
     for (const section of ruleDocSectionInclude) {
-      expectSectionHeader(name, contents, [section], true);
+      expectSectionHeaderOrFail(
+        `\`${name}\` rule doc`,
+        contents,
+        [section],
+        true
+      );
     }
 
     // Check for disallowed sections.
     for (const section of ruleDocSectionExclude) {
-      expectSectionHeader(name, contents, [section], false);
+      expectSectionHeaderOrFail(
+        `\`${name}\` rule doc`,
+        contents,
+        [section],
+        false
+      );
     }
 
     if (ruleDocSectionOptions) {
       // Options section.
-      expectSectionHeader(
-        name,
+      expectSectionHeaderOrFail(
+        `\`${name}\` rule doc`,
         contents,
         ['Options', 'Config'],
         hasOptions(schema)
       );
       for (const namedOption of getAllNamedOptions(schema)) {
-        expectContent(name, contents, namedOption, true); // Each rule option is mentioned.
+        expectContentOrFail(
+          `\`${name}\` rule doc`,
+          'rule option',
+          contents,
+          namedOption,
+          true
+        ); // Each rule option is mentioned.
       }
     }
   }
