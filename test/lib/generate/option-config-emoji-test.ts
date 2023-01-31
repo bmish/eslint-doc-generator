@@ -70,6 +70,60 @@ describe('generate (--config-emoji)', function () {
     });
   });
 
+  describe('rule with emoji and badge configs', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
+            },
+            configs: {
+              foo: {
+                rules: { 'test/no-foo': 'error', },
+              },
+              bar: {
+                rules: { 'test/no-foo': 'error', },
+              },
+              baz: {
+                rules: { 'test/no-foo': 'error', },
+              }
+            }
+          };`,
+
+        'README.md': '## Rules\n',
+
+        'docs/rules/no-foo.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('sorts emojis before badges', async function () {
+      await generate('.', {
+        configEmoji: [
+          ['bar', '🎨'],
+          // no emoji for baz (uses badge instead)
+          ['foo', '🔥'],
+        ],
+      });
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
   describe('invalid format', function () {
     beforeEach(function () {
       mockFs({
