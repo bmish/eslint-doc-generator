@@ -56,6 +56,10 @@ function isConsideredFalse(value: unknown): boolean {
   );
 }
 
+function isBadge(emojiOrBadge: string) {
+  return emojiOrBadge.startsWith('![badge-');
+}
+
 function getPropertyFromRule(
   plugin: Plugin,
   ruleName: string,
@@ -86,14 +90,24 @@ function getConfigurationColumnValueForRule(
     )
   );
 
-  // Collect the emojis for the configs that set the rule to this severity level.
-  return getEmojisForConfigsSettingRuleToSeverity(
+  // Collect the emojis/badges for the configs that set the rule to this severity level.
+  const emojisAndBadges = getEmojisForConfigsSettingRuleToSeverity(
     ruleName,
     configsToRulesWithoutIgnored,
     pluginPrefix,
     configEmojis,
     severityType
-  ).join(' ');
+  );
+
+  const emojis = emojisAndBadges.filter(
+    (emojiOrBadge) => !isBadge(emojiOrBadge)
+  );
+  const badges = emojisAndBadges.filter((emojiOrBadge) =>
+    isBadge(emojiOrBadge)
+  );
+
+  // Sort emojis before badges for aesthetics.
+  return [...emojis, ...badges].join(' ');
 }
 
 function buildRuleRow(
