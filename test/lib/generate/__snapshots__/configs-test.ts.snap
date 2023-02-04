@@ -81,12 +81,12 @@ exports[`generate (configs) rules that are disabled or set to warn generates the
 
 | Name                           | Description            | 💼 | ⚠️                 | 🚫                 |
 | :----------------------------- | :--------------------- | :- | :----------------- | :----------------- |
-| [no-bar](docs/rules/no-bar.md) | Description of no-bar. |    |                    | ![badge-other][] ✅ |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. |    |                    | ✅ ![badge-other][] |
 | [no-baz](docs/rules/no-baz.md) | Description of no-baz. | ✅  |                    | ![badge-other][]   |
 | [no-bez](docs/rules/no-bez.md) | Description of no-bez. |    | ![badge-other][]   |                    |
 | [no-biz](docs/rules/no-biz.md) | Description of no-biz. |    |                    | ![badge-other][]   |
 | [no-boz](docs/rules/no-boz.md) | Description of no-boz. |    | ✅                  |                    |
-| [no-buz](docs/rules/no-buz.md) | Description of no-buz. |    | ![badge-other][] ✅ |                    |
+| [no-buz](docs/rules/no-buz.md) | Description of no-buz. |    | ✅ ![badge-other][] |                    |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. |    |                    | ✅                  |
 
 <!-- end auto-generated rules list -->

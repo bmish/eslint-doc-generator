@@ -11,7 +11,7 @@ exports[`generate (--config-emoji) basic shows the correct emojis 1`] = `
 | Name                           | Description             | 💼                               |
 | :----------------------------- | :---------------------- | :------------------------------- |
 | [no-bar](docs/rules/no-bar.md) | Description for no-bar. | 🔥 🎨                            |
-| [no-baz](docs/rules/no-baz.md) | Description for no-boz. | ![badge-configWithoutEmoji][] 🎨 |
+| [no-baz](docs/rules/no-baz.md) | Description for no-boz. | 🎨 ![badge-configWithoutEmoji][] |
 | [no-foo](docs/rules/no-foo.md) | Description for no-foo. | 🔥                               |
 
 <!-- end auto-generated rules list -->
@@ -63,6 +63,31 @@ exports[`generate (--config-emoji) removing default emoji for a config reverts t
 "# Description for no-foo (\`test/no-foo\`)
 
 💼 This rule is enabled in the \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (--config-emoji) rule with emoji and badge configs sorts emojis before badges 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+🎨 Set in the \`bar\` configuration.\\
+🔥 Set in the \`foo\` configuration.
+
+| Name                           | Description             | 💼                   |
+| :----------------------------- | :---------------------- | :------------------- |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | 🎨 🔥 ![badge-baz][] |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (--config-emoji) rule with emoji and badge configs sorts emojis before badges 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+💼 This rule is enabled in the following configs: 🎨 \`bar\`, \`baz\`, 🔥 \`foo\`.
 
 <!-- end auto-generated rule header -->
 "
