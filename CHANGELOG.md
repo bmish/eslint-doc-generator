@@ -48,6 +48,17 @@
 
 
 
+
+## v1.4.3 (2023-02-04)
+
+#### :bug: Bug Fix
+* [#409](https://github.com/bmish/eslint-doc-generator/pull/409) Sort emojis before badges for configs in rules list for better aesthetics ([@bmish](https://github.com/bmish))
+* [#411](https://github.com/bmish/eslint-doc-generator/pull/411) Fix loading of plugin with JSON entry point ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v1.4.2 (2023-01-10)
 
 #### :bug: Bug Fix
