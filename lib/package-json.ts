@@ -1,4 +1,11 @@
-import { join, resolve, basename, dirname, isAbsolute } from 'node:path';
+import {
+  join,
+  resolve,
+  basename,
+  dirname,
+  isAbsolute,
+  extname,
+} from 'node:path';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { importAbs } from './import.js';
 import { createRequire } from 'node:module';
@@ -65,6 +72,13 @@ export async function loadPlugin(path: string): Promise<Plugin> {
       throw new Error(
         `ESLint plugin entry point does not exist. Tried: ${pluginEntryPoint}`
       );
+    }
+
+    if (extname(pluginEntryPointAbs) === '.json') {
+      // For JSON files, have to require() instead of import(..., { assert: { type: 'json' } }) because of this error:
+      // Dynamic imports only support a second argument when the '--module' option is set to 'esnext', 'node16', or 'nodenext'. ts(1324)
+      // TODO: Switch to import() when we drop support for Node 14.
+      return require(pluginEntryPointAbs) as Plugin; // eslint-disable-line import/no-dynamic-require
     }
 
     const { default: plugin } = (await importAbs(pluginEntryPointAbs)) as {
