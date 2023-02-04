@@ -154,7 +154,7 @@ There's also a `postprocess` option that's only available via a [config file](#c
 These are the types of rule metadata that are available for display in rule list columns (`--rule-list-columns`) and/or rule doc notices (`--rule-doc-notices`).
 
 | Emoji | Type | Column? | Notice? | Description |
-| --- | --- | --- | --- | --- |
+| :-- | :-- | :-- | :-- | :-- |
 | 💼 | `configsError` | Yes | No | Whether a rule is set to `error` in a config. |
 | 🚫 | `configsOff` | Yes | No | Whether a rule is set to `off` in a config. |
 | ⚠️ | `configsWarn` | Yes | No | Whether a rule is set to `warn` in a config. |
