@@ -52,10 +52,12 @@
     "cosmiconfig": "^8.0.0",
     "deepmerge": "^4.2.2",
     "dot-prop": "^7.2.0",
+    "gpt-emoji": "^0.2.1",
     "jest-diff": "^29.2.1",
     "json-schema-traverse": "^1.0.0",
     "markdown-table": "^3.0.3",
     "no-case": "^3.0.4",
+    "table": "^6.8.1",
     "type-fest": "^3.0.0"
   },
   "devDependencies": {

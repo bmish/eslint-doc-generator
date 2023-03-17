@@ -26,6 +26,8 @@ import { diff } from 'jest-diff';
 import type { GenerateOptions } from './types.js';
 import { OPTION_TYPE, RuleModule } from './types.js';
 import { replaceRulePlaceholder } from './rule-link.js';
+import { getEmojis } from 'gpt-emoji';
+import { table } from 'table';
 
 function stringOrArrayWithFallback<T extends string | readonly string[]>(
   stringOrArray: undefined | T,
@@ -75,6 +77,8 @@ export async function generate(path: string, options?: GenerateOptions) {
   const ignoreDeprecatedRules =
     options?.ignoreDeprecatedRules ??
     OPTION_DEFAULTS[OPTION_TYPE.IGNORE_DEPRECATED_RULES];
+  const initEmojis =
+    options?.initEmojis ?? OPTION_DEFAULTS[OPTION_TYPE.INIT_EMOJIS];
   const initRuleDocs =
     options?.initRuleDocs ?? OPTION_DEFAULTS[OPTION_TYPE.INIT_RULE_DOCS];
   const pathRuleDoc =
@@ -112,6 +116,22 @@ export async function generate(path: string, options?: GenerateOptions) {
     options?.urlConfigs ?? OPTION_DEFAULTS[OPTION_TYPE.URL_CONFIGS];
   const urlRuleDoc =
     options?.urlRuleDoc ?? OPTION_DEFAULTS[OPTION_TYPE.URL_RULE_DOC];
+
+  if (initEmojis) {
+    if (!process.env.OPENAI_API_KEY) {
+      throw new Error('Missing OPENAI_API_KEY environment variable.');
+    }
+    const configNames = Object.keys(plugin.configs || {});
+    const result = await getEmojis(configNames, {
+      count: 1,
+    });
+    const data = [
+      ['Config', 'Emoji'],
+      ...configNames.map((configName, i) => [configName, result[i]]),
+    ];
+    console.log(table(data));
+    return;
+  }
 
   // Gather normalized list of rules.
   const ruleNamesAndRules = Object.entries(plugin.rules)
