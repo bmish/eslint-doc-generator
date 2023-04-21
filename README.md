@@ -127,6 +127,10 @@ These can be provided as CLI options or as [config file](#configuration-file) op
 
 The CLI has an optional path argument if you need to point the CLI to an ESLint plugin directory that isn't just the current directory.
 
+```sh
+eslint-doc-generator path/to/eslint-plugin
+```
+
 There's also a `postprocess` option that's only available via a [config file](#configuration-file).
 
 | Name | Description | Default |
