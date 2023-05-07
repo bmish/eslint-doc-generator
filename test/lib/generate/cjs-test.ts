@@ -68,7 +68,7 @@ describe('generate (cjs)', function () {
         'cjs-main-file-does-not-exist'
       );
       await expect(generate(FIXTURE_PATH)).rejects.toThrow(
-        'Unable to determine plugin entry point.'
+        /Cannot find module/u
       );
     });
   });

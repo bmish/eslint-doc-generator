@@ -36,7 +36,7 @@ export async function loadPlugin(path: string): Promise<Plugin> {
   try {
     // Try require first which should work for CJS plugins.
     return require(pluginRoot) as Plugin; // eslint-disable-line import/no-dynamic-require
-  } catch {
+  } catch (error) {
     // Otherwise, for ESM plugins, we'll have to try to resolve the exact plugin entry point and import it.
     const pluginPackageJson = loadPackageJson(path);
     let pluginEntryPoint;
@@ -61,8 +61,10 @@ export async function loadPlugin(path: string): Promise<Plugin> {
       }
     }
 
+    // If the ESM export doesn't exist, fall back to throwing the CJS error
+    // (if the ESM export does exist, we'll validate it next)
     if (!pluginEntryPoint) {
-      throw new Error('Unable to determine plugin entry point.');
+      throw error;
     }
 
     const pluginEntryPointAbs = join(pluginRoot, pluginEntryPoint);
