@@ -116,6 +116,7 @@ This tool is used by popular ESLint plugins like:
 - [eslint-plugin-import](https://github.com/import-js/eslint-plugin-import#rules)
 - [eslint-plugin-jest](https://github.com/jest-community/eslint-plugin-jest#rules)
 - [eslint-plugin-jsx-a11y](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y#supported-rules)
+- [eslint-plugin-perfectionist](https://github.com/azat-io/eslint-plugin-perfectionist/tree/main#-rules)
 - [eslint-plugin-promise](https://github.com/eslint-community/eslint-plugin-promise#rules)
 - [eslint-plugin-qunit](https://github.com/platinumazure/eslint-plugin-qunit#rules)
 - [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react#list-of-supported-rules)
