@@ -53,8 +53,6 @@ export async function loadPlugin(path: string): Promise<Plugin> {
       const propertiesToCheck: readonly (keyof PackageJson.ExportConditions)[] =
         ['.', 'node', 'import', 'require', 'default'];
       for (const prop of propertiesToCheck) {
-        // @ts-expect-error -- The union type for the object is causing trouble.
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const value = exports[prop];
         if (typeof value === 'string') {
           pluginEntryPoint = value;
