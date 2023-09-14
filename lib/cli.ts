@@ -95,6 +95,7 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
       configFormat: { type: 'string' },
       ignoreConfig: schemaStringArray,
       ignoreDeprecatedRules: { type: 'boolean' },
+      initEmojis: { type: 'boolean' },
       initRuleDocs: { type: 'boolean' },
       pathRuleDoc: { type: 'string' },
       pathRuleList: { anyOf: [{ type: 'string' }, schemaStringArray] },
@@ -214,6 +215,13 @@ export async function run(
       '--ignore-deprecated-rules [boolean]',
       `(optional) Whether to ignore deprecated rules from being checked, displayed, or updated. (default: ${String(
         OPTION_DEFAULTS[OPTION_TYPE.IGNORE_DEPRECATED_RULES]
+      )})`,
+      parseBoolean
+    )
+    .option(
+      '--init-emojis [boolean]',
+      `(optional) Whether to suggest an emoji for each config. Use \`--config-emoji\` option to utilize a suggestion. (default: ${String(
+        OPTION_DEFAULTS[OPTION_TYPE.INIT_EMOJIS]
       )})`,
       parseBoolean
     )

@@ -140,6 +140,7 @@ There's also a `postprocess` option that's only available via a [config file](#c
 | `--config-format` | The format to use for config names. See choices in below [table](#--config-format). | `name` |
 | `--ignore-config` | Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. | |
 | `--ignore-deprecated-rules` | Whether to ignore deprecated rules from being checked, displayed, or updated. | `false` |
+| `--init-emojis` | Whether to suggest an emoji for each config. Use `--config-emoji` option to utilize a suggestion. | `false` |
 | `--init-rule-docs` | Whether to create rule doc files if they don't yet exist. | `false` |
 | `--path-rule-doc` | Path to markdown file for each rule doc. Use `{name}` placeholder for the rule name. | `docs/rules/{name}.md` |
 | `--path-rule-list` | Path to markdown file where the rules table list should live. Option can be repeated. | `README.md` |

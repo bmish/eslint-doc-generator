@@ -100,6 +100,7 @@ export enum OPTION_TYPE {
   CONFIG_FORMAT = 'configFormat',
   IGNORE_CONFIG = 'ignoreConfig',
   IGNORE_DEPRECATED_RULES = 'ignoreDeprecatedRules',
+  INIT_EMOJIS = 'initEmojis',
   INIT_RULE_DOCS = 'initRuleDocs',
   PATH_RULE_DOC = 'pathRuleDoc',
   PATH_RULE_LIST = 'pathRuleList',
@@ -164,6 +165,8 @@ export type GenerateOptions = {
   readonly ignoreConfig?: readonly string[];
   /** Whether to ignore deprecated rules from being checked, displayed, or updated. Default: `false`. */
   readonly ignoreDeprecatedRules?: boolean;
+  /** Whether to suggest an emoji for each config. Use `--config-emoji` option to utilize a suggestion. Default: `false`. */
+  readonly initEmojis?: boolean;
   /** Whether to create rule doc files if they don't yet exist. Default: `false`. */
   readonly initRuleDocs?: boolean;
   /** Path to markdown file for each rule doc. Use `{name}` placeholder for the rule name. Default: `docs/rules/{name}.md`. */
