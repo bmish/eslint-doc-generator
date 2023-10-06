@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generate (configs list) basic generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           | Description            |
+| :----------------------------- | :--------------------- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |
+
+<!-- end auto-generated rules list -->
+## Configs
+<!-- begin auto-generated configs list -->
+
+|    | Name          |
+| :- | :------------ |
+| ✅  | \`recommended\` |
+
+<!-- end auto-generated configs list -->"
+`;
+
+exports[`generate (configs list) when a config exports a description generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           | Description            |
+| :----------------------------- | :--------------------- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |
+
+<!-- end auto-generated rules list -->
+## Configs
+<!-- begin auto-generated configs list -->
+
+|    | Name          | Description                              |
+| :- | :------------ | :--------------------------------------- |
+|    | \`foo\`         |                                          |
+| ✅  | \`recommended\` | This config has the recommended rules... |
+
+<!-- end auto-generated configs list -->"
+`;
+
+exports[`generate (configs list) when all configs are ignored generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           | Description            |
+| :----------------------------- | :--------------------- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |
+
+<!-- end auto-generated rules list -->
+## Configs
+<!-- begin auto-generated configs list -->
+<!-- end auto-generated configs list -->"
+`;
+
+exports[`generate (configs list) when there are no configs generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           | Description            |
+| :----------------------------- | :--------------------- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |
+
+<!-- end auto-generated rules list -->
+## Configs
+<!-- begin auto-generated configs list -->
+<!-- end auto-generated configs list -->"
+`;
+
+exports[`generate (configs list) with --config-format generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           | Description            |
+| :----------------------------- | :--------------------- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |
+
+<!-- end auto-generated rules list -->
+## Configs
+<!-- begin auto-generated configs list -->
+
+|    | Name               |
+| :- | :----------------- |
+| ✅  | \`test/recommended\` |
+
+<!-- end auto-generated configs list -->"
+`;
+
+exports[`generate (configs list) with --ignore-config generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           | Description            |
+| :----------------------------- | :--------------------- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |
+
+<!-- end auto-generated rules list -->
+## Configs
+<!-- begin auto-generated configs list -->
+
+|    | Name          |
+| :- | :------------ |
+| ✅  | \`recommended\` |
+
+<!-- end auto-generated configs list -->"
+`;
+
+exports[`generate (configs list) with configs not defined in alphabetical order generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           | Description            |
+| :----------------------------- | :--------------------- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |
+
+<!-- end auto-generated rules list -->
+## Configs
+<!-- begin auto-generated configs list -->
+
+|    | Name          |
+| :- | :------------ |
+|    | \`foo\`         |
+| ✅  | \`recommended\` |
+
+<!-- end auto-generated configs list -->"
+`;

@@ -7,6 +7,7 @@ Automatic documentation generator for [ESLint](https://eslint.org/) plugins and 
 Generates the following documentation covering a [wide variety](#column-and-notice-types) of rule metadata:
 
 - `README.md` rules table
+- `README.md` configs table
 - Rule doc titles and notices
 
 Also performs [configurable](#configuration-options) section consistency checks on rule docs:
@@ -20,6 +21,7 @@ Also performs [configurable](#configuration-options) section consistency checks 
 - [Usage](#usage)
 - [Examples](#examples)
   - [Rules list table](#rules-list-table)
+  - [Configs list table](#configs-list-table)
   - [Rule doc notices](#rule-doc-notices)
   - [Users](#users)
 - [Configuration options](#configuration-options)
@@ -75,6 +77,13 @@ Delete any old rules list from your `README.md`. A new one will be automatically
 <!-- end auto-generated rules list -->
 ```
 
+Optionally, add these marker comments to your `README.md` where you would like the configs list to go (uses the `description` property exported by each config if available):
+
+```md
+<!-- begin auto-generated configs list -->
+<!-- end auto-generated configs list -->
+```
+
 Delete any old recommended/fixable/etc. notices from your rule docs. A new title and notices will be automatically added to the top of each rule doc (along with a marker comment if it doesn't already exist).
 
 ```md
@@ -101,6 +110,10 @@ For examples, see our [users](#users) or the in-house examples below. Note that 
 ### Rules list table
 
 See the generated rules table and legend in our example [`README.md`](./docs/examples/eslint-plugin-test/README.md#rules).
+
+### Configs list table
+
+See the generated configs table in our example [`README.md`](./docs/examples/eslint-plugin-test/README.md#configs).
 
 ### Rule doc notices
 

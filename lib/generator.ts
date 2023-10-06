@@ -8,6 +8,7 @@ import {
   getPathWithExactFileNameCasing,
 } from './package-json.js';
 import { updateRulesList } from './rule-list.js';
+import { updateConfigsList } from './config-list.js';
 import { generateRuleHeaderLines } from './rule-doc-notices.js';
 import {
   parseRuleDocNoticesOption,
@@ -260,22 +261,30 @@ export async function generate(path: string, options?: GenerateOptions) {
     // Update the rules list in this file.
     const fileContents = readFileSync(pathToFile, 'utf8');
     const fileContentsNew = await postprocess(
-      updateRulesList(
-        ruleNamesAndRules,
-        fileContents,
+      updateConfigsList(
+        updateRulesList(
+          ruleNamesAndRules,
+          fileContents,
+          plugin,
+          configsToRules,
+          pluginPrefix,
+          pathRuleDoc,
+          pathToFile,
+          path,
+          configEmojis,
+          configFormat,
+          ignoreConfig,
+          ruleListColumns,
+          ruleListSplit,
+          urlConfigs,
+          urlRuleDoc
+        ),
         plugin,
         configsToRules,
         pluginPrefix,
-        pathRuleDoc,
-        pathToFile,
-        path,
         configEmojis,
         configFormat,
-        ignoreConfig,
-        ruleListColumns,
-        ruleListSplit,
-        urlConfigs,
-        urlRuleDoc
+        ignoreConfig
       ),
       resolve(pathToFile)
     );
