@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generate (rule options list) basic generates the documentation 1`] = `
+"# test/no-foo
+
+<!-- end auto-generated rule header -->
+## Options
+<!-- begin auto-generated rule options list -->
+
+| Name  | Description                   | Type    | Choices           | Default  | Required | Deprecated |
+| :---- | :---------------------------- | :------ | :---------------- | :------- | :------- | :--------- |
+| \`bar\` | Choose how to use the rule.   | String  | \`always\`, \`never\` | \`always\` | Yes      |            |
+| \`baz\` |                               |         |                   | \`true\`   | Yes      |            |
+| \`biz\` |                               |         |                   |          |          |            |
+| \`foo\` | Enable some kind of behavior. | Boolean |                   | \`false\`  |          | Yes        |
+
+<!-- end auto-generated rule options list -->"
+`;
+
+exports[`generate (rule options list) with no marker comments generates the documentation 1`] = `
+"# test/no-foo
+
+<!-- end auto-generated rule header -->
+## Options
+foo"
+`;
+
+exports[`generate (rule options list) with no options generates the documentation 1`] = `
+"# test/no-foo
+
+<!-- end auto-generated rule header -->
+## Options
+<!-- begin auto-generated rule options list -->
+
+
+
+<!-- end auto-generated rule options list -->"
+`;

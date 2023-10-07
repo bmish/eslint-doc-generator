@@ -27,6 +27,7 @@ import { diff } from 'jest-diff';
 import type { GenerateOptions } from './types.js';
 import { OPTION_TYPE, RuleModule } from './types.js';
 import { replaceRulePlaceholder } from './rule-link.js';
+import { updateRuleOptionsList } from './rule-options-list.js';
 
 function stringOrArrayWithFallback<T extends string | readonly string[]>(
   stringOrArray: undefined | T,
@@ -180,7 +181,10 @@ export async function generate(path: string, options?: GenerateOptions) {
 
     const contents = readFileSync(pathToDoc).toString();
     const contentsNew = await postprocess(
-      replaceOrCreateHeader(contents, newHeaderLines, END_RULE_HEADER_MARKER),
+      updateRuleOptionsList(
+        replaceOrCreateHeader(contents, newHeaderLines, END_RULE_HEADER_MARKER),
+        rule
+      ),
       resolve(pathToDoc)
     );
 
@@ -229,7 +233,7 @@ export async function generate(path: string, options?: GenerateOptions) {
         ['Options', 'Config'],
         hasOptions(schema)
       );
-      for (const namedOption of getAllNamedOptions(schema)) {
+      for (const { name: namedOption } of getAllNamedOptions(schema)) {
         expectContentOrFail(
           `\`${name}\` rule doc`,
           'rule option',

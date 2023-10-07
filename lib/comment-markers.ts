@@ -11,3 +11,9 @@ export const BEGIN_CONFIG_LIST_MARKER =
   '<!-- begin auto-generated configs list -->';
 export const END_CONFIG_LIST_MARKER =
   '<!-- end auto-generated configs list -->';
+
+// Markers so that the rule options table list can be automatically updated.
+export const BEGIN_RULE_OPTIONS_LIST_MARKER =
+  '<!-- begin auto-generated rule options list -->';
+export const END_RULE_OPTIONS_LIST_MARKER =
+  '<!-- end auto-generated rule options list -->';

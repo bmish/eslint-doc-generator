@@ -22,4 +22,35 @@ Examples would normally go here.
 
 ## Options
 
-Config options would normally go here.
+<!-- begin auto-generated rule options list -->
+
+| Name  | Description                   | Type    | Choices           | Default  | Required | Deprecated |
+| :---- | :---------------------------- | :------ | :---------------- | :------- | :------- | :--------- |
+| `bar` | Choose how to use the rule.   | String  | `always`, `never` | `always` | Yes      |            |
+| `foo` | Enable some kind of behavior. | Boolean |                   | `false`  |          | Yes        |
+
+<!-- end auto-generated rule options list -->
+
+For the purpose of this example, below is the `meta.schema` that would generate the above rule options table:
+
+```json
+[{
+    "type": "object",
+    "properties": {
+        "foo": {
+            "type": "boolean",
+            "description": "Enable some kind of behavior.",
+            "deprecated": true,
+            "default": false
+        },
+        "bar": {
+            "description": "Choose how to use the rule.",
+            "type": "string",
+            "enum": ["always", "never"],
+            "default": "always"
+        }
+    },
+    "required": ["bar"],
+    "additionalProperties": false
+}]
+```
