@@ -4,7 +4,15 @@ This plugin is for x purpose.
 
 ## Configs
 
-Configs section would normally go here.
+<!-- begin auto-generated configs list -->
+
+|    | Name          | Description                                      |
+| :- | :------------ | :----------------------------------------------- |
+| ✅  | `recommended` | These rules are recommended for everyone.        |
+| 🎨 | `stylistic`   | These rules are more about code style than bugs. |
+| ⌨️ | `typescript`  | These are good rules to use with TypeScript.     |
+
+<!-- end auto-generated configs list -->
 
 ## Rules
 
