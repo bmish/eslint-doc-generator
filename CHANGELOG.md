@@ -49,6 +49,17 @@
 
 
 
+
+## v1.5.0 (2023-10-12)
+
+#### :rocket: Enhancement
+* [#481](https://github.com/bmish/eslint-doc-generator/pull/481) Support auto-generated rule options lists ([@bmish](https://github.com/bmish))
+* [#480](https://github.com/bmish/eslint-doc-generator/pull/480) Support auto-generated config lists ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v1.4.3 (2023-02-04)
 
 #### :bug: Bug Fix
