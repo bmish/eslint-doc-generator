@@ -3,23 +3,23 @@ import { getAllNamedOptions } from '../../lib/rule-options.js';
 describe('rule options', function () {
   describe('#getAllNamedOptions', function () {
     it('handles null', function () {
-      expect(getAllNamedOptions(null)).toStrictEqual([]); // eslint-disable-line unicorn/no-null
+      expect(getAllNamedOptions(null)).toMatchInlineSnapshot('[]'); // eslint-disable-line unicorn/no-null
     });
 
     it('handles undefined', function () {
-      expect(getAllNamedOptions(undefined)).toStrictEqual([]); // eslint-disable-line unicorn/no-useless-undefined
+      expect(getAllNamedOptions(undefined)).toMatchInlineSnapshot('[]'); // eslint-disable-line unicorn/no-useless-undefined
     });
 
     it('handles empty array', function () {
-      expect(getAllNamedOptions([])).toStrictEqual([]);
+      expect(getAllNamedOptions([])).toMatchInlineSnapshot('[]');
     });
 
     it('handles array of empty object', function () {
-      expect(getAllNamedOptions([{}])).toStrictEqual([]);
+      expect(getAllNamedOptions([{}])).toMatchInlineSnapshot('[]');
     });
 
     it('handles empty object', function () {
-      expect(getAllNamedOptions({})).toStrictEqual([]);
+      expect(getAllNamedOptions({})).toMatchInlineSnapshot('[]');
     });
 
     it('handles object', function () {
@@ -27,14 +27,56 @@ describe('rule options', function () {
         getAllNamedOptions({
           type: 'object',
           properties: {
-            optionToDoSomething: {
+            optionToDoSomething1: {
               type: 'boolean',
               default: false,
+              deprecated: true,
+            },
+            optionToDoSomething2: {
+              type: 'string',
+              enum: ['always', 'never'],
+            },
+            optionToDoSomething3: {
+              required: true,
             },
           },
+          required: ['optionToDoSomething'],
           additionalProperties: false,
         })
-      ).toStrictEqual(['optionToDoSomething']);
+      ).toMatchInlineSnapshot(`
+        [
+          {
+            "default": false,
+            "deprecated": true,
+            "description": undefined,
+            "enum": undefined,
+            "name": "optionToDoSomething1",
+            "required": false,
+            "type": "boolean",
+          },
+          {
+            "default": undefined,
+            "deprecated": undefined,
+            "description": undefined,
+            "enum": [
+              "always",
+              "never",
+            ],
+            "name": "optionToDoSomething2",
+            "required": false,
+            "type": "string",
+          },
+          {
+            "default": undefined,
+            "deprecated": undefined,
+            "description": undefined,
+            "enum": undefined,
+            "name": "optionToDoSomething3",
+            "required": true,
+            "type": undefined,
+          },
+        ]
+      `);
     });
 
     it('handles object in JS array', function () {
@@ -51,7 +93,19 @@ describe('rule options', function () {
             additionalProperties: false,
           },
         ])
-      ).toStrictEqual(['optionToDoSomething']);
+      ).toMatchInlineSnapshot(`
+        [
+          {
+            "default": false,
+            "deprecated": undefined,
+            "description": undefined,
+            "enum": undefined,
+            "name": "optionToDoSomething",
+            "required": false,
+            "type": "boolean",
+          },
+        ]
+      `);
     });
 
     it('handles multiple objects in JS array', function () {
@@ -78,7 +132,28 @@ describe('rule options', function () {
             additionalProperties: false,
           },
         ])
-      ).toStrictEqual(['optionToDoSomething1', 'optionToDoSomething2']);
+      ).toMatchInlineSnapshot(`
+        [
+          {
+            "default": false,
+            "deprecated": undefined,
+            "description": undefined,
+            "enum": undefined,
+            "name": "optionToDoSomething1",
+            "required": false,
+            "type": "boolean",
+          },
+          {
+            "default": false,
+            "deprecated": undefined,
+            "description": undefined,
+            "enum": undefined,
+            "name": "optionToDoSomething2",
+            "required": false,
+            "type": "boolean",
+          },
+        ]
+      `);
     });
 
     it('handles object in array schema', function () {
@@ -98,7 +173,19 @@ describe('rule options', function () {
             },
           },
         ])
-      ).toStrictEqual(['optionToDoSomething']);
+      ).toMatchInlineSnapshot(`
+        [
+          {
+            "default": false,
+            "deprecated": undefined,
+            "description": undefined,
+            "enum": undefined,
+            "name": "optionToDoSomething",
+            "required": false,
+            "type": "boolean",
+          },
+        ]
+      `);
     });
 
     it('handles array in object', function () {
@@ -118,7 +205,19 @@ describe('rule options', function () {
             },
           },
         ])
-      ).toStrictEqual(['optionToDoSomething']);
+      ).toMatchInlineSnapshot(`
+        [
+          {
+            "default": false,
+            "deprecated": undefined,
+            "description": undefined,
+            "enum": undefined,
+            "name": "optionToDoSomething",
+            "required": false,
+            "type": "boolean",
+          },
+        ]
+      `);
     });
 
     it('handles object in array in object', function () {
@@ -144,7 +243,28 @@ describe('rule options', function () {
             additionalProperties: false,
           },
         ])
-      ).toStrictEqual(['optionToDoSomething1', 'optionToDoSomething2']);
+      ).toMatchInlineSnapshot(`
+        [
+          {
+            "default": undefined,
+            "deprecated": undefined,
+            "description": undefined,
+            "enum": undefined,
+            "name": "optionToDoSomething1",
+            "required": false,
+            "type": "array",
+          },
+          {
+            "default": false,
+            "deprecated": undefined,
+            "description": undefined,
+            "enum": undefined,
+            "name": "optionToDoSomething2",
+            "required": false,
+            "type": "boolean",
+          },
+        ]
+      `);
     });
   });
 });
