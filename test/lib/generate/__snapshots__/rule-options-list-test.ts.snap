@@ -43,7 +43,7 @@ exports[`generate (rule options list) with no options generates the documentatio
 "# test/no-foo
 
 <!-- end auto-generated rule header -->
-## Options
+
 <!-- begin auto-generated rule options list -->
 
 

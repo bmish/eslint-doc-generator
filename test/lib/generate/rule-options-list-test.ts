@@ -4,6 +4,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
 import { jest } from '@jest/globals';
+import * as sinon from 'sinon';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -74,7 +75,10 @@ describe('generate (rule options list)', function () {
     });
 
     it('generates the documentation', async function () {
+      const consoleErrorStub = sinon.stub(console, 'error');
       await generate('.');
+      expect(consoleErrorStub.callCount).toBe(0);
+      consoleErrorStub.restore();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
     });
   });
@@ -126,7 +130,10 @@ describe('generate (rule options list)', function () {
     });
 
     it('generates the documentation', async function () {
+      const consoleErrorStub = sinon.stub(console, 'error');
       await generate('.');
+      expect(consoleErrorStub.callCount).toBe(0);
+      consoleErrorStub.restore();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
     });
   });
@@ -155,7 +162,7 @@ describe('generate (rule options list)', function () {
 
         'README.md': '## Rules\n',
 
-        'docs/rules/no-foo.md': `## Options
+        'docs/rules/no-foo.md': `
 <!-- begin auto-generated rule options list -->
 <!-- end auto-generated rule options list -->`,
 
@@ -170,7 +177,10 @@ describe('generate (rule options list)', function () {
     });
 
     it('generates the documentation', async function () {
+      const consoleErrorStub = sinon.stub(console, 'error');
       await generate('.');
+      expect(consoleErrorStub.callCount).toBe(0);
+      consoleErrorStub.restore();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
     });
   });
@@ -211,7 +221,10 @@ describe('generate (rule options list)', function () {
     });
 
     it('generates the documentation', async function () {
+      const consoleErrorStub = sinon.stub(console, 'error');
       await generate('.');
+      expect(consoleErrorStub.callCount).toBe(0);
+      consoleErrorStub.restore();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
     });
   });
@@ -255,7 +268,10 @@ describe('generate (rule options list)', function () {
     });
 
     it('generates the documentation', async function () {
+      const consoleErrorStub = sinon.stub(console, 'error');
       await generate('.');
+      expect(consoleErrorStub.callCount).toBe(0);
+      consoleErrorStub.restore();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
     });
   });
