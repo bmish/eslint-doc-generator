@@ -36,3 +36,17 @@ exports[`generate (rule options list) with no options generates the documentatio
 
 <!-- end auto-generated rule options list -->"
 `;
+
+exports[`generate (rule options list) with string that needs to be escaped in table generates the documentation 1`] = `
+"# test/no-foo
+
+<!-- end auto-generated rule header -->
+## Options
+<!-- begin auto-generated rule options list -->
+
+| Name  | Description                     | Type           |
+| :---- | :------------------------------ | :------------- |
+| \`foo\` | test<br/>                  desc | String\\|number |
+
+<!-- end auto-generated rule options list -->"
+`;

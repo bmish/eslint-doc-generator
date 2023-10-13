@@ -5,6 +5,7 @@ import {
 import { markdownTable } from 'markdown-table';
 import type { ConfigsToRules, ConfigEmojis, Plugin } from './types.js';
 import { ConfigFormat, configNameToDisplay } from './config-format.js';
+import { sanitizeMarkdownTable } from './string.js';
 
 function generateConfigListMarkdown(
   plugin: Plugin,
@@ -26,12 +27,14 @@ function generateConfigListMarkdown(
   }
 
   return markdownTable(
-    [
+    sanitizeMarkdownTable([
       listHeaderRow,
       ...Object.keys(configsToRules)
         .filter((configName) => !ignoreConfig.includes(configName))
         .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
         .map((configName) => {
+          const description = // @ts-expect-error -- description is not an official config property.
+            plugin.configs?.[configName]?.description as string | undefined;
           return [
             configEmojis.find((obj) => obj.config === configName)?.emoji || '',
             `\`${configNameToDisplay(
@@ -39,15 +42,10 @@ function generateConfigListMarkdown(
               configFormat,
               pluginPrefix
             )}\``,
-            hasDescription
-              ? // @ts-expect-error -- description is not an official config property.
-                (plugin.configs?.[configName]?.description as
-                  | string
-                  | undefined) || ''
-              : undefined,
-          ].filter((col) => col !== undefined);
+            hasDescription ? description || '' : undefined,
+          ].filter((col) => col !== undefined) as string[];
         }),
-    ],
+    ]),
     { align: 'l' } // Left-align headers.
   );
 }

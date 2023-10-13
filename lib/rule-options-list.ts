@@ -5,7 +5,7 @@ import {
 import { markdownTable } from 'markdown-table';
 import type { RuleModule } from './types.js';
 import { RuleOption, getAllNamedOptions } from './rule-options.js';
-import { capitalizeOnlyFirstLetter } from './string.js';
+import { capitalizeOnlyFirstLetter, sanitizeMarkdownTable } from './string.js';
 
 export enum COLUMN_TYPE {
   // Alphabetical order.
@@ -116,11 +116,11 @@ function generateRuleOptionsListMarkdown(rule: RuleModule): string {
       // Recreate object using correct ordering and presence of columns.
       return Object.keys(COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING)
         .filter((type) => columnsToDisplay[type as COLUMN_TYPE])
-        .map((type) => ruleOptionColumnValues[type as COLUMN_TYPE]);
+        .map((type) => ruleOptionColumnValues[type as COLUMN_TYPE] || '');
     });
 
   return markdownTable(
-    [listHeaderRow, ...rows],
+    sanitizeMarkdownTable([listHeaderRow, ...rows]),
     { align: 'l' } // Left-align headers.
   );
 }
