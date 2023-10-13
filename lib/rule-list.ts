@@ -32,7 +32,7 @@ import type {
 import { EMOJIS_TYPE } from './rule-type.js';
 import { hasOptions } from './rule-options.js';
 import { getLinkToRule } from './rule-link.js';
-import { capitalizeOnlyFirstLetter } from './string.js';
+import { capitalizeOnlyFirstLetter, sanitizeMarkdownTable } from './string.js';
 import { noCase } from 'no-case';
 import { getProperty } from 'dot-prop';
 import { boolean, isBooleanable } from 'boolean';
@@ -178,7 +178,9 @@ function buildRuleRow(
     [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: rule.meta?.docs?.requiresTypeChecking
       ? EMOJI_REQUIRES_TYPE_CHECKING
       : '',
-    [COLUMN_TYPE.TYPE]: rule.meta?.type ? EMOJIS_TYPE[rule.meta?.type] : '',
+    [COLUMN_TYPE.TYPE]: rule.meta?.type
+      ? EMOJIS_TYPE[rule.meta?.type] || ''
+      : '',
   };
 
   // List columns using the ordering and presence of columns specified in columnsEnabled.
@@ -222,7 +224,7 @@ function generateRulesListMarkdown(
   });
 
   return markdownTable(
-    [
+    sanitizeMarkdownTable([
       listHeaderRow,
       ...ruleNamesAndRules.map(([name, rule]) =>
         buildRuleRow(
@@ -240,7 +242,7 @@ function generateRulesListMarkdown(
           urlRuleDoc
         )
       ),
-    ],
+    ]),
     { align: 'l' } // Left-align headers.
   );
 }

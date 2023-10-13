@@ -163,4 +163,48 @@ describe('generate (rule options list)', function () {
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
     });
   });
+
+  describe('with string that needs to be escaped in table', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: {
+                  schema: [{ type: "object", properties: { foo: { description: \`test
+                  desc\`, type: 'string|number' } } }]
+                },
+                create(context) {}
+              },
+            },
+          };`,
+
+        'README.md': '## Rules\n',
+
+        'docs/rules/no-foo.md': `## Options
+<!-- begin auto-generated rule options list -->
+<!-- end auto-generated rule options list -->`,
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('generates the documentation', async function () {
+      await generate('.');
+      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+    });
+  });
 });

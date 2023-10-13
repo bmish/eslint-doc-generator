@@ -18,3 +18,13 @@ export function addTrailingPeriod(str: string) {
 export function capitalizeOnlyFirstLetter(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
+
+function sanitizeMarkdownTableCell(text: string): string {
+  return text.replace(/\|/gu, '\\|').replace(/\n/gu, '<br/>');
+}
+
+export function sanitizeMarkdownTable(
+  text: readonly (readonly string[])[]
+): readonly (readonly string[])[] {
+  return text.map((row) => row.map((col) => sanitizeMarkdownTableCell(col)));
+}

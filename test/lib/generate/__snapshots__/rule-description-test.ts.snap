@@ -90,3 +90,15 @@ exports[`generate (rule descriptions) rule with long-enough description to requi
 <!-- end auto-generated rule header -->
 "
 `;
+
+exports[`generate (rule descriptions) with rule description that needs to be escaped in table generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           | Description |
+| :----------------------------- | :---------- |
+| [no-foo](docs/rules/no-foo.md) | Foo\\|Bar    |
+
+<!-- end auto-generated rules list -->
+"
+`;

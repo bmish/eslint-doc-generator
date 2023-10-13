@@ -238,6 +238,51 @@ describe('generate (configs list)', function () {
     });
   });
 
+  describe('when a config description needs to be escaped in table', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: { docs: { description: 'Description no-foo.' }, },
+                create(context) {}
+              },
+            },
+            configs: {
+              recommended: { description: 'Foo|Bar' },
+            }
+          };`,
+
+        'README.md': `## Rules
+## Configs
+<!-- begin auto-generated configs list -->
+<!-- end auto-generated configs list -->`,
+
+        'docs/rules/no-foo.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('generates the documentation', async function () {
+      await generate('.');
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
   describe('when there are no configs', function () {
     beforeEach(function () {
       mockFs({

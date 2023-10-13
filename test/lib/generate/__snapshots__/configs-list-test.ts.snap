@@ -19,6 +19,25 @@ exports[`generate (configs list) basic generates the documentation 1`] = `
 <!-- end auto-generated configs list -->"
 `;
 
+exports[`generate (configs list) when a config description needs to be escaped in table generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           | Description         |
+| :----------------------------- | :------------------ |
+| [no-foo](docs/rules/no-foo.md) | Description no-foo. |
+
+<!-- end auto-generated rules list -->
+## Configs
+<!-- begin auto-generated configs list -->
+
+|    | Name          | Description |
+| :- | :------------ | :---------- |
+| ✅  | \`recommended\` | Foo\\|Bar    |
+
+<!-- end auto-generated configs list -->"
+`;
+
 exports[`generate (configs list) when a config exports a description generates the documentation 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
