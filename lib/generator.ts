@@ -179,24 +179,28 @@ export async function generate(path: string, options?: GenerateOptions) {
       urlRuleDoc
     );
 
-    const contents = readFileSync(pathToDoc).toString();
+    const contentsOld = readFileSync(pathToDoc).toString();
     const contentsNew = await postprocess(
       updateRuleOptionsList(
-        replaceOrCreateHeader(contents, newHeaderLines, END_RULE_HEADER_MARKER),
+        replaceOrCreateHeader(
+          contentsOld,
+          newHeaderLines,
+          END_RULE_HEADER_MARKER
+        ),
         rule
       ),
       resolve(pathToDoc)
     );
 
     if (check) {
-      if (contentsNew !== contents) {
+      if (contentsNew !== contentsOld) {
         console.error(
           `Please run eslint-doc-generator. A rule doc is out-of-date: ${relative(
             getPluginRoot(path),
             pathToDoc
           )}`
         );
-        console.error(diff(contentsNew, contents, { expand: false }));
+        console.error(diff(contentsNew, contentsOld, { expand: false }));
         process.exitCode = 1;
       }
     } else {
@@ -209,7 +213,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     for (const section of ruleDocSectionInclude) {
       expectSectionHeaderOrFail(
         `\`${name}\` rule doc`,
-        contents,
+        contentsNew,
         [section],
         true
       );
@@ -219,7 +223,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     for (const section of ruleDocSectionExclude) {
       expectSectionHeaderOrFail(
         `\`${name}\` rule doc`,
-        contents,
+        contentsNew,
         [section],
         false
       );
@@ -229,7 +233,7 @@ export async function generate(path: string, options?: GenerateOptions) {
       // Options section.
       expectSectionHeaderOrFail(
         `\`${name}\` rule doc`,
-        contents,
+        contentsNew,
         ['Options', 'Config'],
         hasOptions(schema)
       );
@@ -237,7 +241,7 @@ export async function generate(path: string, options?: GenerateOptions) {
         expectContentOrFail(
           `\`${name}\` rule doc`,
           'rule option',
-          contents,
+          contentsNew,
           namedOption,
           true
         ); // Each rule option is mentioned.
