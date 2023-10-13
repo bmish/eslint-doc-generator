@@ -79,7 +79,9 @@ function ruleOptionsToColumnsToDisplay(ruleOptions: readonly RuleOption[]): {
     [key in COLUMN_TYPE]: boolean;
   } = {
     // Alphabetical order.
-    [COLUMN_TYPE.DEFAULT]: ruleOptions.some((ruleOption) => ruleOption.default),
+    [COLUMN_TYPE.DEFAULT]: ruleOptions.some(
+      (ruleOption) => ruleOption.default !== undefined
+    ),
     [COLUMN_TYPE.DEPRECATED]: ruleOptions.some(
       (ruleOption) => ruleOption.deprecated
     ),
