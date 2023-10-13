@@ -50,6 +50,18 @@
 
 
 
+
+## v1.5.1 (2023-10-13)
+
+#### :bug: Bug Fix
+* [#482](https://github.com/bmish/eslint-doc-generator/pull/482) Sanitize newlines and pipes from markdown table cells ([@bmish](https://github.com/bmish))
+* [#484](https://github.com/bmish/eslint-doc-generator/pull/484) Don't exit with failure about missing mention of rule option when rule option list was just generated ([@bmish](https://github.com/bmish))
+* [#483](https://github.com/bmish/eslint-doc-generator/pull/483) Show rule option list "Default" column even with only a falsy value ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v1.5.0 (2023-10-12)
 
 #### :rocket: Enhancement
