@@ -15,7 +15,11 @@ import {
   parseRuleListColumnsOption,
   parseConfigEmojiOptions,
 } from './option-parsers.js';
-import { END_RULE_HEADER_MARKER } from './comment-markers.js';
+import {
+  BEGIN_RULE_OPTIONS_LIST_MARKER,
+  END_RULE_HEADER_MARKER,
+  END_RULE_OPTIONS_LIST_MARKER,
+} from './comment-markers.js';
 import {
   replaceOrCreateHeader,
   expectContentOrFail,
@@ -148,6 +152,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     const schema = rule.meta?.schema;
     const description = rule.meta?.docs?.description;
     const pathToDoc = replaceRulePlaceholder(join(path, pathRuleDoc), name);
+    const ruleHasOptions = hasOptions(schema);
 
     if (!existsSync(pathToDoc)) {
       if (!initRuleDocs) {
@@ -157,7 +162,12 @@ export async function generate(path: string, options?: GenerateOptions) {
       }
 
       mkdirSync(dirname(pathToDoc), { recursive: true });
-      writeFileSync(pathToDoc, '');
+      writeFileSync(
+        pathToDoc,
+        ruleHasOptions
+          ? `\n## Options\n\n${BEGIN_RULE_OPTIONS_LIST_MARKER}\n${END_RULE_OPTIONS_LIST_MARKER}\n`
+          : ''
+      );
       initializedRuleDoc = true;
     }
 
@@ -235,7 +245,7 @@ export async function generate(path: string, options?: GenerateOptions) {
         `\`${name}\` rule doc`,
         contentsNew,
         ['Options', 'Config'],
-        hasOptions(schema)
+        ruleHasOptions
       );
       for (const { name: namedOption } of getAllNamedOptions(schema)) {
         expectContentOrFail(
