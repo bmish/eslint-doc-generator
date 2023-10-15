@@ -161,13 +161,24 @@ export async function generate(path: string, options?: GenerateOptions) {
         );
       }
 
-      mkdirSync(dirname(pathToDoc), { recursive: true });
-      writeFileSync(
-        pathToDoc,
+      // Determine content for fresh rule doc, including any mandatory sections.
+      // The rule doc header will be added later.
+      let newRuleDocContents = [
+        ruleDocSectionInclude.length > 0
+          ? ruleDocSectionInclude.map((title) => `## ${title}`).join('\n\n')
+          : undefined,
         ruleHasOptions
-          ? `\n## Options\n\n${BEGIN_RULE_OPTIONS_LIST_MARKER}\n${END_RULE_OPTIONS_LIST_MARKER}\n`
-          : ''
-      );
+          ? `## Options\n\n${BEGIN_RULE_OPTIONS_LIST_MARKER}\n${END_RULE_OPTIONS_LIST_MARKER}`
+          : undefined,
+      ]
+        .filter((section) => section !== undefined)
+        .join('\n\n');
+      if (newRuleDocContents !== '') {
+        newRuleDocContents = `\n${newRuleDocContents}\n`;
+      }
+
+      mkdirSync(dirname(pathToDoc), { recursive: true });
+      writeFileSync(pathToDoc, newRuleDocContents);
       initializedRuleDoc = true;
     }
 
