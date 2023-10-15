@@ -51,6 +51,17 @@
 
 
 
+
+## v1.5.2 (2023-10-15)
+
+#### :bug: Bug Fix
+* [#486](https://github.com/bmish/eslint-doc-generator/pull/486) Include any mandatory sections when generating new rule docs with `--init-rule-docs` and `--rule-doc-section-include` ([@bmish](https://github.com/bmish))
+* [#485](https://github.com/bmish/eslint-doc-generator/pull/485) Initialize rule doc options section when using `--init-rule-docs` ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v1.5.1 (2023-10-13)
 
 #### :bug: Bug Fix
