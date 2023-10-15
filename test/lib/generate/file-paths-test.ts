@@ -26,6 +26,10 @@ describe('generate (file paths)', function () {
                 meta: { },
                 create(context) {}
               },
+              'no-bar': {
+                meta: { schema: [{ type: 'object', properties: { option1: {} } }] },
+                create(context) {}
+              },
             },
           };`,
 
@@ -46,7 +50,7 @@ describe('generate (file paths)', function () {
       it('throws an error', async function () {
         // Use join to handle both Windows and Unix paths.
         await expect(generate('.')).rejects.toThrow(
-          `Could not find rule doc: ${join('docs', 'rules', 'no-foo.md')}`
+          `Could not find rule doc: ${join('docs', 'rules', 'no-bar.md')}`
         );
       });
     });
@@ -55,6 +59,7 @@ describe('generate (file paths)', function () {
       it('creates the rule doc', async function () {
         await generate('.', { initRuleDocs: true });
         expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot(); // Should add options section.
       });
     });
   });
