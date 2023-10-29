@@ -50,7 +50,11 @@ describe('generate (file paths)', function () {
       it('throws an error', async function () {
         // Use join to handle both Windows and Unix paths.
         await expect(generate('.')).rejects.toThrow(
-          `Could not find rule doc: ${join('docs', 'rules', 'no-bar.md')}`
+          `Could not find rule doc (run with --init-rule-docs to create): ${join(
+            'docs',
+            'rules',
+            'no-bar.md'
+          )}`
         );
       });
     });

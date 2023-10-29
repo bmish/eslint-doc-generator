@@ -157,7 +157,10 @@ export async function generate(path: string, options?: GenerateOptions) {
     if (!existsSync(pathToDoc)) {
       if (!initRuleDocs) {
         throw new Error(
-          `Could not find rule doc: ${relative(getPluginRoot(path), pathToDoc)}`
+          `Could not find rule doc (run with --init-rule-docs to create): ${relative(
+            getPluginRoot(path),
+            pathToDoc
+          )}`
         );
       }
 
