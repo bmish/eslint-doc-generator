@@ -39,7 +39,14 @@ export function getAllNamedOptions(
       options.push(
         ...Object.entries(js.properties).map(([key, value]) => ({
           name: key,
-          type: value.type ? value.type.toString() : undefined,
+          type:
+            value.type === 'array' &&
+            !Array.isArray(value.items) &&
+            value.items?.type
+              ? `${value.items.type.toString()}[]`
+              : value.type
+              ? value.type.toString()
+              : undefined,
           description: value.description,
           default: value.default,
           enum: value.enum,
