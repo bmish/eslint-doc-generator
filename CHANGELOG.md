@@ -52,6 +52,17 @@
 
 
 
+
+## v1.5.3 (2023-10-31)
+
+#### :bug: Bug Fix
+* [#496](https://github.com/bmish/eslint-doc-generator/pull/496) Indicate type of array for array options in rule option lists ([@bmish](https://github.com/bmish))
+* [#495](https://github.com/bmish/eslint-doc-generator/pull/495) Add hint about using `--init-rule-docs` when rule doc missing ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v1.5.2 (2023-10-15)
 
 #### :bug: Bug Fix
