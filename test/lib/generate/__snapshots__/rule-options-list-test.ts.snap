@@ -7,12 +7,14 @@ exports[`generate (rule options list) basic generates the documentation 1`] = `
 ## Options
 <!-- begin auto-generated rule options list -->
 
-| Name  | Description                   | Type    | Choices           | Default  | Required | Deprecated |
-| :---- | :---------------------------- | :------ | :---------------- | :------- | :------- | :--------- |
-| \`bar\` | Choose how to use the rule.   | String  | \`always\`, \`never\` | \`always\` | Yes      |            |
-| \`baz\` |                               |         |                   | \`true\`   | Yes      |            |
-| \`biz\` |                               |         |                   |          |          |            |
-| \`foo\` | Enable some kind of behavior. | Boolean |                   | \`false\`  |          | Yes        |
+| Name   | Description                   | Type     | Choices           | Default  | Required | Deprecated |
+| :----- | :---------------------------- | :------- | :---------------- | :------- | :------- | :--------- |
+| \`arr1\` |                               | Array    |                   |          |          |            |
+| \`arr2\` |                               | String[] |                   |          |          |            |
+| \`bar\`  | Choose how to use the rule.   | String   | \`always\`, \`never\` | \`always\` | Yes      |            |
+| \`baz\`  |                               |          |                   | \`true\`   | Yes      |            |
+| \`biz\`  |                               |          |                   |          |          |            |
+| \`foo\`  | Enable some kind of behavior. | Boolean  |                   | \`false\`  |          | Yes        |
 
 <!-- end auto-generated rule options list -->"
 `;

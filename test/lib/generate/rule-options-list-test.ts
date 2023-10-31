@@ -45,6 +45,15 @@ describe('generate (rule options list)', function () {
                             required: true,
                         },
                         biz: {},
+                        arr1: {
+                          type: "array",
+                        },
+                        arr2: {
+                          type: "array",
+                          items: {
+                            type: "string"
+                          }
+                        },
                     },
                     required: ["bar"],
                     additionalProperties: false
