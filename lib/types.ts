@@ -152,7 +152,7 @@ export type GenerateOptions = {
    * List of configs and their associated emojis.
    * Array of `[configName, emoji]`.
    * Default emojis are provided for common configs.
-   * To remove a default emoji and rely on a badge instead, provide the config name without an emoji.
+   * To use a text/image/icon badge instead of an emoji, supply the corresponding markdown as the emoji.
    */
   readonly configEmoji?: readonly (
     | [configName: string, emoji: string]

@@ -177,7 +177,7 @@ There's also a `postprocess` option that's only available via a [config file](#c
 | Name | Description | Default |
 | :-- | :-- | :-- |
 | `--check` | Whether to check for and fail if there is a diff. Any diff will be displayed but no output will be written to files. Typically used during CI. | `false` |
-| `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Option can be repeated. | Default emojis are provided for [common configs](./lib/emojis.ts). To remove a default emoji and rely on a [badge](#badges) instead, provide the config name without an emoji. |
+| `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Option can be repeated. | Default emojis are provided for [common configs](./lib/emojis.ts). See [Badges](#badges) for an alternative to emojis. |
 | `--config-format` | The format to use for config names. See choices in below [table](#--config-format). | `name` |
 | `--ignore-config` | Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. | |
 | `--ignore-deprecated-rules` | Whether to ignore deprecated rules from being checked, displayed, or updated. | `false` |
@@ -305,19 +305,30 @@ module.exports = config;
 
 ### Badges
 
-While config emojis are the recommended representations of configs that a rule belongs to (see [`--config-emoji`](#configuration-options)), you can alternatively define badges for configs at the bottom of your `README.md`.
+While emojis are the recommended representations of configs that a rule belongs to, you can alternatively use a text/image/icon badge for configs by supplying the following markdown for the emoji using the [`--config-emoji`](#configuration-options) option.
 
-Here's a badge for a custom `fun` config that displays in blue:
+For example, here's the markdown for a text badge representing a custom `fun` config that displays in blue (note that the markdown includes alt text followed by the image URL):
 
 ```md
-[badge-fun]: https://img.shields.io/badge/-fun-blue.svg
+![fun config badge](https://img.shields.io/badge/-fun-blue.svg)
+```
+
+Here's how you'd configure it:
+
+```js
+/** @type {import('eslint-doc-generator').GenerateOptions} */
+const config = {
+  configEmoji: [
+    ['fun', '![fun config badge](https://img.shields.io/badge/-fun-blue.svg)'],
+  ],
+};
+
+module.exports = config;
 ```
 
 And how it looks:
 
-![badge-fun][]
-
-[badge-fun]: https://img.shields.io/badge/-fun-blue.svg
+![fun config badge](https://img.shields.io/badge/-fun-blue.svg)
 
 ## Compatibility
 
