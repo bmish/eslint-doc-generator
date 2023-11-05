@@ -53,6 +53,16 @@
 
 
 
+
+## v1.5.4 (2023-11-05)
+
+#### :bug: Bug Fix
+* [#498](https://github.com/bmish/eslint-doc-generator/pull/498) Handle when an option could have multiple types in rule option lists ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v1.5.3 (2023-10-31)
 
 #### :bug: Bug Fix
