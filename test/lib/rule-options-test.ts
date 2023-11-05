@@ -52,7 +52,7 @@ describe('rule options', function () {
             "enum": undefined,
             "name": "optionToDoSomething1",
             "required": false,
-            "type": "boolean",
+            "type": "Boolean",
           },
           {
             "default": undefined,
@@ -64,7 +64,7 @@ describe('rule options', function () {
             ],
             "name": "optionToDoSomething2",
             "required": false,
-            "type": "string",
+            "type": "String",
           },
           {
             "default": undefined,
@@ -102,7 +102,7 @@ describe('rule options', function () {
             "enum": undefined,
             "name": "optionToDoSomething",
             "required": false,
-            "type": "boolean",
+            "type": "Boolean",
           },
         ]
       `);
@@ -141,7 +141,7 @@ describe('rule options', function () {
             "enum": undefined,
             "name": "optionToDoSomething1",
             "required": false,
-            "type": "boolean",
+            "type": "Boolean",
           },
           {
             "default": false,
@@ -150,7 +150,7 @@ describe('rule options', function () {
             "enum": undefined,
             "name": "optionToDoSomething2",
             "required": false,
-            "type": "boolean",
+            "type": "Boolean",
           },
         ]
       `);
@@ -182,7 +182,7 @@ describe('rule options', function () {
             "enum": undefined,
             "name": "optionToDoSomething",
             "required": false,
-            "type": "boolean",
+            "type": "Boolean",
           },
         ]
       `);
@@ -214,7 +214,7 @@ describe('rule options', function () {
             "enum": undefined,
             "name": "optionToDoSomething",
             "required": false,
-            "type": "boolean",
+            "type": "Boolean",
           },
         ]
       `);
@@ -255,7 +255,7 @@ describe('rule options', function () {
             "enum": undefined,
             "name": "optionToDoSomething1",
             "required": false,
-            "type": "object[]",
+            "type": "Object[]",
           },
           {
             "default": undefined,
@@ -264,7 +264,7 @@ describe('rule options', function () {
             "enum": undefined,
             "name": "optionToDoSomething2",
             "required": false,
-            "type": "array",
+            "type": "Array",
           },
           {
             "default": false,
@@ -273,7 +273,62 @@ describe('rule options', function () {
             "enum": undefined,
             "name": "optionToDoSomething2",
             "required": false,
-            "type": "boolean",
+            "type": "Boolean",
+          },
+        ]
+      `);
+    });
+
+    it('handles when type is an array', function () {
+      expect(
+        getAllNamedOptions([
+          {
+            type: 'object',
+            properties: {
+              optionToDoSomething1: {
+                type: 'array',
+                items: {
+                  type: ['boolean', 'string'],
+                },
+              },
+              optionToDoSomething2: {
+                type: ['boolean', 'string'],
+              },
+              optionToDoSomething3: {
+                type: ['boolean'],
+              },
+            },
+            additionalProperties: false,
+          },
+        ])
+      ).toMatchInlineSnapshot(`
+        [
+          {
+            "default": undefined,
+            "deprecated": undefined,
+            "description": undefined,
+            "enum": undefined,
+            "name": "optionToDoSomething1",
+            "required": false,
+            "type": "(Boolean, String)[]",
+          },
+          {
+            "default": undefined,
+            "deprecated": undefined,
+            "description": undefined,
+            "enum": undefined,
+            "name": "optionToDoSomething2",
+            "required": false,
+            "type": "Boolean, String",
+          },
+          {
+            "default": undefined,
+            "deprecated": undefined,
+            "description": undefined,
+            "enum": undefined,
+            "name": "optionToDoSomething3",
+            "required": false,
+            "type": "Boolean",
           },
         ]
       `);

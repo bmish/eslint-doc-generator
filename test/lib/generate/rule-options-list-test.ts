@@ -48,10 +48,22 @@ describe('generate (rule options list)', function () {
                         arr1: {
                           type: "array",
                         },
-                        arr2: {
+                        arrWithArrType: {
+                          type: ["string", "boolean"],
+                        },
+                        arrWithArrTypeSingleItem: {
+                          type: ["string"],
+                        },
+                        arrWithItemsType: {
                           type: "array",
                           items: {
                             type: "string"
+                          }
+                        },
+                        arrWithItemsArrayType: {
+                          type: "array",
+                          items: {
+                            type: ["string", "boolean"]
                           }
                         },
                     },
