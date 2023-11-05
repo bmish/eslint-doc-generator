@@ -5,7 +5,7 @@ import {
 import { markdownTable } from 'markdown-table';
 import type { RuleModule } from './types.js';
 import { RuleOption, getAllNamedOptions } from './rule-options.js';
-import { capitalizeOnlyFirstLetter, sanitizeMarkdownTable } from './string.js';
+import { sanitizeMarkdownTable } from './string.js';
 
 export enum COLUMN_TYPE {
   // Alphabetical order.
@@ -64,9 +64,7 @@ function ruleOptionToColumnValues(ruleOption: RuleOption): {
         : undefined,
     [COLUMN_TYPE.NAME]: `\`${ruleOption.name}\``,
     [COLUMN_TYPE.REQUIRED]: ruleOption.required ? 'Yes' : undefined,
-    [COLUMN_TYPE.TYPE]: ruleOption.type
-      ? capitalizeOnlyFirstLetter(ruleOption.type)
-      : undefined,
+    [COLUMN_TYPE.TYPE]: ruleOption.type || undefined,
   };
 
   return columns;

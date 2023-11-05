@@ -1,5 +1,6 @@
 import traverse from 'json-schema-traverse';
 import type { JSONSchema } from '@typescript-eslint/utils';
+import { capitalizeOnlyFirstLetter } from './string.js';
 
 export type RuleOption = {
   name: string;
@@ -10,6 +11,14 @@ export type RuleOption = {
   default?: JSONSchema.JSONSchema4Type;
   deprecated?: boolean;
 };
+
+function typeToString(
+  type: JSONSchema.JSONSchema4TypeName[] | JSONSchema.JSONSchema4TypeName
+): string {
+  return Array.isArray(type)
+    ? type.map((item) => capitalizeOnlyFirstLetter(item)).join(', ')
+    : capitalizeOnlyFirstLetter(type);
+}
 
 /**
  * Gather a list of named options from a rule schema.
@@ -43,9 +52,13 @@ export function getAllNamedOptions(
             value.type === 'array' &&
             !Array.isArray(value.items) &&
             value.items?.type
-              ? `${value.items.type.toString()}[]`
+              ? `${
+                  Array.isArray(value.items.type) && value.items.type.length > 1
+                    ? `(${typeToString(value.items.type)})`
+                    : typeToString(value.items.type)
+                }[]`
               : value.type
-              ? value.type.toString()
+              ? typeToString(value.type)
               : undefined,
           description: value.description,
           default: value.default,
