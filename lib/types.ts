@@ -138,6 +138,14 @@ export type UrlRuleDocFunction = (
   path: string
 ) => string | undefined;
 
+/**
+ * Function for generating the path to markdown file for each rule doc.
+ * Can be provided via a JavaScript-based config file using the `pathRuleDoc` option.
+ * @param name - the name of the rule
+ * @returns the path to the rule doc
+ */
+export type PathRuleDocFunction = (name: string) => string;
+
 // JSDocs for options should be kept in sync with README.md and the CLI runner in cli.ts.
 /** The type for the config file (e.g. `.eslint-doc-generatorrc.js`) and internal `generate()` function. */
 export type GenerateOptions = {
@@ -166,8 +174,12 @@ export type GenerateOptions = {
   readonly ignoreDeprecatedRules?: boolean;
   /** Whether to create rule doc files if they don't yet exist. Default: `false`. */
   readonly initRuleDocs?: boolean;
-  /** Path to markdown file for each rule doc. Use `{name}` placeholder for the rule name. Default: `docs/rules/{name}.md`. */
-  readonly pathRuleDoc?: string;
+  /**
+   * Path (or function to generate a path) to to markdown file for each rule doc.
+   * For the string version, use `{name}` placeholder for the rule name.
+   * Default: `docs/rules/{name}.md`.
+   */
+  readonly pathRuleDoc?: string | PathRuleDocFunction;
   /** Path to markdown file(s) where the rules table list should live. Default: `README.md`. */
   readonly pathRuleList?: string | readonly string[];
   /**

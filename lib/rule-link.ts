@@ -1,8 +1,19 @@
 import { join, sep, relative, dirname } from 'node:path';
-import { Plugin, RULE_SOURCE, UrlRuleDocFunction } from './types.js';
+import {
+  PathRuleDocFunction,
+  Plugin,
+  RULE_SOURCE,
+  UrlRuleDocFunction,
+} from './types.js';
 import { getPluginRoot } from './package-json.js';
 
-export function replaceRulePlaceholder(pathOrUrl: string, ruleName: string) {
+export function replaceRulePlaceholder(
+  pathOrUrl: string | PathRuleDocFunction,
+  ruleName: string
+) {
+  if (typeof pathOrUrl === 'function') {
+    return pathOrUrl(ruleName);
+  }
   return pathOrUrl.replace(/\{name\}/gu, ruleName);
 }
 
@@ -22,7 +33,7 @@ export function getUrlToRule(
   ruleSource: RULE_SOURCE,
   pluginPrefix: string,
   pathPlugin: string,
-  pathRuleDoc: string,
+  pathRuleDoc: string | PathRuleDocFunction,
   pathCurrentPage: string,
   urlRuleDoc?: string | UrlRuleDocFunction
 ) {
@@ -76,7 +87,7 @@ export function getLinkToRule(
   plugin: Plugin,
   pluginPrefix: string,
   pathPlugin: string,
-  pathRuleDoc: string,
+  pathRuleDoc: string | PathRuleDocFunction,
   pathCurrentPage: string,
   includeBackticks: boolean,
   includePrefix: boolean,

@@ -151,7 +151,7 @@ export async function generate(path: string, options?: GenerateOptions) {
   for (const [name, rule] of ruleNamesAndRules) {
     const schema = rule.meta?.schema;
     const description = rule.meta?.docs?.description;
-    const pathToDoc = replaceRulePlaceholder(join(path, pathRuleDoc), name);
+    const pathToDoc = join(path, replaceRulePlaceholder(pathRuleDoc, name));
     const ruleHasOptions = hasOptions(schema);
 
     if (!existsSync(pathToDoc)) {

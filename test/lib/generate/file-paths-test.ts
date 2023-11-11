@@ -267,6 +267,15 @@ describe('generate (file paths)', function () {
       expect(readFileSync('rules/list.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('rules/no-foo/no-foo.md', 'utf8')).toMatchSnapshot();
     });
+
+    it('generates the documentation using a function for pathRuleDoc', async function () {
+      await generate('.', {
+        pathRuleDoc: (ruleName) => join('rules', ruleName, `${ruleName}.md`),
+        pathRuleList: join('rules', 'list.md'),
+      });
+      expect(readFileSync('rules/list.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('rules/no-foo/no-foo.md', 'utf8')).toMatchSnapshot();
+    });
   });
 
   describe('multiple rules lists', function () {
