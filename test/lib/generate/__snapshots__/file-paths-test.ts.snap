@@ -44,6 +44,51 @@ exports[`generate (file paths) missing rule doc when initRuleDocs is true create
 "
 `;
 
+exports[`generate (file paths) missing rule doc when initRuleDocs is true creates the rule doc 2`] = `
+"# test/no-bar
+
+<!-- end auto-generated rule header -->
+
+## Options
+
+<!-- begin auto-generated rule options list -->
+
+| Name      |
+| :-------- |
+| \`option1\` |
+
+<!-- end auto-generated rule options list -->
+"
+`;
+
+exports[`generate (file paths) missing rule doc, initRuleDocs is true, and with ruleDocSectionInclude creates the rule doc including the mandatory section 1`] = `
+"# test/no-foo
+
+<!-- end auto-generated rule header -->
+
+## Examples
+"
+`;
+
+exports[`generate (file paths) missing rule doc, initRuleDocs is true, and with ruleDocSectionInclude creates the rule doc including the mandatory section 2`] = `
+"# test/no-bar
+
+<!-- end auto-generated rule header -->
+
+## Examples
+
+## Options
+
+<!-- begin auto-generated rule options list -->
+
+| Name      |
+| :-------- |
+| \`option1\` |
+
+<!-- end auto-generated rule options list -->
+"
+`;
+
 exports[`generate (file paths) multiple rules lists generates the documentation 1`] = `
 "<!-- begin auto-generated rules list -->
 

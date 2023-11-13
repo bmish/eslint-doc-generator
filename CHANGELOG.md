@@ -49,6 +49,61 @@
 
 
 
+
+
+
+
+
+## v1.5.4 (2023-11-05)
+
+#### :bug: Bug Fix
+* [#498](https://github.com/bmish/eslint-doc-generator/pull/498) Handle when an option could have multiple types in rule option lists ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
+## v1.5.3 (2023-10-31)
+
+#### :bug: Bug Fix
+* [#496](https://github.com/bmish/eslint-doc-generator/pull/496) Indicate type of array for array options in rule option lists ([@bmish](https://github.com/bmish))
+* [#495](https://github.com/bmish/eslint-doc-generator/pull/495) Add hint about using `--init-rule-docs` when rule doc missing ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
+## v1.5.2 (2023-10-15)
+
+#### :bug: Bug Fix
+* [#486](https://github.com/bmish/eslint-doc-generator/pull/486) Include any mandatory sections when generating new rule docs with `--init-rule-docs` and `--rule-doc-section-include` ([@bmish](https://github.com/bmish))
+* [#485](https://github.com/bmish/eslint-doc-generator/pull/485) Initialize rule doc options section when using `--init-rule-docs` ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
+## v1.5.1 (2023-10-13)
+
+#### :bug: Bug Fix
+* [#482](https://github.com/bmish/eslint-doc-generator/pull/482) Sanitize newlines and pipes from markdown table cells ([@bmish](https://github.com/bmish))
+* [#484](https://github.com/bmish/eslint-doc-generator/pull/484) Don't exit with failure about missing mention of rule option when rule option list was just generated ([@bmish](https://github.com/bmish))
+* [#483](https://github.com/bmish/eslint-doc-generator/pull/483) Show rule option list "Default" column even with only a falsy value ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
+## v1.5.0 (2023-10-12)
+
+#### :rocket: Enhancement
+* [#481](https://github.com/bmish/eslint-doc-generator/pull/481) Support auto-generated rule options lists ([@bmish](https://github.com/bmish))
+* [#480](https://github.com/bmish/eslint-doc-generator/pull/480) Support auto-generated config lists ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v1.4.3 (2023-02-04)
 
 #### :bug: Bug Fix

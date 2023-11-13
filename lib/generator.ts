@@ -8,13 +8,18 @@ import {
   getPathWithExactFileNameCasing,
 } from './package-json.js';
 import { updateRulesList } from './rule-list.js';
+import { updateConfigsList } from './config-list.js';
 import { generateRuleHeaderLines } from './rule-doc-notices.js';
 import {
   parseRuleDocNoticesOption,
   parseRuleListColumnsOption,
   parseConfigEmojiOptions,
 } from './option-parsers.js';
-import { END_RULE_HEADER_MARKER } from './comment-markers.js';
+import {
+  BEGIN_RULE_OPTIONS_LIST_MARKER,
+  END_RULE_HEADER_MARKER,
+  END_RULE_OPTIONS_LIST_MARKER,
+} from './comment-markers.js';
 import {
   replaceOrCreateHeader,
   expectContentOrFail,
@@ -26,6 +31,7 @@ import { diff } from 'jest-diff';
 import type { GenerateOptions } from './types.js';
 import { OPTION_TYPE, RuleModule } from './types.js';
 import { replaceRulePlaceholder } from './rule-link.js';
+import { updateRuleOptionsList } from './rule-options-list.js';
 
 function stringOrArrayWithFallback<T extends string | readonly string[]>(
   stringOrArray: undefined | T,
@@ -146,16 +152,36 @@ export async function generate(path: string, options?: GenerateOptions) {
     const schema = rule.meta?.schema;
     const description = rule.meta?.docs?.description;
     const pathToDoc = replaceRulePlaceholder(join(path, pathRuleDoc), name);
+    const ruleHasOptions = hasOptions(schema);
 
     if (!existsSync(pathToDoc)) {
       if (!initRuleDocs) {
         throw new Error(
-          `Could not find rule doc: ${relative(getPluginRoot(path), pathToDoc)}`
+          `Could not find rule doc (run with --init-rule-docs to create): ${relative(
+            getPluginRoot(path),
+            pathToDoc
+          )}`
         );
       }
 
+      // Determine content for fresh rule doc, including any mandatory sections.
+      // The rule doc header will be added later.
+      let newRuleDocContents = [
+        ruleDocSectionInclude.length > 0
+          ? ruleDocSectionInclude.map((title) => `## ${title}`).join('\n\n')
+          : undefined,
+        ruleHasOptions
+          ? `## Options\n\n${BEGIN_RULE_OPTIONS_LIST_MARKER}\n${END_RULE_OPTIONS_LIST_MARKER}`
+          : undefined,
+      ]
+        .filter((section) => section !== undefined)
+        .join('\n\n');
+      if (newRuleDocContents !== '') {
+        newRuleDocContents = `\n${newRuleDocContents}\n`;
+      }
+
       mkdirSync(dirname(pathToDoc), { recursive: true });
-      writeFileSync(pathToDoc, '');
+      writeFileSync(pathToDoc, newRuleDocContents);
       initializedRuleDoc = true;
     }
 
@@ -177,21 +203,28 @@ export async function generate(path: string, options?: GenerateOptions) {
       urlRuleDoc
     );
 
-    const contents = readFileSync(pathToDoc).toString();
+    const contentsOld = readFileSync(pathToDoc).toString();
     const contentsNew = await postprocess(
-      replaceOrCreateHeader(contents, newHeaderLines, END_RULE_HEADER_MARKER),
+      updateRuleOptionsList(
+        replaceOrCreateHeader(
+          contentsOld,
+          newHeaderLines,
+          END_RULE_HEADER_MARKER
+        ),
+        rule
+      ),
       resolve(pathToDoc)
     );
 
     if (check) {
-      if (contentsNew !== contents) {
+      if (contentsNew !== contentsOld) {
         console.error(
           `Please run eslint-doc-generator. A rule doc is out-of-date: ${relative(
             getPluginRoot(path),
             pathToDoc
           )}`
         );
-        console.error(diff(contentsNew, contents, { expand: false }));
+        console.error(diff(contentsNew, contentsOld, { expand: false }));
         process.exitCode = 1;
       }
     } else {
@@ -204,7 +237,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     for (const section of ruleDocSectionInclude) {
       expectSectionHeaderOrFail(
         `\`${name}\` rule doc`,
-        contents,
+        contentsNew,
         [section],
         true
       );
@@ -214,7 +247,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     for (const section of ruleDocSectionExclude) {
       expectSectionHeaderOrFail(
         `\`${name}\` rule doc`,
-        contents,
+        contentsNew,
         [section],
         false
       );
@@ -224,15 +257,15 @@ export async function generate(path: string, options?: GenerateOptions) {
       // Options section.
       expectSectionHeaderOrFail(
         `\`${name}\` rule doc`,
-        contents,
+        contentsNew,
         ['Options', 'Config'],
-        hasOptions(schema)
+        ruleHasOptions
       );
-      for (const namedOption of getAllNamedOptions(schema)) {
+      for (const { name: namedOption } of getAllNamedOptions(schema)) {
         expectContentOrFail(
           `\`${name}\` rule doc`,
           'rule option',
-          contents,
+          contentsNew,
           namedOption,
           true
         ); // Each rule option is mentioned.
@@ -260,22 +293,30 @@ export async function generate(path: string, options?: GenerateOptions) {
     // Update the rules list in this file.
     const fileContents = readFileSync(pathToFile, 'utf8');
     const fileContentsNew = await postprocess(
-      updateRulesList(
-        ruleNamesAndRules,
-        fileContents,
+      updateConfigsList(
+        updateRulesList(
+          ruleNamesAndRules,
+          fileContents,
+          plugin,
+          configsToRules,
+          pluginPrefix,
+          pathRuleDoc,
+          pathToFile,
+          path,
+          configEmojis,
+          configFormat,
+          ignoreConfig,
+          ruleListColumns,
+          ruleListSplit,
+          urlConfigs,
+          urlRuleDoc
+        ),
         plugin,
         configsToRules,
         pluginPrefix,
-        pathRuleDoc,
-        pathToFile,
-        path,
         configEmojis,
         configFormat,
-        ignoreConfig,
-        ruleListColumns,
-        ruleListSplit,
-        urlConfigs,
-        urlRuleDoc
+        ignoreConfig
       ),
       resolve(pathToFile)
     );

@@ -26,6 +26,10 @@ describe('generate (file paths)', function () {
                 meta: { },
                 create(context) {}
               },
+              'no-bar': {
+                meta: { schema: [{ type: 'object', properties: { option1: {} } }] },
+                create(context) {}
+              },
             },
           };`,
 
@@ -46,7 +50,11 @@ describe('generate (file paths)', function () {
       it('throws an error', async function () {
         // Use join to handle both Windows and Unix paths.
         await expect(generate('.')).rejects.toThrow(
-          `Could not find rule doc: ${join('docs', 'rules', 'no-foo.md')}`
+          `Could not find rule doc (run with --init-rule-docs to create): ${join(
+            'docs',
+            'rules',
+            'no-bar.md'
+          )}`
         );
       });
     });
@@ -55,7 +63,54 @@ describe('generate (file paths)', function () {
       it('creates the rule doc', async function () {
         await generate('.', { initRuleDocs: true });
         expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+        expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot(); // Should add options section.
       });
+    });
+  });
+
+  describe('missing rule doc, initRuleDocs is true, and with ruleDocSectionInclude', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: { },
+                create(context) {}
+              },
+              'no-bar': {
+                meta: { schema: [{ type: 'object', properties: { option1: {} } }] },
+                create(context) {}
+              },
+            },
+          };`,
+
+        'README.md':
+          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('creates the rule doc including the mandatory section', async function () {
+      await generate('.', {
+        initRuleDocs: true,
+        ruleDocSectionInclude: ['Examples'],
+      });
+      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot(); // Should add options section.
     });
   });
 

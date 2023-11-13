@@ -7,7 +7,9 @@ Automatic documentation generator for [ESLint](https://eslint.org/) plugins and 
 Generates the following documentation covering a [wide variety](#column-and-notice-types) of rule metadata:
 
 - `README.md` rules table
+- `README.md` configs table
 - Rule doc titles and notices
+- Rule doc options lists
 
 Also performs [configurable](#configuration-options) section consistency checks on rule docs:
 
@@ -17,10 +19,16 @@ Also performs [configurable](#configuration-options) section consistency checks 
 
 - [Motivation](#motivation)
 - [Setup](#setup)
+  - [Scripts](#scripts)
+  - [Update `README.md`](#update-readmemd)
+  - [Update rule docs](#update-rule-docs)
+  - [Configure linting](#configure-linting)
 - [Usage](#usage)
 - [Examples](#examples)
   - [Rules list table](#rules-list-table)
+  - [Configs list table](#configs-list-table)
   - [Rule doc notices](#rule-doc-notices)
+  - [Rule doc options lists](#rule-doc-options-lists)
   - [Users](#users)
 - [Configuration options](#configuration-options)
   - [Column and notice types](#column-and-notice-types)
@@ -50,6 +58,8 @@ Install it:
 npm i --save-dev eslint-doc-generator
 ```
 
+### Scripts
+
 Add scripts to `package.json`:
 
 - Both a lint script to ensure everything is up-to-date in CI and an update script for contributors to run locally
@@ -68,6 +78,8 @@ Add scripts to `package.json`:
 }
 ```
 
+### Update `README.md`
+
 Delete any old rules list from your `README.md`. A new one will be automatically added to your `## Rules` section (along with the following marker comments if they don't already exist):
 
 ```md
@@ -75,16 +87,37 @@ Delete any old rules list from your `README.md`. A new one will be automatically
 <!-- end auto-generated rules list -->
 ```
 
+Optionally, add these marker comments to your `README.md` in a `## Configs` section or similar location (uses the `description` property exported by each config if available):
+
+```md
+<!-- begin auto-generated configs list -->
+<!-- end auto-generated configs list -->
+```
+
+### Update rule docs
+
 Delete any old recommended/fixable/etc. notices from your rule docs. A new title and notices will be automatically added to the top of each rule doc (along with a marker comment if it doesn't already exist).
 
 ```md
 <!-- end auto-generated rule header -->
 ```
 
+Optionally, add these marker comments to your rule docs in an `## Options` section or similar location:
+
+```md
+<!-- begin auto-generated rule options list -->
+<!-- end auto-generated rule options list -->
+```
+
+Note that rule option lists are subject-to-change as we add support for more kinds and properties of schemas. To fully take advantage of them, you'll want to ensure your rules have the `meta.schema` property fleshed out with properties like `description`, `type`, `enum`, `default`, `required`, `deprecated`.
+
+### Configure linting
+
 And be sure to enable the `recommended` rules from [eslint-plugin-eslint-plugin](https://github.com/eslint-community/eslint-plugin-eslint-plugin) as well as:
 
 - [eslint-plugin/require-meta-docs-description](https://github.com/eslint-community/eslint-plugin-eslint-plugin/blob/main/docs/rules/require-meta-docs-description.md) to ensure your rules have consistent descriptions for use in the generated docs
 - [eslint-plugin/require-meta-docs-url](https://github.com/eslint-community/eslint-plugin-eslint-plugin/blob/main/docs/rules/require-meta-docs-url.md) to ensure your rule docs are linked to by editors on highlighted violations
+- [eslint-plugin/require-meta-schema](https://github.com/eslint-community/eslint-plugin-eslint-plugin/blob/main/docs/rules/require-meta-schema.md) to ensure your rules have schemas for use in determining options
 
 ## Usage
 
@@ -102,9 +135,17 @@ For examples, see our [users](#users) or the in-house examples below. Note that 
 
 See the generated rules table and legend in our example [`README.md`](./docs/examples/eslint-plugin-test/README.md#rules).
 
+### Configs list table
+
+See the generated configs table in our example [`README.md`](./docs/examples/eslint-plugin-test/README.md#configs).
+
 ### Rule doc notices
 
 See the generated rule doc title and notices in our example rule docs [`no-foo.md`](./docs/examples/eslint-plugin-test/docs/rules/no-foo.md), [`prefer-bar.md`](./docs/examples/eslint-plugin-test/docs/rules/prefer-bar.md), [`require-baz.md`](./docs/examples/eslint-plugin-test/docs/rules/require-baz.md).
+
+### Rule doc options lists
+
+See the generated rule doc options lists in our example rule doc [`no-foo.md`](./docs/examples/eslint-plugin-test/docs/rules/no-foo.md).
 
 ### Users
 
@@ -136,7 +177,7 @@ There's also a `postprocess` option that's only available via a [config file](#c
 | Name | Description | Default |
 | :-- | :-- | :-- |
 | `--check` | Whether to check for and fail if there is a diff. Any diff will be displayed but no output will be written to files. Typically used during CI. | `false` |
-| `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Option can be repeated. | Default emojis are provided for [common configs](./lib/emojis.ts). To remove a default emoji and rely on a [badge](#badges) instead, provide the config name without an emoji. |
+| `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Option can be repeated. | Default emojis are provided for [common configs](./lib/emojis.ts). See [Badges](#badges) for an alternative to emojis. |
 | `--config-format` | The format to use for config names. See choices in below [table](#--config-format). | `name` |
 | `--ignore-config` | Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. | |
 | `--ignore-deprecated-rules` | Whether to ignore deprecated rules from being checked, displayed, or updated. | `false` |
@@ -264,19 +305,30 @@ module.exports = config;
 
 ### Badges
 
-While config emojis are the recommended representations of configs that a rule belongs to (see [`--config-emoji`](#configuration-options)), you can alternatively define badges for configs at the bottom of your `README.md`.
+While emojis are the recommended representations of configs that a rule belongs to, you can alternatively use a text/image/icon badge for configs by supplying the following markdown for the emoji using the [`--config-emoji`](#configuration-options) option.
 
-Here's a badge for a custom `fun` config that displays in blue:
+For example, here's the markdown for a text badge representing a custom `fun` config that displays in blue (note that the markdown includes alt text followed by the image URL):
 
 ```md
-[badge-fun]: https://img.shields.io/badge/-fun-blue.svg
+![fun config badge](https://img.shields.io/badge/-fun-blue.svg)
+```
+
+Here's how you'd configure it:
+
+```js
+/** @type {import('eslint-doc-generator').GenerateOptions} */
+const config = {
+  configEmoji: [
+    ['fun', '![fun config badge](https://img.shields.io/badge/-fun-blue.svg)'],
+  ],
+};
+
+module.exports = config;
 ```
 
 And how it looks:
 
-![badge-fun][]
-
-[badge-fun]: https://img.shields.io/badge/-fun-blue.svg
+![fun config badge](https://img.shields.io/badge/-fun-blue.svg)
 
 ## Compatibility
 

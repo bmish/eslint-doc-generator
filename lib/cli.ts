@@ -192,7 +192,7 @@ export async function run(
     )
     .option(
       '--config-emoji <config-emoji>',
-      '(optional) Custom emoji to use for a config. Format is `config-name,emoji`. Default emojis are provided for common configs. To remove a default emoji and rely on a badge instead, provide the config name without an emoji. Option can be repeated.',
+      '(optional) Custom emoji to use for a config. Format is `config-name,emoji`. Default emojis are provided for common configs. To use a text/image/icon badge instead of an emoji, supply the corresponding markdown as the emoji. Option can be repeated.',
       collectCSVNested,
       []
     )
