@@ -182,7 +182,7 @@ There's also a `postprocess` option that's only available via a [config file](#c
 | `--ignore-config` | Config to ignore from being displayed. Often used for an `all` config. Option can be repeated. | |
 | `--ignore-deprecated-rules` | Whether to ignore deprecated rules from being checked, displayed, or updated. | `false` |
 | `--init-rule-docs` | Whether to create rule doc files if they don't yet exist. | `false` |
-| `--path-rule-doc` | Path to markdown file for each rule doc. Use `{name}` placeholder for the rule name. | `docs/rules/{name}.md` |
+| `--path-rule-doc` | Path to markdown file for each rule doc. Use `{name}` placeholder for the rule name. A function can also be provided for this option via a [config file](#configuration-file). | `docs/rules/{name}.md` |
 | `--path-rule-list` | Path to markdown file where the rules table list should live. Option can be repeated. | `README.md` |
 | `--rule-doc-notices` | Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. See choices in below [table](#column-and-notice-types). | `deprecated`, `configs`, `fixableAndHasSuggestions`, `requiresTypeChecking` |
 | `--rule-doc-section-exclude` | Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. |
@@ -256,6 +256,21 @@ Example `.eslint-doc-generatorrc.js`:
 /** @type {import('eslint-doc-generator').GenerateOptions} */
 const config = {
   ignoreConfig: ['all'],
+};
+
+module.exports = config;
+```
+
+Example `.eslint-doc-generatorrc.js` with `pathRuleDoc` function:
+
+```js
+/** @type {import('eslint-doc-generator').GenerateOptions} */
+const config = {
+  pathRuleDoc(name) {
+    // e.g. rule name format is `some-plugin/some-rule`, and rule is in a monorepo under different package.
+    const [plugin, rule] = name.split("/");
+    return `packages/eslint-plugin-${plugin}/src/rules/${rule}.md`;
+  },
 };
 
 module.exports = config;

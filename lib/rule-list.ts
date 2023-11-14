@@ -28,6 +28,7 @@ import type {
   ConfigsToRules,
   ConfigEmojis,
   RuleNamesAndRules,
+  PathRuleDocFunction,
 } from './types.js';
 import { EMOJIS_TYPE } from './rule-type.js';
 import { hasOptions } from './rule-options.js';
@@ -118,7 +119,7 @@ function buildRuleRow(
   plugin: Plugin,
   pluginPrefix: string,
   pathPlugin: string,
-  pathRuleDoc: string,
+  pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: readonly string[],
@@ -203,7 +204,7 @@ function generateRulesListMarkdown(
   plugin: Plugin,
   pluginPrefix: string,
   pathPlugin: string,
-  pathRuleDoc: string,
+  pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: readonly string[],
@@ -258,7 +259,7 @@ function generateRuleListMarkdownForRulesAndHeaders(
   plugin: Plugin,
   pluginPrefix: string,
   pathPlugin: string,
-  pathRuleDoc: string,
+  pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
   ignoreConfig: readonly string[],
@@ -396,7 +397,7 @@ export function updateRulesList(
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
-  pathRuleDoc: string,
+  pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
   pathPlugin: string,
   configEmojis: ConfigEmojis,

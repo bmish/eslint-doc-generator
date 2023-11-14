@@ -96,7 +96,14 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
       ignoreConfig: schemaStringArray,
       ignoreDeprecatedRules: { type: 'boolean' },
       initRuleDocs: { type: 'boolean' },
-      pathRuleDoc: { type: 'string' },
+      pathRuleDoc:
+        /* istanbul ignore next -- TODO: haven't tested JavaScript config files yet https://github.com/bmish/eslint-doc-generator/issues/366 */
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        typeof explorerResults.config.pathRuleDoc === 'function'
+          ? {
+              /* Functions are allowed but JSON Schema can't validate them so no-op in this case. */
+            }
+          : { type: 'string' },
       pathRuleList: { anyOf: [{ type: 'string' }, schemaStringArray] },
       postprocess: {
         /* JSON Schema can't validate functions so check this later */
@@ -226,7 +233,7 @@ export async function run(
     )
     .option(
       '--path-rule-doc <path>',
-      `(optional) Path to markdown file for each rule doc. Use \`{name}\` placeholder for the rule name. (default: ${
+      `(optional) Path to markdown file for each rule doc. Use \`{name}\` placeholder for the rule name. To specify a function, use a JavaScript-based config file. (default: ${
         OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_DOC]
       })`
     )

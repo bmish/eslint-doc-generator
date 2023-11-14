@@ -16,6 +16,7 @@ import {
   SEVERITY_TYPE,
   NOTICE_TYPE,
   UrlRuleDocFunction,
+  PathRuleDocFunction,
 } from './types.js';
 import { RULE_TYPE, RULE_TYPE_MESSAGES_NOTICES } from './rule-type.js';
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
@@ -104,7 +105,7 @@ const RULE_NOTICES: {
         plugin: Plugin;
         pluginPrefix: string;
         pathPlugin: string;
-        pathRuleDoc: string;
+        pathRuleDoc: string | PathRuleDocFunction;
         type?: `${RULE_TYPE}`;
         urlRuleDoc?: string | UrlRuleDocFunction;
       }) => string);
@@ -303,7 +304,7 @@ function getRuleNoticeLines(
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   pathPlugin: string,
-  pathRuleDoc: string,
+  pathRuleDoc: string | PathRuleDocFunction,
   configEmojis: ConfigEmojis,
   configFormat: ConfigFormat,
   ignoreConfig: readonly string[],
@@ -495,7 +496,7 @@ export function generateRuleHeaderLines(
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   pathPlugin: string,
-  pathRuleDoc: string,
+  pathRuleDoc: string | PathRuleDocFunction,
   configEmojis: ConfigEmojis,
   configFormat: ConfigFormat,
   ignoreConfig: readonly string[],
