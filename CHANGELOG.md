@@ -54,6 +54,24 @@
 
 
 
+
+## v1.6.0 (2023-11-14)
+
+#### :rocket: Enhancement
+* [#502](https://github.com/bmish/eslint-doc-generator/pull/502) Support a user-defined function for `--path-rule-doc` option ([@hyoban](https://github.com/hyoban))
+
+#### :bug: Bug Fix
+* [#447](https://github.com/bmish/eslint-doc-generator/pull/447) Throw better exception when failing to load plugin ([@JoshuaKGoldberg](https://github.com/JoshuaKGoldberg))
+
+#### :memo: Documentation
+* [#500](https://github.com/bmish/eslint-doc-generator/pull/500) Deprecate README-defined badges ([@bmish](https://github.com/bmish))
+
+#### Committers: 3
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+- Josh Goldberg ✨ ([@JoshuaKGoldberg](https://github.com/JoshuaKGoldberg))
+- Stephen Zhou ([@hyoban](https://github.com/hyoban))
+
+
 ## v1.5.4 (2023-11-05)
 
 #### :bug: Bug Fix
