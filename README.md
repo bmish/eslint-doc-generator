@@ -261,6 +261,21 @@ const config = {
 module.exports = config;
 ```
 
+Example `.eslint-doc-generatorrc.js` with `pathRuleDoc` function:
+
+```js
+/** @type {import('eslint-doc-generator').GenerateOptions} */
+const config = {
+  pathRuleDoc(name) {
+    // e.g. rule name format is `some-plugin/some-rule`, and rule is in a monorepo under different package.
+    const [plugin, rule] = name.split("/");
+    return `packages/eslint-plugin-${plugin}/src/rules/${rule}.md`;
+  },
+};
+
+module.exports = config;
+```
+
 Example `.eslint-doc-generatorrc.js` with `ruleListSplit` function:
 
 ```js
