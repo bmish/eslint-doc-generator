@@ -274,6 +274,7 @@ describe('generate (file paths)', function () {
       await generate('.', {
         pathRuleDoc: (ruleName) => join('rules', ruleName, `${ruleName}.md`),
       });
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('rules/no-foo/no-foo.md', 'utf8')).toMatchSnapshot();
     });
   });
