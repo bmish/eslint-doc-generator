@@ -66,6 +66,14 @@ describe('generate (rule options list)', function () {
                             type: ["string", "boolean"]
                           }
                         },
+                        arrWithDefaultEmpty: {
+                          type: "array",
+                          default: [],
+                        },
+                        arrWithDefault: {
+                          type: "array",
+                          default: ['hello world', 1, 2, 3, true],
+                        },
                     },
                     required: ["bar"],
                     additionalProperties: false
