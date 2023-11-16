@@ -45,6 +45,17 @@ const COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
   [COLUMN_TYPE.DEPRECATED]: true,
 };
 
+/**
+ * Output could look like:
+ * - `[]`
+ * - [`hello world`, `1`, `2`, `true`]
+ */
+function arrayToString(arr: readonly unknown[]): string {
+  return `${arr.length === 0 ? '`' : ''}[${arr.length > 0 ? '`' : ''}${arr.join(
+    '`, `'
+  )}${arr.length > 0 ? '`' : ''}]${arr.length === 0 ? '`' : ''}`;
+}
+
 function ruleOptionToColumnValues(ruleOption: RuleOption): {
   [key in COLUMN_TYPE]: string | undefined;
 } {
@@ -55,6 +66,8 @@ function ruleOptionToColumnValues(ruleOption: RuleOption): {
     [COLUMN_TYPE.DEFAULT]:
       ruleOption.default === undefined
         ? undefined
+        : Array.isArray(ruleOption.default)
+        ? arrayToString(ruleOption.default)
         : `\`${String(ruleOption.default)}\``,
     [COLUMN_TYPE.DEPRECATED]: ruleOption.deprecated ? 'Yes' : undefined,
     [COLUMN_TYPE.DESCRIPTION]: ruleOption.description,
