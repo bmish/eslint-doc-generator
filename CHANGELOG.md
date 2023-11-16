@@ -55,6 +55,16 @@
 
 
 
+
+## v1.6.1 (2023-11-16)
+
+#### :bug: Bug Fix
+* [#503](https://github.com/bmish/eslint-doc-generator/pull/503) Better display of rule option default for array option ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v1.6.0 (2023-11-14)
 
 #### :rocket: Enhancement
