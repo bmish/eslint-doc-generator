@@ -56,6 +56,16 @@
 
 
 
+
+## v1.6.2 (2024-01-14)
+
+#### :bug: Bug Fix
+* [#508](https://github.com/bmish/eslint-doc-generator/pull/508) Support multiple potential property locations for config description ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v1.6.1 (2023-11-16)
 
 #### :bug: Bug Fix
