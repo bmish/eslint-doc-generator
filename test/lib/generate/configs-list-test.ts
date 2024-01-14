@@ -193,48 +193,142 @@ describe('generate (configs list)', function () {
   });
 
   describe('when a config exports a description', function () {
-    beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
+    describe('property=description', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            exports: 'index.js',
+            type: 'module',
+          }),
 
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': {
-                meta: { docs: { description: 'Description of no-foo.' }, },
-                create(context) {}
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: { docs: { description: 'Description of no-foo.' }, },
+                  create(context) {}
+                },
               },
-            },
-            configs: {
-              foo: {},
-              recommended: { description: 'This config has the recommended rules...' },
-            }
-          };`,
+              configs: {
+                foo: {},
+                recommended: { description: 'This config has the recommended rules...' },
+              }
+            };`,
 
-        'README.md': `## Rules
-## Configs
-<!-- begin auto-generated configs list -->
-<!-- end auto-generated configs list -->`,
+          'README.md': `## Rules
+  ## Configs
+  <!-- begin auto-generated configs list -->
+  <!-- end auto-generated configs list -->`,
 
-        'docs/rules/no-foo.md': '',
+          'docs/rules/no-foo.md': '',
 
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(PATH_NODE_MODULES),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('generates the documentation', async function () {
+        await generate('.');
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
       });
     });
 
-    afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+    describe('property=meta.description', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            exports: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: { docs: { description: 'Description of no-foo.' }, },
+                  create(context) {}
+                },
+              },
+              configs: {
+                foo: {},
+                recommended: { meta: { description: 'This config has the recommended rules...' } },
+              }
+            };`,
+
+          'README.md': `## Rules
+  ## Configs
+  <!-- begin auto-generated configs list -->
+  <!-- end auto-generated configs list -->`,
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(PATH_NODE_MODULES),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('generates the documentation', async function () {
+        await generate('.');
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      });
     });
 
-    it('generates the documentation', async function () {
-      await generate('.');
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+    describe('property=meta.docs.description', function () {
+      beforeEach(function () {
+        mockFs({
+          'package.json': JSON.stringify({
+            name: 'eslint-plugin-test',
+            exports: 'index.js',
+            type: 'module',
+          }),
+
+          'index.js': `
+            export default {
+              rules: {
+                'no-foo': {
+                  meta: { docs: { description: 'Description of no-foo.' }, },
+                  create(context) {}
+                },
+              },
+              configs: {
+                foo: {},
+                recommended: { meta: { docs: { description: 'This config has the recommended rules...' } } },
+              }
+            };`,
+
+          'README.md': `## Rules
+  ## Configs
+  <!-- begin auto-generated configs list -->
+  <!-- end auto-generated configs list -->`,
+
+          'docs/rules/no-foo.md': '',
+
+          // Needed for some of the test infrastructure to work.
+          node_modules: mockFs.load(PATH_NODE_MODULES),
+        });
+      });
+
+      afterEach(function () {
+        mockFs.restore();
+        jest.resetModules();
+      });
+
+      it('generates the documentation', async function () {
+        await generate('.');
+        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      });
     });
   });
 

@@ -87,7 +87,7 @@ Delete any old rules list from your `README.md`. A new one will be automatically
 <!-- end auto-generated rules list -->
 ```
 
-Optionally, add these marker comments to your `README.md` in a `## Configs` section or similar location (uses the `description` property exported by each config if available):
+Optionally, add these marker comments to your `README.md` in a `## Configs` section or similar location (uses the `meta.docs.description` property exported by each config if available):
 
 ```md
 <!-- begin auto-generated configs list -->
