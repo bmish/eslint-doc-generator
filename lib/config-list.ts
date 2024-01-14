@@ -3,9 +3,30 @@ import {
   END_CONFIG_LIST_MARKER,
 } from './comment-markers.js';
 import { markdownTable } from 'markdown-table';
-import type { ConfigsToRules, ConfigEmojis, Plugin } from './types.js';
+import type { ConfigsToRules, ConfigEmojis, Plugin, Config } from './types.js';
 import { ConfigFormat, configNameToDisplay } from './config-format.js';
 import { sanitizeMarkdownTable } from './string.js';
+
+/**
+ * Check potential locations for the config description.
+ * These are not official properties.
+ * The recommended/allowed way to add a description is still pending the outcome of: https://github.com/eslint/eslint/issues/17842
+ * @param config
+ * @returns the description if available
+ */
+function configToDescription(config: Config): string | undefined {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return (
+    // @ts-expect-error -- description is not an official config property.
+    config.description ||
+    // @ts-expect-error -- description is not an official config property.
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    config.meta?.description ||
+    // @ts-expect-error -- description is not an official config property.
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    config.meta?.docs?.description
+  );
+}
 
 function generateConfigListMarkdown(
   plugin: Plugin,
@@ -17,10 +38,7 @@ function generateConfigListMarkdown(
 ): string {
   /* istanbul ignore next -- configs are sure to exist at this point */
   const configs = Object.values(plugin.configs || {});
-  const hasDescription = configs.some(
-    // @ts-expect-error -- description is not an official config property.
-    (config) => config.description
-  );
+  const hasDescription = configs.some((config) => configToDescription(config));
   const listHeaderRow = ['', 'Name'];
   if (hasDescription) {
     listHeaderRow.push('Description');
@@ -33,8 +51,9 @@ function generateConfigListMarkdown(
         .filter((configName) => !ignoreConfig.includes(configName))
         .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
         .map((configName) => {
-          const description = // @ts-expect-error -- description is not an official config property.
-            plugin.configs?.[configName]?.description as string | undefined;
+          const config = plugin.configs?.[configName];
+          /* istanbul ignore next -- config should exist at this point */
+          const description = config ? configToDescription(config) : undefined;
           return [
             configEmojis.find((obj) => obj.config === configName)?.emoji || '',
             `\`${configNameToDisplay(

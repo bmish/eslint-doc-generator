@@ -38,7 +38,7 @@ exports[`generate (configs list) when a config description needs to be escaped i
 <!-- end auto-generated configs list -->"
 `;
 
-exports[`generate (configs list) when a config exports a description generates the documentation 1`] = `
+exports[`generate (configs list) when a config exports a description property=description generates the documentation 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -47,8 +47,48 @@ exports[`generate (configs list) when a config exports a description generates t
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. |
 
 <!-- end auto-generated rules list -->
-## Configs
-<!-- begin auto-generated configs list -->
+  ## Configs
+  <!-- begin auto-generated configs list -->
+
+|    | Name          | Description                              |
+| :- | :------------ | :--------------------------------------- |
+|    | \`foo\`         |                                          |
+| ✅  | \`recommended\` | This config has the recommended rules... |
+
+<!-- end auto-generated configs list -->"
+`;
+
+exports[`generate (configs list) when a config exports a description property=meta.description generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           | Description            |
+| :----------------------------- | :--------------------- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |
+
+<!-- end auto-generated rules list -->
+  ## Configs
+  <!-- begin auto-generated configs list -->
+
+|    | Name          | Description                              |
+| :- | :------------ | :--------------------------------------- |
+|    | \`foo\`         |                                          |
+| ✅  | \`recommended\` | This config has the recommended rules... |
+
+<!-- end auto-generated configs list -->"
+`;
+
+exports[`generate (configs list) when a config exports a description property=meta.docs.description generates the documentation 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+| Name                           | Description            |
+| :----------------------------- | :--------------------- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |
+
+<!-- end auto-generated rules list -->
+  ## Configs
+  <!-- begin auto-generated configs list -->
 
 |    | Name          | Description                              |
 | :- | :------------ | :--------------------------------------- |
