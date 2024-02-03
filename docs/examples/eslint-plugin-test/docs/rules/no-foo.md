@@ -6,7 +6,7 @@
 
 ⚙️ This rule is configurable.
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 ❗ This rule identifies problems that could cause errors or unexpected behavior.
 

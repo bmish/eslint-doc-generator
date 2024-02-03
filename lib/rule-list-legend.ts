@@ -144,7 +144,7 @@ const LEGENDS: {
   [COLUMN_TYPE.NAME]: undefined,
   [COLUMN_TYPE.OPTIONS]: [`${EMOJI_OPTIONS} Has configuration options.`],
   [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: [
-    `${EMOJI_REQUIRES_TYPE_CHECKING} Requires type information.`,
+    `${EMOJI_REQUIRES_TYPE_CHECKING} Requires [type information](https://typescript-eslint.io/linting/typed-linting).`,
   ],
 };
 

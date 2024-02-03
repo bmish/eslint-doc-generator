@@ -48,7 +48,7 @@ exports[`generate (--rule-list-columns) shows column and notice for requiresType
 
 💼 Configurations enabled in.\\
 🌐 Set in the \`all\` configuration.\\
-💭 Requires type information.
+💭 Requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 | Name                           | Description            | 💼 | 💭 |
 | :----------------------------- | :--------------------- | :- | :- |
@@ -70,7 +70,7 @@ exports[`generate (--rule-list-columns) shows column and notice for requiresType
 exports[`generate (--rule-list-columns) shows column and notice for requiresTypeChecking updates the documentation 3`] = `
 "# Description of no-bar (\`test/no-bar\`)
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
 "
