@@ -27,7 +27,7 @@ This plugin is for x purpose.
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\
 💡 Manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).\
 ⚙️ Has configuration options.\
-💭 Requires type information.\
+💭 Requires [type information](https://typescript-eslint.io/linting/typed-linting).\
 🗂️ The type of rule.\
 ❗ Identifies problems that could cause errors or unexpected behavior.\
 📖 Identifies potential improvements.\

@@ -253,7 +253,7 @@ const RULE_NOTICES: {
   [NOTICE_TYPE.HAS_SUGGESTIONS]: NOTICE_HAS_SUGGESTIONS,
 
   [NOTICE_TYPE.OPTIONS]: `${EMOJI_OPTIONS} This rule is configurable.`,
-  [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]: `${EMOJI_REQUIRES_TYPE_CHECKING} This rule requires type information.`,
+  [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]: `${EMOJI_REQUIRES_TYPE_CHECKING} This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).`,
 };
 
 /**
