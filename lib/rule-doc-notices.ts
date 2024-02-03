@@ -81,7 +81,7 @@ function configsToNoticeSentence(
 
 // A few individual notices declared here just so they can be reused in multiple notices.
 const NOTICE_FIXABLE = `${EMOJI_FIXABLE} This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).`;
-const NOTICE_HAS_SUGGESTIONS = `${EMOJI_HAS_SUGGESTIONS} This rule is manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`;
+const NOTICE_HAS_SUGGESTIONS = `${EMOJI_HAS_SUGGESTIONS} This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).`;
 
 /**
  * An object containing the text for each notice type (as a string or function to generate the string).
@@ -239,7 +239,7 @@ const RULE_NOTICES: {
   [NOTICE_TYPE.FIXABLE]: NOTICE_FIXABLE,
   [NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: ({ fixable, hasSuggestions }) => {
     if (fixable && hasSuggestions) {
-      return `${EMOJI_FIXABLE}${EMOJI_HAS_SUGGESTIONS} This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).`;
+      return `${EMOJI_FIXABLE}${EMOJI_HAS_SUGGESTIONS} This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).`;
     } else if (fixable) {
       return NOTICE_FIXABLE;
     } else if (hasSuggestions) {

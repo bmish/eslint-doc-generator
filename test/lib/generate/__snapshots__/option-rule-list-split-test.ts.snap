@@ -197,7 +197,7 @@ exports[`generate (--rule-list-split) with boolean (camelCase) splits the list w
 "## Rules
 <!-- begin auto-generated rules list -->
 
-💡 Manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+💡 Manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
 | Name                           | 💡 |
 | :----------------------------- | :- |
