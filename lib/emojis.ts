@@ -15,6 +15,7 @@ export const EMOJI_CONFIGS = {
   error: EMOJI_ERROR,
   errors: EMOJI_ERROR,
   recommended: '✅',
+  'recommended-type-checked': '☑️',
   strict: '🔒',
   style: EMOJI_STYLE,
   stylistic: EMOJI_STYLE,
