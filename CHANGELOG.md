@@ -57,6 +57,22 @@
 
 
 
+
+## v1.7.0 (2024-02-28)
+
+#### :rocket: Enhancement
+* [#521](https://github.com/bmish/eslint-doc-generator/pull/521) Add emoji for additional `type-checked` config name variations ([@bmish](https://github.com/bmish))
+* [#518](https://github.com/bmish/eslint-doc-generator/pull/518) Add emoji for `recommended-type-checked` config ([@JoshuaKGoldberg](https://github.com/JoshuaKGoldberg))
+* [#516](https://github.com/bmish/eslint-doc-generator/pull/516) Add link to typed linting in generated docs ([@JoshuaKGoldberg](https://github.com/JoshuaKGoldberg))
+
+#### :bug: Bug Fix
+* [#509](https://github.com/bmish/eslint-doc-generator/pull/509) Update rule suggestions link to new docs page ([@JoshuaKGoldberg](https://github.com/JoshuaKGoldberg))
+
+#### Committers: 2
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+- Josh Goldberg ✨ ([@JoshuaKGoldberg](https://github.com/JoshuaKGoldberg))
+
+
 ## v1.6.2 (2024-01-14)
 
 #### :bug: Bug Fix
