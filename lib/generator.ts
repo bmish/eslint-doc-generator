@@ -1,3 +1,4 @@
+import { EOL } from 'node:os';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { getAllNamedOptions, hasOptions } from './rule-options.js';
@@ -168,16 +169,18 @@ export async function generate(path: string, options?: GenerateOptions) {
       // The rule doc header will be added later.
       let newRuleDocContents = [
         ruleDocSectionInclude.length > 0
-          ? ruleDocSectionInclude.map((title) => `## ${title}`).join('\n\n')
+          ? ruleDocSectionInclude
+              .map((title) => `## ${title}`)
+              .join(`${EOL}${EOL}`)
           : undefined,
         ruleHasOptions
-          ? `## Options\n\n${BEGIN_RULE_OPTIONS_LIST_MARKER}\n${END_RULE_OPTIONS_LIST_MARKER}`
+          ? `## Options${EOL}${EOL}${BEGIN_RULE_OPTIONS_LIST_MARKER}${EOL}${END_RULE_OPTIONS_LIST_MARKER}`
           : undefined,
       ]
         .filter((section) => section !== undefined)
-        .join('\n\n');
+        .join(`${EOL}${EOL}`);
       if (newRuleDocContents !== '') {
-        newRuleDocContents = `\n${newRuleDocContents}\n`;
+        newRuleDocContents = `${EOL}${newRuleDocContents}${EOL}`;
       }
 
       mkdirSync(dirname(pathToDoc), { recursive: true });

@@ -1,3 +1,4 @@
+import { EOL } from 'node:os';
 import { END_RULE_HEADER_MARKER } from './comment-markers.js';
 import {
   EMOJI_DEPRECATED,
@@ -523,5 +524,5 @@ export function generateRuleHeaderLines(
     ),
     '',
     END_RULE_HEADER_MARKER,
-  ].join('\n');
+  ].join(EOL);
 }
