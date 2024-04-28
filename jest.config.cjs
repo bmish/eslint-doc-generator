@@ -6,6 +6,7 @@ const jestConfig = {
   preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
   testMatch: ['<rootDir>/test/**/*-test.ts'],
+  setupFiles: ['<rootDir>/test/jest.setup.cjs'],
   transform: {
     '^.+\\.tsx?$': ['ts-jest', { useESM: true }],
   },
