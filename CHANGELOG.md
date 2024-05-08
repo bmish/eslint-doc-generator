@@ -58,6 +58,16 @@
 
 
 
+
+## v1.7.1 (2024-05-08)
+
+#### :bug: Bug Fix
+* [#524](https://github.com/bmish/eslint-doc-generator/pull/524) OS-agnostic handling of end-of-line characters ([@bmish](https://github.com/bmish))
+
+#### Committers: 1
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+
+
 ## v1.7.0 (2024-02-28)
 
 #### :rocket: Enhancement
