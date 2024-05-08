@@ -1,3 +1,4 @@
+import { EOL } from 'node:os';
 import {
   BEGIN_RULE_OPTIONS_LIST_MARKER,
   END_RULE_OPTIONS_LIST_MARKER,
@@ -159,5 +160,5 @@ export function updateRuleOptionsList(
   // New rule options list.
   const list = generateRuleOptionsListMarkdown(rule);
 
-  return `${preList}${BEGIN_RULE_OPTIONS_LIST_MARKER}\n\n${list}\n\n${END_RULE_OPTIONS_LIST_MARKER}${postList}`;
+  return `${preList}${BEGIN_RULE_OPTIONS_LIST_MARKER}${EOL}${EOL}${list}${EOL}${EOL}${END_RULE_OPTIONS_LIST_MARKER}${postList}`;
 }

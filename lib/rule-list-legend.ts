@@ -1,3 +1,4 @@
+import { EOL } from 'node:os';
 import {
   EMOJI_DEPRECATED,
   EMOJI_FIXABLE,
@@ -287,5 +288,5 @@ export function generateLegend(
     );
   }
 
-  return legends.join('\\\n'); // Back slash ensures these end up displayed on separate lines.
+  return legends.join(`\\${EOL}`); // Back slash ensures these end up displayed on separate lines.
 }

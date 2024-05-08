@@ -1,3 +1,4 @@
+import { EOL } from 'node:os';
 import {
   BEGIN_RULE_LIST_MARKER,
   END_RULE_LIST_MARKER,
@@ -288,7 +289,7 @@ function generateRuleListMarkdownForRulesAndHeaders(
     );
   }
 
-  return parts.join('\n\n');
+  return parts.join(`${EOL}${EOL}`);
 }
 
 /**
@@ -546,7 +547,7 @@ export function updateRulesList(
     urlRuleDoc
   );
 
-  const newContent = `${legend ? `${legend}\n\n` : ''}${list}`;
+  const newContent = `${legend ? `${legend}${EOL}${EOL}` : ''}${list}`;
 
-  return `${preList}${BEGIN_RULE_LIST_MARKER}\n\n${newContent}\n\n${END_RULE_LIST_MARKER}${postList}`;
+  return `${preList}${BEGIN_RULE_LIST_MARKER}${EOL}${EOL}${newContent}${EOL}${EOL}${END_RULE_LIST_MARKER}${postList}`;
 }

@@ -1,3 +1,5 @@
+import { EOL } from 'node:os';
+
 export function toSentenceCase(str: string) {
   return str.replace(/^\w/u, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase();
@@ -20,7 +22,7 @@ export function capitalizeOnlyFirstLetter(str: string) {
 }
 
 function sanitizeMarkdownTableCell(text: string): string {
-  return text.replace(/\|/gu, '\\|').replace(/\n/gu, '<br/>');
+  return text.replace(/\|/gu, '\\|').replace(new RegExp(EOL, 'gu'), '<br/>');
 }
 
 export function sanitizeMarkdownTable(

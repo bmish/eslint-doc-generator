@@ -1,3 +1,4 @@
+import { EOL } from 'node:os';
 import {
   BEGIN_CONFIG_LIST_MARKER,
   END_CONFIG_LIST_MARKER,
@@ -111,5 +112,5 @@ export function updateConfigsList(
     ignoreConfig
   );
 
-  return `${preList}${BEGIN_CONFIG_LIST_MARKER}\n\n${list}\n\n${END_CONFIG_LIST_MARKER}${postList}`;
+  return `${preList}${BEGIN_CONFIG_LIST_MARKER}${EOL}${EOL}${list}${EOL}${EOL}${END_CONFIG_LIST_MARKER}${postList}`;
 }

@@ -1,3 +1,5 @@
+import { EOL } from 'node:os';
+
 // General helpers for dealing with markdown files / content.
 
 /**
@@ -12,7 +14,7 @@ export function replaceOrCreateHeader(
   newHeader: string,
   marker: string
 ) {
-  const lines = markdown.split('\n');
+  const lines = markdown.split(EOL);
 
   const titleLineIndex = lines.findIndex((line) => line.startsWith('# '));
   const markerLineIndex = lines.indexOf(marker);
@@ -22,16 +24,18 @@ export function replaceOrCreateHeader(
   // Any YAML front matter or anything else above the title should be kept as-is ahead of the new header.
   const preHeader = lines
     .slice(0, Math.max(titleLineIndex, dashesLineIndex2 + 1))
-    .join('\n');
+    .join(EOL);
 
   // Anything after the marker comment, title, or YAML front matter should be kept as-is after the new header.
   const postHeader = lines
     .slice(
       Math.max(markerLineIndex + 1, titleLineIndex + 1, dashesLineIndex2 + 1)
     )
-    .join('\n');
+    .join(EOL);
 
-  return `${preHeader ? `${preHeader}\n` : ''}${newHeader}\n${postHeader}`;
+  return `${
+    preHeader ? `${preHeader}${EOL}` : ''
+  }${newHeader}${EOL}${postHeader}`;
 }
 
 /**
@@ -42,7 +46,7 @@ export function findSectionHeader(
   str: string
 ): string | undefined {
   // Get all the matching strings.
-  const regexp = new RegExp(`## .*${str}.*\n`, 'giu');
+  const regexp = new RegExp(`## .*${str}.*${EOL}`, 'giu');
   const sectionPotentialMatches = [...markdown.matchAll(regexp)].map(
     (match) => match[0]
   );
@@ -64,7 +68,7 @@ export function findSectionHeader(
 }
 
 export function findFinalHeaderLevel(str: string) {
-  const lines = str.split('\n');
+  const lines = str.split(EOL);
   const finalHeader = lines.reverse().find((line) => line.match('^(#+) .+$'));
   return finalHeader ? finalHeader.indexOf(' ') : undefined;
 }
