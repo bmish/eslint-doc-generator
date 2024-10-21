@@ -29,6 +29,7 @@ module.exports = {
 
     'import/extensions': ['error', 'always'],
     'node/no-missing-import': 'off', // Disabled due to a bug: https://github.com/mysticatea/eslint-plugin-node/issues/342
+    'unicorn/expiring-todo-comments': 'off',
     'unicorn/no-array-reduce': 'off',
     'unicorn/no-nested-ternary': 'off',
     'unicorn/prevent-abbreviations': 'off',
