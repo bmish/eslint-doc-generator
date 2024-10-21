@@ -38,6 +38,7 @@ if (process.version.startsWith('v14.')) {
   // https://github.com/facebook/jest/issues/11438#issuecomment-954155180
   jestConfig.maxConcurrency = 30;
   jestConfig.maxWorkers = 30;
+  jestConfig.testTimeout = 10_000; // 10 seconds timeout (twice the default)
 }
 
 module.exports = jestConfig;
