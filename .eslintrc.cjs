@@ -8,7 +8,7 @@ module.exports = {
     sourceType: 'module',
   },
   extends: [
-    'plugin:node/recommended',
+    'plugin:n/recommended',
     'plugin:unicorn/recommended', // Turn eslint-plugin-unicorn recommended rules on again because many were turned off by eslint-plugin-square.
     'plugin:jest/recommended',
   ],
@@ -30,7 +30,6 @@ module.exports = {
     'import/no-named-as-default-member': 'off',
 
     'import/extensions': ['error', 'always'],
-    'node/no-missing-import': 'off', // Disabled due to a bug: https://github.com/mysticatea/eslint-plugin-node/issues/342
     'unicorn/expiring-todo-comments': 'off',
     'unicorn/import-style': 'off',
     'unicorn/no-anonymous-default-export': 'off',
@@ -55,7 +54,7 @@ module.exports = {
         'plugin:@typescript-eslint/recommended-requiring-type-checking',
       ],
       rules: {
-        'node/no-unsupported-features/es-syntax': [
+        'n/no-unsupported-features/es-syntax': [
           'error',
           { ignores: ['dynamicImport', 'modules'] },
         ],
