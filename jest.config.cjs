@@ -1,4 +1,3 @@
-/* eslint filenames/match-exported:"off" -- trouble matching given period in filename */
 // https://kulshekhar.github.io/ts-jest/docs/guides/esm-support/
 
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
