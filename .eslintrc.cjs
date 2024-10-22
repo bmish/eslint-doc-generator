@@ -1,11 +1,13 @@
 module.exports = {
+  "plugins": [
+    "import"
+  ],
   root: true,
   parserOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',
   },
   extends: [
-    'plugin:square/typescript',
     'plugin:node/recommended',
     'plugin:unicorn/recommended', // Turn eslint-plugin-unicorn recommended rules on again because many were turned off by eslint-plugin-square.
     'plugin:jest/recommended',
@@ -54,6 +56,7 @@ module.exports = {
         ],
 
         '@typescript-eslint/require-array-sort-compare': 'error',
+        '@typescript-eslint/no-unused-vars': 'off'
       },
     },
   ],
