@@ -32,8 +32,13 @@ module.exports = {
     'import/extensions': ['error', 'always'],
     'node/no-missing-import': 'off', // Disabled due to a bug: https://github.com/mysticatea/eslint-plugin-node/issues/342
     'unicorn/expiring-todo-comments': 'off',
+    'unicorn/import-style': 'off',
+    'unicorn/no-anonymous-default-export': 'off',
     'unicorn/no-array-reduce': 'off',
     'unicorn/no-nested-ternary': 'off',
+    'unicorn/prefer-at': 'off',
+    'unicorn/prefer-string-raw': 'off',
+    'unicorn/prefer-string-replace-all': 'off',
     'unicorn/prevent-abbreviations': 'off',
     'require-unicode-regexp': 'error',
   },
