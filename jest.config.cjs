@@ -1,14 +1,15 @@
 // https://kulshekhar.github.io/ts-jest/docs/guides/esm-support/
+const { createDefaultEsmPreset } = require('ts-jest')
 
-/** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
+const defaultEsmPreset = createDefaultEsmPreset()
+
+/** @type {import('ts-jest').JestConfigWithTsJest} */
+
 const jestConfig = {
-  preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
   testMatch: ['<rootDir>/test/**/*-test.ts'],
   setupFiles: ['<rootDir>/test/jest.setup.cjs'],
-  transform: {
-    '^.+\\.tsx?$': ['ts-jest', { useESM: true }],
-  },
+  ...defaultEsmPreset,
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
     '#(.*)': '<rootDir>/node_modules/$1',
