@@ -49,7 +49,7 @@
     "ajv": "^8.11.2",
     "boolean": "^3.2.0",
     "commander": "^10.0.0",
-    "cosmiconfig": "^8.0.0",
+    "cosmiconfig": "^9.0.0",
     "deepmerge": "^4.2.2",
     "dot-prop": "^7.2.0",
     "jest-diff": "^29.2.1",
