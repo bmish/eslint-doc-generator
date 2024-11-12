@@ -63,7 +63,7 @@
     "@release-it-plugins/lerna-changelog": "^7.0.0",
     "@types/jest": "^29.1.0",
     "@types/mock-fs": "^4.13.1",
-    "@types/node": "^20.1.4",
+    "@types/node": "^22.9.0",
     "@types/sinon": "^10.0.13",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
