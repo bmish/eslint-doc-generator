@@ -185,8 +185,8 @@ There's also a `postprocess` option that's only available via a [config file](#c
 | `--path-rule-doc` | Path to markdown file for each rule doc. Use `{name}` placeholder for the rule name. A function can also be provided for this option via a [config file](#configuration-file). | `docs/rules/{name}.md` |
 | `--path-rule-list` | Path to markdown file where the rules table list should live. Option can be repeated. | `README.md` |
 | `--rule-doc-notices` | Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. See choices in below [table](#column-and-notice-types). | `deprecated`, `configs`, `fixableAndHasSuggestions`, `requiresTypeChecking` |
-| `--rule-doc-section-exclude` | Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. |
-| `--rule-doc-section-include` | Required section in each rule doc. Exit with failure if missing. Option can be repeated. |
+| `--rule-doc-section-exclude` | Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. | |
+| `--rule-doc-section-include` | Required section in each rule doc. Exit with failure if missing. Option can be repeated. | |
 | `--rule-doc-section-options` | Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options. | `true` |
 | `--rule-doc-title-format` | The format to use for rule doc titles. See choices in below [table](#--rule-doc-title-format). | `desc-parens-prefix-name` |
 | `--rule-list-columns` | Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. See choices in below [table](#column-and-notice-types). | `name`, `description`, `configsError`, `configsWarn`, `configsOff`, `fixable`, `hasSuggestions`, `requiresTypeChecking`, `deprecated` |
@@ -234,7 +234,7 @@ Where `no-foo` is the rule name, `Disallow use of foo` is the rule description, 
 | `desc-parens-name` | `# Disallow use of foo (no-foo)` |
 | `desc-parens-prefix-name` (default) | `# Disallow use of foo (test/no-foo)` |
 | `name` | `# no-foo` |
-`prefix-name` | `# test/no-foo` |
+| `prefix-name` | `# test/no-foo` |
 
 ### Configuration file
 
