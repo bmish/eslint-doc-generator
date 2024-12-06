@@ -1,5 +1,9 @@
 import traverse from 'json-schema-traverse';
-import type { JSONSchema } from '@typescript-eslint/utils';
+import type {
+  JSONSchema4,
+  JSONSchema4Type,
+  JSONSchema4TypeName,
+} from 'json-schema';
 import { capitalizeOnlyFirstLetter } from './string.js';
 
 export type RuleOption = {
@@ -7,13 +11,13 @@ export type RuleOption = {
   type?: string;
   description?: string;
   required?: boolean;
-  enum?: readonly JSONSchema.JSONSchema4Type[];
-  default?: JSONSchema.JSONSchema4Type;
+  enum?: readonly JSONSchema4Type[];
+  default?: JSONSchema4Type;
   deprecated?: boolean;
 };
 
 function typeToString(
-  type: JSONSchema.JSONSchema4TypeName[] | JSONSchema.JSONSchema4TypeName
+  type: JSONSchema4TypeName[] | JSONSchema4TypeName
 ): string {
   return Array.isArray(type)
     ? type.map((item) => capitalizeOnlyFirstLetter(item)).join(', ')
@@ -26,24 +30,18 @@ function typeToString(
  * @returns - list of named options we could detect from the schema
  */
 export function getAllNamedOptions(
-  jsonSchema:
-    | JSONSchema.JSONSchema4
-    | readonly JSONSchema.JSONSchema4[]
-    | undefined
-    | null
+  jsonSchema: JSONSchema4 | readonly JSONSchema4[] | undefined | null
 ): readonly RuleOption[] {
   if (!jsonSchema) {
     return [];
   }
 
   if (Array.isArray(jsonSchema)) {
-    return jsonSchema.flatMap((js: JSONSchema.JSONSchema4) =>
-      getAllNamedOptions(js)
-    );
+    return jsonSchema.flatMap((js: JSONSchema4) => getAllNamedOptions(js));
   }
 
   const options: RuleOption[] = [];
-  traverse(jsonSchema, (js: JSONSchema.JSONSchema4) => {
+  traverse(jsonSchema, (js: JSONSchema4) => {
     if (js.properties) {
       options.push(
         ...Object.entries(js.properties).map(([key, value]) => ({
@@ -58,8 +56,8 @@ export function getAllNamedOptions(
                     : typeToString(value.items.type)
                 }[]`
               : value.type
-              ? typeToString(value.type)
-              : undefined,
+                ? typeToString(value.type)
+                : undefined,
           description: value.description,
           default: value.default,
           enum: value.enum,
@@ -81,7 +79,7 @@ export function getAllNamedOptions(
  * @returns - whether the schema has options
  */
 export function hasOptions(
-  jsonSchema: JSONSchema.JSONSchema4 | readonly JSONSchema.JSONSchema4[]
+  jsonSchema: JSONSchema4 | readonly JSONSchema4[]
 ): boolean {
   return (
     (Array.isArray(jsonSchema) && jsonSchema.length > 0) ||

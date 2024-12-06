@@ -32,7 +32,7 @@ export function getConfigsThatSetARule(
         )
       )
       // Filter out ignored configs.
-      .filter(([configName]) => !ignoreConfig?.includes(configName))
+      .filter(([configName]) => !ignoreConfig.includes(configName))
       .map(([configName]) => configName)
       .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
   );
@@ -97,7 +97,7 @@ export function findConfigEmoji(
       emoji = `![badge-${configName}][]`;
     } else {
       // No fallback.
-      return undefined; // eslint-disable-line unicorn/no-useless-undefined
+      return undefined;
     }
   }
 

@@ -6,4 +6,4 @@ export const RULE_DOC_TITLE_FORMATS = [
   'prefix-name',
 ] as const;
 
-export type RuleDocTitleFormat = typeof RULE_DOC_TITLE_FORMATS[number];
+export type RuleDocTitleFormat = (typeof RULE_DOC_TITLE_FORMATS)[number];

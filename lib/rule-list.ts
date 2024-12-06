@@ -75,6 +75,7 @@ function getPropertyFromRule(
   }
 
   const rule = plugin.rules[ruleName];
+  // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
   return getProperty(rule, property) as unknown; // TODO: Incorrectly typed as undefined. This could be any type, not just undefined (https://github.com/sindresorhus/dot-prop/issues/95).
 }
 
@@ -88,7 +89,7 @@ function getConfigurationColumnValueForRule(
 ): string {
   const configsToRulesWithoutIgnored = Object.fromEntries(
     Object.entries(configsToRules).filter(
-      ([configName]) => !ignoreConfig?.includes(configName)
+      ([configName]) => !ignoreConfig.includes(configName)
     )
   );
 
@@ -112,6 +113,7 @@ function getConfigurationColumnValueForRule(
   return [...emojis, ...badges].join(' ');
 }
 
+// eslint-disable-next-line complexity
 function buildRuleRow(
   ruleName: string,
   rule: RuleModule,
@@ -177,6 +179,7 @@ function buildRuleRow(
       );
     },
     [COLUMN_TYPE.OPTIONS]: hasOptions(rule.meta?.schema) ? EMOJI_OPTIONS : '',
+    // @ts-expect-error -- TODO: requiresTypeChecking type not present
     [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: rule.meta?.docs?.requiresTypeChecking
       ? EMOJI_REQUIRES_TYPE_CHECKING
       : '',

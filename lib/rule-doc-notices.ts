@@ -74,8 +74,8 @@ function configsToNoticeSentence(
     configs.length > 1
       ? `This rule ${term} in the following ${configsLinkOrWord}: ${csv}.`
       : configs.length === 1
-      ? `This rule ${term} in the ${csv} ${configLinkOrWord}.`
-      : undefined;
+        ? `This rule ${term} in the ${csv} ${configLinkOrWord}.`
+        : undefined;
 
   return sentence;
 }
@@ -129,9 +129,9 @@ const RULE_NOTICES: {
 
     /* istanbul ignore next -- this shouldn't happen */
     if (
-      (!configsError || configsError.length === 0) &&
-      (!configsWarn || configsWarn.length === 0) &&
-      (!configsOff || configsOff.length === 0)
+      configsError.length === 0 &&
+      configsWarn.length === 0 &&
+      configsOff.length === 0
     ) {
       throw new Error(
         'Should not be trying to display config notice for rule not configured in any configs.'
@@ -286,7 +286,8 @@ function getNoticesForRule(
 
     [NOTICE_TYPE.OPTIONS]: hasOptions(rule.meta?.schema),
     [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]:
-      rule.meta?.docs?.requiresTypeChecking || false,
+      // @ts-expect-error -- TODO: requiresTypeChecking type not present
+      (rule.meta?.docs?.requiresTypeChecking as boolean | undefined) || false,
     [NOTICE_TYPE.TYPE]: Boolean(rule.meta?.type),
   };
 
@@ -333,21 +334,21 @@ function getRuleNoticeLines(
     configsToRules,
     pluginPrefix,
     SEVERITY_TYPE.error
-  ).filter((configName) => !ignoreConfig?.includes(configName));
+  ).filter((configName) => !ignoreConfig.includes(configName));
 
   const configsWarn = getConfigsForRule(
     ruleName,
     configsToRules,
     pluginPrefix,
     SEVERITY_TYPE.warn
-  ).filter((configName) => !ignoreConfig?.includes(configName));
+  ).filter((configName) => !ignoreConfig.includes(configName));
 
   const configsOff = getConfigsForRule(
     ruleName,
     configsToRules,
     pluginPrefix,
     SEVERITY_TYPE.off
-  ).filter((configName) => !ignoreConfig?.includes(configName));
+  ).filter((configName) => !ignoreConfig.includes(configName));
 
   const notices = getNoticesForRule(
     rule,

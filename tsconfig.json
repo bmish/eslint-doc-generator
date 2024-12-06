@@ -26,6 +26,7 @@
   "include": [
     "bin/**/*",
     "lib/**/*",
-    "test/**/*"
+    "test/**/*",
+    "jest.config.ts"
   ]
 }

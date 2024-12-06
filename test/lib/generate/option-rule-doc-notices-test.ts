@@ -97,8 +97,10 @@ describe('generate (--rule-doc-notices)', function () {
 
     it('throws an error', async function () {
       await expect(
-        // @ts-expect-error -- testing non-existent notice type
-        generate('.', { ruleDocNotices: [NOTICE_TYPE.FIXABLE, 'non-existent'] })
+        generate('.', {
+          // @ts-expect-error -- testing non-existent notice type
+          ruleDocNotices: [NOTICE_TYPE.FIXABLE, 'non-existent'],
+        })
       ).rejects.toThrow('Invalid ruleDocNotices option: non-existent');
     });
   });

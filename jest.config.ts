@@ -1,11 +1,11 @@
+import type { Config } from 'jest';
 // https://kulshekhar.github.io/ts-jest/docs/guides/esm-support/
-const { createDefaultEsmPreset } = require('ts-jest')
+import { createDefaultEsmPreset } from 'ts-jest';
 
-const defaultEsmPreset = createDefaultEsmPreset()
+const defaultEsmPreset = createDefaultEsmPreset();
 
-/** @type {import('ts-jest').JestConfigWithTsJest} */
-
-const jestConfig = {
+// https://kulshekhar.github.io/ts-jest/docs/guides/esm-support/
+const config: Config = {
   testEnvironment: 'node',
   testMatch: ['<rootDir>/test/**/*-test.ts'],
   setupFiles: ['<rootDir>/test/jest.setup.cjs'],
@@ -32,4 +32,4 @@ const jestConfig = {
   },
 };
 
-module.exports = jestConfig;
+export default config;

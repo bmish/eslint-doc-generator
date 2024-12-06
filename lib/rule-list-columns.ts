@@ -123,6 +123,7 @@ export function getColumns(
       hasOptions(rule.meta?.schema)
     ),
     [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: ruleNamesAndRules.some(
+      // @ts-expect-error -- TODO: requiresTypeChecking type not present
       ([, rule]) => rule.meta?.docs?.requiresTypeChecking
     ),
     // Show type column only if we found at least one rule with a standard type.

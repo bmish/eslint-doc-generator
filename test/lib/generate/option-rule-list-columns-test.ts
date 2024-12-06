@@ -195,7 +195,9 @@ describe('generate (--rule-list-columns)', function () {
 
     it('throws an error', async function () {
       await expect(
-        generate('.', { ruleListColumns: [COLUMN_TYPE.NAME, COLUMN_TYPE.NAME] })
+        generate('.', {
+          ruleListColumns: [COLUMN_TYPE.NAME, COLUMN_TYPE.NAME],
+        })
       ).rejects.toThrow('Duplicate value detected in ruleListColumns option.');
     });
   });
