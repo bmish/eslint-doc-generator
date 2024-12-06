@@ -32,13 +32,4 @@ const jestConfig = {
   },
 };
 
-if (process.version.startsWith('v14.')) {
-  // TODO: remove this workaround after dropping support for Node 14.
-  // Use number greater than number of test suites to avoid: "You are trying to `import` a file after the Jest environment has been torn down."
-  // https://github.com/facebook/jest/issues/11438#issuecomment-954155180
-  jestConfig.maxConcurrency = 30;
-  jestConfig.maxWorkers = 30;
-  jestConfig.testTimeout = 10_000; // 10 seconds timeout (twice the default)
-}
-
 module.exports = jestConfig;
