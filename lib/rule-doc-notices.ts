@@ -31,6 +31,7 @@ import {
 import { ConfigFormat, configNameToDisplay } from './config-format.js';
 
 function severityToTerminology(severity: SEVERITY_TYPE) {
+  // Italics is used to draw attention to non-error severities since they are less common.
   switch (severity) {
     case SEVERITY_TYPE.error: {
       return 'is enabled';
@@ -72,9 +73,9 @@ function configsToNoticeSentence(
   const term = severityToTerminology(severity);
   const sentence =
     configs.length > 1
-      ? `This rule ${term} in the following ${configsLinkOrWord}: ${csv}.`
+      ? `${EMOJI_CONFIG_FROM_SEVERITY[severity]} This rule ${term} in the following ${configsLinkOrWord}: ${csv}.`
       : configs.length === 1
-      ? `This rule ${term} in the ${csv} ${configLinkOrWord}.`
+      ? `${EMOJI_CONFIG_FROM_SEVERITY[severity]} This rule ${term} in the ${csv} ${configLinkOrWord}.`
       : undefined;
 
   return sentence;
@@ -138,18 +139,6 @@ const RULE_NOTICES: {
       );
     }
 
-    // Use the emoji(s) for the severity levels this rule is set to in various configs.
-    const emojis: string[] = [];
-    if (configsError.length > 0) {
-      emojis.push(EMOJI_CONFIG_FROM_SEVERITY[SEVERITY_TYPE.error]);
-    }
-    if (configsWarn.length > 0) {
-      emojis.push(EMOJI_CONFIG_FROM_SEVERITY[SEVERITY_TYPE.warn]);
-    }
-    if (configsOff.length > 0) {
-      emojis.push(EMOJI_CONFIG_FROM_SEVERITY[SEVERITY_TYPE.off]);
-    }
-
     const sentences = [
       configsToNoticeSentence(
         configsError,
@@ -180,9 +169,9 @@ const RULE_NOTICES: {
       ),
     ]
       .filter(Boolean)
-      .join(' ');
+      .join('\n\n');
 
-    return `${emojis.join('')} ${sentences}`;
+    return sentences;
   },
 
   // Deprecated notice has optional "replaced by" rules list.
