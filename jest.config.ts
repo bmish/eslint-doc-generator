@@ -8,7 +8,7 @@ const defaultEsmPreset = createDefaultEsmPreset();
 const config: Config = {
   testEnvironment: 'node',
   testMatch: ['<rootDir>/test/**/*-test.ts'],
-  setupFiles: ['<rootDir>/test/jest.setup.ts'],
+  setupFiles: ['<rootDir>/test/jest.setup.cjs'],
   ...defaultEsmPreset,
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',

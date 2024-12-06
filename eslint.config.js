@@ -157,7 +157,7 @@ export default tseslint.config(
 
   // Disabling type-checking for JS files:
   {
-    files: ['**/*.js'],
+    files: ['**/*.js', '**/*.cjs'],
     extends: [tseslint.configs.disableTypeChecked],
   },
 
