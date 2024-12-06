@@ -4,7 +4,7 @@ export const CONFIG_FORMATS = [
   'prefix-name',
 ] as const;
 
-export type ConfigFormat = typeof CONFIG_FORMATS[number];
+export type ConfigFormat = (typeof CONFIG_FORMATS)[number];
 
 export function configNameToDisplay(
   configName: string,

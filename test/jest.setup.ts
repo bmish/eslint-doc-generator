@@ -1,6 +1,6 @@
-const os = require('node:os');
-const sinon = require('sinon');
+import os from 'node:os';
+import sinon from 'sinon';
 
-module.exports = function () {
+export default function () {
   sinon.stub(os, 'EOL').value('\n'); // Stub os.EOL to always be '\n' for testing/snapshot purposes.
-};
+}

@@ -24,7 +24,9 @@ export function parseConfigEmojiOptions(
   const configsWithDefaultEmojiRemoved: string[] = [];
   const configEmojis =
     configEmoji?.flatMap((configEmojiItem) => {
-      const [config, emoji, ...extra] = configEmojiItem;
+      const [config, emoji, ...extra] = configEmojiItem as
+        | typeof configEmojiItem
+        | [configName: string, emoji: string, extra: string[]];
 
       // Check for duplicate configs.
       if (configsSeen.has(config)) {

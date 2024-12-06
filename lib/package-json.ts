@@ -116,7 +116,7 @@ export async function getPathWithExactFileNameCasing(path: string) {
       return resolve(dir, dirent.name);
     }
   }
-  return undefined; // eslint-disable-line unicorn/no-useless-undefined
+  return undefined;
 }
 
 export async function getCurrentPackageVersion(): Promise<string> {

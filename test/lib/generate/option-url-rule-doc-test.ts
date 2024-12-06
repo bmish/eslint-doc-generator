@@ -172,7 +172,7 @@ describe('generate (--url-rule-doc)', function () {
       await generate('.', {
         pathRuleList: ['README.md', 'nested/README.md'],
         urlRuleDoc() {
-          return undefined; // eslint-disable-line unicorn/no-useless-undefined -- for testing
+          return undefined;
         },
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();

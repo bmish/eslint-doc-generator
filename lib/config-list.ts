@@ -63,7 +63,7 @@ function generateConfigListMarkdown(
               pluginPrefix
             )}\``,
             hasDescription ? description || '' : undefined,
-          ].filter((col) => col !== undefined) as string[];
+          ].filter((col) => col !== undefined);
         }),
     ]),
     { align: 'l' } // Left-align headers.

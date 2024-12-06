@@ -50,15 +50,15 @@ function stringOrArrayToArrayWithFallback(
     stringOrArray instanceof Array // eslint-disable-line unicorn/no-instanceof-array -- using Array.isArray() loses type information about the array.
       ? stringOrArray
       : stringOrArray
-      ? [stringOrArray]
-      : [];
+        ? [stringOrArray]
+        : [];
   const csvStringItem = asArray.find((item) => item.includes(','));
   if (csvStringItem) {
     throw new Error(
       `Provide property as array, not a CSV string: ${csvStringItem}`
     );
   }
-  return asArray && asArray.length > 0 ? asArray : fallback;
+  return asArray.length > 0 ? asArray : fallback;
 }
 
 // eslint-disable-next-line complexity
@@ -144,7 +144,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     })
     .filter(
       // Filter out deprecated rules from being checked, displayed, or updated if the option is set.
-      ([, rule]) => !ignoreDeprecatedRules || !rule.meta.deprecated
+      ([, rule]) => !ignoreDeprecatedRules || !rule.meta?.deprecated
     )
     .sort(([a], [b]) => a.toLowerCase().localeCompare(b.toLowerCase()));
 

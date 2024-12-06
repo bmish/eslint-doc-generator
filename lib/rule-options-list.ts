@@ -68,8 +68,8 @@ function ruleOptionToColumnValues(ruleOption: RuleOption): {
       ruleOption.default === undefined
         ? undefined
         : Array.isArray(ruleOption.default)
-        ? arrayToString(ruleOption.default)
-        : `\`${String(ruleOption.default)}\``,
+          ? arrayToString(ruleOption.default)
+          : `\`${String(ruleOption.default)}\``,
     [COLUMN_TYPE.DEPRECATED]: ruleOption.deprecated ? 'Yes' : undefined,
     [COLUMN_TYPE.DESCRIPTION]: ruleOption.description,
     [COLUMN_TYPE.ENUM]:
@@ -111,7 +111,7 @@ function ruleOptionsToColumnsToDisplay(ruleOptions: readonly RuleOption[]): {
 }
 
 function generateRuleOptionsListMarkdown(rule: RuleModule): string {
-  const ruleOptions = getAllNamedOptions(rule.meta.schema);
+  const ruleOptions = getAllNamedOptions(rule.meta?.schema);
 
   if (ruleOptions.length === 0) {
     return '';

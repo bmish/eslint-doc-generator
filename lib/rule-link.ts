@@ -43,7 +43,7 @@ export function getUrlToRule(
     }
     case RULE_SOURCE.thirdPartyPlugin: {
       // We don't know the documentation URL to third-party plugins.
-      return undefined; // eslint-disable-line unicorn/no-useless-undefined
+      return undefined;
     }
     default: {
       // Fallthrough to remaining logic in function.
@@ -111,8 +111,8 @@ export function getLinkToRule(
   const ruleNameWithPluginPrefix = ruleName.startsWith(`${pluginPrefix}/`)
     ? ruleName
     : ruleSource === RULE_SOURCE.self
-    ? `${pluginPrefix}/${ruleName}`
-    : undefined;
+      ? `${pluginPrefix}/${ruleName}`
+      : undefined;
 
   const urlToRule = getUrlToRule(
     ruleName,

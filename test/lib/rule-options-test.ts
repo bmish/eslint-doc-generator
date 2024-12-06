@@ -7,7 +7,7 @@ describe('rule options', function () {
     });
 
     it('handles undefined', function () {
-      expect(getAllNamedOptions(undefined)).toMatchInlineSnapshot('[]'); // eslint-disable-line unicorn/no-useless-undefined
+      expect(getAllNamedOptions(undefined)).toMatchInlineSnapshot('[]');
     });
 
     it('handles empty array', function () {

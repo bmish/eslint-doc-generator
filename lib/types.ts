@@ -50,7 +50,7 @@ export type ConfigsToRules = Record<string, Rules>;
  */
 export type RuleNamesAndRules = readonly (readonly [
   name: string,
-  rule: RuleModule
+  rule: RuleModule,
 ])[];
 
 /**
