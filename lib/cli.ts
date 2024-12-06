@@ -186,7 +186,7 @@ export async function run(
 
   // Documentation for options should be kept in sync with README.md and the JSDocs for the `GenerateOptions` type.
   await program
-    .version(getCurrentPackageVersion())
+    .version(await getCurrentPackageVersion())
     .addArgument(
       new Argument('[path]', 'path to ESLint plugin root').default('.')
     )

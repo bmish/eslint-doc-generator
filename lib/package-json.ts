@@ -6,11 +6,12 @@ import {
   isAbsolute,
   extname,
 } from 'node:path';
-import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import { importAbs } from './import.js';
 import { createRequire } from 'node:module';
 import type { Plugin } from './types.js';
 import type { PackageJson } from 'type-fest';
+import { readdir, readFile } from 'node:fs/promises';
 
 const require = createRequire(import.meta.url);
 
@@ -18,14 +19,14 @@ export function getPluginRoot(path: string) {
   return isAbsolute(path) ? path : join(process.cwd(), path);
 }
 
-function loadPackageJson(path: string): PackageJson {
+async function loadPackageJson(path: string): Promise<PackageJson> {
   const pluginRoot = getPluginRoot(path);
   const pluginPackageJsonPath = join(pluginRoot, 'package.json');
   if (!existsSync(pluginPackageJsonPath)) {
     throw new Error('Could not find package.json of ESLint plugin.');
   }
   const pluginPackageJson = JSON.parse(
-    readFileSync(join(pluginRoot, 'package.json'), 'utf8')
+    await readFile(join(pluginRoot, 'package.json'), 'utf8')
   ) as PackageJson;
 
   return pluginPackageJson;
@@ -38,7 +39,7 @@ export async function loadPlugin(path: string): Promise<Plugin> {
     return require(pluginRoot) as Plugin; // eslint-disable-line import/no-dynamic-require
   } catch (error) {
     // Otherwise, for ESM plugins, we'll have to try to resolve the exact plugin entry point and import it.
-    const pluginPackageJson = loadPackageJson(path);
+    const pluginPackageJson = await loadPackageJson(path);
     let pluginEntryPoint;
     const exports = pluginPackageJson.exports;
     if (typeof exports === 'string') {
@@ -88,8 +89,8 @@ export async function loadPlugin(path: string): Promise<Plugin> {
   }
 }
 
-export function getPluginPrefix(path: string): string {
-  const pluginPackageJson = loadPackageJson(path);
+export async function getPluginPrefix(path: string): Promise<string> {
+  const pluginPackageJson = await loadPackageJson(path);
   if (!pluginPackageJson.name) {
     throw new Error(
       "Could not find `name` field in ESLint plugin's package.json."
@@ -103,10 +104,10 @@ export function getPluginPrefix(path: string): string {
 /**
  * Resolve the path to a file but with the exact filename-casing present on disk.
  */
-export function getPathWithExactFileNameCasing(path: string) {
+export async function getPathWithExactFileNameCasing(path: string) {
   const dir = dirname(path);
   const fileNameToSearch = basename(path);
-  const filenames = readdirSync(dir, { withFileTypes: true });
+  const filenames = await readdir(dir, { withFileTypes: true });
   for (const dirent of filenames) {
     if (
       dirent.isFile() &&
@@ -118,7 +119,7 @@ export function getPathWithExactFileNameCasing(path: string) {
   return undefined; // eslint-disable-line unicorn/no-useless-undefined
 }
 
-export function getCurrentPackageVersion(): string {
+export async function getCurrentPackageVersion(): Promise<string> {
   // When running as compiled code, use path relative to compiled version of this file in the dist folder.
   // When running as TypeScript (in a test), use path relative to this file.
   const pathToPackageJson = import.meta.url.endsWith('.ts')
@@ -126,7 +127,7 @@ export function getCurrentPackageVersion(): string {
     : /* istanbul ignore next -- can't test the compiled version in test */
       '../../package.json';
   const packageJson = JSON.parse(
-    readFileSync(new URL(pathToPackageJson, import.meta.url), 'utf8')
+    await readFile(new URL(pathToPackageJson, import.meta.url), 'utf8')
   ) as PackageJson;
   if (!packageJson.version) {
     throw new Error('Could not find package.json `version`.');

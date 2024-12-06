@@ -1,5 +1,5 @@
 import { EOL } from 'node:os';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { getAllNamedOptions, hasOptions } from './rule-options.js';
 import {
@@ -33,6 +33,7 @@ import type { GenerateOptions } from './types.js';
 import { OPTION_TYPE, RuleModule } from './types.js';
 import { replaceRulePlaceholder } from './rule-link.js';
 import { updateRuleOptionsList } from './rule-options-list.js';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 
 function stringOrArrayWithFallback<T extends string | readonly string[]>(
   stringOrArray: undefined | T,
@@ -63,7 +64,7 @@ function stringOrArrayToArrayWithFallback(
 // eslint-disable-next-line complexity
 export async function generate(path: string, options?: GenerateOptions) {
   const plugin = await loadPlugin(path);
-  const pluginPrefix = getPluginPrefix(path);
+  const pluginPrefix = await getPluginPrefix(path);
   const configsToRules = await resolveConfigsToRules(plugin);
 
   if (!plugin.rules) {
@@ -183,8 +184,8 @@ export async function generate(path: string, options?: GenerateOptions) {
         newRuleDocContents = `${EOL}${newRuleDocContents}${EOL}`;
       }
 
-      mkdirSync(dirname(pathToDoc), { recursive: true });
-      writeFileSync(pathToDoc, newRuleDocContents);
+      await mkdir(dirname(pathToDoc), { recursive: true });
+      await writeFile(pathToDoc, newRuleDocContents);
       initializedRuleDoc = true;
     }
 
@@ -206,7 +207,7 @@ export async function generate(path: string, options?: GenerateOptions) {
       urlRuleDoc
     );
 
-    const contentsOld = readFileSync(pathToDoc).toString();
+    const contentsOld = (await readFile(pathToDoc)).toString(); // eslint-disable-line unicorn/no-await-expression-member
     const contentsNew = await postprocess(
       updateRuleOptionsList(
         replaceOrCreateHeader(
@@ -231,7 +232,7 @@ export async function generate(path: string, options?: GenerateOptions) {
         process.exitCode = 1;
       }
     } else {
-      writeFileSync(pathToDoc, contentsNew);
+      await writeFile(pathToDoc, contentsNew);
     }
 
     // Check for potential issues with the rule doc.
@@ -284,7 +285,7 @@ export async function generate(path: string, options?: GenerateOptions) {
 
   for (const pathRuleListItem of pathRuleList) {
     // Find the exact filename.
-    const pathToFile = getPathWithExactFileNameCasing(
+    const pathToFile = await getPathWithExactFileNameCasing(
       join(path, pathRuleListItem)
     );
     if (!pathToFile || !existsSync(pathToFile)) {
@@ -294,7 +295,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     }
 
     // Update the rules list in this file.
-    const fileContents = readFileSync(pathToFile, 'utf8');
+    const fileContents = await readFile(pathToFile, 'utf8');
     const fileContentsNew = await postprocess(
       updateConfigsList(
         updateRulesList(
@@ -336,7 +337,7 @@ export async function generate(path: string, options?: GenerateOptions) {
         process.exitCode = 1;
       }
     } else {
-      writeFileSync(pathToFile, fileContentsNew, 'utf8');
+      await writeFile(pathToFile, fileContentsNew, 'utf8');
     }
   }
 }
