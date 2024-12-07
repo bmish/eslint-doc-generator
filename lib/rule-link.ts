@@ -9,7 +9,7 @@ import { getPluginRoot } from './package-json.js';
 
 export function replaceRulePlaceholder(
   pathOrUrl: string | PathRuleDocFunction,
-  ruleName: string
+  ruleName: string,
 ) {
   if (typeof pathOrUrl === 'function') {
     return pathOrUrl(ruleName);
@@ -35,7 +35,7 @@ export function getUrlToRule(
   pathPlugin: string,
   pathRuleDoc: string | PathRuleDocFunction,
   pathCurrentPage: string,
-  urlRuleDoc?: string | UrlRuleDocFunction
+  urlRuleDoc?: string | UrlRuleDocFunction,
 ) {
   switch (ruleSource) {
     case RULE_SOURCE.eslintCore: {
@@ -65,7 +65,7 @@ export function getUrlToRule(
 
   const pathRuleDocEvaluated = join(
     getPluginRoot(pathPlugin),
-    replaceRulePlaceholder(pathRuleDoc, ruleNameWithoutPluginPrefix)
+    replaceRulePlaceholder(pathRuleDoc, ruleNameWithoutPluginPrefix),
   );
 
   return (
@@ -91,7 +91,7 @@ export function getLinkToRule(
   pathCurrentPage: string,
   includeBackticks: boolean,
   includePrefix: boolean,
-  urlRuleDoc?: string | UrlRuleDocFunction
+  urlRuleDoc?: string | UrlRuleDocFunction,
 ) {
   const ruleNameWithoutPluginPrefix = ruleName.startsWith(`${pluginPrefix}/`)
     ? ruleName.slice(pluginPrefix.length + 1)
@@ -121,7 +121,7 @@ export function getLinkToRule(
     pathPlugin,
     pathRuleDoc,
     pathCurrentPage,
-    urlRuleDoc
+    urlRuleDoc,
   );
 
   const ruleNameToDisplay = `${includeBackticks ? '`' : ''}${

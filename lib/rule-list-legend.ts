@@ -108,7 +108,7 @@ const LEGENDS: {
     /* istanbul ignore next -- this shouldn't happen */
     if (!plugin.rules) {
       throw new Error(
-        'Should not be attempting to display type column when there are no rules.'
+        'Should not be attempting to display type column when there are no rules.',
       );
     }
     const rules = plugin.rules;
@@ -118,7 +118,7 @@ const LEGENDS: {
     let hasAnyRuleType = false;
     for (const ruleType of RULE_TYPES) {
       const hasThisRuleType = Object.values(rules).some(
-        (rule) => typeof rule === 'object' && rule.meta?.type === ruleType
+        (rule) => typeof rule === 'object' && rule.meta?.type === ruleType,
       );
       if (hasThisRuleType) {
         if (!hasAnyRuleType) {
@@ -165,7 +165,7 @@ function getLegendForConfigColumnOfSeverity({
   /* istanbul ignore next -- this shouldn't happen */
   if (!plugin.configs || !plugin.rules) {
     throw new Error(
-      'Should not be attempting to display configs column when there are no configs/rules.'
+      'Should not be attempting to display configs column when there are no configs/rules.',
     );
   }
 
@@ -197,7 +197,7 @@ function getLegendsForIndividualConfigs({
   /* istanbul ignore next -- this shouldn't happen */
   if (!plugin.configs || !plugin.rules) {
     throw new Error(
-      'Should not be attempting to display configs column when there are no configs/rules.'
+      'Should not be attempting to display configs column when there are no configs/rules.',
     );
   }
 
@@ -210,7 +210,7 @@ function getLegendsForIndividualConfigs({
     plugin,
     configsToRules,
     pluginPrefix,
-    ignoreConfig
+    ignoreConfig,
   );
 
   return configNamesThatSetRuleToThisSeverity.flatMap((configName) => {
@@ -224,7 +224,7 @@ function getLegendsForIndividualConfigs({
       `${emoji} Set in the \`${configNameToDisplay(
         configName,
         configFormat,
-        pluginPrefix
+        pluginPrefix,
       )}\` ${configLinkOrWord}.`,
     ];
   });
@@ -238,7 +238,7 @@ export function generateLegend(
   configFormat: ConfigFormat,
   pluginPrefix: string,
   ignoreConfig: readonly string[],
-  urlConfigs?: string
+  urlConfigs?: string,
 ) {
   const legends = (
     Object.entries(columns) as readonly [COLUMN_TYPE, boolean][]
@@ -278,13 +278,13 @@ export function generateLegend(
     });
     const finalConfigHeaderLegendPosition = Math.max(
       ...Object.values(SEVERITY_TYPE_TO_WORD).map((word) =>
-        legends.findIndex((legend) => legend.includes(word))
-      )
+        legends.findIndex((legend) => legend.includes(word)),
+      ),
     );
     legends.splice(
       finalConfigHeaderLegendPosition + 1,
       0,
-      ...legendsForIndividualConfigs
+      ...legendsForIndividualConfigs,
     );
   }
 

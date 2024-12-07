@@ -24,15 +24,15 @@ export const COLUMN_HEADER: {
   [COLUMN_TYPE.NAME]: ({ ruleNamesAndRules }) => {
     const ruleNames = ruleNamesAndRules.map(([name]) => name);
     const longestRuleNameLength = Math.max(
-      ...ruleNames.map(({ length }) => length)
+      ...ruleNames.map(({ length }) => length),
     );
     const ruleDescriptions = ruleNamesAndRules.map(
-      ([, rule]) => rule.meta?.docs?.description
+      ([, rule]) => rule.meta?.docs?.description,
     );
     const longestRuleDescriptionLength = Math.max(
       ...ruleDescriptions.map((description) =>
-        description ? description.length : 0
-      )
+        description ? description.length : 0,
+      ),
     );
 
     const title = 'Name';
@@ -73,7 +73,7 @@ export function getColumns(
   configsToRules: ConfigsToRules,
   ruleListColumns: readonly COLUMN_TYPE[],
   pluginPrefix: string,
-  ignoreConfig: readonly string[]
+  ignoreConfig: readonly string[],
 ): Record<COLUMN_TYPE, boolean> {
   const columns: {
     [key in COLUMN_TYPE]: boolean;
@@ -85,7 +85,7 @@ export function getColumns(
         configsToRules,
         pluginPrefix,
         ignoreConfig,
-        SEVERITY_TYPE.error
+        SEVERITY_TYPE.error,
       ).length > 0,
     [COLUMN_TYPE.CONFIGS_OFF]:
       getConfigsThatSetARule(
@@ -93,7 +93,7 @@ export function getColumns(
         configsToRules,
         pluginPrefix,
         ignoreConfig,
-        SEVERITY_TYPE.off
+        SEVERITY_TYPE.off,
       ).length > 0,
     [COLUMN_TYPE.CONFIGS_WARN]:
       getConfigsThatSetARule(
@@ -101,39 +101,39 @@ export function getColumns(
         configsToRules,
         pluginPrefix,
         ignoreConfig,
-        SEVERITY_TYPE.warn
+        SEVERITY_TYPE.warn,
       ).length > 0,
     [COLUMN_TYPE.DEPRECATED]: ruleNamesAndRules.some(
-      ([, rule]) => rule.meta?.deprecated
+      ([, rule]) => rule.meta?.deprecated,
     ),
     [COLUMN_TYPE.DESCRIPTION]: ruleNamesAndRules.some(
-      ([, rule]) => rule.meta?.docs?.description
+      ([, rule]) => rule.meta?.docs?.description,
     ),
     [COLUMN_TYPE.FIXABLE]: ruleNamesAndRules.some(
-      ([, rule]) => rule.meta?.fixable
+      ([, rule]) => rule.meta?.fixable,
     ),
     [COLUMN_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: ruleNamesAndRules.some(
-      ([, rule]) => rule.meta?.fixable || rule.meta?.hasSuggestions
+      ([, rule]) => rule.meta?.fixable || rule.meta?.hasSuggestions,
     ),
     [COLUMN_TYPE.HAS_SUGGESTIONS]: ruleNamesAndRules.some(
-      ([, rule]) => rule.meta?.hasSuggestions
+      ([, rule]) => rule.meta?.hasSuggestions,
     ),
     [COLUMN_TYPE.NAME]: true,
     [COLUMN_TYPE.OPTIONS]: ruleNamesAndRules.some(([, rule]) =>
-      hasOptions(rule.meta?.schema)
+      hasOptions(rule.meta?.schema),
     ),
     [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: ruleNamesAndRules.some(
       // @ts-expect-error -- TODO: requiresTypeChecking type not present
-      ([, rule]) => rule.meta?.docs?.requiresTypeChecking
+      ([, rule]) => rule.meta?.docs?.requiresTypeChecking,
     ),
     // Show type column only if we found at least one rule with a standard type.
     [COLUMN_TYPE.TYPE]: ruleNamesAndRules.some(
-      ([, rule]) => rule.meta?.type && RULE_TYPES.includes(rule.meta?.type)
+      ([, rule]) => rule.meta?.type && RULE_TYPES.includes(rule.meta?.type),
     ),
   };
 
   // Recreate object using the ordering and presence of columns specified in ruleListColumns.
   return Object.fromEntries(
-    ruleListColumns.map((type) => [type, columns[type]])
+    ruleListColumns.map((type) => [type, columns[type]]),
   ) as Record<COLUMN_TYPE, boolean>;
 }

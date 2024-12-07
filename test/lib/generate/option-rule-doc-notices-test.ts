@@ -100,7 +100,7 @@ describe('generate (--rule-doc-notices)', function () {
         generate('.', {
           // @ts-expect-error -- testing non-existent notice type
           ruleDocNotices: [NOTICE_TYPE.FIXABLE, 'non-existent'],
-        })
+        }),
       ).rejects.toThrow('Invalid ruleDocNotices option: non-existent');
     });
   });
@@ -139,7 +139,7 @@ describe('generate (--rule-doc-notices)', function () {
       await expect(
         generate('.', {
           ruleDocNotices: [NOTICE_TYPE.FIXABLE, NOTICE_TYPE.FIXABLE],
-        })
+        }),
       ).rejects.toThrow('Duplicate value detected in ruleDocNotices option.');
     });
   });
@@ -179,7 +179,7 @@ describe('generate (--rule-doc-notices)', function () {
         generate('.', {
           ruleDocNotices: ['type'],
           ruleListColumns: ['name'],
-        })
+        }),
       ).resolves.toBeUndefined();
     });
   });

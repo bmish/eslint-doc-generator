@@ -42,7 +42,7 @@ describe('rule options', function () {
           },
           required: ['optionToDoSomething'],
           additionalProperties: false,
-        })
+        }),
       ).toMatchInlineSnapshot(`
         [
           {
@@ -92,7 +92,7 @@ describe('rule options', function () {
             },
             additionalProperties: false,
           },
-        ])
+        ]),
       ).toMatchInlineSnapshot(`
         [
           {
@@ -131,7 +131,7 @@ describe('rule options', function () {
             },
             additionalProperties: false,
           },
-        ])
+        ]),
       ).toMatchInlineSnapshot(`
         [
           {
@@ -172,7 +172,7 @@ describe('rule options', function () {
               additionalProperties: false,
             },
           },
-        ])
+        ]),
       ).toMatchInlineSnapshot(`
         [
           {
@@ -204,7 +204,7 @@ describe('rule options', function () {
               additionalProperties: false,
             },
           },
-        ])
+        ]),
       ).toMatchInlineSnapshot(`
         [
           {
@@ -245,7 +245,7 @@ describe('rule options', function () {
             },
             additionalProperties: false,
           },
-        ])
+        ]),
       ).toMatchInlineSnapshot(`
         [
           {
@@ -300,7 +300,7 @@ describe('rule options', function () {
             },
             additionalProperties: false,
           },
-        ])
+        ]),
       ).toMatchInlineSnapshot(`
         [
           {

@@ -15,11 +15,11 @@ describe('generate (cjs)', function () {
       await generate(FIXTURE_PATH);
 
       expect(
-        readFileSync(join(FIXTURE_PATH, 'README.md'), 'utf8')
+        readFileSync(join(FIXTURE_PATH, 'README.md'), 'utf8'),
       ).toMatchSnapshot();
 
       expect(
-        readFileSync(join(FIXTURE_PATH, 'docs/rules/no-foo.md'), 'utf8')
+        readFileSync(join(FIXTURE_PATH, 'docs/rules/no-foo.md'), 'utf8'),
       ).toMatchSnapshot();
     });
   });
@@ -43,19 +43,19 @@ describe('generate (cjs)', function () {
       const FIXTURE_PATH = join(FIXTURE_ROOT, 'cjs-config-extends');
       await generate(FIXTURE_PATH);
       expect(
-        readFileSync(join(FIXTURE_PATH, 'README.md'), 'utf8')
+        readFileSync(join(FIXTURE_PATH, 'README.md'), 'utf8'),
       ).toMatchSnapshot();
       expect(
-        readFileSync(join(FIXTURE_PATH, 'docs/rules/no-foo.md'), 'utf8')
+        readFileSync(join(FIXTURE_PATH, 'docs/rules/no-foo.md'), 'utf8'),
       ).toMatchSnapshot();
       expect(
-        readFileSync(join(FIXTURE_PATH, 'docs/rules/no-bar.md'), 'utf8')
+        readFileSync(join(FIXTURE_PATH, 'docs/rules/no-bar.md'), 'utf8'),
       ).toMatchSnapshot();
       expect(
-        readFileSync(join(FIXTURE_PATH, 'docs/rules/no-baz.md'), 'utf8')
+        readFileSync(join(FIXTURE_PATH, 'docs/rules/no-baz.md'), 'utf8'),
       ).toMatchSnapshot();
       expect(
-        readFileSync(join(FIXTURE_PATH, 'docs/rules/no-biz.md'), 'utf8')
+        readFileSync(join(FIXTURE_PATH, 'docs/rules/no-biz.md'), 'utf8'),
       ).toMatchSnapshot();
     });
   });
@@ -65,10 +65,10 @@ describe('generate (cjs)', function () {
       const FIXTURE_PATH = join(
         'test',
         'fixtures',
-        'cjs-main-file-does-not-exist'
+        'cjs-main-file-does-not-exist',
       );
       await expect(generate(FIXTURE_PATH)).rejects.toThrow(
-        /Cannot find module/u
+        /Cannot find module/u,
       );
     });
   });

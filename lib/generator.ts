@@ -37,14 +37,14 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 
 function stringOrArrayWithFallback<T extends string | readonly string[]>(
   stringOrArray: undefined | T,
-  fallback: T
+  fallback: T,
 ): T {
   return stringOrArray && stringOrArray.length > 0 ? stringOrArray : fallback;
 }
 
 function stringOrArrayToArrayWithFallback(
   stringOrArray: undefined | string | readonly string[],
-  fallback: readonly string[]
+  fallback: readonly string[],
 ): readonly string[] {
   const asArray =
     stringOrArray instanceof Array // eslint-disable-line unicorn/no-instanceof-array -- using Array.isArray() loses type information about the array.
@@ -55,7 +55,7 @@ function stringOrArrayToArrayWithFallback(
   const csvStringItem = asArray.find((item) => item.includes(','));
   if (csvStringItem) {
     throw new Error(
-      `Provide property as array, not a CSV string: ${csvStringItem}`
+      `Provide property as array, not a CSV string: ${csvStringItem}`,
     );
   }
   return asArray.length > 0 ? asArray : fallback;
@@ -78,7 +78,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     options?.configFormat ?? OPTION_DEFAULTS[OPTION_TYPE.CONFIG_FORMAT];
   const ignoreConfig = stringOrArrayWithFallback(
     options?.ignoreConfig,
-    OPTION_DEFAULTS[OPTION_TYPE.IGNORE_CONFIG]
+    OPTION_DEFAULTS[OPTION_TYPE.IGNORE_CONFIG],
   );
   const ignoreDeprecatedRules =
     options?.ignoreDeprecatedRules ??
@@ -89,18 +89,18 @@ export async function generate(path: string, options?: GenerateOptions) {
     options?.pathRuleDoc ?? OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_DOC];
   const pathRuleList = stringOrArrayToArrayWithFallback(
     options?.pathRuleList,
-    OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_LIST]
+    OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_LIST],
   );
   const postprocess =
     options?.postprocess ?? OPTION_DEFAULTS[OPTION_TYPE.POSTPROCESS];
   const ruleDocNotices = parseRuleDocNoticesOption(options?.ruleDocNotices);
   const ruleDocSectionExclude = stringOrArrayWithFallback(
     options?.ruleDocSectionExclude,
-    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_EXCLUDE]
+    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_EXCLUDE],
   );
   const ruleDocSectionInclude = stringOrArrayWithFallback(
     options?.ruleDocSectionInclude,
-    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_INCLUDE]
+    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_INCLUDE],
   );
   const ruleDocSectionOptions =
     options?.ruleDocSectionOptions ??
@@ -114,7 +114,7 @@ export async function generate(path: string, options?: GenerateOptions) {
       ? options.ruleListSplit
       : stringOrArrayToArrayWithFallback(
           options?.ruleListSplit,
-          OPTION_DEFAULTS[OPTION_TYPE.RULE_LIST_SPLIT]
+          OPTION_DEFAULTS[OPTION_TYPE.RULE_LIST_SPLIT],
         );
   const urlConfigs =
     options?.urlConfigs ?? OPTION_DEFAULTS[OPTION_TYPE.URL_CONFIGS];
@@ -144,7 +144,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     })
     .filter(
       // Filter out deprecated rules from being checked, displayed, or updated if the option is set.
-      ([, rule]) => !ignoreDeprecatedRules || !rule.meta?.deprecated
+      ([, rule]) => !ignoreDeprecatedRules || !rule.meta?.deprecated,
     )
     .sort(([a], [b]) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
@@ -161,8 +161,8 @@ export async function generate(path: string, options?: GenerateOptions) {
         throw new Error(
           `Could not find rule doc (run with --init-rule-docs to create): ${relative(
             getPluginRoot(path),
-            pathToDoc
-          )}`
+            pathToDoc,
+          )}`,
         );
       }
 
@@ -204,7 +204,7 @@ export async function generate(path: string, options?: GenerateOptions) {
       ruleDocNotices,
       ruleDocTitleFormat,
       urlConfigs,
-      urlRuleDoc
+      urlRuleDoc,
     );
 
     const contentsOld = (await readFile(pathToDoc)).toString(); // eslint-disable-line unicorn/no-await-expression-member
@@ -213,11 +213,11 @@ export async function generate(path: string, options?: GenerateOptions) {
         replaceOrCreateHeader(
           contentsOld,
           newHeaderLines,
-          END_RULE_HEADER_MARKER
+          END_RULE_HEADER_MARKER,
         ),
-        rule
+        rule,
       ),
-      resolve(pathToDoc)
+      resolve(pathToDoc),
     );
 
     if (check) {
@@ -225,8 +225,8 @@ export async function generate(path: string, options?: GenerateOptions) {
         console.error(
           `Please run eslint-doc-generator. A rule doc is out-of-date: ${relative(
             getPluginRoot(path),
-            pathToDoc
-          )}`
+            pathToDoc,
+          )}`,
         );
         console.error(diff(contentsNew, contentsOld, { expand: false }));
         process.exitCode = 1;
@@ -243,7 +243,7 @@ export async function generate(path: string, options?: GenerateOptions) {
         `\`${name}\` rule doc`,
         contentsNew,
         [section],
-        true
+        true,
       );
     }
 
@@ -253,7 +253,7 @@ export async function generate(path: string, options?: GenerateOptions) {
         `\`${name}\` rule doc`,
         contentsNew,
         [section],
-        false
+        false,
       );
     }
 
@@ -263,7 +263,7 @@ export async function generate(path: string, options?: GenerateOptions) {
         `\`${name}\` rule doc`,
         contentsNew,
         ['Options', 'Config'],
-        ruleHasOptions
+        ruleHasOptions,
       );
       for (const { name: namedOption } of getAllNamedOptions(schema)) {
         expectContentOrFail(
@@ -271,7 +271,7 @@ export async function generate(path: string, options?: GenerateOptions) {
           'rule option',
           contentsNew,
           namedOption,
-          true
+          true,
         ); // Each rule option is mentioned.
       }
     }
@@ -279,18 +279,18 @@ export async function generate(path: string, options?: GenerateOptions) {
 
   if (initRuleDocs && !initializedRuleDoc) {
     throw new Error(
-      '--init-rule-docs was enabled, but no rule doc file needed to be created.'
+      '--init-rule-docs was enabled, but no rule doc file needed to be created.',
     );
   }
 
   for (const pathRuleListItem of pathRuleList) {
     // Find the exact filename.
     const pathToFile = await getPathWithExactFileNameCasing(
-      join(path, pathRuleListItem)
+      join(path, pathRuleListItem),
     );
     if (!pathToFile || !existsSync(pathToFile)) {
       throw new Error(
-        `Could not find ${String(pathRuleList)} in ESLint plugin.`
+        `Could not find ${String(pathRuleList)} in ESLint plugin.`,
       );
     }
 
@@ -313,16 +313,16 @@ export async function generate(path: string, options?: GenerateOptions) {
           ruleListColumns,
           ruleListSplit,
           urlConfigs,
-          urlRuleDoc
+          urlRuleDoc,
         ),
         plugin,
         configsToRules,
         pluginPrefix,
         configEmojis,
         configFormat,
-        ignoreConfig
+        ignoreConfig,
       ),
-      resolve(pathToFile)
+      resolve(pathToFile),
     );
 
     if (check) {
@@ -330,8 +330,8 @@ export async function generate(path: string, options?: GenerateOptions) {
         console.error(
           `Please run eslint-doc-generator. The rules table in ${relative(
             getPluginRoot(path),
-            pathToFile
-          )} is out-of-date.`
+            pathToFile,
+          )} is out-of-date.`,
         );
         console.error(diff(fileContentsNew, fileContents, { expand: false }));
         process.exitCode = 1;

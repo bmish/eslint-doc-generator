@@ -26,7 +26,7 @@ function sanitizeMarkdownTableCell(text: string): string {
 }
 
 export function sanitizeMarkdownTable(
-  text: readonly (readonly string[])[]
+  text: readonly (readonly string[])[],
 ): readonly (readonly string[])[] {
   return text.map((row) => row.map((col) => sanitizeMarkdownTableCell(col)));
 }

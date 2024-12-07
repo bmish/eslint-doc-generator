@@ -26,7 +26,7 @@ async function loadPackageJson(path: string): Promise<PackageJson> {
     throw new Error('Could not find package.json of ESLint plugin.');
   }
   const pluginPackageJson = JSON.parse(
-    await readFile(join(pluginRoot, 'package.json'), 'utf8')
+    await readFile(join(pluginRoot, 'package.json'), 'utf8'),
   ) as PackageJson;
 
   return pluginPackageJson;
@@ -71,7 +71,7 @@ export async function loadPlugin(path: string): Promise<Plugin> {
     const pluginEntryPointAbs = join(pluginRoot, pluginEntryPoint);
     if (!existsSync(pluginEntryPointAbs)) {
       throw new Error(
-        `ESLint plugin entry point does not exist. Tried: ${pluginEntryPoint}`
+        `ESLint plugin entry point does not exist. Tried: ${pluginEntryPoint}`,
       );
     }
 
@@ -93,7 +93,7 @@ export async function getPluginPrefix(path: string): Promise<string> {
   const pluginPackageJson = await loadPackageJson(path);
   if (!pluginPackageJson.name) {
     throw new Error(
-      "Could not find `name` field in ESLint plugin's package.json."
+      "Could not find `name` field in ESLint plugin's package.json.",
     );
   }
   return pluginPackageJson.name.endsWith('/eslint-plugin')
@@ -127,7 +127,7 @@ export async function getCurrentPackageVersion(): Promise<string> {
     : /* istanbul ignore next -- can't test the compiled version in test */
       '../../package.json';
   const packageJson = JSON.parse(
-    await readFile(new URL(pathToPackageJson, import.meta.url), 'utf8')
+    await readFile(new URL(pathToPackageJson, import.meta.url), 'utf8'),
   ) as PackageJson;
   if (!packageJson.version) {
     throw new Error('Could not find package.json `version`.');

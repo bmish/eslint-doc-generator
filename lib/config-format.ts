@@ -9,7 +9,7 @@ export type ConfigFormat = (typeof CONFIG_FORMATS)[number];
 export function configNameToDisplay(
   configName: string,
   configFormat: ConfigFormat,
-  pluginPrefix: string
+  pluginPrefix: string,
 ) {
   switch (configFormat) {
     case 'name': {

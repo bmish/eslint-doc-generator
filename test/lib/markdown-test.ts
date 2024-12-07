@@ -34,8 +34,8 @@ describe('markdown', function () {
             ## Other section
             Foo.
           `,
-          'rules'
-        )
+          'rules',
+        ),
       ).toBe('## Rules\n');
     });
 
@@ -52,8 +52,8 @@ describe('markdown', function () {
             ## More specific section about rules
             Foo.
           `,
-          'rules'
-        )
+          'rules',
+        ),
       ).toBe('## Rules\n');
     });
   });

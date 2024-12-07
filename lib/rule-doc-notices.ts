@@ -55,7 +55,7 @@ function configsToNoticeSentence(
   configLinkOrWord: string,
   configEmojis: ConfigEmojis,
   configFormat: ConfigFormat,
-  pluginPrefix: string
+  pluginPrefix: string,
 ): string | undefined {
   // Create CSV list of configs with their emojis.
   const csv = configs
@@ -64,7 +64,7 @@ function configsToNoticeSentence(
       return `${emoji ? `${emoji} ` : ''}\`${configNameToDisplay(
         config,
         configFormat,
-        pluginPrefix
+        pluginPrefix,
       )}\``;
     })
     .join(', ');
@@ -134,7 +134,7 @@ const RULE_NOTICES: {
       configsOff.length === 0
     ) {
       throw new Error(
-        'Should not be trying to display config notice for rule not configured in any configs.'
+        'Should not be trying to display config notice for rule not configured in any configs.',
       );
     }
 
@@ -158,7 +158,7 @@ const RULE_NOTICES: {
         configLinkOrWord,
         configEmojis,
         configFormat,
-        pluginPrefix
+        pluginPrefix,
       ),
       configsToNoticeSentence(
         configsWarn,
@@ -167,7 +167,7 @@ const RULE_NOTICES: {
         configLinkOrWord,
         configEmojis,
         configFormat,
-        pluginPrefix
+        pluginPrefix,
       ),
       configsToNoticeSentence(
         configsOff,
@@ -176,7 +176,7 @@ const RULE_NOTICES: {
         configLinkOrWord,
         configEmojis,
         configFormat,
-        pluginPrefix
+        pluginPrefix,
       ),
     ]
       .filter(Boolean)
@@ -205,8 +205,8 @@ const RULE_NOTICES: {
         replaceRulePlaceholder(pathRuleDoc, ruleName),
         true,
         true,
-        urlRuleDoc
-      )
+        urlRuleDoc,
+      ),
     );
     return `${EMOJI_DEPRECATED} This rule is deprecated.${
       replacedBy && replacedBy.length > 0
@@ -219,7 +219,7 @@ const RULE_NOTICES: {
     /* istanbul ignore next -- this shouldn't happen */
     if (!description) {
       throw new Error(
-        'Should not be trying to display description notice for rule with no description.'
+        'Should not be trying to display description notice for rule with no description.',
       );
     }
     // Return the description like a normal body sentence.
@@ -230,7 +230,7 @@ const RULE_NOTICES: {
     /* istanbul ignore next -- this shouldn't happen */
     if (!type) {
       throw new Error(
-        'Should not be trying to display type notice for rule with no type.'
+        'Should not be trying to display type notice for rule with no type.',
       );
     }
     return RULE_TYPE_MESSAGES_NOTICES[type];
@@ -248,7 +248,7 @@ const RULE_NOTICES: {
     }
     /* istanbul ignore next -- this shouldn't happen */
     throw new Error(
-      'Should not be trying to display fixable and has suggestions column when neither apply.'
+      'Should not be trying to display fixable and has suggestions column when neither apply.',
     );
   },
   [NOTICE_TYPE.HAS_SUGGESTIONS]: NOTICE_HAS_SUGGESTIONS,
@@ -265,7 +265,7 @@ function getNoticesForRule(
   configsError: readonly string[],
   configsWarn: readonly string[],
   configsOff: readonly string[],
-  ruleDocNotices: readonly NOTICE_TYPE[]
+  ruleDocNotices: readonly NOTICE_TYPE[],
 ) {
   const notices: {
     [key in NOTICE_TYPE]: boolean;
@@ -293,7 +293,7 @@ function getNoticesForRule(
 
   // Recreate object using the ordering and presence of columns specified in ruleDocNotices.
   return Object.fromEntries(
-    ruleDocNotices.map((type) => [type, notices[type]])
+    ruleDocNotices.map((type) => [type, notices[type]]),
   ) as Record<NOTICE_TYPE, boolean>;
 }
 
@@ -312,7 +312,7 @@ function getRuleNoticeLines(
   ignoreConfig: readonly string[],
   ruleDocNotices: readonly NOTICE_TYPE[],
   urlConfigs?: string,
-  urlRuleDoc?: string | UrlRuleDocFunction
+  urlRuleDoc?: string | UrlRuleDocFunction,
 ) {
   const lines: string[] = [];
 
@@ -333,21 +333,21 @@ function getRuleNoticeLines(
     ruleName,
     configsToRules,
     pluginPrefix,
-    SEVERITY_TYPE.error
+    SEVERITY_TYPE.error,
   ).filter((configName) => !ignoreConfig.includes(configName));
 
   const configsWarn = getConfigsForRule(
     ruleName,
     configsToRules,
     pluginPrefix,
-    SEVERITY_TYPE.warn
+    SEVERITY_TYPE.warn,
   ).filter((configName) => !ignoreConfig.includes(configName));
 
   const configsOff = getConfigsForRule(
     ruleName,
     configsToRules,
     pluginPrefix,
-    SEVERITY_TYPE.off
+    SEVERITY_TYPE.off,
   ).filter((configName) => !ignoreConfig.includes(configName));
 
   const notices = getNoticesForRule(
@@ -355,7 +355,7 @@ function getRuleNoticeLines(
     configsError,
     configsWarn,
     configsOff,
-    ruleDocNotices
+    ruleDocNotices,
   );
   let noticeType: keyof typeof notices;
 
@@ -398,7 +398,7 @@ function getRuleNoticeLines(
             type: rule.meta?.type,
             urlRuleDoc,
           })
-        : ruleNoticeStrOrFn
+        : ruleNoticeStrOrFn,
     );
   }
 
@@ -409,7 +409,7 @@ function makeRuleDocTitle(
   name: string,
   description: string | undefined,
   pluginPrefix: string,
-  ruleDocTitleFormat: RuleDocTitleFormat
+  ruleDocTitleFormat: RuleDocTitleFormat,
 ) {
   const descriptionFormatted = description
     ? removeTrailingPeriod(toSentenceCase(description))
@@ -434,8 +434,8 @@ function makeRuleDocTitle(
       default: {
         throw new Error(
           `Unhandled rule doc title format fallback: ${String(
-            ruleDocTitleFormatWithFallback
-          )}`
+            ruleDocTitleFormatWithFallback,
+          )}`,
         );
       }
     }
@@ -447,7 +447,7 @@ function makeRuleDocTitle(
       /* istanbul ignore next -- this shouldn't happen */
       if (!descriptionFormatted) {
         throw new Error(
-          'Attempting to display non-existent description in rule doc title.'
+          'Attempting to display non-existent description in rule doc title.',
         );
       }
       return `# ${descriptionFormatted}`;
@@ -456,7 +456,7 @@ function makeRuleDocTitle(
       /* istanbul ignore next -- this shouldn't happen */
       if (!descriptionFormatted) {
         throw new Error(
-          'Attempting to display non-existent description in rule doc title.'
+          'Attempting to display non-existent description in rule doc title.',
         );
       }
       return `# ${descriptionFormatted} (\`${name}\`)`;
@@ -465,7 +465,7 @@ function makeRuleDocTitle(
       /* istanbul ignore next -- this shouldn't happen */
       if (!descriptionFormatted) {
         throw new Error(
-          'Attempting to display non-existent description in rule doc title.'
+          'Attempting to display non-existent description in rule doc title.',
         );
       }
       return `# ${descriptionFormatted} (\`${pluginPrefix}/${name}\`)`;
@@ -480,8 +480,8 @@ function makeRuleDocTitle(
     default: {
       throw new Error(
         `Unhandled rule doc title format: ${String(
-          ruleDocTitleFormatWithFallback
-        )}`
+          ruleDocTitleFormatWithFallback,
+        )}`,
       );
     }
   }
@@ -505,7 +505,7 @@ export function generateRuleHeaderLines(
   ruleDocNotices: readonly NOTICE_TYPE[],
   ruleDocTitleFormat: RuleDocTitleFormat,
   urlConfigs?: string,
-  urlRuleDoc?: string | UrlRuleDocFunction
+  urlRuleDoc?: string | UrlRuleDocFunction,
 ): string {
   return [
     makeRuleDocTitle(name, description, pluginPrefix, ruleDocTitleFormat),
@@ -521,7 +521,7 @@ export function generateRuleHeaderLines(
       ignoreConfig,
       ruleDocNotices,
       urlConfigs,
-      urlRuleDoc
+      urlRuleDoc,
     ),
     '',
     END_RULE_HEADER_MARKER,

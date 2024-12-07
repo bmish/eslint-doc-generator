@@ -53,8 +53,8 @@ describe('generate (file paths)', function () {
           `Could not find rule doc (run with --init-rule-docs to create): ${join(
             'docs',
             'rules',
-            'no-bar.md'
-          )}`
+            'no-bar.md',
+          )}`,
         );
       });
     });
@@ -150,7 +150,7 @@ describe('generate (file paths)', function () {
 
     it('throws an error', async function () {
       await expect(generate('.', { initRuleDocs: true })).rejects.toThrow(
-        '--init-rule-docs was enabled, but no rule doc file needed to be created.'
+        '--init-rule-docs was enabled, but no rule doc file needed to be created.',
       );
     });
   });
@@ -188,7 +188,7 @@ describe('generate (file paths)', function () {
 
     it('throws an error', async function () {
       await expect(generate('.')).rejects.toThrow(
-        'Could not find README.md in ESLint plugin.'
+        'Could not find README.md in ESLint plugin.',
       );
     });
   });
@@ -363,23 +363,23 @@ describe('generate (file paths)', function () {
       await expect(
         generate('.', {
           pathRuleList: `README.md,${join('rules', 'list.md')}`,
-        })
+        }),
       ).rejects.toThrow(
         `Provide property as array, not a CSV string: README.md,${join(
           'rules',
-          'list.md'
-        )}`
+          'list.md',
+        )}`,
       );
 
       await expect(
         generate('.', {
           pathRuleList: [`README.md,${join('rules', 'list.md')}`],
-        })
+        }),
       ).rejects.toThrow(
         `Provide property as array, not a CSV string: README.md,${join(
           'rules',
-          'list.md'
-        )}`
+          'list.md',
+        )}`,
       );
     });
   });

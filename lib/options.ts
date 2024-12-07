@@ -54,7 +54,7 @@ export const OPTION_DEFAULTS = {
   [OPTION_TYPE.PATH_RULE_LIST]: ['README.md'],
   [OPTION_TYPE.POSTPROCESS]: (content: string) => content,
   [OPTION_TYPE.RULE_DOC_NOTICES]: Object.entries(
-    NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING
+    NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING,
   )
     .filter(([_col, enabled]) => enabled)
     .map(([col]) => col),
@@ -63,7 +63,7 @@ export const OPTION_DEFAULTS = {
   [OPTION_TYPE.RULE_DOC_SECTION_OPTIONS]: true,
   [OPTION_TYPE.RULE_DOC_TITLE_FORMAT]: DEFAULT_RULE_DOC_TITLE_FORMAT,
   [OPTION_TYPE.RULE_LIST_COLUMNS]: Object.entries(
-    COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING
+    COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING,
   )
     .filter(([_col, enabled]) => enabled)
     .map(([col]) => col),

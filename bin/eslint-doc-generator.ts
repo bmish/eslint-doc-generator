@@ -14,5 +14,5 @@ run(process.argv, (path, options) => generate(path, options)).catch(
       console.error(error.message);
     }
     process.exitCode = 1;
-  }
+  },
 );

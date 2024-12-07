@@ -158,7 +158,7 @@ describe('generate (--rule-list-columns)', function () {
     it('throws an error', async function () {
       await expect(
         // @ts-expect-error -- testing non-existent column type
-        generate('.', { ruleListColumns: [COLUMN_TYPE.NAME, 'non-existent'] })
+        generate('.', { ruleListColumns: [COLUMN_TYPE.NAME, 'non-existent'] }),
       ).rejects.toThrow('Invalid ruleListColumns option: non-existent');
     });
   });
@@ -197,7 +197,7 @@ describe('generate (--rule-list-columns)', function () {
       await expect(
         generate('.', {
           ruleListColumns: [COLUMN_TYPE.NAME, COLUMN_TYPE.NAME],
-        })
+        }),
       ).rejects.toThrow('Duplicate value detected in ruleListColumns option.');
     });
   });

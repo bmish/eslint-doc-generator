@@ -11,7 +11,7 @@ export function getConfigsThatSetARule(
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   ignoreConfig: readonly string[],
-  severityType?: SEVERITY_TYPE
+  severityType?: SEVERITY_TYPE,
 ) {
   /* istanbul ignore next -- this shouldn't happen */
   if (!plugin.rules) {
@@ -27,9 +27,9 @@ export function getConfigsThatSetARule(
             ruleName,
             configsToRules,
             pluginPrefix,
-            severityType
-          ).includes(configName)
-        )
+            severityType,
+          ).includes(configName),
+        ),
       )
       // Filter out ignored configs.
       .filter(([configName]) => !ignoreConfig.includes(configName))
@@ -46,7 +46,7 @@ export function getConfigsForRule(
   ruleName: string,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
-  severityType?: SEVERITY_TYPE
+  severityType?: SEVERITY_TYPE,
 ) {
   const severity = severityType
     ? SEVERITY_TYPE_TO_SET[severityType]
@@ -70,7 +70,7 @@ export function getConfigsForRule(
   }
 
   return configNames.sort((a, b) =>
-    a.toLowerCase().localeCompare(b.toLowerCase())
+    a.toLowerCase().localeCompare(b.toLowerCase()),
   );
 }
 
@@ -87,10 +87,10 @@ export function findConfigEmoji(
   configName: string,
   options?: {
     fallback?: 'badge';
-  }
+  },
 ) {
   let emoji = configEmojis.find(
-    (configEmoji) => configEmoji.config === configName
+    (configEmoji) => configEmoji.config === configName,
   )?.emoji;
   if (!emoji) {
     if (options?.fallback === 'badge') {
@@ -112,13 +112,13 @@ export function getEmojisForConfigsSettingRuleToSeverity(
   configsToRulesWithoutIgnored: ConfigsToRules,
   pluginPrefix: string,
   configEmojis: ConfigEmojis,
-  severityType: SEVERITY_TYPE
+  severityType: SEVERITY_TYPE,
 ) {
   const configsOfThisSeverity = getConfigsForRule(
     ruleName,
     configsToRulesWithoutIgnored,
     pluginPrefix,
-    severityType
+    severityType,
   );
 
   const emojis: string[] = [];

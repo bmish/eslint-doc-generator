@@ -18,7 +18,7 @@ export function parseConfigEmojiOptions(
   configEmoji?: readonly (
     | [configName: string, emoji: string]
     | [configName: string]
-  )[]
+  )[],
 ): ConfigEmojis {
   const configsSeen = new Set<string>();
   const configsWithDefaultEmojiRemoved: string[] = [];
@@ -31,7 +31,7 @@ export function parseConfigEmojiOptions(
       // Check for duplicate configs.
       if (configsSeen.has(config)) {
         throw new Error(
-          `Duplicate config name in configEmoji options: ${config}`
+          `Duplicate config name in configEmoji options: ${config}`,
         );
       } else {
         configsSeen.add(config);
@@ -46,14 +46,14 @@ export function parseConfigEmojiOptions(
       if (!config || !emoji || extra.length > 0) {
         throw new Error(
           `Invalid configEmoji option: ${String(
-            configEmojiItem
-          )}. Expected format: config,emoji`
+            configEmojiItem,
+          )}. Expected format: config,emoji`,
         );
       }
 
       if (plugin.configs?.[config] === undefined) {
         throw new Error(
-          `Invalid configEmoji option: ${config} config not found.`
+          `Invalid configEmoji option: ${config} config not found.`,
         );
       }
 
@@ -82,7 +82,7 @@ export function parseConfigEmojiOptions(
  * Parse the option, check for errors, and set defaults.
  */
 export function parseRuleListColumnsOption(
-  ruleListColumns: readonly string[] | undefined
+  ruleListColumns: readonly string[] | undefined,
 ): readonly COLUMN_TYPE[] {
   const values = [...(ruleListColumns ?? [])];
   const VALUES_OF_TYPE = new Set(Object.values(COLUMN_TYPE).map(String));
@@ -101,7 +101,7 @@ export function parseRuleListColumnsOption(
     values.push(
       ...Object.entries(COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING)
         .filter(([_type, enabled]) => enabled)
-        .map(([type]) => type)
+        .map(([type]) => type),
     );
   }
 
@@ -112,7 +112,7 @@ export function parseRuleListColumnsOption(
  * Parse the option, check for errors, and set defaults.
  */
 export function parseRuleDocNoticesOption(
-  ruleDocNotices: readonly string[] | undefined
+  ruleDocNotices: readonly string[] | undefined,
 ): readonly NOTICE_TYPE[] {
   const values = [...(ruleDocNotices ?? [])];
   const VALUES_OF_TYPE = new Set(Object.values(NOTICE_TYPE).map(String));
@@ -131,7 +131,7 @@ export function parseRuleDocNoticesOption(
     values.push(
       ...Object.entries(NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING)
         .filter(([_type, enabled]) => enabled)
-        .map(([type]) => type)
+        .map(([type]) => type),
     );
   }
 

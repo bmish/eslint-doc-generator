@@ -29,7 +29,6 @@ export default tseslint.config(
         'error',
         {
           singleQuote: true,
-          trailingComma: 'es5', // TODO: remove this and use default
         },
       ],
 
@@ -171,5 +170,5 @@ export default tseslint.config(
       'coverage/**',
       'test/fixtures/**',
     ],
-  }
+  },
 );
