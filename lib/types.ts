@@ -135,7 +135,7 @@ export type RuleListSplitFunction = (rules: RuleNamesAndRules) => readonly {
  */
 export type UrlRuleDocFunction = (
   name: string,
-  path: string
+  path: string,
 ) => string | undefined;
 
 /**
@@ -189,7 +189,7 @@ export type GenerateOptions = {
    */
   readonly postprocess?: (
     content: string,
-    pathToFile: string
+    pathToFile: string,
   ) => string | Promise<string>;
   /**
    * Ordered list of notices to display in rule doc.

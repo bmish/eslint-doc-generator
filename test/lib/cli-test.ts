@@ -113,7 +113,7 @@ describe('cli', function () {
           'node', // Path to node.
           'eslint-doc-generator.js', // Path to this binary.
         ],
-        stub
+        stub,
       );
       expect(stub.callCount).toBe(1);
       expect(stub.firstCall.args).toMatchSnapshot();
@@ -130,7 +130,7 @@ describe('cli', function () {
 
           ...Object.values(cliOptionsAll).flat(),
         ],
-        stub
+        stub,
       );
       expect(stub.callCount).toBe(1);
       expect(stub.firstCall.args).toMatchSnapshot();
@@ -162,7 +162,7 @@ describe('cli', function () {
           'node', // Path to node.
           'eslint-doc-generator.js', // Path to this binary.
         ],
-        stub
+        stub,
       );
       expect(stub.callCount).toBe(1);
       expect(stub.firstCall.args).toMatchSnapshot();
@@ -196,7 +196,7 @@ describe('cli', function () {
 
           ...Object.values(cliOptionsAll).flat(),
         ],
-        stub
+        stub,
       );
       expect(stub.callCount).toBe(1);
       expect(stub.firstCall.args).toMatchSnapshot();
@@ -235,7 +235,7 @@ describe('cli', function () {
           '--path-rule-list',
           'listFromCli2.md',
         ],
-        stub
+        stub,
       );
       expect(stub.callCount).toBe(1);
       expect(stub.firstCall.args).toMatchSnapshot();
@@ -253,7 +253,7 @@ describe('cli', function () {
           '--ignore-deprecated-rules',
           'false',
         ],
-        stub
+        stub,
       );
       expect(stub.callCount).toBe(1);
       expect(stub.firstCall.args).toMatchSnapshot();
@@ -271,7 +271,7 @@ describe('cli', function () {
           '--ignore-deprecated-rules',
           'true',
         ],
-        stub
+        stub,
       );
       expect(stub.callCount).toBe(1);
       expect(stub.firstCall.args).toMatchSnapshot();
@@ -288,7 +288,7 @@ describe('cli', function () {
 
           '--ignore-deprecated-rules',
         ],
-        stub
+        stub,
       );
       expect(stub.callCount).toBe(1);
       expect(stub.firstCall.args).toMatchSnapshot();
@@ -318,8 +318,8 @@ describe('cli', function () {
             'node', // Path to node.
             'eslint-doc-generator.js', // Path to this binary.
           ],
-          stub
-        )
+          stub,
+        ),
       ).rejects.toThrow('Could not find package.json `version`.');
     });
   });
@@ -351,8 +351,8 @@ describe('cli', function () {
             'node', // Path to node.
             'eslint-doc-generator.js', // Path to this binary.
           ],
-          stub
-        )
+          stub,
+        ),
       ).rejects.toThrow('config file must NOT have additional properties');
     });
 
@@ -378,8 +378,8 @@ describe('cli', function () {
             'node', // Path to node.
             'eslint-doc-generator.js', // Path to this binary.
           ],
-          stub
-        )
+          stub,
+        ),
       ).rejects.toThrow('postprocess must be a function.');
     });
 
@@ -405,10 +405,10 @@ describe('cli', function () {
             'node', // Path to node.
             'eslint-doc-generator.js', // Path to this binary.
           ],
-          stub
-        )
+          stub,
+        ),
       ).rejects.toThrow(
-        'config file/ruleListSplit must be string, config file/ruleListSplit must be array, config file/ruleListSplit must match a schema in anyOf'
+        'config file/ruleListSplit must be string, config file/ruleListSplit must be array, config file/ruleListSplit must match a schema in anyOf',
       );
     });
 
@@ -434,10 +434,10 @@ describe('cli', function () {
             'node', // Path to node.
             'eslint-doc-generator.js', // Path to this binary.
           ],
-          stub
-        )
+          stub,
+        ),
       ).rejects.toThrow(
-        'config file/ruleListSplit must be string, config file/ruleListSplit/0 must be string, config file/ruleListSplit must match a schema in anyOf'
+        'config file/ruleListSplit must be string, config file/ruleListSplit/0 must be string, config file/ruleListSplit must match a schema in anyOf',
       );
     });
 
@@ -463,10 +463,10 @@ describe('cli', function () {
             'node', // Path to node.
             'eslint-doc-generator.js', // Path to this binary.
           ],
-          stub
-        )
+          stub,
+        ),
       ).rejects.toThrow(
-        'config file/ruleListSplit must be string, config file/ruleListSplit must NOT have fewer than 1 items, config file/ruleListSplit must match a schema in anyOf'
+        'config file/ruleListSplit must be string, config file/ruleListSplit must NOT have fewer than 1 items, config file/ruleListSplit must match a schema in anyOf',
       );
     });
   });

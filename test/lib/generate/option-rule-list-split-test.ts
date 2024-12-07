@@ -126,9 +126,9 @@ describe('generate (--rule-list-split)', function () {
 
     it('throws an error', async function () {
       await expect(
-        generate('.', { ruleListSplit: 'non-existent-property' })
+        generate('.', { ruleListSplit: 'non-existent-property' }),
       ).rejects.toThrow(
-        'No rules found with --rule-list-split property "non-existent-property".'
+        'No rules found with --rule-list-split property "non-existent-property".',
       );
     });
   });
@@ -694,9 +694,9 @@ describe('generate (--rule-list-split)', function () {
       await expect(
         generate('.', {
           ruleListSplit: ['meta.deprecated', 'non-existent-property'],
-        })
+        }),
       ).rejects.toThrow(
-        'No rules found with --rule-list-split property "non-existent-property".'
+        'No rules found with --rule-list-split property "non-existent-property".',
       );
     });
   });
@@ -799,7 +799,7 @@ describe('generate (--rule-list-split)', function () {
           ruleListSplit: () => {
             return null; // eslint-disable-line unicorn/no-null -- intentionally invalid return value
           },
-        })
+        }),
       ).rejects.toThrow('ruleListSplit return value must be array');
     });
 
@@ -809,9 +809,9 @@ describe('generate (--rule-list-split)', function () {
           ruleListSplit: () => {
             return [];
           },
-        })
+        }),
       ).rejects.toThrow(
-        'ruleListSplit return value must NOT have fewer than 1 items'
+        'ruleListSplit return value must NOT have fewer than 1 items',
       );
     });
 
@@ -822,7 +822,7 @@ describe('generate (--rule-list-split)', function () {
           ruleListSplit: () => {
             return [{ title: 'Foo', rules: null }]; // eslint-disable-line unicorn/no-null -- intentionally invalid return value
           },
-        })
+        }),
       ).rejects.toThrow('ruleListSplit return value/0/rules must be array');
     });
 
@@ -832,9 +832,9 @@ describe('generate (--rule-list-split)', function () {
           ruleListSplit: () => {
             return [{ title: 'Foo', rules: [] }];
           },
-        })
+        }),
       ).rejects.toThrow(
-        'ruleListSplit return value/0/rules must NOT have fewer than 1 items'
+        'ruleListSplit return value/0/rules must NOT have fewer than 1 items',
       );
     });
 
@@ -845,7 +845,7 @@ describe('generate (--rule-list-split)', function () {
           ruleListSplit: (rules) => {
             return [{ title: 123, rules }];
           },
-        })
+        }),
       ).rejects.toThrow('ruleListSplit return value/0/title must be string');
     });
 
@@ -855,9 +855,9 @@ describe('generate (--rule-list-split)', function () {
           ruleListSplit: (rules) => {
             return [{ title: 'Foo', rules: [rules[0], rules[0]] }];
           },
-        })
+        }),
       ).rejects.toThrow(
-        'ruleListSplit return value/0/rules must NOT have duplicate items (items ## 0 and 1 are identical)'
+        'ruleListSplit return value/0/rules must NOT have duplicate items (items ## 0 and 1 are identical)',
       );
     });
   });

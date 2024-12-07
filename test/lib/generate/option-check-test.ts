@@ -50,7 +50,7 @@ describe('generate (--check)', function () {
         `Please run eslint-doc-generator. A rule doc is out-of-date: ${join(
           'docs',
           'rules',
-          'no-foo.md'
+          'no-foo.md',
         )}`,
       ]);
       expect(consoleErrorStub.secondCall.args).toMatchSnapshot(); // Diff

@@ -20,7 +20,7 @@ import { CONFIG_FORMATS } from './config-format.js';
  */
 function collect(
   value: string,
-  previous: readonly string[]
+  previous: readonly string[],
 ): readonly string[] {
   return [...previous, value];
 }
@@ -31,7 +31,7 @@ function collect(
  * */
 function collectCSV(
   value: string,
-  previous: readonly string[]
+  previous: readonly string[],
 ): readonly string[] {
   return [...previous, ...value.split(',')];
 }
@@ -42,7 +42,7 @@ function collectCSV(
  * */
 function collectCSVNested(
   value: string,
-  previous: readonly (readonly string[])[]
+  previous: readonly (readonly string[])[],
 ): readonly (readonly string[])[] {
   return [...previous, value.split(',')];
 }
@@ -146,7 +146,7 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
         validate.errors
           ? ajv.errorsText(validate.errors, { dataVar: 'config file' })
           : /* istanbul ignore next -- this shouldn't happen */
-            'Invalid config file'
+            'Invalid config file',
       );
     }
 
@@ -180,7 +180,7 @@ async function loadConfigFileOptions(): Promise<GenerateOptions> {
  */
 export async function run(
   argv: readonly string[],
-  cb: (path: string, options: GenerateOptions) => Promise<void>
+  cb: (path: string, options: GenerateOptions) => Promise<void>,
 ) {
   const program = new Command();
 
@@ -188,123 +188,123 @@ export async function run(
   await program
     .version(await getCurrentPackageVersion())
     .addArgument(
-      new Argument('[path]', 'path to ESLint plugin root').default('.')
+      new Argument('[path]', 'path to ESLint plugin root').default('.'),
     )
     .option(
       '--check [boolean]',
       `(optional) Whether to check for and fail if there is a diff. Any diff will be displayed but no output will be written to files. Typically used during CI. (default: ${String(
-        OPTION_DEFAULTS[OPTION_TYPE.CHECK]
+        OPTION_DEFAULTS[OPTION_TYPE.CHECK],
       )})`,
-      parseBoolean
+      parseBoolean,
     )
     .option(
       '--config-emoji <config-emoji>',
       '(optional) Custom emoji to use for a config. Format is `config-name,emoji`. Default emojis are provided for common configs. To use a text/image/icon badge instead of an emoji, supply the corresponding markdown as the emoji. Option can be repeated.',
       collectCSVNested,
-      []
+      [],
     )
     .addOption(
       new Option(
         '--config-format <config-format>',
         `(optional) The format to use for the config name. (default: ${
           OPTION_DEFAULTS[OPTION_TYPE.CONFIG_FORMAT]
-        })`
-      ).choices(CONFIG_FORMATS)
+        })`,
+      ).choices(CONFIG_FORMATS),
     )
     .option(
       '--ignore-config <config>',
       '(optional) Config to ignore from being displayed (often used for an `all` config) (option can be repeated).',
       collect,
-      []
+      [],
     )
     .option(
       '--ignore-deprecated-rules [boolean]',
       `(optional) Whether to ignore deprecated rules from being checked, displayed, or updated. (default: ${String(
-        OPTION_DEFAULTS[OPTION_TYPE.IGNORE_DEPRECATED_RULES]
+        OPTION_DEFAULTS[OPTION_TYPE.IGNORE_DEPRECATED_RULES],
       )})`,
-      parseBoolean
+      parseBoolean,
     )
     .option(
       '--init-rule-docs [boolean]',
       `(optional) Whether to create rule doc files if they don't yet exist. (default: ${String(
-        OPTION_DEFAULTS[OPTION_TYPE.INIT_RULE_DOCS]
+        OPTION_DEFAULTS[OPTION_TYPE.INIT_RULE_DOCS],
       )})`,
-      parseBoolean
+      parseBoolean,
     )
     .option(
       '--path-rule-doc <path>',
       `(optional) Path to markdown file for each rule doc. Use \`{name}\` placeholder for the rule name. To specify a function, use a JavaScript-based config file. (default: ${
         OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_DOC]
-      })`
+      })`,
     )
     .option(
       '--path-rule-list <path>',
       `(optional) Path to markdown file where the rules table list should live. Option can be repeated. Defaults to ${String(
-        OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_LIST]
+        OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_LIST],
       )} if not provided.`,
       collect,
-      []
+      [],
     )
     .option(
       '--rule-doc-notices <notices>',
       `(optional) Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. (choices: "${Object.values(
-        NOTICE_TYPE
+        NOTICE_TYPE,
       ).join('", "')}") (default: ${String(
-        OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_NOTICES]
+        OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_NOTICES],
       )})`,
       collectCSV,
-      []
+      [],
     )
     .option(
       '--rule-doc-section-exclude <section>',
       '(optional) Disallowed section in each rule doc (option can be repeated).',
       collect,
-      []
+      [],
     )
     .option(
       '--rule-doc-section-include <section>',
       '(optional) Required section in each rule doc (option can be repeated).',
       collect,
-      []
+      [],
     )
     .option(
       '--rule-doc-section-options [boolean]',
       `(optional) Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options. (default: ${String(
-        OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_OPTIONS]
+        OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_OPTIONS],
       )})`,
-      parseBoolean
+      parseBoolean,
     )
     .addOption(
       new Option(
         '--rule-doc-title-format <format>',
         `(optional) The format to use for rule doc titles. (default: ${
           OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_TITLE_FORMAT]
-        })`
-      ).choices(RULE_DOC_TITLE_FORMATS)
+        })`,
+      ).choices(RULE_DOC_TITLE_FORMATS),
     )
     .option(
       '--rule-list-columns <columns>',
       `(optional) Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. (choices: "${Object.values(
-        COLUMN_TYPE
+        COLUMN_TYPE,
       ).join('", "')})" (default: ${String(
-        OPTION_DEFAULTS[OPTION_TYPE.RULE_LIST_COLUMNS]
+        OPTION_DEFAULTS[OPTION_TYPE.RULE_LIST_COLUMNS],
       )})`,
       collectCSV,
-      []
+      [],
     )
     .option(
       '--rule-list-split <property>',
       '(optional) Rule property(s) to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`. To specify a function, use a JavaScript-based config file.',
       collectCSV,
-      []
+      [],
     )
     .option(
       '--url-configs <url>',
-      '(optional) Link to documentation about the ESLint configurations exported by the plugin.'
+      '(optional) Link to documentation about the ESLint configurations exported by the plugin.',
     )
     .option(
       '--url-rule-doc <url>',
-      '(optional) Link to documentation for each rule. Useful when it differs from the rule doc path on disk (e.g. custom documentation site in use). Use `{name}` placeholder for the rule name. To specify a function, use a JavaScript-based config file.'
+      '(optional) Link to documentation for each rule. Useful when it differs from the rule doc path on disk (e.g. custom documentation site in use). Use `{name}` placeholder for the rule name. To specify a function, use a JavaScript-based config file.',
     )
     .action(async function (path: string, options: GenerateOptions) {
       // Load config file options and merge with CLI options.

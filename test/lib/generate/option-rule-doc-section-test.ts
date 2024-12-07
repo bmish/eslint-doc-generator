@@ -45,7 +45,7 @@ describe('generate (rule doc sections)', function () {
         generate('.', {
           ruleDocSectionInclude: ['Examples'],
           ruleDocSectionExclude: ['Unwanted Section'],
-        })
+        }),
       ).resolves.toBeUndefined();
     });
   });

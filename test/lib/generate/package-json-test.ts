@@ -350,7 +350,7 @@ describe('generate (package.json)', function () {
 
     it('throws an error', async function () {
       await expect(generate('.')).rejects.toThrow(
-        'ESLint plugin entry point does not exist. Tried: index.js'
+        'ESLint plugin entry point does not exist. Tried: index.js',
       );
     });
   });

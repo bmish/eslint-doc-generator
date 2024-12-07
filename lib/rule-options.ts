@@ -17,7 +17,7 @@ export type RuleOption = {
 };
 
 function typeToString(
-  type: JSONSchema4TypeName[] | JSONSchema4TypeName
+  type: JSONSchema4TypeName[] | JSONSchema4TypeName,
 ): string {
   return Array.isArray(type)
     ? type.map((item) => capitalizeOnlyFirstLetter(item)).join(', ')
@@ -30,7 +30,7 @@ function typeToString(
  * @returns - list of named options we could detect from the schema
  */
 export function getAllNamedOptions(
-  jsonSchema: JSONSchema4 | readonly JSONSchema4[] | undefined | null
+  jsonSchema: JSONSchema4 | readonly JSONSchema4[] | undefined | null,
 ): readonly RuleOption[] {
   if (!jsonSchema) {
     return [];
@@ -66,7 +66,7 @@ export function getAllNamedOptions(
               ? value.required
               : Array.isArray(js.required) && js.required.includes(key),
           deprecated: value.deprecated, // eslint-disable-line @typescript-eslint/no-unsafe-assignment -- property exists on future JSONSchema version but we can let it be used anyway.
-        }))
+        })),
       );
     }
   });
@@ -79,7 +79,7 @@ export function getAllNamedOptions(
  * @returns - whether the schema has options
  */
 export function hasOptions(
-  jsonSchema: JSONSchema4 | readonly JSONSchema4[]
+  jsonSchema: JSONSchema4 | readonly JSONSchema4[],
 ): boolean {
   return (
     (Array.isArray(jsonSchema) && jsonSchema.length > 0) ||

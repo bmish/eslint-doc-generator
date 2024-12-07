@@ -53,7 +53,7 @@ const COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
  */
 function arrayToString(arr: readonly unknown[]): string {
   return `${arr.length === 0 ? '`' : ''}[${arr.length > 0 ? '`' : ''}${arr.join(
-    '`, `'
+    '`, `',
   )}${arr.length > 0 ? '`' : ''}]${arr.length === 0 ? '`' : ''}`;
 }
 
@@ -92,18 +92,18 @@ function ruleOptionsToColumnsToDisplay(ruleOptions: readonly RuleOption[]): {
   } = {
     // Alphabetical order.
     [COLUMN_TYPE.DEFAULT]: ruleOptions.some(
-      (ruleOption) => ruleOption.default !== undefined
+      (ruleOption) => ruleOption.default !== undefined,
     ),
     [COLUMN_TYPE.DEPRECATED]: ruleOptions.some(
-      (ruleOption) => ruleOption.deprecated
+      (ruleOption) => ruleOption.deprecated,
     ),
     [COLUMN_TYPE.DESCRIPTION]: ruleOptions.some(
-      (ruleOption) => ruleOption.description
+      (ruleOption) => ruleOption.description,
     ),
     [COLUMN_TYPE.ENUM]: ruleOptions.some((ruleOption) => ruleOption.enum),
     [COLUMN_TYPE.NAME]: true,
     [COLUMN_TYPE.REQUIRED]: ruleOptions.some(
-      (ruleOption) => ruleOption.required
+      (ruleOption) => ruleOption.required,
     ),
     [COLUMN_TYPE.TYPE]: ruleOptions.some((ruleOption) => ruleOption.type),
   };
@@ -135,13 +135,13 @@ function generateRuleOptionsListMarkdown(rule: RuleModule): string {
 
   return markdownTable(
     sanitizeMarkdownTable([listHeaderRow, ...rows]),
-    { align: 'l' } // Left-align headers.
+    { align: 'l' }, // Left-align headers.
   );
 }
 
 export function updateRuleOptionsList(
   markdown: string,
-  rule: RuleModule
+  rule: RuleModule,
 ): string {
   const listStartIndex = markdown.indexOf(BEGIN_RULE_OPTIONS_LIST_MARKER);
   let listEndIndex = markdown.indexOf(END_RULE_OPTIONS_LIST_MARKER);

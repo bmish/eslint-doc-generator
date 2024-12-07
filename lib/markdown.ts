@@ -12,7 +12,7 @@ import { EOL } from 'node:os';
 export function replaceOrCreateHeader(
   markdown: string,
   newHeader: string,
-  marker: string
+  marker: string,
 ) {
   const lines = markdown.split(EOL);
 
@@ -29,7 +29,7 @@ export function replaceOrCreateHeader(
   // Anything after the marker comment, title, or YAML front matter should be kept as-is after the new header.
   const postHeader = lines
     .slice(
-      Math.max(markerLineIndex + 1, titleLineIndex + 1, dashesLineIndex2 + 1)
+      Math.max(markerLineIndex + 1, titleLineIndex + 1, dashesLineIndex2 + 1),
     )
     .join(EOL);
 
@@ -43,12 +43,12 @@ export function replaceOrCreateHeader(
  */
 export function findSectionHeader(
   markdown: string,
-  str: string
+  str: string,
 ): string | undefined {
   // Get all the matching strings.
   const regexp = new RegExp(`## .*${str}.*${EOL}`, 'giu');
   const sectionPotentialMatches = [...markdown.matchAll(regexp)].map(
-    (match) => match[0]
+    (match) => match[0],
   );
 
   if (sectionPotentialMatches.length === 0) {
@@ -63,7 +63,7 @@ export function findSectionHeader(
 
   // Otherwise assume the shortest match is the correct one.
   return sectionPotentialMatches.sort(
-    (a: string, b: string) => a.length - b.length
+    (a: string, b: string) => a.length - b.length,
   )[0];
 }
 
@@ -87,7 +87,7 @@ export function expectContentOrFail(
   contentName: string,
   contents: string,
   content: string,
-  expected: boolean
+  expected: boolean,
 ) {
   // Check for the content and also the versions of the content with escaped quotes
   // in case escaping is needed where the content is referenced.
@@ -100,7 +100,7 @@ export function expectContentOrFail(
       `${docName} should ${
         /* istanbul ignore next -- TODO: test !expected or remove parameter */
         expected ? '' : 'not '
-      }have included ${contentName}: ${content}`
+      }have included ${contentName}: ${content}`,
     );
     process.exitCode = 1;
   }
@@ -110,23 +110,23 @@ export function expectSectionHeaderOrFail(
   contentName: string,
   contents: string,
   possibleHeaders: readonly string[],
-  expected: boolean
+  expected: boolean,
 ) {
   const found = possibleHeaders.some((header) =>
-    findSectionHeader(contents, header)
+    findSectionHeader(contents, header),
   );
   if (found !== expected) {
     if (possibleHeaders.length > 1) {
       console.error(
         `${contentName} should ${expected ? '' : 'not '}have included ${
           expected ? 'one' : 'any'
-        } of these headers: ${possibleHeaders.join(', ')}`
+        } of these headers: ${possibleHeaders.join(', ')}`,
       );
     } else {
       console.error(
         `${contentName} should ${
           expected ? '' : 'not '
-        }have included the header: ${possibleHeaders.join(', ')}`
+        }have included the header: ${possibleHeaders.join(', ')}`,
       );
     }
 

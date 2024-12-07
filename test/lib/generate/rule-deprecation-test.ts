@@ -140,10 +140,10 @@ describe('generate (deprecated rules)', function () {
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
 
       expect(
-        readFileSync('docs/rules/category/no-foo.md', 'utf8')
+        readFileSync('docs/rules/category/no-foo.md', 'utf8'),
       ).toMatchSnapshot();
       expect(
-        readFileSync('docs/rules/category/no-bar.md', 'utf8')
+        readFileSync('docs/rules/category/no-bar.md', 'utf8'),
       ).toMatchSnapshot();
     });
   });
@@ -202,10 +202,10 @@ describe('generate (deprecated rules)', function () {
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
 
       expect(
-        readFileSync('docs/category/no-foo/README.md', 'utf8')
+        readFileSync('docs/category/no-foo/README.md', 'utf8'),
       ).toMatchSnapshot();
       expect(
-        readFileSync('docs/category/no-bar/README.md', 'utf8')
+        readFileSync('docs/category/no-bar/README.md', 'utf8'),
       ).toMatchSnapshot();
     });
   });

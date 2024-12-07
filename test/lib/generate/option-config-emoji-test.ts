@@ -157,16 +157,16 @@ describe('generate (--config-emoji)', function () {
     it('throws an error', async function () {
       await expect(
         // @ts-expect-error -- testing invalid input (too many items)
-        generate('.', { configEmoji: [['foo', 'bar', 'baz']] })
+        generate('.', { configEmoji: [['foo', 'bar', 'baz']] }),
       ).rejects.toThrow(
-        'Invalid configEmoji option: foo,bar,baz. Expected format: config,emoji'
+        'Invalid configEmoji option: foo,bar,baz. Expected format: config,emoji',
       );
 
       await expect(
         // @ts-expect-error -- testing invalid input (too few items)
-        generate('.', { configEmoji: [[]] })
+        generate('.', { configEmoji: [[]] }),
       ).rejects.toThrow(
-        'Invalid configEmoji option: . Expected format: config,emoji'
+        'Invalid configEmoji option: . Expected format: config,emoji',
       );
     });
   });
@@ -203,9 +203,9 @@ describe('generate (--config-emoji)', function () {
 
     it('throws an error', async function () {
       await expect(
-        generate('.', { configEmoji: [['config-without-default-emoji']] })
+        generate('.', { configEmoji: [['config-without-default-emoji']] }),
       ).rejects.toThrow(
-        'Invalid configEmoji option: config-without-default-emoji. Expected format: config,emoji'
+        'Invalid configEmoji option: config-without-default-emoji. Expected format: config,emoji',
       );
     });
   });
@@ -285,9 +285,9 @@ describe('generate (--config-emoji)', function () {
 
     it('throws an error', async function () {
       await expect(
-        generate('.', { configEmoji: [['config-does-not-exist', '🔥']] })
+        generate('.', { configEmoji: [['config-does-not-exist', '🔥']] }),
       ).rejects.toThrow(
-        'Invalid configEmoji option: config-does-not-exist config not found.'
+        'Invalid configEmoji option: config-does-not-exist config not found.',
       );
     });
   });
@@ -328,7 +328,7 @@ describe('generate (--config-emoji)', function () {
 
     it('throws an error', async function () {
       await expect(
-        generate('.', { configEmoji: [['recommended', EMOJI_CONFIG_ERROR]] })
+        generate('.', { configEmoji: [['recommended', EMOJI_CONFIG_ERROR]] }),
       ).rejects.toThrow(`Cannot specify reserved emoji ${EMOJI_CONFIG_ERROR}.`);
     });
   });
@@ -373,9 +373,9 @@ describe('generate (--config-emoji)', function () {
             ['recommended', '🔥'],
             ['recommended', '😋'],
           ],
-        })
+        }),
       ).rejects.toThrow(
-        'Duplicate config name in configEmoji options: recommended'
+        'Duplicate config name in configEmoji options: recommended',
       );
     });
   });

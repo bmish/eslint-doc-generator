@@ -35,7 +35,7 @@ function generateConfigListMarkdown(
   pluginPrefix: string,
   configEmojis: ConfigEmojis,
   configFormat: ConfigFormat,
-  ignoreConfig: readonly string[]
+  ignoreConfig: readonly string[],
 ): string {
   /* istanbul ignore next -- configs are sure to exist at this point */
   const configs = Object.values(plugin.configs || {});
@@ -60,13 +60,13 @@ function generateConfigListMarkdown(
             `\`${configNameToDisplay(
               configName,
               configFormat,
-              pluginPrefix
+              pluginPrefix,
             )}\``,
             hasDescription ? description || '' : undefined,
           ].filter((col) => col !== undefined);
         }),
     ]),
-    { align: 'l' } // Left-align headers.
+    { align: 'l' }, // Left-align headers.
   );
 }
 
@@ -77,7 +77,7 @@ export function updateConfigsList(
   pluginPrefix: string,
   configEmojis: ConfigEmojis,
   configFormat: ConfigFormat,
-  ignoreConfig: readonly string[]
+  ignoreConfig: readonly string[],
 ): string {
   const listStartIndex = markdown.indexOf(BEGIN_CONFIG_LIST_MARKER);
   let listEndIndex = markdown.indexOf(END_CONFIG_LIST_MARKER);
@@ -89,7 +89,7 @@ export function updateConfigsList(
 
   if (
     Object.keys(configsToRules).filter(
-      (configName) => !ignoreConfig.includes(configName)
+      (configName) => !ignoreConfig.includes(configName),
     ).length === 0
   ) {
     // No non-ignored configs found.
@@ -109,7 +109,7 @@ export function updateConfigsList(
     pluginPrefix,
     configEmojis,
     configFormat,
-    ignoreConfig
+    ignoreConfig,
   );
 
   return `${preList}${BEGIN_CONFIG_LIST_MARKER}${EOL}${EOL}${list}${EOL}${EOL}${END_CONFIG_LIST_MARKER}${postList}`;
