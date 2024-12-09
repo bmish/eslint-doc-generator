@@ -33,16 +33,12 @@ export default tseslint.config(
       ],
 
       // unicorn rules:
-      'require-unicode-regexp': 'error',
       'unicorn/expiring-todo-comments': 'off',
       'unicorn/import-style': 'off',
       'unicorn/no-anonymous-default-export': 'off',
       'unicorn/no-array-reduce': 'off',
       'unicorn/no-nested-ternary': 'off',
       'unicorn/no-useless-undefined': 'off', // We use a lot of `return undefined` to satisfy the `consistent-return` rule.
-      'unicorn/prefer-at': 'off',
-      'unicorn/prefer-string-raw': 'off',
-      'unicorn/prefer-string-replace-all': 'off',
       'unicorn/prevent-abbreviations': 'off',
 
       // typescript-eslint rules:
@@ -112,6 +108,7 @@ export default tseslint.config(
       radix: 'error',
       'require-atomic-updates': 'error',
       'require-await': 'error',
+      'require-unicode-regexp': 'error',
       'spaced-comment': ['error', 'always', { markers: ['*', '!'] }],
       'sort-vars': 'error',
       yoda: 'error',

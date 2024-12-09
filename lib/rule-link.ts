@@ -14,7 +14,7 @@ export function replaceRulePlaceholder(
   if (typeof pathOrUrl === 'function') {
     return pathOrUrl(ruleName);
   }
-  return pathOrUrl.replace(/\{name\}/gu, ruleName);
+  return pathOrUrl.replaceAll('{name}', ruleName);
 }
 
 /**

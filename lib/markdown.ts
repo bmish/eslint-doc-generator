@@ -93,8 +93,8 @@ export function expectContentOrFail(
   // in case escaping is needed where the content is referenced.
   const hasContent =
     contents.includes(content) ||
-    contents.includes(content.replace(/"/gu, '\\"')) ||
-    contents.includes(content.replace(/'/gu, "\\'"));
+    contents.includes(content.replaceAll('"', String.raw`\"`)) ||
+    contents.includes(content.replaceAll("'", String.raw`\'`));
   if (hasContent !== expected) {
     console.error(
       `${docName} should ${
