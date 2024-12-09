@@ -365,8 +365,11 @@ function getRulesAndHeadersForSplit(
       // Turn ruleListSplit into a title.
       // E.g. meta.docs.requiresTypeChecking to "Requires Type Checking".
       const ruleListSplitParts = ruleListSplitItem.split('.');
-      const ruleListSplitFinalPart =
-        ruleListSplitParts[ruleListSplitParts.length - 1];
+      const ruleListSplitFinalPart = ruleListSplitParts.at(-1);
+      /* istanbul ignore next -- this shouldn't happen */
+      if (!ruleListSplitFinalPart) {
+        throw new Error(`Invalid ruleListSplit value "${ruleListSplitItem}".`);
+      }
       const ruleListSplitTitle = noCase(ruleListSplitFinalPart, {
         transform: (str) => capitalizeOnlyFirstLetter(str),
       });
