@@ -78,7 +78,7 @@ export async function loadPlugin(path: string): Promise<Plugin> {
     if (extname(pluginEntryPointAbs) === '.json') {
       // For JSON files, have to require() instead of import(..., { assert: { type: 'json' } }) because of this error:
       // Dynamic imports only support a second argument when the '--module' option is set to 'esnext', 'node16', or 'nodenext'. ts(1324)
-      // TODO: Switch to import() when we drop support for Node 14.
+      // TODO: Switch to import() when we drop support for Node 14. https://github.com/bmish/eslint-doc-generator/issues/585
       return require(pluginEntryPointAbs) as Plugin; // eslint-disable-line import/no-dynamic-require
     }
 
