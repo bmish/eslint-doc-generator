@@ -59,6 +59,40 @@
 
 
 
+
+## v2.0.0 (2024-12-09)
+
+#### :boom: Breaking Change
+* [#582](https://github.com/bmish/eslint-doc-generator/pull/582) Drop support below ESLint v8 ([@bmish](https://github.com/bmish))
+* [#575](https://github.com/bmish/eslint-doc-generator/pull/575) Require Node 18, 20, 22+ ([@bmish](https://github.com/bmish))
+
+#### :bug: Bug Fix
+* [#577](https://github.com/bmish/eslint-doc-generator/pull/577) Use async file access ([@bmish](https://github.com/bmish))
+
+#### :house: Internal
+* [#583](https://github.com/bmish/eslint-doc-generator/pull/583) Use top-level await for CLI ([@bmish](https://github.com/bmish))
+* [#581](https://github.com/bmish/eslint-doc-generator/pull/581) Use ES2023 target for TypeScript ([@bmish](https://github.com/bmish))
+* [#579](https://github.com/bmish/eslint-doc-generator/pull/579) chore(deps): update dot-prop to v9 ([@bmish](https://github.com/bmish))
+* [#578](https://github.com/bmish/eslint-doc-generator/pull/578) chore(deps): Update dev dependencies and refresh lockfile ([@bmish](https://github.com/bmish))
+* [#576](https://github.com/bmish/eslint-doc-generator/pull/576) chore(deps): Update to ESLint v9 flat config and TypeScript v5 ([@bmish](https://github.com/bmish))
+* [#574](https://github.com/bmish/eslint-doc-generator/pull/574) Remove `typeRoots` and adjust types for Jest support ([@y-hsgw](https://github.com/y-hsgw))
+* [#553](https://github.com/bmish/eslint-doc-generator/pull/553) chore(deps): update @release-it-plugins/lerna-changelog to 7.0.0 ([@MikeMcC399](https://github.com/MikeMcC399))
+* [#547](https://github.com/bmish/eslint-doc-generator/pull/547) chore(deps): update ts-jest to 29.2.5 ([@MikeMcC399](https://github.com/MikeMcC399))
+* [#540](https://github.com/bmish/eslint-doc-generator/pull/540) chore(deps): migrate to eslint-plugin-n@17.11.1 ([@MikeMcC399](https://github.com/MikeMcC399))
+* [#544](https://github.com/bmish/eslint-doc-generator/pull/544) Revert "chore(deps-dev): Bump markdownlint-cli from 0.32.2 to 0.42.0" ([@ddzz](https://github.com/ddzz))
+* [#541](https://github.com/bmish/eslint-doc-generator/pull/541) chore(deps): update eslint-plugin-unicorn to 56.0.0 ([@MikeMcC399](https://github.com/MikeMcC399))
+* [#536](https://github.com/bmish/eslint-doc-generator/pull/536) ci: drop node.js 14.x and 16.x testing ([@MikeMcC399](https://github.com/MikeMcC399))
+* [#539](https://github.com/bmish/eslint-doc-generator/pull/539) chore(deps): replace eslint-plugin-square ([@MikeMcC399](https://github.com/MikeMcC399))
+* [#531](https://github.com/bmish/eslint-doc-generator/pull/531) chore(deps): update eslint-plugin-jest to 27.9.0 ([@MikeMcC399](https://github.com/MikeMcC399))
+* [#530](https://github.com/bmish/eslint-doc-generator/pull/530) chore(deps): update eslint to 8.57.1 ([@MikeMcC399](https://github.com/MikeMcC399))
+
+#### Committers: 4
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+- Darius Dzien ([@ddzz](https://github.com/ddzz))
+- Mike McCready ([@MikeMcC399](https://github.com/MikeMcC399))
+- Yukihiro Hasegawa ([@y-hsgw](https://github.com/y-hsgw))
+
+
 ## v1.7.1 (2024-05-08)
 
 #### :bug: Bug Fix
