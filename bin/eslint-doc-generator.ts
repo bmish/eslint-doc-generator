@@ -7,12 +7,11 @@
 import { run } from '../lib/cli.js';
 import { generate } from '../lib/generator.js';
 
-// eslint-disable-next-line unicorn/prefer-top-level-await -- TODO: use top-level await once updating TypeScript target to ES2022 (when dropping Node 14 support).
-run(process.argv, (path, options) => generate(path, options)).catch(
-  (error: unknown) => {
-    if (error instanceof Error) {
-      console.error(error.message);
-    }
-    process.exitCode = 1;
-  },
-);
+try {
+  await run(process.argv, (path, options) => generate(path, options));
+} catch (error: unknown) {
+  if (error instanceof Error) {
+    console.error(error.message);
+  }
+  process.exitCode = 1;
+}
