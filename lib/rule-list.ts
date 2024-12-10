@@ -1,4 +1,3 @@
-import { EOL } from 'node:os';
 import {
   BEGIN_RULE_LIST_MARKER,
   END_RULE_LIST_MARKER,
@@ -34,12 +33,18 @@ import type {
 import { EMOJIS_TYPE } from './rule-type.js';
 import { hasOptions } from './rule-options.js';
 import { getLinkToRule } from './rule-link.js';
-import { capitalizeOnlyFirstLetter, sanitizeMarkdownTable } from './string.js';
+import {
+  capitalizeOnlyFirstLetter,
+  getEndOfLine,
+  sanitizeMarkdownTable,
+} from './string.js';
 import { noCase } from 'no-case';
 import { getProperty } from 'dot-prop';
 import { boolean, isBooleanable } from 'boolean';
 import Ajv from 'ajv';
 import { ConfigFormat } from './config-format.js';
+
+const EOL = getEndOfLine();
 
 function isBooleanableTrue(value: unknown): boolean {
   return isBooleanable(value) && boolean(value);

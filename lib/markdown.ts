@@ -1,4 +1,6 @@
-import { EOL } from 'node:os';
+import { getEndOfLine } from './string.js';
+
+const EOL = getEndOfLine();
 
 // General helpers for dealing with markdown files / content.
 

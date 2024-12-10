@@ -1,4 +1,3 @@
-import { EOL } from 'node:os';
 import { END_RULE_HEADER_MARKER } from './comment-markers.js';
 import {
   EMOJI_DEPRECATED,
@@ -27,8 +26,11 @@ import {
   toSentenceCase,
   removeTrailingPeriod,
   addTrailingPeriod,
+  getEndOfLine,
 } from './string.js';
 import { ConfigFormat, configNameToDisplay } from './config-format.js';
+
+const EOL = getEndOfLine();
 
 function severityToTerminology(severity: SEVERITY_TYPE) {
   switch (severity) {
