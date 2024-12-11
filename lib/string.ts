@@ -39,11 +39,7 @@ export function sanitizeMarkdownTable(
 // Gets the end of line string while respecting the
 // `.editorconfig` and falling back to `EOL` from `node:os`.
 export function getEndOfLine() {
-  // The passed string is the target file name, relative to process.cwd().
-  // Given that the docs markdown files are generated inside the `docs/rules` folder
-  // This should be the correct path to resolve the `.editorconfig` for these
-  // specific markdown files.
-  const config = editorconfig.parseSync('./docs/rules/markdown.md');
+  const config = editorconfig.parseSync('markdown.md');
 
   let endOfLine = EOL;
 
