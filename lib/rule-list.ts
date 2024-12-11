@@ -35,7 +35,7 @@ import { EMOJIS_TYPE } from './rule-type.js';
 import { hasOptions } from './rule-options.js';
 import { getLinkToRule } from './rule-link.js';
 import { capitalizeOnlyFirstLetter, sanitizeMarkdownTable } from './string.js';
-import { noCase } from 'no-case';
+import { noCase } from 'change-case';
 import { getProperty } from 'dot-prop';
 import { boolean, isBooleanable } from 'boolean';
 import Ajv from 'ajv';
