@@ -35,7 +35,7 @@ import { EMOJIS_TYPE } from './rule-type.js';
 import { hasOptions } from './rule-options.js';
 import { getLinkToRule } from './rule-link.js';
 import { capitalizeOnlyFirstLetter, sanitizeMarkdownTable } from './string.js';
-import { noCase } from 'no-case';
+import { noCase } from 'change-case';
 import { getProperty } from 'dot-prop';
 import { boolean, isBooleanable } from 'boolean';
 import Ajv from 'ajv';
@@ -370,9 +370,10 @@ function getRulesAndHeadersForSplit(
       if (!ruleListSplitFinalPart) {
         throw new Error(`Invalid ruleListSplit value "${ruleListSplitItem}".`);
       }
-      const ruleListSplitTitle = noCase(ruleListSplitFinalPart, {
-        transform: (str) => capitalizeOnlyFirstLetter(str),
-      });
+      const ruleListSplitTitle = noCase(ruleListSplitFinalPart)
+        .split(' ')
+        .map((word) => capitalizeOnlyFirstLetter(word))
+        .join(' ');
 
       // Add a list for the rules with property set to this value.
       rulesAndHeadersForThisSplit.push({
