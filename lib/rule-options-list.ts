@@ -69,12 +69,12 @@ function ruleOptionToColumnValues(ruleOption: RuleOption): {
         ? undefined
         : Array.isArray(ruleOption.default)
           ? arrayToString(ruleOption.default)
-          : `\`${String(ruleOption.default)}\``,
+          : `\`${String(ruleOption.default)}\``, // eslint-disable-line @typescript-eslint/no-base-to-string
     [COLUMN_TYPE.DEPRECATED]: ruleOption.deprecated ? 'Yes' : undefined,
     [COLUMN_TYPE.DESCRIPTION]: ruleOption.description,
     [COLUMN_TYPE.ENUM]:
       ruleOption.enum && ruleOption.enum.length > 0
-        ? `\`${ruleOption.enum.join('`, `')}\``
+        ? `\`${ruleOption.enum.join('`, `')}\`` // eslint-disable-line @typescript-eslint/no-base-to-string
         : undefined,
     [COLUMN_TYPE.NAME]: `\`${ruleOption.name}\``,
     [COLUMN_TYPE.REQUIRED]: ruleOption.required ? 'Yes' : undefined,
