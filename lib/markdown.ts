@@ -1,7 +1,5 @@
 import { getEndOfLine } from './string.js';
 
-const EOL = getEndOfLine();
-
 // General helpers for dealing with markdown files / content.
 
 /**
@@ -16,6 +14,8 @@ export function replaceOrCreateHeader(
   newHeader: string,
   marker: string,
 ) {
+  const EOL = getEndOfLine();
+
   const lines = markdown.split(EOL);
 
   const titleLineIndex = lines.findIndex((line) => line.startsWith('# '));
@@ -47,6 +47,8 @@ export function findSectionHeader(
   markdown: string,
   str: string,
 ): string | undefined {
+  const EOL = getEndOfLine();
+
   // Get all the matching strings.
   const regexp = new RegExp(`## .*${str}.*${EOL}`, 'giu');
   const sectionPotentialMatches = [...markdown.matchAll(regexp)].map(
@@ -70,6 +72,8 @@ export function findSectionHeader(
 }
 
 export function findFinalHeaderLevel(str: string) {
+  const EOL = getEndOfLine();
+
   const lines = str.split(EOL);
   const finalHeader = lines.reverse().find((line) => line.match('^(#+) .+$'));
   return finalHeader ? finalHeader.indexOf(' ') : undefined;

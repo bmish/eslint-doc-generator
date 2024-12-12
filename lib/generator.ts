@@ -35,8 +35,6 @@ import { updateRuleOptionsList } from './rule-options-list.js';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { getEndOfLine } from './string.js';
 
-const EOL = getEndOfLine();
-
 function stringOrArrayWithFallback<T extends string | readonly string[]>(
   stringOrArray: undefined | T,
   fallback: T,
@@ -65,6 +63,8 @@ function stringOrArrayToArrayWithFallback(
 
 // eslint-disable-next-line complexity
 export async function generate(path: string, options?: GenerateOptions) {
+  const EOL = getEndOfLine();
+
   const plugin = await loadPlugin(path);
   const pluginPrefix = await getPluginPrefix(path);
   const configsToRules = await resolveConfigsToRules(plugin);

@@ -39,6 +39,9 @@ export function sanitizeMarkdownTable(
 // Gets the end of line string while respecting the
 // `.editorconfig` and falling back to `EOL` from `node:os`.
 export function getEndOfLine() {
+  // The passed `markdown.md` argument is used as an example
+  // of a markdown file in the plugin root folder in order to
+  // check for any specific markdown configurations.
   const config = editorconfig.parseSync('markdown.md');
 
   let endOfLine = EOL;
