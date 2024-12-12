@@ -60,6 +60,20 @@
 
 
 
+
+## v2.0.1 (2024-12-12)
+
+#### :bug: Bug Fix
+* [#590](https://github.com/bmish/eslint-doc-generator/pull/590) Respect EOL character from `.editorconfig` ([@CloudNStoyan](https://github.com/CloudNStoyan))
+
+#### :house: Internal
+* [#591](https://github.com/bmish/eslint-doc-generator/pull/591) Switch to `change-case` ([@bmish](https://github.com/bmish))
+
+#### Committers: 2
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+- Stoyan Kolev ([@CloudNStoyan](https://github.com/CloudNStoyan))
+
+
 ## v2.0.0 (2024-12-09)
 
 #### :boom: Breaking Change
