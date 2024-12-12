@@ -1,4 +1,3 @@
-import { EOL } from 'node:os';
 import {
   BEGIN_RULE_LIST_MARKER,
   END_RULE_LIST_MARKER,
@@ -34,7 +33,11 @@ import type {
 import { EMOJIS_TYPE } from './rule-type.js';
 import { hasOptions } from './rule-options.js';
 import { getLinkToRule } from './rule-link.js';
-import { capitalizeOnlyFirstLetter, sanitizeMarkdownTable } from './string.js';
+import {
+  capitalizeOnlyFirstLetter,
+  getEndOfLine,
+  sanitizeMarkdownTable,
+} from './string.js';
 import { noCase } from 'change-case';
 import { getProperty } from 'dot-prop';
 import { boolean, isBooleanable } from 'boolean';
@@ -269,6 +272,8 @@ function generateRuleListMarkdownForRulesAndHeaders(
   ignoreConfig: readonly string[],
   urlRuleDoc?: string | UrlRuleDocFunction,
 ): string {
+  const EOL = getEndOfLine();
+
   const parts: string[] = [];
 
   for (const { title, rules } of rulesAndHeaders) {
@@ -416,6 +421,8 @@ export function updateRulesList(
   urlConfigs?: string,
   urlRuleDoc?: string | UrlRuleDocFunction,
 ): string {
+  const EOL = getEndOfLine();
+
   let listStartIndex = markdown.indexOf(BEGIN_RULE_LIST_MARKER);
   let listEndIndex = markdown.indexOf(END_RULE_LIST_MARKER);
 

@@ -53,6 +53,7 @@
     "cosmiconfig": "^9.0.0",
     "deepmerge": "^4.2.2",
     "dot-prop": "^9.0.0",
+    "editorconfig": "^2.0.0",
     "jest-diff": "^29.2.1",
     "json-schema": "^0.4.0",
     "json-schema-traverse": "^1.0.0",

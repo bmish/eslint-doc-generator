@@ -1,4 +1,3 @@
-import { EOL } from 'node:os';
 import {
   BEGIN_RULE_OPTIONS_LIST_MARKER,
   END_RULE_OPTIONS_LIST_MARKER,
@@ -6,7 +5,9 @@ import {
 import { markdownTable } from 'markdown-table';
 import type { RuleModule } from './types.js';
 import { RuleOption, getAllNamedOptions } from './rule-options.js';
-import { sanitizeMarkdownTable } from './string.js';
+import { getEndOfLine, sanitizeMarkdownTable } from './string.js';
+
+const EOL = getEndOfLine();
 
 export enum COLUMN_TYPE {
   // Alphabetical order.
