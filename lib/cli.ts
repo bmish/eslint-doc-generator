@@ -11,7 +11,7 @@ import {
   OPTION_TYPE,
 } from './types.js';
 import { getCurrentPackageVersion } from './package-json.js';
-import { boolean, isBooleanable } from 'boolean';
+import { boolean, isBooleanable } from './boolean.js';
 import { CONFIG_FORMATS } from './config-format.js';
 
 /**

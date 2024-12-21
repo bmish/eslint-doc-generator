@@ -47,7 +47,6 @@
   "dependencies": {
     "@typescript-eslint/utils": "^8.0.0",
     "ajv": "^8.11.2",
-    "boolean": "^3.2.0",
     "change-case": "^5.0.0",
     "commander": "^12.1.0",
     "cosmiconfig": "^9.0.0",
