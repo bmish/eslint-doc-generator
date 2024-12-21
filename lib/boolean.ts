@@ -1,3 +1,25 @@
+export function boolean(value: unknown): boolean {
+  switch (typeof value) {
+    case 'string': {
+      return ['true', 't', 'yes', 'y', 'on', '1'].includes(
+        value.trim().toLowerCase(),
+      );
+    }
+
+    case 'number': {
+      return value.valueOf() === 1;
+    }
+
+    case 'boolean': {
+      return value.valueOf();
+    }
+
+    default: {
+      return false;
+    }
+  }
+}
+
 export function isBooleanable(value: unknown): boolean {
   switch (typeof value) {
     case 'string': {
