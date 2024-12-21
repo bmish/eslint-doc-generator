@@ -40,7 +40,7 @@ import {
 } from './string.js';
 import { noCase } from 'change-case';
 import { getProperty } from 'dot-prop';
-import { boolean, isBooleanable } from 'boolean';
+import { boolean, isBooleanable } from './boolean.js';
 import Ajv from 'ajv';
 import { ConfigFormat } from './config-format.js';
 
