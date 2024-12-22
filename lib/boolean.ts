@@ -1,3 +1,5 @@
+// Originally from: https://www.npmjs.com/package/boolean
+
 export function boolean(value: unknown): boolean {
   switch (typeof value) {
     case 'string': {
