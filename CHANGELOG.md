@@ -61,6 +61,16 @@
 
 
 
+
+## v2.0.2 (2024-12-22)
+
+#### :bug: Bug Fix
+* [#597](https://github.com/bmish/eslint-doc-generator/pull/597) Replace deprecated `boolean` dependency ([@y-hsgw](https://github.com/y-hsgw))
+
+#### Committers: 1
+- Yukihiro Hasegawa ([@y-hsgw](https://github.com/y-hsgw))
+
+
 ## v2.0.1 (2024-12-12)
 
 #### :bug: Bug Fix
