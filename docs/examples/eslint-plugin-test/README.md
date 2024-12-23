@@ -25,7 +25,7 @@ This plugin is for x purpose.
 🎨 Set in the `stylistic` configuration.\
 ⌨️ Set in the `typescript` configuration.\
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\
-💡 Manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).\
+💡 Manually fixable by [editor suggestions](https://eslint.org/docs/latest/extend/custom-rules#providing-suggestions).\
 ⚙️ Has configuration options.\
 💭 Requires [type information](https://typescript-eslint.io/linting/typed-linting).\
 🗂️ The type of rule.\
