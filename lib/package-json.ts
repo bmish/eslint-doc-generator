@@ -62,6 +62,10 @@ export async function loadPlugin(path: string): Promise<Plugin> {
       }
     }
 
+    if (pluginPackageJson.type === 'module' && !exports) {
+      pluginEntryPoint = pluginPackageJson.main;
+    }
+
     // If the ESM export doesn't exist, fall back to throwing the CJS error
     // (if the ESM export does exist, we'll validate it next)
     if (!pluginEntryPoint) {
