@@ -31,7 +31,7 @@ export const SEVERITY_TYPE_TO_WORD: {
 
 // A few individual legends declared here just so they can be reused in multiple legends.
 const LEGEND_FIXABLE = `${EMOJI_FIXABLE} Automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).`;
-const LEGEND_HAS_SUGGESTIONS = `${EMOJI_HAS_SUGGESTIONS} Manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).`;
+const LEGEND_HAS_SUGGESTIONS = `${EMOJI_HAS_SUGGESTIONS} Manually fixable by [editor suggestions](https://eslint.org/docs/latest/extend/custom-rules#providing-suggestions).`;
 
 /**
  * An object containing the legends for each column (as a string or function to generate the string).
