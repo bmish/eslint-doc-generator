@@ -355,6 +355,44 @@ describe('generate (package.json)', function () {
     });
   });
 
+  describe("plugin entry point with type: 'module' and main field specified", function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          main: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `export default {
+          rules: {
+            'no-foo': {
+              meta: { docs: { description: 'disallow foo.' }, },
+              create(context) {}
+            },
+          },
+        };`,
+
+        'README.md':
+          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+        'docs/rules/no-foo.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('finds the entry point', async function () {
+      await expect(generate('.')).resolves.toBeUndefined();
+    });
+  });
+
   describe('passing absolute path for plugin root', function () {
     beforeEach(function () {
       mockFs({
