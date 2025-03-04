@@ -62,6 +62,16 @@
 
 
 
+
+## v2.1.0 (2025-03-04)
+
+#### :rocket: Enhancement
+* [#598](https://github.com/bmish/eslint-doc-generator/pull/598) Support ESLint plugins with `"type": "module"` and `main` in package.json ([@y-hsgw](https://github.com/y-hsgw))
+
+#### Committers: 1
+- Yukihiro Hasegawa ([@y-hsgw](https://github.com/y-hsgw))
+
+
 ## v2.0.2 (2024-12-22)
 
 #### :bug: Bug Fix
