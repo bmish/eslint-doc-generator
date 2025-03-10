@@ -62,11 +62,7 @@ describe('generate (cjs)', function () {
 
   describe('package.json `main` field points to non-existent file', function () {
     it('throws an error', async function () {
-      const FIXTURE_PATH = join(
-        'test',
-        'fixtures',
-        'cjs-main-file-does-not-exist',
-      );
+      const FIXTURE_PATH = join(FIXTURE_ROOT, 'cjs-main-file-does-not-exist');
       await expect(generate(FIXTURE_PATH)).rejects.toThrow(
         /Cannot find module/u,
       );
