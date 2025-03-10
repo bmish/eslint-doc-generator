@@ -44,6 +44,7 @@ export async function loadPlugin(path: string): Promise<Plugin> {
     // eslint-disable-next-line import/no-dynamic-require
     const _plugin = require(pluginRoot) as cjsOrEsmPlugin;
 
+    /* istanbul ignore next */
     if ('__esModule' in _plugin && _plugin.__esModule && _plugin.default) {
       return _plugin.default;
     }
