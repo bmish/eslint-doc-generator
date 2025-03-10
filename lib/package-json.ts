@@ -35,8 +35,20 @@ async function loadPackageJson(path: string): Promise<PackageJson> {
 export async function loadPlugin(path: string): Promise<Plugin> {
   const pluginRoot = getPluginRoot(path);
   try {
-    // Try require first which should work for CJS plugins.
-    return require(pluginRoot) as Plugin; // eslint-disable-line import/no-dynamic-require
+    /**
+     * Try require first which should work for CJS plugins.
+     * From Node 22 requiring on ESM module returns the module object
+     * @see https://github.com/bmish/eslint-doc-generator/issues/615
+     */
+    type cjsOrEsmPlugin = Plugin | { __esModule: boolean; default: Plugin };
+    // eslint-disable-next-line import/no-dynamic-require
+    const _plugin = require(pluginRoot) as cjsOrEsmPlugin;
+
+    /* istanbul ignore next */
+    if ('__esModule' in _plugin && _plugin.__esModule && _plugin.default) {
+      return _plugin.default;
+    }
+    return _plugin as Plugin;
   } catch (error) {
     // Otherwise, for ESM plugins, we'll have to try to resolve the exact plugin entry point and import it.
     const pluginPackageJson = await loadPackageJson(path);
