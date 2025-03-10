@@ -63,6 +63,16 @@
 
 
 
+
+## v2.1.1 (2025-03-10)
+
+#### :bug: Bug Fix
+* [#648](https://github.com/bmish/eslint-doc-generator/pull/648) Fix ESM support in Node 22+ when the package includes the `main` property ([@marcalexiei](https://github.com/marcalexiei))
+
+#### Committers: 1
+- Marco Pasqualetti ([@marcalexiei](https://github.com/marcalexiei))
+
+
 ## v2.1.0 (2025-03-04)
 
 #### :rocket: Enhancement
