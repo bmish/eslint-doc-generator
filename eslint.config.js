@@ -25,12 +25,7 @@ export default tseslint.config(
     rules: {
       'n/no-missing-import': 'off', // bug with recognizing node: prefix https://github.com/mysticatea/eslint-plugin-node/issues/275
 
-      'prettier/prettier': [
-        'error',
-        {
-          singleQuote: true,
-        },
-      ],
+      'prettier/prettier': 'error', // see `.prettierrc.json` for format config
 
       // unicorn rules:
       'unicorn/expiring-todo-comments': 'off',
