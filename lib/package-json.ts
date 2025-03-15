@@ -40,12 +40,26 @@ export async function loadPlugin(path: string): Promise<Plugin> {
      * From Node 22 requiring on ESM module returns the module object
      * @see https://github.com/bmish/eslint-doc-generator/issues/615
      */
-    type cjsOrEsmPlugin = Plugin | { __esModule: boolean; default: Plugin };
+    type cjsOrEsmPlugin =
+      | Plugin
+      | {
+          __esModule: boolean;
+          default: Plugin;
+          /* some plugins might have additional exports besides `default` */
+          [key: string]: unknown;
+        };
     // eslint-disable-next-line import/no-dynamic-require
     const _plugin = require(pluginRoot) as cjsOrEsmPlugin;
 
     /* istanbul ignore next */
-    if ('__esModule' in _plugin && _plugin.__esModule && _plugin.default) {
+    if (
+      '__esModule' in _plugin &&
+      _plugin.__esModule &&
+      // Ensure that we return only the default key when only a default export is present
+      // @see https://github.com/bmish/eslint-doc-generator/issues/656#issuecomment-2726745618
+      Object.keys(_plugin).length === 2 &&
+      ['__esModule', 'default'].every((it) => Boolean(_plugin[it]))
+    ) {
       return _plugin.default;
     }
     return _plugin as Plugin;
