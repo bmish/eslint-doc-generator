@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generate (plugin exports - cjs) exporting configs/rules with const generates the docs 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description             | 💼                      |
+| :----------------------------- | :---------------------- | :---------------------- |
+| [no-bar](docs/rules/no-bar.md) | Description for no-bar. | ![badge-customConfig][] |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅                       |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (plugin exports - cjs) exporting configs/rules with const generates the docs 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (plugin exports - cjs) exporting configs/rules with const generates the docs 3`] = `
+"# Description for no-bar (\`test/no-bar\`)
+
+💼 This rule is enabled in the \`customConfig\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
