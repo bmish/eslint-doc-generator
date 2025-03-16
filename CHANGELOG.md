@@ -64,6 +64,19 @@
 
 
 
+
+## v2.1.2 (2025-03-16)
+
+#### :bug: Bug Fix
+* [#658](https://github.com/bmish/eslint-doc-generator/pull/658) Fix regression in ESM plugin loading ([@marcalexiei](https://github.com/marcalexiei))
+
+#### :house: Internal
+* [#654](https://github.com/bmish/eslint-doc-generator/pull/654) Use `.prettierrc.json` instead of `eslint` `prettier` rule to configure format options ([@marcalexiei](https://github.com/marcalexiei))
+
+#### Committers: 1
+- Marco Pasqualetti ([@marcalexiei](https://github.com/marcalexiei))
+
+
 ## v2.1.1 (2025-03-10)
 
 #### :bug: Bug Fix
