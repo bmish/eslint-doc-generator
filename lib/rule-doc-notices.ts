@@ -410,12 +410,13 @@ function getRuleNoticeLines(
 function makeRuleDocTitle(
   name: string,
   description: string | undefined,
-  pluginPrefix: string,
+  pluginPrefix: string | undefined,
   ruleDocTitleFormat: RuleDocTitleFormat,
 ) {
   const descriptionFormatted = description
     ? removeTrailingPeriod(toSentenceCase(description))
     : undefined;
+  const prefix = pluginPrefix ? `${pluginPrefix}/` : '';
 
   let ruleDocTitleFormatWithFallback: RuleDocTitleFormat = ruleDocTitleFormat;
 
@@ -470,13 +471,13 @@ function makeRuleDocTitle(
           'Attempting to display non-existent description in rule doc title.',
         );
       }
-      return `# ${descriptionFormatted} (\`${pluginPrefix}/${name}\`)`;
+      return `# ${descriptionFormatted} (\`${prefix}${name}\`)`;
     }
     case 'name': {
       return `# ${name}`;
     }
     case 'prefix-name': {
-      return `# ${pluginPrefix}/${name}`;
+      return `# ${prefix}${name}`;
     }
     /* istanbul ignore next -- this shouldn't happen */
     default: {
@@ -487,6 +488,24 @@ function makeRuleDocTitle(
       );
     }
   }
+}
+
+function detectPrefixFromConfigsToRules(
+  ruleName: string,
+  configsToRules: ConfigsToRules,
+): string | undefined {
+  const prefixes = new Set<string>();
+
+  for (const rules of Object.values(configsToRules)) {
+    for (const ruleId of Object.keys(rules)) {
+      const [prefix, name] = ruleId.split('/');
+      if (name === ruleName && prefix) {
+        prefixes.add(prefix);
+      }
+    }
+  }
+
+  return prefixes.size === 1 ? [...prefixes][0] : undefined;
 }
 
 /**
@@ -509,8 +528,9 @@ export function generateRuleHeaderLines(
   urlConfigs?: string,
   urlRuleDoc?: string | UrlRuleDocFunction,
 ): string {
+  const prefix = detectPrefixFromConfigsToRules(name, configsToRules);
   return [
-    makeRuleDocTitle(name, description, pluginPrefix, ruleDocTitleFormat),
+    makeRuleDocTitle(name, description, prefix, ruleDocTitleFormat),
     ...getRuleNoticeLines(
       name,
       plugin,

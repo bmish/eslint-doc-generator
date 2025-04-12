@@ -31,7 +31,7 @@ function pathToUrl(path: string): string {
 export function getUrlToRule(
   ruleName: string,
   ruleSource: RULE_SOURCE,
-  pluginPrefix: string,
+  pluginPrefix: string | undefined,
   pathPlugin: string,
   pathRuleDoc: string | PathRuleDocFunction,
   pathCurrentPage: string,
@@ -51,10 +51,12 @@ export function getUrlToRule(
     }
   }
 
+  const prefix = pluginPrefix ? `${pluginPrefix}/` : '';
+
   // Ignore plugin prefix if it's included in rule name.
   // While we could display the prefix if we wanted, it definitely cannot be part of the link.
-  const ruleNameWithoutPluginPrefix = ruleName.startsWith(`${pluginPrefix}/`)
-    ? ruleName.slice(pluginPrefix.length + 1)
+  const ruleNameWithoutPluginPrefix = ruleName.startsWith(prefix)
+    ? ruleName.slice(prefix.length + 1)
     : ruleName;
 
   // If the URL is a function, evaluate it.
@@ -85,7 +87,7 @@ export function getUrlToRule(
 export function getLinkToRule(
   ruleName: string,
   plugin: Plugin,
-  pluginPrefix: string,
+  pluginPrefix: string | undefined,
   pathPlugin: string,
   pathRuleDoc: string | PathRuleDocFunction,
   pathCurrentPage: string,
@@ -93,8 +95,9 @@ export function getLinkToRule(
   includePrefix: boolean,
   urlRuleDoc?: string | UrlRuleDocFunction,
 ) {
-  const ruleNameWithoutPluginPrefix = ruleName.startsWith(`${pluginPrefix}/`)
-    ? ruleName.slice(pluginPrefix.length + 1)
+  const prefix = pluginPrefix ? `${pluginPrefix}/` : '';
+  const ruleNameWithoutPluginPrefix = ruleName.startsWith(prefix)
+    ? ruleName.slice(prefix.length + 1)
     : ruleName;
 
   // Determine what plugin this rule comes from.
@@ -108,10 +111,10 @@ export function getLinkToRule(
     ruleSource = RULE_SOURCE.eslintCore;
   }
 
-  const ruleNameWithPluginPrefix = ruleName.startsWith(`${pluginPrefix}/`)
+  const ruleNameWithPluginPrefix = ruleName.startsWith(prefix)
     ? ruleName
     : ruleSource === RULE_SOURCE.self
-      ? `${pluginPrefix}/${ruleName}`
+      ? `${prefix}${ruleName}`
       : undefined;
 
   const urlToRule = getUrlToRule(
