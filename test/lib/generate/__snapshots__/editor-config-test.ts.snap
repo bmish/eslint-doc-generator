@@ -26,14 +26,14 @@ exports[`string (getEndOfLine) generates using the correct end of line when .edi
 `;
 
 exports[`string (getEndOfLine) generates using the correct end of line when .editorconfig exists generates using crlf end of line from .editorconfig 3`] = `
-"# test/B
+"# B
 
 <!-- end auto-generated rule header -->
 "
 `;
 
 exports[`string (getEndOfLine) generates using the correct end of line when .editorconfig exists generates using crlf end of line from .editorconfig 4`] = `
-"# test/c
+"# c
 
 <!-- end auto-generated rule header -->
 "
@@ -65,14 +65,14 @@ exports[`string (getEndOfLine) generates using the correct end of line when .edi
 `;
 
 exports[`string (getEndOfLine) generates using the correct end of line when .editorconfig exists generates using lf end of line from .editorconfig 3`] = `
-"# test/B
+"# B
 
 <!-- end auto-generated rule header -->
 "
 `;
 
 exports[`string (getEndOfLine) generates using the correct end of line when .editorconfig exists generates using lf end of line from .editorconfig 4`] = `
-"# test/c
+"# c
 
 <!-- end auto-generated rule header -->
 "
@@ -104,14 +104,14 @@ exports[`string (getEndOfLine) generates using the correct end of line when .edi
 `;
 
 exports[`string (getEndOfLine) generates using the correct end of line when .editorconfig exists generates using the end of line from .editorconfig while respecting the .md specific end of line setting 3`] = `
-"# test/B
+"# B
 
 <!-- end auto-generated rule header -->
 "
 `;
 
 exports[`string (getEndOfLine) generates using the correct end of line when .editorconfig exists generates using the end of line from .editorconfig while respecting the .md specific end of line setting 4`] = `
-"# test/c
+"# c
 
 <!-- end auto-generated rule header -->
 "

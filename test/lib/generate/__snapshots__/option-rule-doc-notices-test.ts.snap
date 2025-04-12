@@ -17,7 +17,7 @@ exports[`generate (--rule-doc-notices) basic shows the right rule doc notices 1`
 `;
 
 exports[`generate (--rule-doc-notices) basic shows the right rule doc notices 2`] = `
-"# Description for no-foo (\`test/no-foo\`)
+"# Description for no-foo (\`no-foo\`)
 
 💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 

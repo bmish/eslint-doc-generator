@@ -15,7 +15,7 @@ Located at README.md"
 `;
 
 exports[`generate (postprocess option) basic calls the postprocessor 2`] = `
-"# test/no-foo
+"# no-foo
 
 <!-- end auto-generated rule header -->
 
