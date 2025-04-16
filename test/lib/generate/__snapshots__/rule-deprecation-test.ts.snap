@@ -13,7 +13,7 @@ exports[`generate (deprecated rules) replaced by ESLint core rule uses correct r
 `;
 
 exports[`generate (deprecated rules) replaced by ESLint core rule uses correct replacement rule link 2`] = `
-"# Description (\`test/no-foo\`)
+"# Description (\`no-foo\`)
 
 ❌ This rule is deprecated. It was replaced by [\`no-unused-vars\`](https://eslint.org/docs/latest/rules/no-unused-vars).
 
@@ -34,7 +34,7 @@ exports[`generate (deprecated rules) replaced by third-party plugin rule uses co
 `;
 
 exports[`generate (deprecated rules) replaced by third-party plugin rule uses correct replacement rule link 2`] = `
-"# Description (\`test/no-foo\`)
+"# Description (\`no-foo\`)
 
 ❌ This rule is deprecated. It was replaced by \`other-plugin/no-unused-vars\`.
 
@@ -55,7 +55,7 @@ exports[`generate (deprecated rules) replaced by third-party plugin rule with sa
 `;
 
 exports[`generate (deprecated rules) replaced by third-party plugin rule with same rule name as one of our rules uses correct replacement rule link 2`] = `
-"# Description (\`test/no-foo\`)
+"# Description (\`no-foo\`)
 
 ❌ This rule is deprecated. It was replaced by \`other-plugin/no-foo\`.
 
@@ -79,7 +79,7 @@ exports[`generate (deprecated rules) several deprecated rules updates the docume
 `;
 
 exports[`generate (deprecated rules) several deprecated rules updates the documentation 2`] = `
-"# Description (\`test/no-foo\`)
+"# Description (\`no-foo\`)
 
 ❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](no-bar.md).
 
@@ -88,7 +88,7 @@ exports[`generate (deprecated rules) several deprecated rules updates the docume
 `;
 
 exports[`generate (deprecated rules) several deprecated rules updates the documentation 3`] = `
-"# Description (\`test/no-bar\`)
+"# Description (\`no-bar\`)
 
 ❌ This rule is deprecated.
 
@@ -97,7 +97,7 @@ exports[`generate (deprecated rules) several deprecated rules updates the docume
 `;
 
 exports[`generate (deprecated rules) several deprecated rules updates the documentation 4`] = `
-"# Description (\`test/no-baz\`)
+"# Description (\`no-baz\`)
 
 ❌ This rule is deprecated.
 
@@ -106,7 +106,7 @@ exports[`generate (deprecated rules) several deprecated rules updates the docume
 `;
 
 exports[`generate (deprecated rules) several deprecated rules updates the documentation 5`] = `
-"# Description (\`test/no-biz\`)
+"# Description (\`no-biz\`)
 
 <!-- end auto-generated rule header -->
 "
@@ -126,16 +126,16 @@ exports[`generate (deprecated rules) using prefix ahead of replacement rule name
 `;
 
 exports[`generate (deprecated rules) using prefix ahead of replacement rule name uses correct replacement rule link 2`] = `
-"# Description (\`test/no-foo\`)
+"# Description (\`no-foo\`)
 
-❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](no-bar.md).
+❌ This rule is deprecated. It was replaced by \`test/no-bar\`.
 
 <!-- end auto-generated rule header -->
 "
 `;
 
 exports[`generate (deprecated rules) using prefix ahead of replacement rule name uses correct replacement rule link 3`] = `
-"# Description (\`test/no-bar\`)
+"# Description (\`no-bar\`)
 
 <!-- end auto-generated rule header -->
 "
@@ -155,7 +155,7 @@ exports[`generate (deprecated rules) with --path-rule-doc has the correct links,
 `;
 
 exports[`generate (deprecated rules) with --path-rule-doc has the correct links, especially replacement rule link 2`] = `
-"# Description (\`test/category/no-foo\`)
+"# Description (\`category/no-foo\`)
 
 ❌ This rule is deprecated. It was replaced by [\`test/category/no-bar\`](../no-bar/README.md).
 
@@ -164,9 +164,9 @@ exports[`generate (deprecated rules) with --path-rule-doc has the correct links,
 `;
 
 exports[`generate (deprecated rules) with --path-rule-doc has the correct links, especially replacement rule link 3`] = `
-"# Description (\`test/category/no-bar\`)
+"# Description (\`category/no-bar\`)
 
-❌ This rule is deprecated. It was replaced by [\`test/category/no-foo\`](../no-foo/README.md).
+❌ This rule is deprecated. It was replaced by \`test/category/no-foo\`.
 
 <!-- end auto-generated rule header -->
 "
@@ -186,7 +186,7 @@ exports[`generate (deprecated rules) with nested rule names has the correct link
 `;
 
 exports[`generate (deprecated rules) with nested rule names has the correct links, especially replacement rule link 2`] = `
-"# Description (\`test/category/no-foo\`)
+"# Description (\`category/no-foo\`)
 
 ❌ This rule is deprecated. It was replaced by [\`test/category/no-bar\`](no-bar.md).
 
@@ -195,9 +195,9 @@ exports[`generate (deprecated rules) with nested rule names has the correct link
 `;
 
 exports[`generate (deprecated rules) with nested rule names has the correct links, especially replacement rule link 3`] = `
-"# Description (\`test/category/no-bar\`)
+"# Description (\`category/no-bar\`)
 
-❌ This rule is deprecated. It was replaced by [\`test/category/no-foo\`](no-foo.md).
+❌ This rule is deprecated. It was replaced by \`test/category/no-foo\`.
 
 <!-- end auto-generated rule header -->
 "
