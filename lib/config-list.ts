@@ -46,27 +46,25 @@ function generateConfigListMarkdown(
     listHeaderRow.push('Description');
   }
 
+  const rows = [
+    listHeaderRow,
+    ...Object.keys(configsToRules)
+      .filter((configName) => !ignoreConfig.includes(configName))
+      .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+      .map((configName) => {
+        const config = plugin.configs?.[configName];
+        /* istanbul ignore next -- config should exist at this point */
+        const description = config ? configToDescription(config) : undefined;
+        return [
+          configEmojis.find((obj) => obj.config === configName)?.emoji || '',
+          `\`${configNameToDisplay(configName, configFormat, pluginPrefix)}\``,
+          hasDescription ? description || '' : undefined,
+        ].filter((col) => col !== undefined);
+      }),
+  ];
+
   return markdownTable(
-    sanitizeMarkdownTable([
-      listHeaderRow,
-      ...Object.keys(configsToRules)
-        .filter((configName) => !ignoreConfig.includes(configName))
-        .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
-        .map((configName) => {
-          const config = plugin.configs?.[configName];
-          /* istanbul ignore next -- config should exist at this point */
-          const description = config ? configToDescription(config) : undefined;
-          return [
-            configEmojis.find((obj) => obj.config === configName)?.emoji || '',
-            `\`${configNameToDisplay(
-              configName,
-              configFormat,
-              pluginPrefix,
-            )}\``,
-            hasDescription ? description || '' : undefined,
-          ].filter((col) => col !== undefined);
-        }),
-    ]),
+    sanitizeMarkdownTable(rows),
     { align: 'l' }, // Left-align headers.
   );
 }
