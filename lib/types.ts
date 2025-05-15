@@ -3,16 +3,17 @@ import type { TSESLint } from '@typescript-eslint/utils';
 import { ConfigFormat } from './config-format.js';
 
 // Standard ESLint types.
+export type RuleMetaData = TSESLint.RuleMetaData<string>;
 
-export type RuleModule = TSESLint.RuleModule<string, readonly unknown[]>;
+export type RuleModule = TSESLint.LooseRuleDefinition;
 
 export type Rules = TSESLint.Linter.RulesRecord;
 
 export type RuleSeverity = TSESLint.Linter.RuleLevel;
 
-export type Config = TSESLint.Linter.Config;
+export type Config = TSESLint.Linter.ConfigType;
 
-export type Plugin = TSESLint.Linter.Plugin;
+export type Plugin = TSESLint.FlatConfig.Plugin | TSESLint.Linter.Plugin;
 
 // Custom types.
 
@@ -229,3 +230,15 @@ export type GenerateOptions = {
    */
   readonly urlRuleDoc?: string | UrlRuleDocFunction;
 };
+
+export interface RelevantRuleMetaData
+  extends Partial<
+    Pick<
+      RuleMetaData,
+      'deprecated' | 'hasSuggestions' | 'replacedBy' | 'schema' | 'type'
+    >
+  > {
+  description?: string;
+  fixable?: string; // relax this type for any non-ts users
+  requiresTypeChecking?: boolean;
+}

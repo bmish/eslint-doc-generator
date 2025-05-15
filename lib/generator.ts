@@ -34,6 +34,7 @@ import { replaceRulePlaceholder } from './rule-link.js';
 import { updateRuleOptionsList } from './rule-options-list.js';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { getEndOfLine } from './string.js';
+import { parseRuleMetaData } from './parse-rule-meta-data.js';
 
 function stringOrArrayWithFallback<T extends string | readonly string[]>(
   stringOrArray: undefined | T,
@@ -127,15 +128,12 @@ export async function generate(path: string, options?: GenerateOptions) {
   const ruleNamesAndRules = Object.entries(plugin.rules)
     .map(([name, ruleModule]) => {
       // Convert deprecated function-style rules to object-style rules so that we don't have to handle function-style rules everywhere throughout the codebase.
-      // @ts-expect-error -- this type unfortunately requires us to choose a `meta.type` even though the deprecated function-style rule won't have one.
       const ruleModuleAsObject: RuleModule =
         typeof ruleModule === 'function'
           ? {
               // Deprecated function-style rule don't support most of the properties that object-style rules support, so we'll just use the bare minimum.
               meta: {
-                // @ts-expect-error -- type is missing for this property
                 schema: ruleModule.schema, // eslint-disable-line @typescript-eslint/no-unsafe-assignment -- type is missing for this property
-                // @ts-expect-error -- type is missing for this property
                 deprecated: ruleModule.deprecated, // eslint-disable-line @typescript-eslint/no-unsafe-assignment -- type is missing for this property
               },
               create: ruleModule,
@@ -146,17 +144,21 @@ export async function generate(path: string, options?: GenerateOptions) {
     })
     .filter(
       // Filter out deprecated rules from being checked, displayed, or updated if the option is set.
-      ([, rule]) => !ignoreDeprecatedRules || !rule.meta?.deprecated,
+      ([, rule]) => {
+        const meta = parseRuleMetaData(rule);
+        return !ignoreDeprecatedRules || !meta.deprecated
+      },
     )
     .sort(([a], [b]) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
   // Update rule doc for each rule.
   let initializedRuleDoc = false;
   for (const [name, rule] of ruleNamesAndRules) {
-    const schema = rule.meta?.schema;
-    const description = rule.meta?.docs?.description;
+    const meta = parseRuleMetaData(rule);
+    const schema = meta.schema;
+    const description = meta.description;
     const pathToDoc = join(path, replaceRulePlaceholder(pathRuleDoc, name));
-    const ruleHasOptions = hasOptions(schema);
+    const ruleHasOptions = schema ? hasOptions(schema) : false;
 
     if (!existsSync(pathToDoc)) {
       if (!initRuleDocs) {

@@ -29,6 +29,7 @@ import {
   getEndOfLine,
 } from './string.js';
 import { ConfigFormat, configNameToDisplay } from './config-format.js';
+import { parseRuleMetaData } from './parse-rule-meta-data.js';
 
 const EOL = getEndOfLine();
 
@@ -269,6 +270,7 @@ function getNoticesForRule(
   configsOff: readonly string[],
   ruleDocNotices: readonly NOTICE_TYPE[],
 ) {
+  const meta = parseRuleMetaData(rule);
   const notices: {
     [key in NOTICE_TYPE]: boolean;
   } = {
@@ -277,20 +279,18 @@ function getNoticesForRule(
       configsError.length > 0 ||
       configsWarn.length > 0 ||
       configsOff.length > 0,
-    [NOTICE_TYPE.DEPRECATED]: rule.meta?.deprecated || false,
-    [NOTICE_TYPE.DESCRIPTION]: Boolean(rule.meta?.docs?.description) || false,
+    [NOTICE_TYPE.DEPRECATED]: meta.deprecated || false,
+    [NOTICE_TYPE.DESCRIPTION]: Boolean(meta.description) || false,
 
     // Fixable/suggestions.
-    [NOTICE_TYPE.FIXABLE]: Boolean(rule.meta?.fixable),
+    [NOTICE_TYPE.FIXABLE]: Boolean(meta.fixable),
     [NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]:
-      Boolean(rule.meta?.fixable) || Boolean(rule.meta?.hasSuggestions),
-    [NOTICE_TYPE.HAS_SUGGESTIONS]: Boolean(rule.meta?.hasSuggestions),
+      Boolean(meta.fixable) || Boolean(meta.hasSuggestions),
+    [NOTICE_TYPE.HAS_SUGGESTIONS]: Boolean(meta.hasSuggestions),
 
-    [NOTICE_TYPE.OPTIONS]: hasOptions(rule.meta?.schema),
-    [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]:
-      // @ts-expect-error -- TODO: requiresTypeChecking type not present
-      (rule.meta?.docs?.requiresTypeChecking as boolean | undefined) || false,
-    [NOTICE_TYPE.TYPE]: Boolean(rule.meta?.type),
+    [NOTICE_TYPE.OPTIONS]: meta.schema ? hasOptions(meta.schema) : false,
+    [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]: meta.requiresTypeChecking ?? false,
+    [NOTICE_TYPE.TYPE]: Boolean(meta.type),
   };
 
   // Recreate object using the ordering and presence of columns specified in ruleDocNotices.
@@ -324,6 +324,8 @@ function getRuleNoticeLines(
     // This is only to please TypeScript. We should always have a rule when this function is called.
     throw new Error('Rule not found');
   }
+
+  const meta = parseRuleMetaData(rule);
 
   if (typeof rule !== 'object') {
     // We don't support the deprecated, function-style rule format as there's not much information we can extract from it.
@@ -388,16 +390,16 @@ function getRuleNoticeLines(
             configsOff,
             configEmojis,
             configFormat,
-            description: rule.meta?.docs?.description,
-            fixable: Boolean(rule.meta?.fixable),
-            hasSuggestions: Boolean(rule.meta?.hasSuggestions),
+            description: meta.description,
+            fixable: Boolean(meta.fixable),
+            hasSuggestions: Boolean(meta.hasSuggestions),
             urlConfigs,
-            replacedBy: rule.meta?.replacedBy,
+            replacedBy: meta.replacedBy,
             plugin,
             pluginPrefix,
             pathPlugin,
             pathRuleDoc,
-            type: rule.meta?.type,
+            type: meta.type,
             urlRuleDoc,
           })
         : ruleNoticeStrOrFn,

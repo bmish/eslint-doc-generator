@@ -43,6 +43,7 @@ import { getProperty } from 'dot-prop';
 import { boolean, isBooleanable } from './boolean.js';
 import Ajv from 'ajv';
 import { ConfigFormat } from './config-format.js';
+import { parseRuleMetaData } from './parse-rule-meta-data.js';
 
 function isBooleanableTrue(value: unknown): boolean {
   return isBooleanable(value) && boolean(value);
@@ -116,7 +117,6 @@ function getConfigurationColumnValueForRule(
   return [...emojis, ...badges].join(' ');
 }
 
-// eslint-disable-next-line complexity
 function buildRuleRow(
   ruleName: string,
   rule: RuleModule,
@@ -131,6 +131,7 @@ function buildRuleRow(
   ignoreConfig: readonly string[],
   urlRuleDoc?: string | UrlRuleDocFunction,
 ): readonly string[] {
+  const meta = parseRuleMetaData(rule);
   const columns: {
     [key in COLUMN_TYPE]: string | (() => string);
   } = {
@@ -159,13 +160,13 @@ function buildRuleRow(
       ignoreConfig,
       SEVERITY_TYPE.warn,
     ),
-    [COLUMN_TYPE.DEPRECATED]: rule.meta?.deprecated ? EMOJI_DEPRECATED : '',
-    [COLUMN_TYPE.DESCRIPTION]: rule.meta?.docs?.description || '',
-    [COLUMN_TYPE.FIXABLE]: rule.meta?.fixable ? EMOJI_FIXABLE : '',
+    [COLUMN_TYPE.DEPRECATED]: meta.deprecated ? EMOJI_DEPRECATED : '',
+    [COLUMN_TYPE.DESCRIPTION]: meta.description || '',
+    [COLUMN_TYPE.FIXABLE]: meta.fixable ? EMOJI_FIXABLE : '',
     [COLUMN_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: `${
-      rule.meta?.fixable ? EMOJI_FIXABLE : ''
-    }${rule.meta?.hasSuggestions ? EMOJI_HAS_SUGGESTIONS : ''}`,
-    [COLUMN_TYPE.HAS_SUGGESTIONS]: rule.meta?.hasSuggestions
+      meta.fixable ? EMOJI_FIXABLE : ''
+    }${meta.hasSuggestions ? EMOJI_HAS_SUGGESTIONS : ''}`,
+    [COLUMN_TYPE.HAS_SUGGESTIONS]: meta.hasSuggestions
       ? EMOJI_HAS_SUGGESTIONS
       : '',
     [COLUMN_TYPE.NAME]() {
@@ -181,14 +182,12 @@ function buildRuleRow(
         urlRuleDoc,
       );
     },
-    [COLUMN_TYPE.OPTIONS]: hasOptions(rule.meta?.schema) ? EMOJI_OPTIONS : '',
-    // @ts-expect-error -- TODO: requiresTypeChecking type not present
-    [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: rule.meta?.docs?.requiresTypeChecking
+    [COLUMN_TYPE.OPTIONS]:
+      meta.schema && hasOptions(meta.schema) ? EMOJI_OPTIONS : '',
+    [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: meta.requiresTypeChecking
       ? EMOJI_REQUIRES_TYPE_CHECKING
       : '',
-    [COLUMN_TYPE.TYPE]: rule.meta?.type
-      ? EMOJIS_TYPE[rule.meta?.type] || ''
-      : '',
+    [COLUMN_TYPE.TYPE]: meta.type ? EMOJIS_TYPE[meta.type] || '' : '',
   };
 
   // List columns using the ordering and presence of columns specified in columnsEnabled.
@@ -362,9 +361,7 @@ function getRulesAndHeadersForSplit(
       // Rules with the property set to this value.
       const rulesForThisValue = unusedRules.filter(([name]) => {
         const property = getPropertyFromRule(plugin, name, ruleListSplitItem);
-        return (
-          property === value || (value === true && isBooleanableTrue(property))
-        );
+        return property === value || (value && isBooleanableTrue(property));
       });
 
       // Turn ruleListSplit into a title.
