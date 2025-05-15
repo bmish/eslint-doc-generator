@@ -1,17 +1,18 @@
 import {
+  EMOJI_CONFIG_FROM_SEVERITY,
   EMOJI_DEPRECATED,
   EMOJI_FIXABLE,
   EMOJI_HAS_SUGGESTIONS,
+  EMOJI_OPTIONS,
   EMOJI_REQUIRES_TYPE_CHECKING,
   EMOJI_TYPE,
-  EMOJI_CONFIG_FROM_SEVERITY,
-  EMOJI_OPTIONS,
 } from './emojis.js';
 import { RULE_TYPES } from './rule-type.js';
+import type { ConfigsToRules, Plugin, RuleNamesAndRules } from './types.js';
 import { COLUMN_TYPE, SEVERITY_TYPE } from './types.js';
 import { getConfigsThatSetARule } from './plugin-configs.js';
 import { hasOptions } from './rule-options.js';
-import type { ConfigsToRules, Plugin, RuleNamesAndRules } from './types.js';
+import { parseRuleMetaData } from './parse-rule-meta-data.js';
 
 /**
  * An object containing the column header for each column (as a string or function to generate the string).
@@ -27,7 +28,7 @@ export const COLUMN_HEADER: {
       ...ruleNames.map(({ length }) => length),
     );
     const ruleDescriptions = ruleNamesAndRules.map(
-      ([, rule]) => rule.meta?.docs?.description,
+      ([, rule]) => parseRuleMetaData(rule).description,
     );
     const longestRuleDescriptionLength = Math.max(
       ...ruleDescriptions.map((description) =>
@@ -104,32 +105,36 @@ export function getColumns(
         SEVERITY_TYPE.warn,
       ).length > 0,
     [COLUMN_TYPE.DEPRECATED]: ruleNamesAndRules.some(
-      ([, rule]) => rule.meta?.deprecated,
+      ([, rule]) => parseRuleMetaData(rule).deprecated,
     ),
     [COLUMN_TYPE.DESCRIPTION]: ruleNamesAndRules.some(
-      ([, rule]) => rule.meta?.docs?.description,
+      ([, rule]) => parseRuleMetaData(rule).description,
     ),
     [COLUMN_TYPE.FIXABLE]: ruleNamesAndRules.some(
-      ([, rule]) => rule.meta?.fixable,
+      ([, rule]) => parseRuleMetaData(rule).fixable,
     ),
     [COLUMN_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: ruleNamesAndRules.some(
-      ([, rule]) => rule.meta?.fixable || rule.meta?.hasSuggestions,
+      ([, rule]) => {
+        const meta = parseRuleMetaData(rule);
+        return meta.fixable || meta.hasSuggestions;
+      },
     ),
     [COLUMN_TYPE.HAS_SUGGESTIONS]: ruleNamesAndRules.some(
-      ([, rule]) => rule.meta?.hasSuggestions,
+      ([, rule]) => parseRuleMetaData(rule).hasSuggestions,
     ),
     [COLUMN_TYPE.NAME]: true,
-    [COLUMN_TYPE.OPTIONS]: ruleNamesAndRules.some(([, rule]) =>
-      hasOptions(rule.meta?.schema),
-    ),
+    [COLUMN_TYPE.OPTIONS]: ruleNamesAndRules.some(([, rule]) => {
+      const meta = parseRuleMetaData(rule);
+      return meta.schema ? hasOptions(meta.schema) : false;
+    }),
     [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: ruleNamesAndRules.some(
-      // @ts-expect-error -- TODO: requiresTypeChecking type not present
-      ([, rule]) => rule.meta?.docs?.requiresTypeChecking,
+      ([, rule]) => parseRuleMetaData(rule).requiresTypeChecking,
     ),
     // Show type column only if we found at least one rule with a standard type.
-    [COLUMN_TYPE.TYPE]: ruleNamesAndRules.some(
-      ([, rule]) => rule.meta?.type && RULE_TYPES.includes(rule.meta?.type),
-    ),
+    [COLUMN_TYPE.TYPE]: ruleNamesAndRules.some(([, rule]) => {
+      const metaType = parseRuleMetaData(rule).type;
+      return metaType && RULE_TYPES.includes(metaType);
+    }),
   };
 
   // Recreate object using the ordering and presence of columns specified in ruleListColumns.

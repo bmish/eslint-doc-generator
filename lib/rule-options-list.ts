@@ -6,6 +6,7 @@ import { markdownTable } from 'markdown-table';
 import type { RuleModule } from './types.js';
 import { RuleOption, getAllNamedOptions } from './rule-options.js';
 import { getEndOfLine, sanitizeMarkdownTable } from './string.js';
+import { parseRuleMetaData } from './parse-rule-meta-data.js';
 
 const EOL = getEndOfLine();
 
@@ -112,7 +113,8 @@ function ruleOptionsToColumnsToDisplay(ruleOptions: readonly RuleOption[]): {
 }
 
 function generateRuleOptionsListMarkdown(rule: RuleModule): string {
-  const ruleOptions = getAllNamedOptions(rule.meta?.schema);
+  const meta = parseRuleMetaData(rule);
+  const ruleOptions = getAllNamedOptions(meta.schema);
 
   if (ruleOptions.length === 0) {
     return '';

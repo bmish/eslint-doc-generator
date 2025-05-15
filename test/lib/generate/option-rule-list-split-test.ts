@@ -4,6 +4,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
 import { jest } from '@jest/globals';
+import { parseRuleMetaData } from '../../../lib/parse-rule-meta-data.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -741,15 +742,21 @@ describe('generate (--rule-list-split)', function () {
       await generate('.', {
         ruleListSplit: (rules) => {
           const list1 = {
-            rules: rules.filter(([, rule]) => rule.meta.type === 'suggestion'),
+            rules: rules.filter(
+              ([, rule]) => parseRuleMetaData(rule).type === 'suggestion',
+            ),
           };
           const list2 = {
             title: 'Not Deprecated',
-            rules: rules.filter(([, rule]) => !rule.meta.deprecated),
+            rules: rules.filter(
+              ([, rule]) => !parseRuleMetaData(rule).deprecated,
+            ),
           };
           const list3 = {
             title: 'Deprecated',
-            rules: rules.filter(([, rule]) => rule.meta.deprecated),
+            rules: rules.filter(
+              ([, rule]) => parseRuleMetaData(rule).deprecated,
+            ),
           };
           const list4 = {
             title: 'Name = "no-baz"',
