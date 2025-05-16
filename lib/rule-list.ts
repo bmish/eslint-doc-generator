@@ -79,7 +79,7 @@ function getPropertyFromRule(
   }
 
   const rule = plugin.rules[ruleName];
-  // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
   return getProperty(rule, property) as unknown; // TODO: Incorrectly typed as undefined. This could be any type, not just undefined (https://github.com/sindresorhus/dot-prop/issues/95).
 }
 
@@ -187,7 +187,7 @@ function buildRuleRow(
     [COLUMN_TYPE.REQUIRES_TYPE_CHECKING]: meta.requiresTypeChecking
       ? EMOJI_REQUIRES_TYPE_CHECKING
       : '',
-    [COLUMN_TYPE.TYPE]: meta.type ? EMOJIS_TYPE[meta.type] || '' : '',
+    [COLUMN_TYPE.TYPE]: meta.type ? EMOJIS_TYPE[meta.type] : '',
   };
 
   // List columns using the ordering and presence of columns specified in columnsEnabled.

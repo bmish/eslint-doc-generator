@@ -2,9 +2,11 @@ import { existsSync } from 'node:fs';
 import { importAbs } from './import.js';
 import type { ConfigsToRules, Plugin, Rules } from './types.js';
 import { TSESLint } from '@typescript-eslint/utils';
+
 import {
   ClassicConfig,
   FlatConfig,
+  // eslint-disable-next-line import/extensions -- false positive
 } from '@typescript-eslint/utils/dist/ts-eslint';
 
 /**
@@ -15,6 +17,7 @@ export async function resolveConfigsToRules(
 ): Promise<ConfigsToRules> {
   const configs: Record<string, Rules> = {};
   for (const [configName, config] of Object.entries(plugin.configs || {})) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- type inference not working here but config has the correct type
     configs[configName] = await resolvePotentiallyFlatConfigs(config);
   }
   return configs;
@@ -41,8 +44,8 @@ async function resolveConfigRules(
   config: ClassicConfig.Config | FlatConfig.Config,
 ): Promise<Rules> {
   const rules = { ...config.rules };
-  if ('overrides' in config) {
-    for (const override of config.overrides || []) {
+  if ('overrides' in config && config.overrides) {
+    for (const override of config.overrides) {
       Object.assign(rules, override.rules);
       const extendedRulesFromOverride = await resolveConfigExtends(
         override.extends || [],
@@ -50,8 +53,8 @@ async function resolveConfigRules(
       Object.assign(rules, extendedRulesFromOverride);
     }
   }
-  if ('extends' in config) {
-    const extendedRules = await resolveConfigExtends(config.extends || []);
+  if ('extends' in config && config.extends) {
+    const extendedRules = await resolveConfigExtends(config.extends);
     Object.assign(rules, extendedRules);
   }
   return rules;

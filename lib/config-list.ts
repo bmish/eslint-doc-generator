@@ -40,7 +40,9 @@ function generateConfigListMarkdown(
 ): string {
   /* istanbul ignore next -- configs are sure to exist at this point */
   const configs = Object.values(plugin.configs || {});
-  const hasDescription = configs.some((config) => configToDescription(config));
+  const hasDescription = configs.some((config: Config) =>
+    configToDescription(config),
+  );
   const listHeaderRow = ['', 'Name'];
   if (hasDescription) {
     listHeaderRow.push('Description');

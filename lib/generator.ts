@@ -126,15 +126,16 @@ export async function generate(path: string, options?: GenerateOptions) {
 
   // Gather normalized list of rules.
   const ruleNamesAndRules = Object.entries(plugin.rules)
-    .map(([name, ruleModule]) => {
+    .map(([name, ruleModule]: [string, RuleModule]) => {
       // Convert deprecated function-style rules to object-style rules so that we don't have to handle function-style rules everywhere throughout the codebase.
       const ruleModuleAsObject: RuleModule =
         typeof ruleModule === 'function'
           ? {
               // Deprecated function-style rule don't support most of the properties that object-style rules support, so we'll just use the bare minimum.
               meta: {
-                schema: ruleModule.schema, // eslint-disable-line @typescript-eslint/no-unsafe-assignment -- type is missing for this property
-                deprecated: ruleModule.deprecated, // eslint-disable-line @typescript-eslint/no-unsafe-assignment -- type is missing for this property
+                schema: 'schema' in ruleModule ? ruleModule.schema : undefined,
+                deprecated:
+                  'deprecated' in ruleModule ? ruleModule.deprecated : false,
               },
               create: ruleModule,
             }
@@ -146,7 +147,7 @@ export async function generate(path: string, options?: GenerateOptions) {
       // Filter out deprecated rules from being checked, displayed, or updated if the option is set.
       ([, rule]) => {
         const meta = parseRuleMetaData(rule);
-        return !ignoreDeprecatedRules || !meta.deprecated
+        return !ignoreDeprecatedRules || !meta.deprecated;
       },
     )
     .sort(([a], [b]) => a.toLowerCase().localeCompare(b.toLowerCase()));
