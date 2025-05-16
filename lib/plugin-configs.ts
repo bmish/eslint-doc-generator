@@ -45,17 +45,18 @@ export function getConfigsThatSetARule(
 export function getConfigsForRule(
   ruleName: string,
   configsToRules: ConfigsToRules,
-  pluginPrefix: string,
+  pluginPrefix: string | undefined,
   severityType?: SEVERITY_TYPE,
 ) {
   const severity = severityType
     ? SEVERITY_TYPE_TO_SET[severityType]
     : undefined;
   const configNames: Array<keyof typeof configsToRules> = [];
+  const prefix = pluginPrefix ? `${pluginPrefix}/` : '';
 
   for (const configName in configsToRules) {
     const rules = configsToRules[configName];
-    const value = rules[`${pluginPrefix}/${ruleName}`];
+    const value = rules[`${prefix}${ruleName}`];
     const isSet =
       ((typeof value === 'string' || typeof value === 'number') &&
         (!severity || severity.has(value))) ||

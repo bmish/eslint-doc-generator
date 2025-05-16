@@ -15,7 +15,7 @@ exports[`generate (package.json) No configs found omits the config column 1`] = 
 `;
 
 exports[`generate (package.json) No configs found omits the config column 2`] = `
-"# Disallow foo (\`test/no-foo\`)
+"# Disallow foo (\`no-foo\`)
 
 <!-- end auto-generated rule header -->
 "
@@ -46,7 +46,7 @@ exports[`generate (package.json) Scoped plugin with custom plugin name determine
 `;
 
 exports[`generate (package.json) Scoped plugin with custom plugin name determines the correct plugin prefix 2`] = `
-"# Disallow foo (\`@my-scope/foo/no-foo\`)
+"# Disallow foo (\`no-foo\`)
 
 💼 This rule is enabled in the ✅ \`recommended\` config.
 
