@@ -14,10 +14,12 @@ import {
   Plugin,
   ConfigsToRules,
   SEVERITY_TYPE,
+  RuleModule,
 } from './types.js';
 import { RULE_TYPE_MESSAGES_LEGEND, RULE_TYPES } from './rule-type.js';
 import { ConfigFormat, configNameToDisplay } from './config-format.js';
 import { getEndOfLine } from './string.js';
+import { parseRuleMetaData } from './parse-rule-meta-data.js';
 
 const EOL = getEndOfLine();
 
@@ -119,9 +121,10 @@ const LEGENDS: {
 
     let hasAnyRuleType = false;
     for (const ruleType of RULE_TYPES) {
-      const hasThisRuleType = Object.values(rules).some(
-        (rule) => typeof rule === 'object' && rule.meta?.type === ruleType,
-      );
+      const hasThisRuleType = Object.values(rules).some((rule: RuleModule) => {
+        const meta = parseRuleMetaData(rule);
+        return meta.type === ruleType;
+      });
       if (hasThisRuleType) {
         if (!hasAnyRuleType) {
           hasAnyRuleType = true;
