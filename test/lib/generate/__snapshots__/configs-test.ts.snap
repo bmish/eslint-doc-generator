@@ -1,5 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`generate (configs) config as flat config updates the documentation 1`] = `
+"<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description            | 💼 |
+| :----------------------------- | :--------------------- | :- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | ✅  |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (configs) config as flat config updates the documentation 2`] = `
+"# Description of no-foo (\`test/no-foo\`)
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) config as flat config updates the documentation 3`] = `
+"# Description of no-bar (\`test/no-bar\`)
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
 exports[`generate (configs) config with overrides generates the documentation 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
