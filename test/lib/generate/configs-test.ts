@@ -547,6 +547,7 @@ describe('generate (configs)', function () {
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
 
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
     });
   });
 });

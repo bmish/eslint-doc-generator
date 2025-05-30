@@ -23,6 +23,15 @@ exports[`generate (configs) config as flat config updates the documentation 2`] 
 "
 `;
 
+exports[`generate (configs) config as flat config updates the documentation 3`] = `
+"# Description of no-bar (\`test/no-bar\`)
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
 exports[`generate (configs) config with overrides generates the documentation 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
