@@ -441,4 +441,139 @@ describe('generate (deprecated rules)', function () {
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
     });
   });
+
+  describe('with the old format', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: {
+                  docs: { description: 'Description.' },
+                  deprecated: true,
+                  replacedBy: ['no-bar'],
+                },
+                create(context) {}
+              },
+            },
+          };`,
+
+        'README.md':
+          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+        'docs/rules/no-foo.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('warns about its deprecation', async function () {
+      await generate('.');
+
+      expect(console.warn).toHaveBeenCalledWith(
+        expect.stringContaining(
+          'Please consider using the new object type `DeprecatedInfo`.',
+        ),
+      );
+    });
+  });
+
+  describe('with the object type `DeprecatedInfo`', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: {
+                  docs: { description: 'Description.' },
+                  deprecated: {
+                    deprecatedSince: '1.0.0',
+                    url: 'https://example.org/blog/non-existant'
+                  },
+                },
+                create(context) {}
+              },
+              'no-bar': {
+                meta: {
+                  docs: { description: 'Description.' },
+                  deprecated: {
+                    message: 'This rule is outdated',
+                  }
+                },
+                create(context) {}
+              },
+              'no-baz': {
+                meta: {
+                  docs: { description: 'Description.' },
+                  deprecated: {
+                    replacedBy: [
+                      {
+                        // should not be present
+                        rule: {}
+                      },
+                      {
+                        rule: {
+                          name: 'no-bar',
+                        }
+                      },
+                      {
+                        rule: {
+                          name: 'no-baz',
+                          url: 'https://example.org/rules/no-baz.md'
+                        }
+                      },
+                    ]
+                  }
+                },
+                create(context) {}
+              },
+            },
+          };`,
+
+        'README.md':
+          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+        'docs/rules/no-foo.md': '',
+        'docs/rules/no-bar.md': '',
+        'docs/rules/no-baz.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('displays correct information', async function () {
+      await generate('.');
+
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-baz.md', 'utf8')).toMatchSnapshot();
+    });
+  });
 });
