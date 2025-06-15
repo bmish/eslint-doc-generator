@@ -52,6 +52,14 @@ describe('generate (deprecated rules)', function () {
                         },
                         create(context) {}
                       },
+                      'no-boz': {
+                        meta: {
+                          docs: { description: 'Description.' },
+                          deprecated: true,
+                          replacedBy: ['no-baz', 'no-biz'], // Multiple replacements.
+                        },
+                        create(context) {}
+                      },
                     },
                     configs: {}
                   };`,
@@ -63,6 +71,7 @@ describe('generate (deprecated rules)', function () {
         'docs/rules/no-bar.md': '',
         'docs/rules/no-baz.md': '',
         'docs/rules/no-biz.md': '',
+        'docs/rules/no-boz.md': '',
 
         // Needed for some of the test infrastructure to work.
         node_modules: mockFs.load(PATH_NODE_MODULES),
@@ -83,6 +92,7 @@ describe('generate (deprecated rules)', function () {
       expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-baz.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-biz.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-boz.md', 'utf8')).toMatchSnapshot();
     });
   });
 
