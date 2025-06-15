@@ -211,3 +211,46 @@ exports[`generate (deprecated rules) with no rule doc but --ignore-deprecated-ru
 
 <!-- end auto-generated rules list -->"
 `;
+
+exports[`generate (deprecated rules) with the object type \`DeprecatedInfo\` displays correct information 1`] = `
+"<!-- begin auto-generated rules list -->
+
+❌ Deprecated.
+
+| Name                           | Description  | ❌  |
+| :----------------------------- | :----------- | :- |
+| [no-bar](docs/rules/no-bar.md) | Description. | ❌  |
+| [no-baz](docs/rules/no-baz.md) | Description. | ❌  |
+| [no-foo](docs/rules/no-foo.md) | Description. | ❌  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (deprecated rules) with the object type \`DeprecatedInfo\` displays correct information 2`] = `
+"# Description (\`test/no-foo\`)
+
+❌ This rule is deprecated since v1.0.0.
+
+Read more at [example.org](https://example.org/blog/non-existant)
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (deprecated rules) with the object type \`DeprecatedInfo\` displays correct information 3`] = `
+"# Description (\`test/no-bar\`)
+
+❌ This rule is deprecated.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (deprecated rules) with the object type \`DeprecatedInfo\` displays correct information 4`] = `
+"# Description (\`test/no-baz\`)
+
+❌ This rule is deprecated. It was replaced by \`no-bar\`,[\`no-baz\`](https://example.org/rules/no-baz.md).
+
+<!-- end auto-generated rule header -->
+"
+`;
