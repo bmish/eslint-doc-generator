@@ -10,6 +10,8 @@ export type Rules = TSESLint.Linter.RulesRecord;
 
 export type RuleSeverity = TSESLint.Linter.RuleLevel;
 
+export type DeprecatedInfo = TSESLint.DeprecatedInfo;
+
 export type Config = TSESLint.Linter.Config;
 
 export type Plugin = TSESLint.Linter.Plugin;

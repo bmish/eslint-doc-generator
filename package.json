@@ -45,7 +45,7 @@
     "test": "node --max-old-space-size=4096 --experimental-vm-modules node_modules/jest/bin/jest.js --colors --coverage"
   },
   "dependencies": {
-    "@typescript-eslint/utils": "^8.0.0",
+    "@typescript-eslint/utils": "^8.34.0",
     "ajv": "^8.11.2",
     "change-case": "^5.0.0",
     "commander": "^14.0.0",

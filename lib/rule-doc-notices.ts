@@ -10,6 +10,7 @@ import {
 import { findConfigEmoji, getConfigsForRule } from './plugin-configs.js';
 import {
   RuleModule,
+  DeprecatedInfo,
   Plugin,
   ConfigsToRules,
   ConfigEmojis,
@@ -104,6 +105,7 @@ const RULE_NOTICES: {
         fixable: boolean;
         hasSuggestions: boolean;
         urlConfigs?: string;
+        deprecatedInfo: boolean | DeprecatedInfo | undefined;
         replacedBy: readonly string[] | undefined;
         plugin: Plugin;
         pluginPrefix: string;
@@ -187,8 +189,8 @@ const RULE_NOTICES: {
     return `${emojis.join('')} ${sentences}`;
   },
 
-  // Deprecated notice has optional "replaced by" rules list.
   [NOTICE_TYPE.DEPRECATED]: ({
+    deprecatedInfo,
     replacedBy,
     plugin,
     pluginPrefix,
@@ -197,6 +199,43 @@ const RULE_NOTICES: {
     ruleName,
     urlRuleDoc,
   }) => {
+    // use object type `DeprecatedInfo`
+    if (typeof deprecatedInfo === 'object') {
+      const replacementRuleList = (deprecatedInfo.replacedBy ?? [])
+        .map(({ rule }) =>
+          rule && rule.name
+            ? rule.url
+              ? `[\`${rule.name}\`](${rule.url})`
+              : `\`${rule.name}\``
+            : undefined,
+        )
+        .filter((rule): rule is string => typeof rule === 'string');
+
+      return `${EMOJI_DEPRECATED} This rule is deprecated${
+        deprecatedInfo.deprecatedSince
+          ? ` since v${deprecatedInfo.deprecatedSince}.`
+          : '.'
+      }${
+        replacementRuleList.length > 0
+          ? ` It was replaced by ${String(replacementRuleList)}.`
+          : ''
+      }${
+        // use DeprecatedInfo#url to inform about the reasons
+        deprecatedInfo.url
+          ? `${EOL}${EOL}Read more at [${new URL(deprecatedInfo.url).hostname}](${deprecatedInfo.url})`
+          : ''
+      }`;
+    }
+
+    // warn and use fallback
+    console.warn(
+      [
+        'The two top-level properties `deprecated` and `replacedBy` are deprecated since eslint 9.21.0.',
+        'Please consider using the new object type `DeprecatedInfo`.',
+        'https://eslint.org/docs/latest/extend/rule-deprecation#-deprecatedinfo-type',
+      ].join('\n'),
+    );
+
     const replacementRuleList = (replacedBy ?? []).map((replacementRuleName) =>
       getLinkToRule(
         replacementRuleName,
@@ -210,6 +249,7 @@ const RULE_NOTICES: {
         urlRuleDoc,
       ),
     );
+
     return `${EMOJI_DEPRECATED} This rule is deprecated.${
       replacedBy && replacedBy.length > 0
         ? ` It was replaced by ${String(replacementRuleList)}.`
@@ -277,7 +317,7 @@ function getNoticesForRule(
       configsError.length > 0 ||
       configsWarn.length > 0 ||
       configsOff.length > 0,
-    [NOTICE_TYPE.DEPRECATED]: rule.meta?.deprecated || false,
+    [NOTICE_TYPE.DEPRECATED]: Boolean(rule.meta?.deprecated) || false,
     [NOTICE_TYPE.DESCRIPTION]: Boolean(rule.meta?.docs?.description) || false,
 
     // Fixable/suggestions.
@@ -359,6 +399,7 @@ function getRuleNoticeLines(
     configsOff,
     ruleDocNotices,
   );
+
   let noticeType: keyof typeof notices;
 
   for (noticeType in notices) {
@@ -392,7 +433,8 @@ function getRuleNoticeLines(
             fixable: Boolean(rule.meta?.fixable),
             hasSuggestions: Boolean(rule.meta?.hasSuggestions),
             urlConfigs,
-            replacedBy: rule.meta?.replacedBy,
+            deprecatedInfo: rule.meta?.deprecated,
+            replacedBy: rule.meta?.replacedBy, // eslint-disable-line @typescript-eslint/no-deprecated
             plugin,
             pluginPrefix,
             pathPlugin,
