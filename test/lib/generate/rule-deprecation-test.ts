@@ -452,55 +452,6 @@ describe('generate (deprecated rules)', function () {
     });
   });
 
-  describe('with the old format', function () {
-    beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': {
-                meta: {
-                  docs: { description: 'Description.' },
-                  deprecated: true,
-                  replacedBy: ['no-bar'],
-                },
-                create(context) {}
-              },
-            },
-          };`,
-
-        'README.md':
-          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
-    });
-
-    afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
-    });
-
-    it('warns about its deprecation', async function () {
-      await generate('.');
-
-      expect(console.warn).toHaveBeenCalledWith(
-        expect.stringContaining(
-          'Please consider using the new object type `DeprecatedInfo`.',
-        ),
-      );
-    });
-  });
-
   describe('with the object type `DeprecatedInfo`', function () {
     beforeEach(function () {
       mockFs({

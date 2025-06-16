@@ -3,6 +3,5 @@ const sinon = require('sinon'); // eslint-disable-line @typescript-eslint/no-req
 
 // eslint-disable-next-line no-undef
 module.exports = function () {
-  jest.spyOn(console, 'warn').mockImplementation(() => {}); // Disabled to hide warnings related to `DeprecatedInfo`
   sinon.stub(os, 'EOL').value('\n'); // Stub os.EOL to always be '\n' for testing/snapshot purposes.
 };

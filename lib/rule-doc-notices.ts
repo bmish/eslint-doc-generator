@@ -227,15 +227,6 @@ const RULE_NOTICES: {
       }`;
     }
 
-    // warn and use fallback
-    console.warn(
-      [
-        'The two top-level properties `deprecated` and `replacedBy` are deprecated since eslint 9.21.0.',
-        'Please consider using the new object type `DeprecatedInfo`.',
-        'https://eslint.org/docs/latest/extend/rule-deprecation#-deprecatedinfo-type',
-      ].join('\n'),
-    );
-
     const replacementRuleList = (replacedBy ?? []).map((replacementRuleName) =>
       getLinkToRule(
         replacementRuleName,
