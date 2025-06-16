@@ -252,7 +252,7 @@ const RULE_NOTICES: {
 
     return `${EMOJI_DEPRECATED} This rule is deprecated.${
       replacedBy && replacedBy.length > 0
-        ? ` It was replaced by ${String(replacementRuleList)}.`
+        ? ` It was replaced by ${replacementRuleList.join(', ')}.`
         : ''
     }`;
   },
