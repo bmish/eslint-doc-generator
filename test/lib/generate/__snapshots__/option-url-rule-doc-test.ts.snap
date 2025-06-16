@@ -16,7 +16,7 @@ exports[`generate (--url-rule-doc) basic uses the right URLs 1`] = `
 `;
 
 exports[`generate (--url-rule-doc) basic uses the right URLs 2`] = `
-"# Description for no-foo (\`test/no-foo\`)
+"# Description for no-foo (\`no-foo\`)
 
 ❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](https://example.com/rule-docs/no-bar/).
 
@@ -25,7 +25,7 @@ exports[`generate (--url-rule-doc) basic uses the right URLs 2`] = `
 `;
 
 exports[`generate (--url-rule-doc) basic uses the right URLs 3`] = `
-"# Description for no-bar (\`test/no-bar\`)
+"# Description for no-bar (\`no-bar\`)
 
 <!-- end auto-generated rule header -->
 "
@@ -62,7 +62,7 @@ exports[`generate (--url-rule-doc) function returns undefined should fallback to
 `;
 
 exports[`generate (--url-rule-doc) function returns undefined should fallback to the normal URL 3`] = `
-"# Description for no-foo (\`test/no-foo\`)
+"# Description for no-foo (\`no-foo\`)
 
 ❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](no-bar.md).
 
@@ -71,7 +71,7 @@ exports[`generate (--url-rule-doc) function returns undefined should fallback to
 `;
 
 exports[`generate (--url-rule-doc) function returns undefined should fallback to the normal URL 4`] = `
-"# Description for no-bar (\`test/no-bar\`)
+"# Description for no-bar (\`no-bar\`)
 
 <!-- end auto-generated rule header -->
 "
@@ -108,7 +108,7 @@ exports[`generate (--url-rule-doc) function uses the custom URL 2`] = `
 `;
 
 exports[`generate (--url-rule-doc) function uses the custom URL 3`] = `
-"# Description for no-foo (\`test/no-foo\`)
+"# Description for no-foo (\`no-foo\`)
 
 ❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](https://example.com/rule-docs/name:no-bar/path:docs/rules/no-foo.md).
 
@@ -117,7 +117,7 @@ exports[`generate (--url-rule-doc) function uses the custom URL 3`] = `
 `;
 
 exports[`generate (--url-rule-doc) function uses the custom URL 4`] = `
-"# Description for no-bar (\`test/no-bar\`)
+"# Description for no-bar (\`no-bar\`)
 
 <!-- end auto-generated rule header -->
 "
