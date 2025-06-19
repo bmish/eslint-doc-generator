@@ -65,6 +65,20 @@
 
 
 
+
+## v2.2.0 (2025-06-19)
+
+#### :rocket: Enhancement
+* [#709](https://github.com/bmish/eslint-doc-generator/pull/709) Enable flat configs ([@Hagobert](https://github.com/Hagobert))
+
+#### :bug: Bug Fix
+* [#731](https://github.com/bmish/eslint-doc-generator/pull/731) Fix csv spacing for deprecated rule replaced-by list ([@bmish](https://github.com/bmish))
+
+#### Committers: 2
+- Bryan Mishkin ([@bmish](https://github.com/bmish))
+- [@Hagobert](https://github.com/Hagobert)
+
+
 ## v2.1.2 (2025-03-16)
 
 #### :bug: Bug Fix
