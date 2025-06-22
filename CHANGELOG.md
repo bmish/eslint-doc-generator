@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.2](https://github.com/bmish/eslint-doc-generator/compare/v2.2.1...v2.2.2) (2025-06-22)
+
+
+### Bug Fixes
+
+* no-op for testing release-please ([#751](https://github.com/bmish/eslint-doc-generator/issues/751)) ([ade5adf](https://github.com/bmish/eslint-doc-generator/commit/ade5adf161fc7bb9a6fbac65954370034a2d237f))
+
 ## [2.2.1](https://github.com/bmish/eslint-doc-generator/compare/v2.2.0...v2.2.1) (2025-06-22)
 
 
