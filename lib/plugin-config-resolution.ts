@@ -66,7 +66,7 @@ async function resolveConfigExtends(
   extendItems: readonly string[] | string,
 ): Promise<Rules> {
   const rules: Rules = {};
-  // eslint-disable-next-line unicorn/no-instanceof-array -- using Array.isArray() loses type information about the array.
+  // eslint-disable-next-line unicorn/no-instanceof-builtins -- using Array.isArray() loses type information about the array.
   for (const extend of extendItems instanceof Array
     ? extendItems
     : [extendItems]) {

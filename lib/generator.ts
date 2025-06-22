@@ -47,7 +47,7 @@ function stringOrArrayToArrayWithFallback(
   fallback: readonly string[],
 ): readonly string[] {
   const asArray =
-    stringOrArray instanceof Array // eslint-disable-line unicorn/no-instanceof-array -- using Array.isArray() loses type information about the array.
+    stringOrArray instanceof Array // eslint-disable-line unicorn/no-instanceof-builtins -- using Array.isArray() loses type information about the array.
       ? stringOrArray
       : stringOrArray
         ? [stringOrArray]
