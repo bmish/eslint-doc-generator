@@ -393,7 +393,7 @@ Alternatively, you can configure your scripts to run `prettier` after this tool:
 
 This tool follows [semantic versioning](https://semver.org/).
 
-New features will be released as a minor version, while bug fixes will be released as a patch version.
+New features will be [released](./RELEASE.md) as a minor version, while bug fixes will be released as a patch version.
 
 Breaking changes will be released as a major version and include:
 
