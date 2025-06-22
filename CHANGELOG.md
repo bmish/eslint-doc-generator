@@ -1,9 +1,70 @@
-## [2.2.1](https://github.com/bmish/eslint-doc-generator/compare/v2.2.0...v2.2.1) (2025-06-22)
 
 
-### Bug Fixes
 
-* no-op for testing release-please ([#739](https://github.com/bmish/eslint-doc-generator/issues/739)) ([0492d97](https://github.com/bmish/eslint-doc-generator/commit/0492d97b56a0ffa42fdb8272b8f32c9ec7a9deca))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## v2.2.0 (2025-06-19)
 
@@ -890,3 +951,4 @@ Now considered stable and already successfully adopted in many of the top ESLint
 #### Committers: 2
 - Bryan Mishkin ([@bmish](https://github.com/bmish))
 - Darius Dzien ([@ddzz](https://github.com/ddzz))
+
