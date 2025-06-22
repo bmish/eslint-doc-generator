@@ -5,6 +5,26 @@
 
 * no-op for testing release-please ([#739](https://github.com/bmish/eslint-doc-generator/issues/739)) ([0492d97](https://github.com/bmish/eslint-doc-generator/commit/0492d97b56a0ffa42fdb8272b8f32c9ec7a9deca))
 
+## [2.3.0](https://github.com/bmish/eslint-doc-generator/compare/v2.2.1...v2.3.0) (2025-06-22)
+
+
+### Features
+
+* add recommended-type-checked: ☑️ to preset emojis ([#518](https://github.com/bmish/eslint-doc-generator/issues/518)) ([2a49eda](https://github.com/bmish/eslint-doc-generator/commit/2a49edaca145d4ca575a36fff558fb5ec7aa670c))
+
+
+### Bug Fixes
+
+* correct deprecated rule replacement link with customized --path-rule-doc ([b76efba](https://github.com/bmish/eslint-doc-generator/commit/b76efbad452bfbb32026f17d4d9e4f077b893dd3))
+* correct path to types ([#298](https://github.com/bmish/eslint-doc-generator/issues/298)) ([04a0afa](https://github.com/bmish/eslint-doc-generator/commit/04a0afa84d4476d4908210cee6a8df6a6a467862))
+* no-op for testing release-please ([#739](https://github.com/bmish/eslint-doc-generator/issues/739)) ([0492d97](https://github.com/bmish/eslint-doc-generator/commit/0492d97b56a0ffa42fdb8272b8f32c9ec7a9deca))
+* no-op for testing release-please ([#745](https://github.com/bmish/eslint-doc-generator/issues/745)) ([d40250d](https://github.com/bmish/eslint-doc-generator/commit/d40250d8d2726be423f7871916e20aa590b9386b))
+* OS-agnostic handling of end-of-line characters ([#524](https://github.com/bmish/eslint-doc-generator/issues/524)) ([4852197](https://github.com/bmish/eslint-doc-generator/commit/485219789f1bffd6e96e81a7a3b05f3053d20e33))
+* **package-json:** refine ESM logic to return default export only when it is the only available export ([#658](https://github.com/bmish/eslint-doc-generator/issues/658)) ([d194eae](https://github.com/bmish/eslint-doc-generator/commit/d194eaee5fbce1d998636a5d70d06c26a577affb))
+* remove extra closing quote from error message ([f4b98ae](https://github.com/bmish/eslint-doc-generator/commit/f4b98aede0e778def94e0c1a988812c0eae38420))
+* Remove typeRoots and adjust types for Jest support ([#574](https://github.com/bmish/eslint-doc-generator/issues/574)) ([0ad8110](https://github.com/bmish/eslint-doc-generator/commit/0ad8110010c919170c524c4bee825dfd2ca2b031))
+* spacing for deprecated rule replaced by csv list ([#731](https://github.com/bmish/eslint-doc-generator/issues/731)) ([97a77fe](https://github.com/bmish/eslint-doc-generator/commit/97a77fef0b78ac1fe016aa9230e42d9378244d2b))
+
 ## v2.2.0 (2025-06-19)
 
 #### :rocket: Enhancement
