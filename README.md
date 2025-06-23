@@ -360,7 +360,7 @@ If you have a build step for your code like [Babel](https://babeljs.io/) or [Typ
 
 ### markdownlint
 
-The output of this tool should be compatible with the default configuration of [markdownlint](https://github.com/DavidAnson/markdownlint), which you might use to lint your markdown. If it's not, you can follow the [prettier example](#prettier) to tweak your scripts or use the `postprocess` option. See [here](https://github.com/DavidAnson/markdownlint/blob/main/helpers/README.md#applying-recommended-fixes) for an example of markdownlint's Node API for applying fixes to use in your `postprocess` function.
+The output of this tool should be compatible with the default configuration of [markdownlint](https://github.com/DavidAnson/markdownlint), which you might use to lint your markdown. If it's not, you can follow the [prettier example](#prettier) to tweak your scripts or use the `postprocess` option. See the [markdownlint documentation](https://github.com/DavidAnson/markdownlint/blob/main/helpers/README.md#applying-recommended-fixes) for an example of markdownlint's Node API for applying fixes to use in your `postprocess` function.
 
 ### prettier
 
@@ -393,7 +393,7 @@ Alternatively, you can configure your scripts to run `prettier` after this tool:
 
 This tool follows [semantic versioning](https://semver.org/).
 
-New features will be released as a minor version, while bug fixes will be released as a patch version.
+New features will be [released](./RELEASE.md) as a minor version, while bug fixes will be released as a patch version.
 
 Breaking changes will be released as a major version and include:
 

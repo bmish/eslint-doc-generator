@@ -11,9 +11,7 @@ import tseslint from 'typescript-eslint';
 export default tseslint.config(
   // Configs:
   js.configs.recommended,
-  eslintPluginImport.flatConfigs
-    ? eslintPluginImport.flatConfigs.recommended // TODO: use typescript config
-    : {},
+  eslintPluginImport.flatConfigs.typescript,
   eslintPluginJest.configs['flat/recommended'],
   eslintPluginN.configs['flat/recommended'],
   eslintPluginPrettierRecommended,
@@ -137,7 +135,7 @@ export default tseslint.config(
     languageOptions: {
       parserOptions: {
         projectService: true,
-        tsconfigRootDir: import.meta.dirname,
+        tsconfigRootDir: import.meta.dirname, // eslint-disable-line n/no-unsupported-features/node-builtins
       },
     },
 
