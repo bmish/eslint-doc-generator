@@ -3,7 +3,7 @@ import mockFs from 'mock-fs';
 import { dirname, resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
-import { jest } from '@jest/globals';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 import * as sinon from 'sinon';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -38,7 +38,7 @@ describe('generate (--check)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('prints the issues, exits with failure, and does not write changes', async function () {

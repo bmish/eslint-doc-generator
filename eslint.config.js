@@ -2,7 +2,6 @@
 
 import js from '@eslint/js';
 import eslintPluginN from 'eslint-plugin-n';
-import eslintPluginJest from 'eslint-plugin-jest';
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'; // eslint-disable-line import/extensions -- false positive
 import * as eslintPluginImport from 'eslint-plugin-import';
@@ -12,7 +11,6 @@ export default tseslint.config(
   // Configs:
   js.configs.recommended,
   eslintPluginImport.flatConfigs.typescript,
-  eslintPluginJest.configs['flat/recommended'],
   eslintPluginN.configs['flat/recommended'],
   eslintPluginPrettierRecommended,
   eslintPluginUnicorn.configs['flat/recommended'],

@@ -1,7 +1,7 @@
 import { getEndOfLine } from '../../../lib/string.js';
 import { generate } from '../../../lib/generator.js';
 import mockFs from 'mock-fs';
-import { jest } from '@jest/globals';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { readFileSync } from 'node:fs';
@@ -14,14 +14,14 @@ describe('string (getEndOfLine)', function () {
   describe('returns the correct end of line when .editorconfig exists', function () {
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('returns lf end of line when .editorconfig is configured with lf', function () {
       mockFs({
         '.editorconfig': `
                   root = true
-      
+
                   [*]
                   end_of_line = lf`,
       });
@@ -33,7 +33,7 @@ describe('string (getEndOfLine)', function () {
       mockFs({
         '.editorconfig': `
                 root = true
-    
+
                 [*]
                 end_of_line = crlf`,
       });
@@ -45,10 +45,10 @@ describe('string (getEndOfLine)', function () {
       mockFs({
         '.editorconfig': `
                   root = true
-      
+
                   [*]
                   end_of_line = lf
-                  
+
                   [*.md]
                   end_of_line = crlf`,
       });
@@ -89,7 +89,7 @@ describe('string (getEndOfLine)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates using lf end of line from .editorconfig', async function () {
@@ -98,7 +98,7 @@ describe('string (getEndOfLine)', function () {
         'README.md': '## Rules\n',
         '.editorconfig': `
                   root = true
-      
+
                   [*]
                   end_of_line = lf`,
       });
@@ -115,7 +115,7 @@ describe('string (getEndOfLine)', function () {
         'README.md': '## Rules\r\n',
         '.editorconfig': `
                   root = true
-      
+
                   [*]
                   end_of_line = crlf`,
       });
@@ -133,10 +133,10 @@ describe('string (getEndOfLine)', function () {
         'README.md': '## Rules\r\n',
         '.editorconfig': `
                   root = true
-      
+
                   [*]
                   end_of_line = lf
-                  
+
                   [*.md]
                   end_of_line = crlf`,
       });

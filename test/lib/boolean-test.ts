@@ -1,4 +1,5 @@
 import { boolean, isBooleanable } from '../../lib/boolean.js';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 
 describe('boolean', function () {
   describe('#boolean', function () {

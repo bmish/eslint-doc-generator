@@ -3,7 +3,7 @@ import mockFs from 'mock-fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
-import { jest } from '@jest/globals';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -51,7 +51,7 @@ describe('generate (--url-rule-doc)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('uses the right URLs', async function () {
@@ -106,7 +106,7 @@ describe('generate (--url-rule-doc)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('uses the custom URL', async function () {
@@ -165,7 +165,7 @@ describe('generate (--url-rule-doc)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('should fallback to the normal URL', async function () {

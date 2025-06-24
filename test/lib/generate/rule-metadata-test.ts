@@ -3,7 +3,7 @@ import mockFs from 'mock-fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
-import { jest } from '@jest/globals';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -44,7 +44,7 @@ describe('generate (rule metadata)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -95,7 +95,7 @@ describe('generate (rule metadata)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -142,7 +142,7 @@ describe('generate (rule metadata)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {

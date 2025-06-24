@@ -3,7 +3,7 @@ import mockFs from 'mock-fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
-import { jest } from '@jest/globals';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 import * as sinon from 'sinon';
 import { COLUMN_TYPE, NOTICE_TYPE } from '../../../lib/types.js';
 
@@ -49,7 +49,7 @@ describe('generate (rule options)', function () {
     });
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
     it('prints an error', async function () {
       const consoleErrorStub = sinon.stub(console, 'error');
@@ -95,7 +95,7 @@ describe('generate (rule options)', function () {
     });
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
     it('prints an error', async function () {
       const consoleErrorStub = sinon.stub(console, 'error');
@@ -141,7 +141,7 @@ describe('generate (rule options)', function () {
     });
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
     it('prints an error', async function () {
       const consoleErrorStub = sinon.stub(console, 'error');
@@ -187,7 +187,7 @@ describe('generate (rule options)', function () {
     });
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
     it('has no error', async function () {
       const consoleErrorStub = sinon.stub(console, 'error');
@@ -246,7 +246,7 @@ describe('generate (rule options)', function () {
     });
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
     it('successfully finds the options mentioned in the rule doc despite quote escaping', async function () {
       const consoleErrorStub = sinon.stub(console, 'error');
@@ -307,7 +307,7 @@ describe('generate (rule options)', function () {
     });
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
     it('prints an error', async function () {
       const consoleErrorStub = sinon.stub(console, 'error');
@@ -353,7 +353,7 @@ describe('generate (rule options)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('displays the column and notice', async function () {

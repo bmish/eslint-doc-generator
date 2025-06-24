@@ -5,6 +5,7 @@ import {
   getEndOfLine,
 } from '../../lib/string.js';
 import { EOL } from 'node:os';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 
 describe('strings', function () {
   describe('#addTrailingPeriod', function () {

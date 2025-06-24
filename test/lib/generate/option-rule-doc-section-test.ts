@@ -2,7 +2,7 @@ import { generate } from '../../../lib/generator.js';
 import mockFs from 'mock-fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { jest } from '@jest/globals';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 import * as sinon from 'sinon';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -37,7 +37,7 @@ describe('generate (rule doc sections)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('has no issues', async function () {
@@ -77,7 +77,7 @@ describe('generate (rule doc sections)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('prints errors', async function () {

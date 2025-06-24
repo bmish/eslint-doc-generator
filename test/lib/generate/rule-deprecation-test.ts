@@ -3,7 +3,7 @@ import mockFs from 'mock-fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
-import { jest } from '@jest/globals';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -80,7 +80,7 @@ describe('generate (deprecated rules)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('updates the documentation', async function () {
@@ -141,7 +141,7 @@ describe('generate (deprecated rules)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('has the correct links, especially replacement rule link', async function () {
@@ -203,7 +203,7 @@ describe('generate (deprecated rules)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('has the correct links, especially replacement rule link', async function () {
@@ -261,7 +261,7 @@ describe('generate (deprecated rules)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('uses correct replacement rule link', async function () {
@@ -304,7 +304,7 @@ describe('generate (deprecated rules)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('omits the rule from the README and does not try to update its non-existent rule doc', async function () {
@@ -349,7 +349,7 @@ describe('generate (deprecated rules)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('uses correct replacement rule link', async function () {
@@ -395,7 +395,7 @@ describe('generate (deprecated rules)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('uses correct replacement rule link', async function () {
@@ -441,7 +441,7 @@ describe('generate (deprecated rules)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('uses correct replacement rule link', async function () {

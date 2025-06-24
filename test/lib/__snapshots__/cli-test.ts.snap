@@ -1,4 +1,249 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`cli > all CLI options and all config files options > merges correctly, with CLI options taking precedence 1`] = `
+[
+  ".",
+  {
+    "check": true,
+    "configEmoji": [
+      [
+        "recommended-from-config-file",
+        "🚲",
+      ],
+      [
+        "recommended-from-cli",
+        "🚲",
+      ],
+    ],
+    "configFormat": "plugin-colon-prefix-name",
+    "ignoreConfig": [
+      "ignoredConfigFromConfigFile1",
+      "ignoredConfigFromConfigFile2",
+      "ignoredConfigFromCli1",
+      "ignoredConfigFromCli2",
+    ],
+    "ignoreDeprecatedRules": true,
+    "initRuleDocs": false,
+    "pathRuleDoc": "www.example.com/rule-doc-from-cli",
+    "pathRuleList": [
+      "www.example.com/rule-list-from-config-file",
+      "www.example.com/rule-list-from-cli",
+    ],
+    "ruleDocNotices": [
+      "fixable",
+      "type",
+    ],
+    "ruleDocSectionExclude": [
+      "excludedSectionFromConfigFile1",
+      "excludedSectionFromConfigFile2",
+      "excludedSectionFromCli1",
+      "excludedSectionFromCli2",
+    ],
+    "ruleDocSectionInclude": [
+      "includedSectionFromConfigFile1",
+      "includedSectionFromConfigFile2",
+      "includedSectionFromCli1",
+      "includedSectionFromCli2",
+    ],
+    "ruleDocSectionOptions": true,
+    "ruleDocTitleFormat": "name",
+    "ruleListColumns": [
+      "fixable",
+      "hasSuggestions",
+      "type",
+    ],
+    "ruleListSplit": [
+      "meta.docs.foo-from-config-file",
+      "meta.docs.foo-from-cli",
+    ],
+    "urlConfigs": "https://example.com/configs-url-from-cli",
+    "urlRuleDoc": "https://example.com/rule-doc-url-from-cli",
+  },
+]
+`;
+
+exports[`cli > all CLI options, no config file options > is called correctly 1`] = `
+[
+  ".",
+  {
+    "check": true,
+    "configEmoji": [
+      [
+        "recommended-from-cli",
+        "🚲",
+      ],
+    ],
+    "configFormat": "plugin-colon-prefix-name",
+    "ignoreConfig": [
+      "ignoredConfigFromCli1",
+      "ignoredConfigFromCli2",
+    ],
+    "ignoreDeprecatedRules": true,
+    "initRuleDocs": false,
+    "pathRuleDoc": "www.example.com/rule-doc-from-cli",
+    "pathRuleList": [
+      "www.example.com/rule-list-from-cli",
+    ],
+    "ruleDocNotices": [
+      "type",
+    ],
+    "ruleDocSectionExclude": [
+      "excludedSectionFromCli1",
+      "excludedSectionFromCli2",
+    ],
+    "ruleDocSectionInclude": [
+      "includedSectionFromCli1",
+      "includedSectionFromCli2",
+    ],
+    "ruleDocSectionOptions": true,
+    "ruleDocTitleFormat": "name",
+    "ruleListColumns": [
+      "type",
+    ],
+    "ruleListSplit": [
+      "meta.docs.foo-from-cli",
+    ],
+    "urlConfigs": "https://example.com/configs-url-from-cli",
+    "urlRuleDoc": "https://example.com/rule-doc-url-from-cli",
+  },
+]
+`;
+
+exports[`cli > all config files options, no CLI options > is called correctly 1`] = `
+[
+  ".",
+  {
+    "check": true,
+    "configEmoji": [
+      [
+        "recommended-from-config-file",
+        "🚲",
+      ],
+    ],
+    "configFormat": "name",
+    "ignoreConfig": [
+      "ignoredConfigFromConfigFile1",
+      "ignoredConfigFromConfigFile2",
+    ],
+    "ignoreDeprecatedRules": true,
+    "initRuleDocs": true,
+    "pathRuleDoc": "www.example.com/rule-doc-from-config-file",
+    "pathRuleList": [
+      "www.example.com/rule-list-from-config-file",
+    ],
+    "ruleDocNotices": [
+      "fixable",
+    ],
+    "ruleDocSectionExclude": [
+      "excludedSectionFromConfigFile1",
+      "excludedSectionFromConfigFile2",
+    ],
+    "ruleDocSectionInclude": [
+      "includedSectionFromConfigFile1",
+      "includedSectionFromConfigFile2",
+    ],
+    "ruleDocSectionOptions": false,
+    "ruleDocTitleFormat": "desc",
+    "ruleListColumns": [
+      "fixable",
+      "hasSuggestions",
+    ],
+    "ruleListSplit": [
+      "meta.docs.foo-from-config-file",
+    ],
+    "urlConfigs": "https://example.com/configs-url-from-config-file",
+    "urlRuleDoc": "https://example.com/rule-doc-url-from-config-file",
+  },
+]
+`;
+
+exports[`cli > boolean option - false (explicit) > is called correctly 1`] = `
+[
+  ".",
+  {
+    "configEmoji": [],
+    "ignoreConfig": [],
+    "ignoreDeprecatedRules": false,
+    "pathRuleList": [],
+    "ruleDocNotices": [],
+    "ruleDocSectionExclude": [],
+    "ruleDocSectionInclude": [],
+    "ruleListColumns": [],
+    "ruleListSplit": [],
+  },
+]
+`;
+
+exports[`cli > boolean option - true (explicit) > is called correctly 1`] = `
+[
+  ".",
+  {
+    "configEmoji": [],
+    "ignoreConfig": [],
+    "ignoreDeprecatedRules": true,
+    "pathRuleList": [],
+    "ruleDocNotices": [],
+    "ruleDocSectionExclude": [],
+    "ruleDocSectionInclude": [],
+    "ruleListColumns": [],
+    "ruleListSplit": [],
+  },
+]
+`;
+
+exports[`cli > boolean option - true (implicit) > is called correctly 1`] = `
+[
+  ".",
+  {
+    "configEmoji": [],
+    "ignoreConfig": [],
+    "ignoreDeprecatedRules": true,
+    "pathRuleList": [],
+    "ruleDocNotices": [],
+    "ruleDocSectionExclude": [],
+    "ruleDocSectionInclude": [],
+    "ruleListColumns": [],
+    "ruleListSplit": [],
+  },
+]
+`;
+
+exports[`cli > no options > is called correctly 1`] = `
+[
+  ".",
+  {
+    "configEmoji": [],
+    "ignoreConfig": [],
+    "pathRuleList": [],
+    "ruleDocNotices": [],
+    "ruleDocSectionExclude": [],
+    "ruleDocSectionInclude": [],
+    "ruleListColumns": [],
+    "ruleListSplit": [],
+  },
+]
+`;
+
+exports[`cli > pathRuleList as array in config file and CLI > merges correctly 1`] = `
+[
+  ".",
+  {
+    "configEmoji": [],
+    "ignoreConfig": [],
+    "pathRuleList": [
+      "listFromConfigFile1.md",
+      "listFromConfigFile2.md",
+      "listFromCli1.md",
+      "listFromCli2.md",
+    ],
+    "ruleDocNotices": [],
+    "ruleDocSectionExclude": [],
+    "ruleDocSectionInclude": [],
+    "ruleListColumns": [],
+    "ruleListSplit": [],
+  },
+]
+`;
 
 exports[`cli all CLI options and all config files options merges correctly, with CLI options taking precedence 1`] = `
 [

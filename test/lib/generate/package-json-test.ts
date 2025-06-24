@@ -3,7 +3,7 @@ import mockFs from 'mock-fs';
 import { dirname, resolve } from 'node:path';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { jest } from '@jest/globals';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -21,7 +21,7 @@ describe('generate (package.json)', function () {
     });
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
     it('throws an error', async function () {
       await expect(generate('.')).rejects.toThrowErrorMatchingSnapshot();
@@ -44,7 +44,7 @@ describe('generate (package.json)', function () {
     });
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
     it('throws an error', async function () {
       await expect(generate('.')).rejects.toThrowErrorMatchingSnapshot();
@@ -84,7 +84,7 @@ describe('generate (package.json)', function () {
     });
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
     it('determines the correct plugin prefix', async function () {
       await generate('.');
@@ -125,7 +125,7 @@ describe('generate (package.json)', function () {
     });
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
     it('determines the correct plugin prefix', async function () {
       await generate('.');
@@ -164,7 +164,7 @@ describe('generate (package.json)', function () {
     });
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
     it('omits the config column', async function () {
       await generate('.');
@@ -195,7 +195,7 @@ describe('generate (package.json)', function () {
     });
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
     it('throws an error', async function () {
       await expect(generate('.')).rejects.toThrowErrorMatchingSnapshot();
@@ -231,7 +231,7 @@ describe('generate (package.json)', function () {
     });
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
     it('finds the entry point', async function () {
       await expect(generate('.')).resolves.toBeUndefined();
@@ -267,7 +267,7 @@ describe('generate (package.json)', function () {
     });
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
     it('finds the entry point', async function () {
       await expect(generate('.')).resolves.toBeUndefined();
@@ -315,7 +315,7 @@ describe('generate (package.json)', function () {
     });
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
     it('generates the documentation', async function () {
       await generate('.');
@@ -345,7 +345,7 @@ describe('generate (package.json)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('throws an error', async function () {
@@ -385,7 +385,7 @@ describe('generate (package.json)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('finds the entry point', async function () {
@@ -415,7 +415,7 @@ describe('generate (package.json)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('finds the entry point', async function () {

@@ -3,7 +3,7 @@ import mockFs from 'mock-fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
-import { jest } from '@jest/globals';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 import { EMOJI_CONFIG_ERROR } from '../../../lib/emojis.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -53,7 +53,7 @@ describe('generate (--config-emoji)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('shows the correct emojis', async function () {
@@ -108,7 +108,7 @@ describe('generate (--config-emoji)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('sorts emojis before badges', async function () {
@@ -151,7 +151,7 @@ describe('generate (--config-emoji)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('throws an error', async function () {
@@ -198,7 +198,7 @@ describe('generate (--config-emoji)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('throws an error', async function () {
@@ -240,7 +240,7 @@ describe('generate (--config-emoji)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('reverts to using a badge for the config', async function () {
@@ -280,7 +280,7 @@ describe('generate (--config-emoji)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('throws an error', async function () {
@@ -323,7 +323,7 @@ describe('generate (--config-emoji)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('throws an error', async function () {
@@ -363,7 +363,7 @@ describe('generate (--config-emoji)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('throws an error', async function () {
@@ -410,7 +410,7 @@ describe('generate (--config-emoji)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('shows the default config emoji', async function () {

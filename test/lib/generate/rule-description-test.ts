@@ -3,7 +3,7 @@ import mockFs from 'mock-fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
-import { jest } from '@jest/globals';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -37,7 +37,7 @@ describe('generate (rule descriptions)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('adds spaces to the name column', async function () {
@@ -74,7 +74,7 @@ describe('generate (rule descriptions)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('does not add spaces to name column', async function () {
@@ -115,7 +115,7 @@ describe('generate (rule descriptions)', function () {
     });
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
     it('capitalizes the first letter and removes the trailing period from the description', async function () {
       await generate('.');
@@ -153,7 +153,7 @@ describe('generate (rule descriptions)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -198,7 +198,7 @@ describe('generate (rule descriptions)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -239,7 +239,7 @@ describe('generate (rule descriptions)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {

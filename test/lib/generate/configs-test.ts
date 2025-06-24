@@ -3,7 +3,7 @@ import mockFs from 'mock-fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
-import { jest } from '@jest/globals';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -50,7 +50,7 @@ describe('generate (configs)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -98,7 +98,7 @@ describe('generate (configs)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -188,7 +188,7 @@ describe('generate (configs)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -247,7 +247,7 @@ describe('generate (configs)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -300,7 +300,7 @@ describe('generate (configs)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -341,7 +341,7 @@ describe('generate (configs)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('uses recommended config emoji since it is the only relevant config', async function () {
@@ -387,7 +387,7 @@ describe('generate (configs)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('ignores external rules', async function () {
@@ -429,7 +429,7 @@ describe('generate (configs)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('updates the documentation', async function () {
@@ -476,7 +476,7 @@ describe('generate (configs)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('hides the ignored config', async function () {
@@ -538,7 +538,7 @@ describe('generate (configs)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('updates the documentation', async function () {

@@ -3,7 +3,7 @@ import mockFs from 'mock-fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
-import { jest } from '@jest/globals';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -39,7 +39,7 @@ describe('generate (--rule-doc-title-format)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('uses the right rule doc title format, with fallback when missing description', async function () {
@@ -80,7 +80,7 @@ describe('generate (--rule-doc-title-format)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('uses the right rule doc title format', async function () {
@@ -121,7 +121,7 @@ describe('generate (--rule-doc-title-format)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('uses the right rule doc title format', async function () {
@@ -160,7 +160,7 @@ describe('generate (--rule-doc-title-format)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('uses the right rule doc title format', async function () {
@@ -198,7 +198,7 @@ describe('generate (--rule-doc-title-format)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('uses the right rule doc title format', async function () {

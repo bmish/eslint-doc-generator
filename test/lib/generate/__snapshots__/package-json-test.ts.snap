@@ -1,4 +1,10 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`generate (package.json) > Missing plugin package.json > throws an error 1`] = `[Error: Could not find package.json of ESLint plugin.]`;
+
+exports[`generate (package.json) > Missing plugin package.json \`name\` field > throws an error 1`] = `[Error: Cannot find module '/Users/bryan/Development/oss/eslint-doc-generator/index.js' imported from '/Users/bryan/Development/oss/eslint-doc-generator/lib/import.ts']`;
+
+exports[`generate (package.json) > No exported rules object found > throws an error 1`] = `[Error: Cannot find module '/Users/bryan/Development/oss/eslint-doc-generator/index.js' imported from '/Users/bryan/Development/oss/eslint-doc-generator/lib/import.ts']`;
 
 exports[`generate (package.json) Missing plugin package.json \`name\` field throws an error 1`] = `"Could not find \`name\` field in ESLint plugin's package.json."`;
 

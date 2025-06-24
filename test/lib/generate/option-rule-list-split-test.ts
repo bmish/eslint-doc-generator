@@ -3,7 +3,7 @@ import mockFs from 'mock-fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
-import { jest } from '@jest/globals';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -43,7 +43,7 @@ describe('generate (--rule-list-split)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('splits the list', async function () {
@@ -85,7 +85,7 @@ describe('generate (--rule-list-split)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('splits the list', async function () {
@@ -121,7 +121,7 @@ describe('generate (--rule-list-split)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('throws an error', async function () {
@@ -164,7 +164,7 @@ describe('generate (--rule-list-split)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('splits the list with the right header', async function () {
@@ -206,7 +206,7 @@ describe('generate (--rule-list-split)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('splits the list with the right header', async function () {
@@ -248,7 +248,7 @@ describe('generate (--rule-list-split)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('splits the list with the right header', async function () {
@@ -290,7 +290,7 @@ describe('generate (--rule-list-split)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('splits the list with the right header', async function () {
@@ -330,7 +330,7 @@ describe('generate (--rule-list-split)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('splits the list and does the best it can with the header', async function () {
@@ -396,7 +396,7 @@ describe('generate (--rule-list-split)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('splits the list', async function () {
@@ -439,7 +439,7 @@ describe('generate (--rule-list-split)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('uses the proper sub-list header level', async function () {
@@ -480,7 +480,7 @@ describe('generate (--rule-list-split)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('uses the proper sub-list header level', async function () {
@@ -520,7 +520,7 @@ describe('generate (--rule-list-split)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('splits the list', async function () {
@@ -563,7 +563,7 @@ describe('generate (--rule-list-split)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('splits the list and still uses recommended config emoji in both lists', async function () {
@@ -607,7 +607,7 @@ describe('generate (--rule-list-split)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('splits the list by multiple properties', async function () {
@@ -647,7 +647,7 @@ describe('generate (--rule-list-split)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('does not show the property with no rules left and does not throw', async function () {
@@ -687,7 +687,7 @@ describe('generate (--rule-list-split)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('throws an error', async function () {
@@ -734,7 +734,7 @@ describe('generate (--rule-list-split)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -789,7 +789,7 @@ describe('generate (--rule-list-split)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('throws an error when no return value', async function () {

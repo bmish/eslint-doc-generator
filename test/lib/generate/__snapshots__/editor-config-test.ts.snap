@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`string (getEndOfLine) generates using the correct end of line when .editorconfig exists generates using crlf end of line from .editorconfig 1`] = `
 "## Rules

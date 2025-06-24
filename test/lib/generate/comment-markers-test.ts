@@ -3,7 +3,7 @@ import mockFs from 'mock-fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
-import { jest } from '@jest/globals';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 import { outdent } from 'outdent';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -56,7 +56,7 @@ describe('generate (comment markers)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -108,7 +108,7 @@ describe('generate (comment markers)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -156,7 +156,7 @@ describe('generate (comment markers)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -206,7 +206,7 @@ describe('generate (comment markers)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -248,7 +248,7 @@ describe('generate (comment markers)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -299,7 +299,7 @@ describe('generate (comment markers)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('updates the documentation', async function () {
@@ -351,7 +351,7 @@ describe('generate (comment markers)', function () {
     });
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
     it('adds rule list markers to rule section', async function () {
       await generate('.');
@@ -388,7 +388,7 @@ describe('generate (comment markers)', function () {
     });
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
     it('throws an error', async function () {
       await expect(generate('.')).rejects.toThrowErrorMatchingSnapshot();
@@ -427,7 +427,7 @@ describe('generate (comment markers)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('updates the documentation', async function () {
@@ -477,7 +477,7 @@ describe('generate (comment markers)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('updates the documentation', async function () {
@@ -522,7 +522,7 @@ describe('generate (comment markers)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('updates the documentation', async function () {

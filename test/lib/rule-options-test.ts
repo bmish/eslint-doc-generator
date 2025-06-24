@@ -1,4 +1,5 @@
 import { getAllNamedOptions } from '../../lib/rule-options.js';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 
 describe('rule options', function () {
   describe('#getAllNamedOptions', function () {

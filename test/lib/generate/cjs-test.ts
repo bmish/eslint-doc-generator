@@ -4,6 +4,7 @@
 import { generate } from '../../../lib/generator.js';
 import { join } from 'node:path';
 import { readFileSync } from 'node:fs';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 
 const FIXTURE_ROOT = join('test', 'fixtures'); // Relative to project root.
 

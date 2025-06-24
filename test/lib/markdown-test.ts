@@ -1,5 +1,6 @@
 import { outdent } from 'outdent';
 import { findSectionHeader } from '../../lib/markdown.js';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 
 describe('markdown', function () {
   describe('#findSectionHeader', function () {

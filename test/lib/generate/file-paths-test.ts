@@ -3,7 +3,7 @@ import mockFs from 'mock-fs';
 import { dirname, resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
-import { jest } from '@jest/globals';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -43,7 +43,7 @@ describe('generate (file paths)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     describe('when initRuleDocs is false', () => {
@@ -101,7 +101,7 @@ describe('generate (file paths)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('creates the rule doc including the mandatory section', async function () {
@@ -145,7 +145,7 @@ describe('generate (file paths)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('throws an error', async function () {
@@ -183,7 +183,7 @@ describe('generate (file paths)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('throws an error', async function () {
@@ -220,7 +220,7 @@ describe('generate (file paths)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -258,7 +258,7 @@ describe('generate (file paths)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -310,7 +310,7 @@ describe('generate (file paths)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -356,7 +356,7 @@ describe('generate (file paths)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('throws an error', async function () {
@@ -411,7 +411,7 @@ describe('generate (file paths)', function () {
 
     afterEach(function () {
       mockFs.restore();
-      jest.resetModules();
+      vi.resetModules();
     });
 
     it('falls back to default rules list', async function () {

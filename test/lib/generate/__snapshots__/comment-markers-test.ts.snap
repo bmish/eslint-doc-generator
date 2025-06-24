@@ -1,4 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`generate (comment markers) > README missing rule list markers and no rules section > throws an error 1`] = `[Error: Cannot find module '/Users/bryan/Development/oss/eslint-doc-generator/index.js' imported from '/Users/bryan/Development/oss/eslint-doc-generator/lib/import.ts']`;
 
 exports[`generate (comment markers) README missing rule list markers and no rules section throws an error 1`] = `"README.md is missing rules list markers: <!-- begin auto-generated rules list --><!-- end auto-generated rules list -->"`;
 
