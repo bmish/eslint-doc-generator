@@ -4,7 +4,8 @@ import {
 } from './comment-markers.js';
 import { markdownTable } from 'markdown-table';
 import type { ConfigsToRules, ConfigEmojis, Plugin, Config } from './types.js';
-import { ConfigFormat, configNameToDisplay } from './config-format.js';
+import type { ConfigFormat } from './config-format.js';
+import { configNameToDisplay } from './config-format.js';
 import { getEndOfLine, sanitizeMarkdownTable } from './string.js';
 
 const EOL = getEndOfLine();

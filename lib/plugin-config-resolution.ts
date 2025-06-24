@@ -1,12 +1,11 @@
 import { existsSync } from 'node:fs';
 import { importAbs } from './import.js';
 import type { Plugin, Config, Rules, ConfigsToRules } from './types.js';
-import { TSESLint } from '@typescript-eslint/utils';
+import type { TSESLint } from '@typescript-eslint/utils';
 
-import {
+import type {
   ClassicConfig,
   FlatConfig,
-  // eslint-disable-next-line import/extensions -- false positive
 } from '@typescript-eslint/utils/dist/ts-eslint';
 
 /**

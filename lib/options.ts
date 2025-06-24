@@ -1,6 +1,6 @@
 import { join } from 'node:path';
-import { ConfigFormat } from './config-format.js';
-import { RuleDocTitleFormat } from './rule-doc-title-format.js';
+import type { ConfigFormat } from './config-format.js';
+import type { RuleDocTitleFormat } from './rule-doc-title-format.js';
 import { COLUMN_TYPE, NOTICE_TYPE, OPTION_TYPE } from './types.js';
 
 export const COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {

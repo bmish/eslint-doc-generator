@@ -8,18 +8,18 @@ import {
   EMOJI_OPTIONS,
 } from './emojis.js';
 import { findConfigEmoji, getConfigsForRule } from './plugin-configs.js';
-import {
+import type {
   RuleModule,
   Plugin,
   ConfigsToRules,
   ConfigEmojis,
-  SEVERITY_TYPE,
-  NOTICE_TYPE,
   UrlRuleDocFunction,
   PathRuleDocFunction,
 } from './types.js';
-import { RULE_TYPE, RULE_TYPE_MESSAGES_NOTICES } from './rule-type.js';
-import { RuleDocTitleFormat } from './rule-doc-title-format.js';
+import { SEVERITY_TYPE, NOTICE_TYPE } from './types.js';
+import type { RULE_TYPE } from './rule-type.js';
+import { RULE_TYPE_MESSAGES_NOTICES } from './rule-type.js';
+import type { RuleDocTitleFormat } from './rule-doc-title-format.js';
 import { hasOptions } from './rule-options.js';
 import { getLinkToRule, replaceRulePlaceholder } from './rule-link.js';
 import {
@@ -28,7 +28,8 @@ import {
   addTrailingPeriod,
   getEndOfLine,
 } from './string.js';
-import { ConfigFormat, configNameToDisplay } from './config-format.js';
+import type { ConfigFormat } from './config-format.js';
+import { configNameToDisplay } from './config-format.js';
 
 const EOL = getEndOfLine();
 

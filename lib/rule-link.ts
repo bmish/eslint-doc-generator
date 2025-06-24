@@ -1,10 +1,10 @@
 import { join, sep, relative, dirname } from 'node:path';
-import {
+import type {
   PathRuleDocFunction,
   Plugin,
-  RULE_SOURCE,
   UrlRuleDocFunction,
 } from './types.js';
+import { RULE_SOURCE } from './types.js';
 import { getPluginRoot } from './package-json.js';
 
 export function replaceRulePlaceholder(
