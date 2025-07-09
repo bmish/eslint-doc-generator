@@ -112,6 +112,10 @@ function replacedByToNoticeSentence(
 
     const conjunction = arr.length > 1 && idx === arr.length - 1 ? 'and ' : '';
 
+    // @todo - generate (deprecated rules)
+    // using prefix ahead of replacement rule name uses correct replacement rule link 4
+    // with nested rule names has the correct links, especially replacement rule link 5
+    // with --path-rule-doc has the correct links, especially replacement rule link 5
     const replacementRule = info.rule.url
       ? getMarkdownLink(info.rule.name, true, info.rule.url)
       : getLinkToRule(
