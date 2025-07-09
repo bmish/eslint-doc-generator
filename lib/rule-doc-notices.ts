@@ -18,11 +18,16 @@ import {
   NOTICE_TYPE,
   UrlRuleDocFunction,
   PathRuleDocFunction,
+  ReplacedByInfo,
 } from './types.js';
 import { RULE_TYPE, RULE_TYPE_MESSAGES_NOTICES } from './rule-type.js';
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
 import { hasOptions } from './rule-options.js';
-import { getLinkToRule, replaceRulePlaceholder } from './rule-link.js';
+import {
+  getLinkToRule,
+  getMarkdownLink,
+  replaceRulePlaceholder,
+} from './rule-link.js';
 import {
   toSentenceCase,
   removeTrailingPeriod,
@@ -83,6 +88,59 @@ function configsToNoticeSentence(
   return sentence;
 }
 
+function replacedByToNoticeSentence(
+  deprecated: DeprecatedInfo,
+  plugin: Plugin,
+  pluginPrefix: string,
+  pathPlugin: string,
+  pathRuleDoc: string | PathRuleDocFunction,
+  urlRuleDoc: string | UrlRuleDocFunction | undefined,
+): string | undefined {
+  if (!deprecated.replacedBy || deprecated.replacedBy.length === 0) {
+    return undefined;
+  }
+
+  function replacedByIterator(
+    info: ReplacedByInfo,
+    idx: number,
+    arr: ReplacedByInfo[],
+  ): string | undefined {
+    // A plugin maintainer should at least specify a rule name
+    if (!info.rule?.name) {
+      return undefined;
+    }
+
+    const conjunction = arr.length > 1 && idx === arr.length - 1 ? 'and ' : '';
+
+    const replacementRule = info.rule.url
+      ? getMarkdownLink(info.rule.name, true, info.rule.url)
+      : getLinkToRule(
+          info.rule.name,
+          plugin,
+          pluginPrefix,
+          pathPlugin,
+          pathRuleDoc,
+          replaceRulePlaceholder(pathRuleDoc, info.rule.name),
+          true,
+          true,
+          urlRuleDoc,
+        );
+
+    const externalPlugin = info.plugin?.name && info.plugin.name !== 'eslint'
+      ? ` from ${getMarkdownLink(info.plugin.name, false, info.plugin.url)}`
+      : '';
+
+    return `${conjunction}${replacementRule}${externalPlugin}${
+      info.message ? ` (${info.message})` : ''
+    }${info.url ? ` (${getMarkdownLink('read more', false, info.url)})` : ''}`;
+  }
+
+  return `It was replaced by ${deprecated.replacedBy
+    .map((item, index, array) => replacedByIterator(item, index, array))
+    .filter(Boolean)
+    .join(', ')}.`;
+}
+
 // A few individual notices declared here just so they can be reused in multiple notices.
 const NOTICE_FIXABLE = `${EMOJI_FIXABLE} This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).`;
 const NOTICE_HAS_SUGGESTIONS = `${EMOJI_HAS_SUGGESTIONS} This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).`;
@@ -105,7 +163,7 @@ const RULE_NOTICES: {
         fixable: boolean;
         hasSuggestions: boolean;
         urlConfigs?: string;
-        deprecatedInfo: boolean | DeprecatedInfo | undefined;
+        deprecated: boolean | DeprecatedInfo | undefined;
         replacedBy: readonly string[] | undefined;
         plugin: Plugin;
         pluginPrefix: string;
@@ -190,7 +248,7 @@ const RULE_NOTICES: {
   },
 
   [NOTICE_TYPE.DEPRECATED]: ({
-    deprecatedInfo,
+    deprecated,
     replacedBy,
     plugin,
     pluginPrefix,
@@ -199,32 +257,35 @@ const RULE_NOTICES: {
     ruleName,
     urlRuleDoc,
   }) => {
-    // use object type `DeprecatedInfo`
-    if (typeof deprecatedInfo === 'object') {
-      const replacementRuleList = (deprecatedInfo.replacedBy ?? [])
-        .map(({ rule }) =>
-          rule && rule.name
-            ? rule.url
-              ? `[\`${rule.name}\`](${rule.url})`
-              : `\`${rule.name}\``
-            : undefined,
-        )
-        .filter((rule): rule is string => typeof rule === 'string');
+    if (typeof deprecated === 'object') {
+      const sentenceDeprecated = `${EMOJI_DEPRECATED} This rule ${
+        deprecated.deprecatedSince ? 'has been' : 'is'
+      } ${deprecated.url ? `[deprecated](${deprecated.url})` : 'deprecated'}${
+        deprecated.deprecatedSince
+          ? ` since v${deprecated.deprecatedSince}`
+          : ''
+      }${
+        deprecated.availableUntil
+          ? ` and will be available until v${deprecated.availableUntil}`
+          : ''
+      }.`;
 
-      return `${EMOJI_DEPRECATED} This rule is deprecated${
-        deprecatedInfo.deprecatedSince
-          ? ` since v${deprecatedInfo.deprecatedSince}.`
-          : '.'
-      }${
-        replacementRuleList.length > 0
-          ? ` It was replaced by ${String(replacementRuleList)}.`
-          : ''
-      }${
-        // use DeprecatedInfo#url to inform about the reasons
-        deprecatedInfo.url
-          ? `${EOL}${EOL}Read more at [${new URL(deprecatedInfo.url).hostname}](${deprecatedInfo.url})`
-          : ''
-      }`;
+      const sentenceReplacedBy = replacedByToNoticeSentence(
+        deprecated,
+        plugin,
+        pluginPrefix,
+        pathPlugin,
+        pathRuleDoc,
+        urlRuleDoc,
+      );
+
+      const deprecatedMessage = deprecated.message
+        ? addTrailingPeriod(deprecated.message)
+        : undefined;
+
+      return [sentenceDeprecated, sentenceReplacedBy, deprecatedMessage]
+        .filter(Boolean)
+        .join(' ');
     }
 
     const replacementRuleList = (replacedBy ?? []).map((replacementRuleName) =>
@@ -424,7 +485,7 @@ function getRuleNoticeLines(
             fixable: Boolean(rule.meta?.fixable),
             hasSuggestions: Boolean(rule.meta?.hasSuggestions),
             urlConfigs,
-            deprecatedInfo: rule.meta?.deprecated,
+            deprecated: rule.meta?.deprecated,
             replacedBy: rule.meta?.replacedBy, // eslint-disable-line @typescript-eslint/no-deprecated
             plugin,
             pluginPrefix,
