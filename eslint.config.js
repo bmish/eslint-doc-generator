@@ -35,6 +35,7 @@ export default tseslint.config(
       'unicorn/prevent-abbreviations': 'off',
 
       // typescript-eslint rules:
+      '@typescript-eslint/consistent-type-imports': 'error',
       '@typescript-eslint/no-unnecessary-condition': 'off', // Dozens of places where the rule's `meta` property needs optional chaining get flagged by this.
       '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/prefer-readonly': 'error',

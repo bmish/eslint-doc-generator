@@ -15,13 +15,7 @@ import { findSectionHeader, findFinalHeaderLevel } from './markdown.js';
 import { getPluginRoot } from './package-json.js';
 import { generateLegend } from './rule-list-legend.js';
 import { relative } from 'node:path';
-import {
-  COLUMN_TYPE,
-  RuleListSplitFunction,
-  RuleModule,
-  SEVERITY_TYPE,
-  UrlRuleDocFunction,
-} from './types.js';
+import { COLUMN_TYPE, SEVERITY_TYPE } from './types.js';
 import { markdownTable } from 'markdown-table';
 import type {
   Plugin,
@@ -29,6 +23,9 @@ import type {
   ConfigEmojis,
   RuleNamesAndRules,
   PathRuleDocFunction,
+  RuleListSplitFunction,
+  RuleModule,
+  UrlRuleDocFunction,
 } from './types.js';
 import { EMOJIS_TYPE } from './rule-type.js';
 import { hasOptions } from './rule-options.js';
@@ -42,7 +39,7 @@ import { noCase } from 'change-case';
 import { getProperty } from 'dot-prop';
 import { boolean, isBooleanable } from './boolean.js';
 import Ajv from 'ajv';
-import { ConfigFormat } from './config-format.js';
+import type { ConfigFormat } from './config-format.js';
 
 function isBooleanableTrue(value: unknown): boolean {
   return isBooleanable(value) && boolean(value);
