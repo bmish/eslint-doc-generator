@@ -51,7 +51,7 @@ details"
 `;
 
 exports[`generate (general) basic updates the documentation 4`] = `
-"# Description of no-boz (\`test/no-baz\`)
+"# Description of no-boz (\`no-baz\`)
 
 <!-- end auto-generated rule header -->
 ## Rule details
