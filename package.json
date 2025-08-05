@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
-    "@jest/globals": "^29.1.2",
+    "@jest/globals": "^30.0.5",
     "@types/jest": "^29.5.14",
     "@types/mock-fs": "^4.13.4",
     "@types/node": "^24.0.3",
