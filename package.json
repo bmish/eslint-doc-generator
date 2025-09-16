@@ -90,7 +90,7 @@
     "eslint": ">= 8.57.1"
   },
   "engines": {
-    "node": "^18.18.0 || ^20.9.0 || >=22.0.0"
+    "node": "^20.9.0 || ^22.0.0 || >=24.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
