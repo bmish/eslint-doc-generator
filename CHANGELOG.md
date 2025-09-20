@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.3](https://github.com/bmish/eslint-doc-generator/compare/v2.2.2...v2.2.3) (2025-09-20)
+
+
+### Bug Fixes
+
+* readme ([#795](https://github.com/bmish/eslint-doc-generator/issues/795)) ([dcbafb7](https://github.com/bmish/eslint-doc-generator/commit/dcbafb7346aea8563d4fd40bce1d3e5b79f4e2e0))
+
 ## [2.2.2](https://github.com/bmish/eslint-doc-generator/compare/v2.2.1...v2.2.2) (2025-06-22)
 
 
