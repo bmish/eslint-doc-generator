@@ -109,7 +109,7 @@ Optionally, add these marker comments to your rule docs in an `## Options` secti
 <!-- end auto-generated rule options list -->
 ```
 
-Note that rule option lists are subject-to-change as we add support for more kinds and properties of schemas. To fully take advantage of them, you'll want to ensure your rules have the `meta.schema` property fleshed out with properties like `description`, `type`, `enum`, `default`, `required`, `deprecated`.
+Note that rule option lists are subject-to-change as we add support for more kinds and properties of schemas. To fully take advantage of them, you'll want to ensure your rules have the `meta.schema` property fleshed out with properties like `description`, `type`, `enum`, `default`, `required`, and `deprecated`.
 
 ### Configure linting
 
@@ -184,7 +184,7 @@ There's also a `postprocess` option that's only available via a [config file](#c
 | `--init-rule-docs` | Whether to create rule doc files if they don't yet exist. | `false` |
 | `--path-rule-doc` | Path to markdown file for each rule doc. Use `{name}` placeholder for the rule name. A function can also be provided for this option via a [config file](#configuration-file). | `docs/rules/{name}.md` |
 | `--path-rule-list` | Path to markdown file where the rules table list should live. Option can be repeated. | `README.md` |
-| `--rule-doc-notices` | Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. See choices in below [table](#column-and-notice-types). | `deprecated`, `configs`, `fixableAndHasSuggestions`, `requiresTypeChecking` |
+| `--rule-doc-notices` | Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. See choices in below [table](#column-and-notice-types). | `configs`, `deprecated`, `fixableAndHasSuggestions`, `requiresTypeChecking` |
 | `--rule-doc-section-exclude` | Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. | |
 | `--rule-doc-section-include` | Required section in each rule doc. Exit with failure if missing. Option can be repeated. | |
 | `--rule-doc-section-options` | Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options. | `true` |
