@@ -26,11 +26,9 @@ import {
   toSentenceCase,
   removeTrailingPeriod,
   addTrailingPeriod,
-  getEndOfLine,
+  EOL,
 } from './string.js';
 import { ConfigFormat, configNameToDisplay } from './config-format.js';
-
-const EOL = getEndOfLine();
 
 function severityToTerminology(severity: SEVERITY_TYPE) {
   switch (severity) {

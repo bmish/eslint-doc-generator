@@ -17,9 +17,7 @@ import {
 } from './types.js';
 import { RULE_TYPE_MESSAGES_LEGEND, RULE_TYPES } from './rule-type.js';
 import { ConfigFormat, configNameToDisplay } from './config-format.js';
-import { getEndOfLine } from './string.js';
-
-const EOL = getEndOfLine();
+import { EOL } from './string.js';
 
 export const SEVERITY_TYPE_TO_WORD: {
   [key in SEVERITY_TYPE]: string;
