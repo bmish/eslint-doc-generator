@@ -5,9 +5,7 @@ import {
 import { markdownTable } from 'markdown-table';
 import type { ConfigsToRules, ConfigEmojis, Plugin, Config } from './types.js';
 import { ConfigFormat, configNameToDisplay } from './config-format.js';
-import { getEndOfLine, sanitizeMarkdownTable } from './string.js';
-
-const EOL = getEndOfLine();
+import { EOL, sanitizeMarkdownTable } from './string.js';
 
 /**
  * Check potential locations for the config description.

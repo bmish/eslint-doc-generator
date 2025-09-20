@@ -5,9 +5,7 @@ import {
 import { markdownTable } from 'markdown-table';
 import type { RuleModule } from './types.js';
 import { RuleOption, getAllNamedOptions } from './rule-options.js';
-import { getEndOfLine, sanitizeMarkdownTable } from './string.js';
-
-const EOL = getEndOfLine();
+import { EOL, sanitizeMarkdownTable } from './string.js';
 
 export enum COLUMN_TYPE {
   // Alphabetical order.
