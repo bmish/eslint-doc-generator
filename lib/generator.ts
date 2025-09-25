@@ -28,8 +28,8 @@ import {
 import { resolveConfigsToRules } from './plugin-config-resolution.js';
 import { OPTION_DEFAULTS } from './options.js';
 import { diff } from 'jest-diff';
-import type { GenerateOptions } from './types.js';
-import { OPTION_TYPE, RuleModule } from './types.js';
+import type { GenerateOptions, RuleModule } from './types.js';
+import { OPTION_TYPE } from './types.js';
 import { replaceRulePlaceholder } from './rule-link.js';
 import { updateRuleOptionsList } from './rule-options-list.js';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';

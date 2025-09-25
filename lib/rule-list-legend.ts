@@ -8,15 +8,11 @@ import {
   EMOJI_CONFIG_FROM_SEVERITY,
 } from './emojis.js';
 import { findConfigEmoji, getConfigsThatSetARule } from './plugin-configs.js';
-import {
-  COLUMN_TYPE,
-  ConfigEmojis,
-  Plugin,
-  ConfigsToRules,
-  SEVERITY_TYPE,
-} from './types.js';
+import type { ConfigEmojis, Plugin, ConfigsToRules } from './types.js';
+import { COLUMN_TYPE, SEVERITY_TYPE } from './types.js';
 import { RULE_TYPE_MESSAGES_LEGEND, RULE_TYPES } from './rule-type.js';
-import { ConfigFormat, configNameToDisplay } from './config-format.js';
+import type { ConfigFormat } from './config-format.js';
+import { configNameToDisplay } from './config-format.js';
 import { getEndOfLine } from './string.js';
 
 const EOL = getEndOfLine();
