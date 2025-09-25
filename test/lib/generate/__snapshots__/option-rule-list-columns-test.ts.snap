@@ -16,7 +16,7 @@ exports[`generate (--rule-list-columns) basic shows the right columns and legend
 `;
 
 exports[`generate (--rule-list-columns) basic shows the right columns and legend 2`] = `
-"# Description for no-foo (\`test/no-foo\`)
+"# Description for no-foo (\`no-foo\`)
 
 ❌ This rule is deprecated.
 
@@ -68,7 +68,7 @@ exports[`generate (--rule-list-columns) shows column and notice for requiresType
 `;
 
 exports[`generate (--rule-list-columns) shows column and notice for requiresTypeChecking updates the documentation 3`] = `
-"# Description of no-bar (\`test/no-bar\`)
+"# Description of no-bar (\`no-bar\`)
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
