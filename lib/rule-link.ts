@@ -79,6 +79,16 @@ export function getUrlToRule(
   );
 }
 
+export function getMarkdownLink(
+  text: string,
+  includeBackticks: boolean,
+  url?: string,
+) {
+  const displayedText = includeBackticks ? `\`${text}\`` : text;
+
+  return url ? `[${displayedText}](${url})` : displayedText;
+}
+
 /**
  * Get the markdown link (title and URL) to the rule's documentation.
  */
@@ -124,11 +134,10 @@ export function getLinkToRule(
     urlRuleDoc,
   );
 
-  const ruleNameToDisplay = `${includeBackticks ? '`' : ''}${
+  const ruleString =
     includePrefix && ruleNameWithPluginPrefix
       ? ruleNameWithPluginPrefix
-      : ruleNameWithoutPluginPrefix
-  }${includeBackticks ? '`' : ''}`;
+      : ruleNameWithoutPluginPrefix;
 
-  return urlToRule ? `[${ruleNameToDisplay}](${urlToRule})` : ruleNameToDisplay;
+  return getMarkdownLink(ruleString, includeBackticks, urlToRule);
 }
