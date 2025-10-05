@@ -36,21 +36,23 @@ export function sanitizeMarkdownTable(
   return text.map((row) => row.map((col) => sanitizeMarkdownTableCell(col)));
 }
 
-// Gets the end of line string while respecting the
-// `.editorconfig` and falling back to `EOL` from `node:os`.
+/**
+ * Gets the end of line string while respecting the
+ * `.editorconfig` and falling back to `EOL` from `node:os`.
+ */
 export function getEndOfLine() {
   // The passed `markdown.md` argument is used as an example
   // of a markdown file in the plugin root folder in order to
   // check for any specific markdown configurations.
   const config = editorconfig.parseSync('markdown.md');
 
-  let endOfLine = EOL;
-
   if (config.end_of_line === 'lf') {
-    endOfLine = '\n';
-  } else if (config.end_of_line === 'crlf') {
-    endOfLine = '\r\n';
+    return '\n';
   }
 
-  return endOfLine;
+  if (config.end_of_line === 'crlf') {
+    return '\r\n';
+  }
+
+  return EOL;
 }
