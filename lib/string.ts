@@ -9,12 +9,12 @@ export function toSentenceCase(str: string) {
   });
 }
 
-export function removeTrailingPeriod(str: string) {
-  return str.replace(/\.$/u, '');
-}
-
 export function addTrailingPeriod(str: string) {
   return str.replace(/\.?$/u, '.');
+}
+
+export function removeTrailingPeriod(str: string) {
+  return str.replace(/\.$/u, '');
 }
 
 /**
