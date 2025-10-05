@@ -5,9 +5,8 @@ import {
 import { markdownTable } from 'markdown-table';
 import type { ConfigsToRules, ConfigEmojis, Plugin, Config } from './types.js';
 import { ConfigFormat, configNameToDisplay } from './config-format.js';
-import { getEndOfLine, sanitizeMarkdownTable } from './string.js';
-
-const EOL = getEndOfLine();
+import { sanitizeMarkdownTable } from './string.js';
+import { Context } from './context.js';
 
 /**
  * Check potential locations for the config description.
@@ -31,6 +30,7 @@ function configToDescription(config: Config): string | undefined {
 }
 
 function generateConfigListMarkdown(
+  context: Context,
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
@@ -64,12 +64,13 @@ function generateConfigListMarkdown(
   ];
 
   return markdownTable(
-    sanitizeMarkdownTable(rows),
+    sanitizeMarkdownTable(context, rows),
     { align: 'l' }, // Left-align headers.
   );
 }
 
 export function updateConfigsList(
+  context: Context,
   markdown: string,
   plugin: Plugin,
   configsToRules: ConfigsToRules,
@@ -78,6 +79,8 @@ export function updateConfigsList(
   configFormat: ConfigFormat,
   ignoreConfig: readonly string[],
 ): string {
+  const { endOfLine } = context;
+
   const listStartIndex = markdown.indexOf(BEGIN_CONFIG_LIST_MARKER);
   let listEndIndex = markdown.indexOf(END_CONFIG_LIST_MARKER);
 
@@ -103,6 +106,7 @@ export function updateConfigsList(
 
   // New config list.
   const list = generateConfigListMarkdown(
+    context,
     plugin,
     configsToRules,
     pluginPrefix,
@@ -111,5 +115,5 @@ export function updateConfigsList(
     ignoreConfig,
   );
 
-  return `${preList}${BEGIN_CONFIG_LIST_MARKER}${EOL}${EOL}${list}${EOL}${EOL}${END_CONFIG_LIST_MARKER}${postList}`;
+  return `${preList}${BEGIN_CONFIG_LIST_MARKER}${endOfLine}${endOfLine}${list}${endOfLine}${endOfLine}${END_CONFIG_LIST_MARKER}${postList}`;
 }
