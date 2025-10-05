@@ -9,7 +9,7 @@ export interface Context {
   endOfLine: string;
 }
 
-export function getContext() {
+export function getContext(): Context {
   return {
     endOfLine: getEndOfLine(),
   };
