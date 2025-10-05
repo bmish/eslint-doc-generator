@@ -8,13 +8,16 @@ node_modules
 
 # Test output:
 .nyc_output
-coverage/
+coverage
 
 # ESLint
 .eslintcache
 
 # TypeScript output
-dist/
+dist
 
 # Mac
 .DS_Store
+
+# Agents
+.claude
