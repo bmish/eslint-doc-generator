@@ -33,7 +33,7 @@ import { OPTION_TYPE, RuleModule } from './types.js';
 import { replaceRulePlaceholder } from './rule-link.js';
 import { updateRuleOptionsList } from './rule-options-list.js';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { getEndOfLine } from './string.js';
+import { getContext } from './context.js';
 
 function stringOrArrayWithFallback<T extends string | readonly string[]>(
   stringOrArray: undefined | T,
@@ -63,7 +63,8 @@ function stringOrArrayToArrayWithFallback(
 
 // eslint-disable-next-line complexity
 export async function generate(path: string, options?: GenerateOptions) {
-  const EOL = getEndOfLine();
+  const context = getContext();
+  const { endOfLine } = context;
 
   const plugin = await loadPlugin(path);
   const pluginPrefix = await getPluginPrefix(path);
@@ -174,16 +175,16 @@ export async function generate(path: string, options?: GenerateOptions) {
         ruleDocSectionInclude.length > 0
           ? ruleDocSectionInclude
               .map((title) => `## ${title}`)
-              .join(`${EOL}${EOL}`)
+              .join(`${endOfLine}${endOfLine}`)
           : undefined,
         ruleHasOptions
-          ? `## Options${EOL}${EOL}${BEGIN_RULE_OPTIONS_LIST_MARKER}${EOL}${END_RULE_OPTIONS_LIST_MARKER}`
+          ? `## Options${endOfLine}${endOfLine}${BEGIN_RULE_OPTIONS_LIST_MARKER}${endOfLine}${END_RULE_OPTIONS_LIST_MARKER}`
           : undefined,
       ]
         .filter((section) => section !== undefined)
-        .join(`${EOL}${EOL}`);
+        .join(`${endOfLine}${endOfLine}`);
       if (newRuleDocContents !== '') {
-        newRuleDocContents = `${EOL}${newRuleDocContents}${EOL}`;
+        newRuleDocContents = `${endOfLine}${newRuleDocContents}${endOfLine}`;
       }
 
       await mkdir(dirname(pathToDoc), { recursive: true });
@@ -193,6 +194,7 @@ export async function generate(path: string, options?: GenerateOptions) {
 
     // Regenerate the header (title/notices) of each rule doc.
     const newHeaderLines = generateRuleHeaderLines(
+      context,
       description,
       name,
       plugin,
@@ -212,7 +214,9 @@ export async function generate(path: string, options?: GenerateOptions) {
     const contentsOld = (await readFile(pathToDoc)).toString(); // eslint-disable-line unicorn/no-await-expression-member
     const contentsNew = await postprocess(
       updateRuleOptionsList(
+        context,
         replaceOrCreateHeader(
+          context,
           contentsOld,
           newHeaderLines,
           END_RULE_HEADER_MARKER,
@@ -242,6 +246,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     // Check for required sections.
     for (const section of ruleDocSectionInclude) {
       expectSectionHeaderOrFail(
+        context,
         `\`${name}\` rule doc`,
         contentsNew,
         [section],
@@ -252,6 +257,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     // Check for disallowed sections.
     for (const section of ruleDocSectionExclude) {
       expectSectionHeaderOrFail(
+        context,
         `\`${name}\` rule doc`,
         contentsNew,
         [section],
@@ -262,6 +268,7 @@ export async function generate(path: string, options?: GenerateOptions) {
     if (ruleDocSectionOptions) {
       // Options section.
       expectSectionHeaderOrFail(
+        context,
         `\`${name}\` rule doc`,
         contentsNew,
         ['Options', 'Config'],
@@ -300,7 +307,9 @@ export async function generate(path: string, options?: GenerateOptions) {
     const fileContents = await readFile(pathToFile, 'utf8');
     const fileContentsNew = await postprocess(
       updateConfigsList(
+        context,
         updateRulesList(
+          context,
           ruleNamesAndRules,
           fileContents,
           plugin,
