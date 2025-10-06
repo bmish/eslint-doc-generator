@@ -30,10 +30,8 @@ function getEndOfLineFromEditorConfig(): '\n' | '\r\n' | undefined {
 async function getEndOfLineFromPrettierConfig(): Promise<
   '\n' | '\r\n' | undefined
 > {
-  // The passed `markdown.md` argument is used as an example of a Markdown file
-  // in the plugin root folder in order to check for any specific Markdown
-  // configurations.
-  const prettierOptions = await prettier.resolveConfig('markdown.md');
+  const cwd = process.cwd();
+  const prettierOptions = await prettier.resolveConfig(cwd);
 
   if (prettierOptions === null) {
     return undefined;
@@ -47,7 +45,9 @@ async function getEndOfLineFromPrettierConfig(): Promise<
     return '\r\n';
   }
 
-  return undefined;
+  // Prettier defaults to "lf" if it is not explicitly specified in the config file:
+  // https://prettier.io/docs/options#end-of-line
+  return '\n';
 }
 
 /** `EOL` is typed as `string`, so we perform run-time validation to be safe. */
