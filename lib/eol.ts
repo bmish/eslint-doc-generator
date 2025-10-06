@@ -2,37 +2,33 @@ import * as prettier from 'prettier';
 import { EOL } from 'node:os';
 import editorconfig from 'editorconfig';
 
-/**
- * Gets the end of line string while respecting the `.editorconfig` and
- * Prettier config and falling back to `EOL` from `node:os`.
- */
-export async function getEndOfLine(): Promise<string> {
+export async function getEndOfLine(): Promise<'\n' | '\r\n'> {
   return (
     getEndOfLineFromEditorConfig() ??
     (await getEndOfLineFromPrettierConfig()) ??
-    EOL
+    getNodeEOL()
   );
 }
 
-function getEndOfLineFromEditorConfig(): 'lf' | 'crlf' | undefined {
+function getEndOfLineFromEditorConfig(): '\n' | '\r\n' | undefined {
   // The passed `markdown.md` argument is used as an example of a Markdown file
   // in the plugin root folder in order to check for any specific Markdown
   // configurations.
   const editorConfigProps = editorconfig.parseSync('markdown.md');
 
   if (editorConfigProps.end_of_line === 'lf') {
-    return 'lf';
+    return '\n';
   }
 
   if (editorConfigProps.end_of_line === 'crlf') {
-    return 'crlf';
+    return '\r\n';
   }
 
   return undefined;
 }
 
 async function getEndOfLineFromPrettierConfig(): Promise<
-  'lf' | 'crlf' | undefined
+  '\n' | '\r\n' | undefined
 > {
   // The passed `markdown.md` argument is used as an example of a Markdown file
   // in the plugin root folder in order to check for any specific Markdown
@@ -44,12 +40,23 @@ async function getEndOfLineFromPrettierConfig(): Promise<
   }
 
   if (prettierOptions.endOfLine === 'lf') {
-    return 'lf';
+    return '\n';
   }
 
   if (prettierOptions.endOfLine === 'crlf') {
-    return 'crlf';
+    return '\r\n';
   }
 
   return undefined;
+}
+
+/** `EOL` is typed as `string`, so we perform run-time validation to be safe. */
+function getNodeEOL(): '\n' | '\r\n' {
+  if (EOL === '\n' || EOL === '\r\n') {
+    return EOL;
+  }
+
+  throw new Error(
+    `Failed to detect the end-of-line constant from the JavaScript runtime: ${EOL}`,
+  );
 }
