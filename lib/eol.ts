@@ -1,4 +1,3 @@
-import * as prettier from 'prettier';
 import { EOL } from 'node:os';
 import editorconfig from 'editorconfig';
 
@@ -32,6 +31,13 @@ async function getEndOfLineFromEditorConfig(): Promise<
 async function getEndOfLineFromPrettierConfig(): Promise<
   '\n' | '\r\n' | undefined
 > {
+  let prettier: typeof import('prettier') | undefined;
+  try {
+    prettier = await import('prettier');
+  } catch {
+    return undefined;
+  }
+
   const cwd = process.cwd();
   const prettierOptions = await prettier.resolveConfig(cwd);
 
