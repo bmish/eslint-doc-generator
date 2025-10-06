@@ -17,7 +17,7 @@ describe('string (getEndOfLine)', function () {
       jest.resetModules();
     });
 
-    it('returns lf end of line when .editorconfig is configured with lf', function () {
+    it('returns lf end of line when .editorconfig is configured with lf', async function () {
       mockFs({
         '.editorconfig': `
                   root = true
@@ -26,10 +26,10 @@ describe('string (getEndOfLine)', function () {
                   end_of_line = lf`,
       });
 
-      expect(getEndOfLine()).toStrictEqual('\n');
+      expect(await getEndOfLine()).toStrictEqual('\n');
     });
 
-    it('returns crlf end of line when .editorconfig is configured with crlf', function () {
+    it('returns crlf end of line when .editorconfig is configured with crlf', async function () {
       mockFs({
         '.editorconfig': `
                 root = true
@@ -38,10 +38,10 @@ describe('string (getEndOfLine)', function () {
                 end_of_line = crlf`,
       });
 
-      expect(getEndOfLine()).toStrictEqual('\r\n');
+      expect(await getEndOfLine()).toStrictEqual('\r\n');
     });
 
-    it('respects the .md specific end of line settings when .editorconfig is configured', function () {
+    it('respects the .md specific end of line settings when .editorconfig is configured', async function () {
       mockFs({
         '.editorconfig': `
                   root = true
@@ -53,7 +53,7 @@ describe('string (getEndOfLine)', function () {
                   end_of_line = crlf`,
       });
 
-      expect(getEndOfLine()).toStrictEqual('\r\n');
+      expect(await getEndOfLine()).toStrictEqual('\r\n');
     });
   });
 
