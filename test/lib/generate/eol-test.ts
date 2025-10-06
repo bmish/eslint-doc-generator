@@ -181,6 +181,17 @@ describe('getEndOfLine', function () {
 
         expect(await getEndOfLine()).toStrictEqual('\r\n');
       });
+
+      it('returns lf when ".prettierrc.json" is not configured', async function () {
+        mockFs({
+          '.prettierrc.json': `
+                  {
+                    "$schema": "https://json.schemastore.org/prettierrc"
+                  }`,
+        });
+
+        expect(await getEndOfLine()).toStrictEqual('n');
+      });
     });
   });
 
