@@ -4,17 +4,19 @@ import editorconfig from 'editorconfig';
 
 export async function getEndOfLine(): Promise<'\n' | '\r\n'> {
   return (
-    getEndOfLineFromEditorConfig() ??
+    (await getEndOfLineFromEditorConfig()) ??
     (await getEndOfLineFromPrettierConfig()) ??
     getNodeEOL()
   );
 }
 
-function getEndOfLineFromEditorConfig(): '\n' | '\r\n' | undefined {
+async function getEndOfLineFromEditorConfig(): Promise<
+  '\n' | '\r\n' | undefined
+> {
   // The passed `markdown.md` argument is used as an example of a Markdown file
   // in the plugin root folder in order to check for any specific Markdown
   // configurations.
-  const editorConfigProps = editorconfig.parseSync('markdown.md');
+  const editorConfigProps = await editorconfig.parse('markdown.md');
 
   if (editorConfigProps.end_of_line === 'lf') {
     return '\n';
