@@ -152,48 +152,44 @@ describe('getEndOfLine', function () {
   });
 
   describe('with a Prettier config', function () {
-    describe('returns the correct end of line when ".prettierrc.json" exists', function () {
-      afterEach(function () {
-        mockFs.restore();
-        jest.resetModules();
-      });
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
 
-      it('returns lf end of line when ".prettierrc.json" is configured with lf', async function () {
-        mockFs({
-          '.prettierrc.json': `
+    it('returns lf end of line when ".prettierrc.json" is configured with lf', async function () {
+      mockFs({
+        '.prettierrc.json': `
                   {
                     "$schema": "https://json.schemastore.org/prettierrc",
                     "endOfLine": "lf"
                   }`,
-        });
-
-        expect(await getEndOfLine()).toStrictEqual('\n');
       });
 
-      it('returns crlf end of line when ".prettierrc.json" is configured with crlf', async function () {
-        mockFs({
-          '.prettierrc.json': `
+      expect(await getEndOfLine()).toStrictEqual('\n');
+    });
+
+    it('returns crlf end of line when ".prettierrc.json" is configured with crlf', async function () {
+      mockFs({
+        '.prettierrc.json': `
                   {
                     "$schema": "https://json.schemastore.org/prettierrc",
                     "endOfLine": "crlf"
                   }`,
-          // Needed for some of the test infrastructure to work.
-          node_modules: mockFs.load(PATH_NODE_MODULES),
-        });
-
-        expect(await getEndOfLine()).toStrictEqual('\r\n');
       });
 
-      it('returns lf when ".prettierrc.json" is not configured', async function () {
-        mockFs({
-          '.prettierrc.json': `
+      expect(await getEndOfLine()).toStrictEqual('\r\n');
+    });
+
+    it('returns lf when ".prettierrc.json" is not configured with the "endOfLine" option', async function () {
+      mockFs({
+        '.prettierrc.json': `
                   {
                     "$schema": "https://json.schemastore.org/prettierrc"
                   }`,
-        });
-
-        expect(await getEndOfLine()).toStrictEqual('\n');
       });
+
+      expect(await getEndOfLine()).toStrictEqual('\n');
     });
   });
 
