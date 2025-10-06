@@ -35,6 +35,7 @@ async function getEndOfLineFromPrettierConfig(): Promise<
   try {
     prettier = await import('prettier');
   } catch {
+    /* istanbul ignore next */
     return undefined;
   }
 
@@ -60,6 +61,7 @@ async function getEndOfLineFromPrettierConfig(): Promise<
   return '\n';
 }
 
+/* istanbul ignore next */
 /** `EOL` is typed as `string`, so we perform run-time validation to be safe. */
 function getNodeEOL(): '\n' | '\r\n' {
   if (EOL === '\n' || EOL === '\r\n') {
