@@ -164,6 +164,9 @@ describe('getEndOfLine', function () {
                     "$schema": "https://json.schemastore.org/prettierrc",
                     "endOfLine": "lf"
                   }`,
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
       });
 
       expect(await getEndOfLine()).toStrictEqual('\n');
@@ -176,6 +179,9 @@ describe('getEndOfLine', function () {
                     "$schema": "https://json.schemastore.org/prettierrc",
                     "endOfLine": "crlf"
                   }`,
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
       });
 
       expect(await getEndOfLine()).toStrictEqual('\r\n');
@@ -187,6 +193,9 @@ describe('getEndOfLine', function () {
                   {
                     "$schema": "https://json.schemastore.org/prettierrc"
                   }`,
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
       });
 
       expect(await getEndOfLine()).toStrictEqual('\n');
