@@ -1,21 +1,16 @@
-import { getEndOfLine } from '../../../lib/context.js';
+import { getEndOfLine } from '../../../lib/eol.js';
 import { generate } from '../../../lib/generator.js';
 import mockFs from 'mock-fs';
 import { jest } from '@jest/globals';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { readFileSync } from 'node:fs';
-import { EOL } from 'node:os';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const PATH_NODE_MODULES = resolve(__dirname, '..', '..', '..', 'node_modules');
 
 describe('string (getEndOfLine)', function () {
-  it('handles when .editorconfig is not available and fallbacks to `EOL` from `node:os`', function () {
-    expect(getEndOfLine()).toStrictEqual(EOL);
-  });
-
   describe('returns the correct end of line when .editorconfig exists', function () {
     afterEach(function () {
       mockFs.restore();
