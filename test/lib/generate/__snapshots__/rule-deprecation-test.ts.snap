@@ -114,7 +114,7 @@ exports[`generate (deprecated rules) several deprecated rules updates the docume
 `;
 
 exports[`generate (deprecated rules) several deprecated rules updates the documentation 6`] = `
-"# Description (\`test/no-boz\`)
+"# Description (\`no-boz\`)
 
 ❌ This rule is deprecated. It was replaced by [\`test/no-baz\`](no-baz.md), [\`test/no-biz\`](no-biz.md).
 
