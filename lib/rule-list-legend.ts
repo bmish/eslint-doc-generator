@@ -17,9 +17,7 @@ import {
 } from './types.js';
 import { RULE_TYPE_MESSAGES_LEGEND, RULE_TYPES } from './rule-type.js';
 import { ConfigFormat, configNameToDisplay } from './config-format.js';
-import { getEndOfLine } from './string.js';
-
-const EOL = getEndOfLine();
+import { Context } from './context.js';
 
 export const SEVERITY_TYPE_TO_WORD: {
   [key in SEVERITY_TYPE]: string;
@@ -233,6 +231,7 @@ function getLegendsForIndividualConfigs({
 }
 
 export function generateLegend(
+  context: Context,
   columns: Record<COLUMN_TYPE, boolean>,
   plugin: Plugin,
   configsToRules: ConfigsToRules,
@@ -242,6 +241,8 @@ export function generateLegend(
   ignoreConfig: readonly string[],
   urlConfigs?: string,
 ) {
+  const { endOfLine } = context;
+
   const legends = (
     Object.entries(columns) as readonly [COLUMN_TYPE, boolean][]
   ).flatMap(([columnType, enabled]) => {
@@ -290,5 +291,6 @@ export function generateLegend(
     );
   }
 
-  return legends.join(`\\${EOL}`); // Back slash ensures these end up displayed on separate lines.
+  // The backslashes ensure that they end up displayed on separate lines.
+  return legends.join(`\\${endOfLine}`);
 }

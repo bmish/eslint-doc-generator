@@ -33,16 +33,13 @@ import type {
 import { EMOJIS_TYPE } from './rule-type.js';
 import { hasOptions } from './rule-options.js';
 import { getLinkToRule } from './rule-link.js';
-import {
-  capitalizeOnlyFirstLetter,
-  getEndOfLine,
-  sanitizeMarkdownTable,
-} from './string.js';
+import { capitalizeOnlyFirstLetter, sanitizeMarkdownTable } from './string.js';
 import { noCase } from 'change-case';
 import { getProperty } from 'dot-prop';
 import { boolean, isBooleanable } from './boolean.js';
 import Ajv from 'ajv';
 import { ConfigFormat } from './config-format.js';
+import { Context } from './context.js';
 
 function isBooleanableTrue(value: unknown): boolean {
   return isBooleanable(value) && boolean(value);
@@ -205,6 +202,7 @@ function buildRuleRow(
 }
 
 function generateRulesListMarkdown(
+  context: Context,
   ruleNamesAndRules: RuleNamesAndRules,
   columns: Record<COLUMN_TYPE, boolean>,
   configsToRules: ConfigsToRules,
@@ -232,7 +230,7 @@ function generateRulesListMarkdown(
   });
 
   return markdownTable(
-    sanitizeMarkdownTable([
+    sanitizeMarkdownTable(context, [
       listHeaderRow,
       ...ruleNamesAndRules.map(([name, rule]) =>
         buildRuleRow(
@@ -259,6 +257,7 @@ type RulesAndHeaders = { title?: string; rules: RuleNamesAndRules }[];
 type RulesAndHeadersReadOnly = Readonly<RulesAndHeaders>;
 
 function generateRuleListMarkdownForRulesAndHeaders(
+  context: Context,
   rulesAndHeaders: RulesAndHeadersReadOnly,
   headerLevel: number,
   columns: Record<COLUMN_TYPE, boolean>,
@@ -272,8 +271,7 @@ function generateRuleListMarkdownForRulesAndHeaders(
   ignoreConfig: readonly string[],
   urlRuleDoc?: string | UrlRuleDocFunction,
 ): string {
-  const EOL = getEndOfLine();
-
+  const { endOfLine } = context;
   const parts: string[] = [];
 
   for (const { title, rules } of rulesAndHeaders) {
@@ -282,6 +280,7 @@ function generateRuleListMarkdownForRulesAndHeaders(
     }
     parts.push(
       generateRulesListMarkdown(
+        context,
         rules,
         columns,
         configsToRules,
@@ -297,7 +296,7 @@ function generateRuleListMarkdownForRulesAndHeaders(
     );
   }
 
-  return parts.join(`${EOL}${EOL}`);
+  return parts.join(`${endOfLine}${endOfLine}`);
 }
 
 /**
@@ -405,6 +404,7 @@ function getRulesAndHeadersForSplit(
 }
 
 export function updateRulesList(
+  context: Context,
   ruleNamesAndRules: RuleNamesAndRules,
   markdown: string,
   plugin: Plugin,
@@ -421,13 +421,13 @@ export function updateRulesList(
   urlConfigs?: string,
   urlRuleDoc?: string | UrlRuleDocFunction,
 ): string {
-  const EOL = getEndOfLine();
+  const { endOfLine } = context;
 
   let listStartIndex = markdown.indexOf(BEGIN_RULE_LIST_MARKER);
   let listEndIndex = markdown.indexOf(END_RULE_LIST_MARKER);
 
   // Find the best possible section to insert the rules list into if the markers are missing.
-  const rulesSectionHeader = findSectionHeader(markdown, 'rules');
+  const rulesSectionHeader = findSectionHeader(context, markdown, 'rules');
   const rulesSectionIndex = rulesSectionHeader
     ? markdown.indexOf(rulesSectionHeader)
     : -1;
@@ -459,7 +459,7 @@ export function updateRulesList(
   const postList = markdown.slice(Math.max(0, listEndIndex));
 
   // Determine what header level to use for sub-lists based on the last seen header level.
-  const preListFinalHeaderLevel = findFinalHeaderLevel(preList);
+  const preListFinalHeaderLevel = findFinalHeaderLevel(context, preList);
   const ruleListSplitHeaderLevel = preListFinalHeaderLevel
     ? preListFinalHeaderLevel + 1
     : 1;
@@ -476,6 +476,7 @@ export function updateRulesList(
 
   // New legend.
   const legend = generateLegend(
+    context,
     columns,
     plugin,
     configsToRules,
@@ -547,6 +548,7 @@ export function updateRulesList(
 
   // New rule list.
   const list = generateRuleListMarkdownForRulesAndHeaders(
+    context,
     rulesAndHeaders,
     ruleListSplitHeaderLevel,
     columns,
@@ -561,7 +563,7 @@ export function updateRulesList(
     urlRuleDoc,
   );
 
-  const newContent = `${legend ? `${legend}${EOL}${EOL}` : ''}${list}`;
+  const newContent = `${legend ? `${legend}${endOfLine}${endOfLine}` : ''}${list}`;
 
-  return `${preList}${BEGIN_RULE_LIST_MARKER}${EOL}${EOL}${newContent}${EOL}${EOL}${END_RULE_LIST_MARKER}${postList}`;
+  return `${preList}${BEGIN_RULE_LIST_MARKER}${endOfLine}${endOfLine}${newContent}${endOfLine}${endOfLine}${END_RULE_LIST_MARKER}${postList}`;
 }

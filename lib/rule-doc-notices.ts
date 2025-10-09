@@ -26,11 +26,9 @@ import {
   toSentenceCase,
   removeTrailingPeriod,
   addTrailingPeriod,
-  getEndOfLine,
 } from './string.js';
 import { ConfigFormat, configNameToDisplay } from './config-format.js';
-
-const EOL = getEndOfLine();
+import { Context } from './context.js';
 
 function severityToTerminology(severity: SEVERITY_TYPE) {
   switch (severity) {
@@ -212,7 +210,7 @@ const RULE_NOTICES: {
     );
     return `${EMOJI_DEPRECATED} This rule is deprecated.${
       replacedBy && replacedBy.length > 0
-        ? ` It was replaced by ${String(replacementRuleList)}.`
+        ? ` It was replaced by ${replacementRuleList.join(', ')}.`
         : ''
     }`;
   },
@@ -513,6 +511,7 @@ function detectPrefixFromConfigsToRules(
  * @returns {string} - new header including marker
  */
 export function generateRuleHeaderLines(
+  context: Context,
   description: string | undefined,
   name: string,
   plugin: Plugin,
@@ -529,6 +528,8 @@ export function generateRuleHeaderLines(
   urlRuleDoc?: string | UrlRuleDocFunction,
 ): string {
   const prefix = detectPrefixFromConfigsToRules(name, configsToRules);
+  const { endOfLine } = context;
+
   return [
     makeRuleDocTitle(name, description, prefix, ruleDocTitleFormat),
     ...getRuleNoticeLines(
@@ -547,5 +548,5 @@ export function generateRuleHeaderLines(
     ),
     '',
     END_RULE_HEADER_MARKER,
-  ].join(EOL);
+  ].join(endOfLine);
 }
