@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0](https://github.com/bmish/eslint-doc-generator/compare/v2.2.2...v2.3.0) (2025-10-06)
+
+
+### Features
+
+* use Prettier to detect end of line in addition to EditorConfig ([#803](https://github.com/bmish/eslint-doc-generator/issues/803)) ([c0ad58b](https://github.com/bmish/eslint-doc-generator/commit/c0ad58bd23d459f955e40ea04e739df20730f3f2))
+
 ## [2.2.2](https://github.com/bmish/eslint-doc-generator/compare/v2.2.1...v2.2.2) (2025-06-22)
 
 

@@ -26,11 +26,9 @@ import {
   toSentenceCase,
   removeTrailingPeriod,
   addTrailingPeriod,
-  getEndOfLine,
 } from './string.js';
 import { ConfigFormat, configNameToDisplay } from './config-format.js';
-
-const EOL = getEndOfLine();
+import { Context } from './context.js';
 
 function severityToTerminology(severity: SEVERITY_TYPE) {
   switch (severity) {
@@ -494,6 +492,7 @@ function makeRuleDocTitle(
  * @returns {string} - new header including marker
  */
 export function generateRuleHeaderLines(
+  context: Context,
   description: string | undefined,
   name: string,
   plugin: Plugin,
@@ -509,6 +508,8 @@ export function generateRuleHeaderLines(
   urlConfigs?: string,
   urlRuleDoc?: string | UrlRuleDocFunction,
 ): string {
+  const { endOfLine } = context;
+
   return [
     makeRuleDocTitle(name, description, pluginPrefix, ruleDocTitleFormat),
     ...getRuleNoticeLines(
@@ -527,5 +528,5 @@ export function generateRuleHeaderLines(
     ),
     '',
     END_RULE_HEADER_MARKER,
-  ].join(EOL);
+  ].join(endOfLine);
 }
