@@ -38,7 +38,7 @@ exports[`generate (comment markers) no existing comment markers - minimal doc co
 `;
 
 exports[`generate (comment markers) no existing comment markers - minimal doc content generates the documentation 2`] = `
-"# Description of no-foo (\`test/no-foo\`)
+"# Description of no-foo (\`no-foo\`)
 
 🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
@@ -79,7 +79,7 @@ Existing rules section content."
 `;
 
 exports[`generate (comment markers) no existing comment markers - with no blank lines in existing content generates the documentation 2`] = `
-"# Description of no-foo (\`test/no-foo\`)
+"# Description of no-foo (\`no-foo\`)
 
 🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
@@ -103,7 +103,7 @@ Existing rules section content."
 `;
 
 exports[`generate (comment markers) no existing comment markers - with one blank line around existing content generates the documentation 2`] = `
-"# Description of no-foo (\`test/no-foo\`)
+"# Description of no-foo (\`no-foo\`)
 
 🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
@@ -173,7 +173,7 @@ No blank line before this."
 `;
 
 exports[`generate (comment markers) with no blank lines around comment markers generates the documentation 2`] = `
-"# Description of no-foo (\`test/no-foo\`)
+"# Description of no-foo (\`no-foo\`)
 
 🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
@@ -200,7 +200,7 @@ One blank line before this."
 `;
 
 exports[`generate (comment markers) with one blank line around comment markers generates the documentation 2`] = `
-"# Description of no-foo (\`test/no-foo\`)
+"# Description of no-foo (\`no-foo\`)
 
 🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 

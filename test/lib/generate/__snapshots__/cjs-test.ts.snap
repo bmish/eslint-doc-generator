@@ -14,7 +14,7 @@ exports[`generate (cjs) basic generates the documentation 1`] = `
 `;
 
 exports[`generate (cjs) basic generates the documentation 2`] = `
-"# Disallow foo (\`test/no-foo\`)
+"# Disallow foo (\`no-foo\`)
 
 <!-- end auto-generated rule header -->
 "

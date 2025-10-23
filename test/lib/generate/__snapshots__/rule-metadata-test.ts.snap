@@ -38,7 +38,7 @@ exports[`generate (rule metadata) deprecated function-style rule with deprecated
 `;
 
 exports[`generate (rule metadata) deprecated function-style rule with deprecated/schema properties generates the documentation 2`] = `
-"# test/no-foo
+"# no-foo
 
 <!-- end auto-generated rule header -->
 ## Options
