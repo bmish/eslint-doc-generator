@@ -119,16 +119,17 @@ export async function loadPlugin(path: string): Promise<Plugin> {
   }
 }
 
-export async function getPluginPrefix(path: string): Promise<string> {
+/**
+ * Get the plugin name by reading the `name` field in the package.json file.
+ */
+export async function getPluginName(path: string): Promise<string> {
   const pluginPackageJson = await loadPackageJson(path);
   if (!pluginPackageJson.name) {
     throw new Error(
       "Could not find `name` field in ESLint plugin's package.json.",
     );
   }
-  return pluginPackageJson.name.endsWith('/eslint-plugin')
-    ? pluginPackageJson.name.split('/')[0] // Scoped plugin name like @my-scope/eslint-plugin.
-    : pluginPackageJson.name.replace('eslint-plugin-', ''); // Unscoped name like eslint-plugin-foo or scoped name like @my-scope/eslint-plugin-foo.
+  return pluginPackageJson.name;
 }
 
 /**

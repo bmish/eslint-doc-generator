@@ -3,10 +3,11 @@ import { dirname, join, relative, resolve } from 'node:path';
 import { getAllNamedOptions, hasOptions } from './rule-options.js';
 import {
   loadPlugin,
-  getPluginPrefix,
+  getPluginName,
   getPluginRoot,
   getPathWithExactFileNameCasing,
 } from './package-json.js';
+import { getPluginPrefix } from './plugin-prefix.js';
 import { updateRulesList } from './rule-list.js';
 import { updateConfigsList } from './config-list.js';
 import { generateRuleHeaderLines } from './rule-doc-notices.js';
@@ -67,7 +68,9 @@ export async function generate(path: string, options?: GenerateOptions) {
   const { endOfLine } = context;
 
   const plugin = await loadPlugin(path);
-  const pluginPrefix = await getPluginPrefix(path);
+  const pluginPrefix = getPluginPrefix(
+    plugin.meta?.name ?? (await getPluginName(path)),
+  );
   const configsToRules = await resolveConfigsToRules(plugin);
 
   if (!plugin.rules) {
