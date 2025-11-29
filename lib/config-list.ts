@@ -4,7 +4,7 @@ import {
 } from './comment-markers.js';
 import { markdownTable } from 'markdown-table';
 import type { ConfigsToRules, ConfigEmojis, Plugin, Config } from './types.js';
-import { ConfigFormat, configNameToDisplay } from './config-format.js';
+import { configNameToDisplay } from './config-format.js';
 import { sanitizeMarkdownTable } from './string.js';
 import { Context } from './context.js';
 
@@ -35,7 +35,6 @@ function generateConfigListMarkdown(
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   configEmojis: ConfigEmojis,
-  configFormat: ConfigFormat,
   ignoreConfig: readonly string[],
 ): string {
   /* istanbul ignore next -- configs are sure to exist at this point */
@@ -57,7 +56,7 @@ function generateConfigListMarkdown(
         const description = config ? configToDescription(config) : undefined;
         return [
           configEmojis.find((obj) => obj.config === configName)?.emoji || '',
-          `\`${configNameToDisplay(configName, configFormat, pluginPrefix)}\``,
+          `\`${configNameToDisplay(context, configName, pluginPrefix)}\``,
           hasDescription ? description || '' : undefined,
         ].filter((col) => col !== undefined);
       }),
@@ -76,7 +75,6 @@ export function updateConfigsList(
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   configEmojis: ConfigEmojis,
-  configFormat: ConfigFormat,
   ignoreConfig: readonly string[],
 ): string {
   const { endOfLine } = context;
@@ -111,7 +109,6 @@ export function updateConfigsList(
     configsToRules,
     pluginPrefix,
     configEmojis,
-    configFormat,
     ignoreConfig,
   );
 

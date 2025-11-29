@@ -12,9 +12,8 @@ export async function getEndOfLine(): Promise<'\n' | '\r\n'> {
 async function getEndOfLineFromEditorConfig(): Promise<
   '\n' | '\r\n' | undefined
 > {
-  // The passed `markdown.md` argument is used as an example of a Markdown file
-  // in the plugin root folder in order to check for any specific Markdown
-  // configurations.
+  // The passed `markdown.md` argument is used as an example of a Markdown file in the plugin root
+  // folder in order to check for any specific Markdown configurations.
   const editorConfigProps = await editorconfig.parse('markdown.md');
 
   if (editorConfigProps.end_of_line === 'lf') {
@@ -39,9 +38,8 @@ async function getEndOfLineFromPrettierConfig(): Promise<
     return undefined;
   }
 
-  // The passed `markdown.md` argument is used as an example of a Markdown file
-  // in the plugin root folder in order to check for any specific Markdown
-  // configurations.
+  // The passed `markdown.md` argument is used as an example of a Markdown file in the plugin root
+  // folder in order to check for any specific Markdown configurations.
   const prettierOptions = await prettier.resolveConfig('markdown.md');
 
   if (prettierOptions === null) {

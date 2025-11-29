@@ -1,7 +1,13 @@
 import { join } from 'node:path';
 import { ConfigFormat } from './config-format.js';
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
-import { COLUMN_TYPE, NOTICE_TYPE, OPTION_TYPE } from './types.js';
+import {
+  COLUMN_TYPE,
+  GenerateOptions,
+  NOTICE_TYPE,
+  OPTION_TYPE,
+  ResolvedGenerateOptions,
+} from './types.js';
 
 export const COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
   [key in COLUMN_TYPE]: boolean;
@@ -71,3 +77,21 @@ export const OPTION_DEFAULTS = {
   [OPTION_TYPE.URL_CONFIGS]: undefined,
   [OPTION_TYPE.URL_RULE_DOC]: undefined,
 } satisfies Record<OPTION_TYPE, unknown>; // Satisfies is used to ensure all options are included, but without losing type information.
+
+/** Combines provided options with default options. */
+export function getResolvedOptions(
+  options: GenerateOptions = {},
+): ResolvedGenerateOptions {
+  const check = options.check ?? OPTION_DEFAULTS[OPTION_TYPE.CHECK];
+  const configEmoji =
+    options.configEmoji ?? OPTION_DEFAULTS[OPTION_TYPE.CONFIG_EMOJI];
+  const configFormat =
+    options.configFormat ?? OPTION_DEFAULTS[OPTION_TYPE.CONFIG_FORMAT];
+
+  // @ts-expect-error This will be filled in later.
+  return {
+    check,
+    configEmoji,
+    configFormat,
+  };
+}

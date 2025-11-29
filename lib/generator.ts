@@ -27,7 +27,7 @@ import {
   expectSectionHeaderOrFail,
 } from './markdown.js';
 import { resolveConfigsToRules } from './plugin-config-resolution.js';
-import { OPTION_DEFAULTS } from './options.js';
+import { getResolvedOptions, OPTION_DEFAULTS } from './options.js';
 import { diff } from 'jest-diff';
 import type { GenerateOptions } from './types.js';
 import { OPTION_TYPE, RuleModule } from './types.js';
@@ -64,7 +64,10 @@ function stringOrArrayToArrayWithFallback(
 
 // eslint-disable-next-line complexity
 export async function generate(path: string, options?: GenerateOptions) {
-  const context = await getContext(path);
+  const resolvedOptions = getResolvedOptions(options);
+  const { check, configEmoji } = resolvedOptions;
+
+  const context = await getContext(path, resolvedOptions);
   const { endOfLine } = context;
 
   const plugin = await loadPlugin(path);
@@ -78,10 +81,6 @@ export async function generate(path: string, options?: GenerateOptions) {
   }
 
   // Options. Add default values as needed.
-  const check = options?.check ?? OPTION_DEFAULTS[OPTION_TYPE.CHECK];
-  const configEmojis = parseConfigEmojiOptions(plugin, options?.configEmoji);
-  const configFormat =
-    options?.configFormat ?? OPTION_DEFAULTS[OPTION_TYPE.CONFIG_FORMAT];
   const ignoreConfig = stringOrArrayWithFallback(
     options?.ignoreConfig,
     OPTION_DEFAULTS[OPTION_TYPE.IGNORE_CONFIG],
@@ -127,7 +126,10 @@ export async function generate(path: string, options?: GenerateOptions) {
   const urlRuleDoc =
     options?.urlRuleDoc ?? OPTION_DEFAULTS[OPTION_TYPE.URL_RULE_DOC];
 
-  // Gather normalized list of rules.
+  // Create some new data structures based on the options.
+  const configEmojis = parseConfigEmojiOptions(plugin, configEmoji);
+
+  // Gather the normalized list of rules.
   const ruleNamesAndRules = Object.entries(plugin.rules)
     .map(([name, ruleModule]) => {
       // Convert deprecated function-style rules to object-style rules so that we don't have to handle function-style rules everywhere throughout the codebase.
@@ -205,7 +207,6 @@ export async function generate(path: string, options?: GenerateOptions) {
       pluginPrefix,
       pathRuleDoc,
       configEmojis,
-      configFormat,
       ignoreConfig,
       ruleDocNotices,
       ruleDocTitleFormat,
@@ -320,7 +321,6 @@ export async function generate(path: string, options?: GenerateOptions) {
           pathRuleDoc,
           pathToFile,
           configEmojis,
-          configFormat,
           ignoreConfig,
           ruleListColumns,
           ruleListSplit,
@@ -331,7 +331,6 @@ export async function generate(path: string, options?: GenerateOptions) {
         configsToRules,
         pluginPrefix,
         configEmojis,
-        configFormat,
         ignoreConfig,
       ),
       resolve(pathToFile),

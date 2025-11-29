@@ -8,17 +8,14 @@ import {
   EMOJI_CONFIG_ERROR,
   RESERVED_EMOJIS,
 } from './emojis.js';
-import type { Plugin, ConfigEmojis } from './types.js';
+import type { Plugin, ConfigEmojis, GenerateOptions } from './types.js';
 
 /**
  * Parse the options, check for errors, and set defaults.
  */
 export function parseConfigEmojiOptions(
   plugin: Plugin,
-  configEmoji?: readonly (
-    | [configName: string, emoji: string]
-    | [configName: string]
-  )[],
+  configEmoji: GenerateOptions['configEmoji'],
 ): ConfigEmojis {
   const configsSeen = new Set<string>();
   const configsWithDefaultEmojiRemoved: string[] = [];
