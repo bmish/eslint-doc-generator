@@ -81,10 +81,6 @@ export async function generate(path: string, options?: GenerateOptions) {
   }
 
   // Options. Add default values as needed.
-  const ignoreConfig = stringOrArrayWithFallback(
-    options?.ignoreConfig,
-    OPTION_DEFAULTS[OPTION_TYPE.IGNORE_CONFIG],
-  );
   const ignoreDeprecatedRules =
     options?.ignoreDeprecatedRules ??
     OPTION_DEFAULTS[OPTION_TYPE.IGNORE_DEPRECATED_RULES];
@@ -207,7 +203,6 @@ export async function generate(path: string, options?: GenerateOptions) {
       pluginPrefix,
       pathRuleDoc,
       configEmojis,
-      ignoreConfig,
       ruleDocNotices,
       ruleDocTitleFormat,
       urlConfigs,
@@ -308,30 +303,29 @@ export async function generate(path: string, options?: GenerateOptions) {
 
     // Update the rules list in this file.
     const fileContents = await readFile(pathToFile, 'utf8');
+    const rulesList = updateRulesList(
+      context,
+      ruleNamesAndRules,
+      fileContents,
+      plugin,
+      configsToRules,
+      pluginPrefix,
+      pathRuleDoc,
+      pathToFile,
+      configEmojis,
+      ruleListColumns,
+      ruleListSplit,
+      urlConfigs,
+      urlRuleDoc,
+    );
     const fileContentsNew = await postprocess(
       updateConfigsList(
         context,
-        updateRulesList(
-          context,
-          ruleNamesAndRules,
-          fileContents,
-          plugin,
-          configsToRules,
-          pluginPrefix,
-          pathRuleDoc,
-          pathToFile,
-          configEmojis,
-          ignoreConfig,
-          ruleListColumns,
-          ruleListSplit,
-          urlConfigs,
-          urlRuleDoc,
-        ),
+        rulesList,
         plugin,
         configsToRules,
         pluginPrefix,
         configEmojis,
-        ignoreConfig,
       ),
       resolve(pathToFile),
     );

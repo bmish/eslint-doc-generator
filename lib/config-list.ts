@@ -35,8 +35,10 @@ function generateConfigListMarkdown(
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: readonly string[],
 ): string {
+  const { options } = context;
+  const { ignoreConfig } = options;
+
   /* istanbul ignore next -- configs are sure to exist at this point */
   const configs = Object.values(plugin.configs || {});
   const hasDescription = configs.some((config) => configToDescription(config));
@@ -75,9 +77,9 @@ export function updateConfigsList(
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: readonly string[],
 ): string {
-  const { endOfLine } = context;
+  const { endOfLine, options } = context;
+  const { ignoreConfig } = options;
 
   const listStartIndex = markdown.indexOf(BEGIN_CONFIG_LIST_MARKER);
   let listEndIndex = markdown.indexOf(END_CONFIG_LIST_MARKER);
@@ -109,7 +111,6 @@ export function updateConfigsList(
     configsToRules,
     pluginPrefix,
     configEmojis,
-    ignoreConfig,
   );
 
   return `${preList}${BEGIN_CONFIG_LIST_MARKER}${endOfLine}${endOfLine}${list}${endOfLine}${endOfLine}${END_CONFIG_LIST_MARKER}${postList}`;

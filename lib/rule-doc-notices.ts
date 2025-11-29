@@ -308,12 +308,12 @@ function getRuleNoticeLines(
   pluginPrefix: string,
   pathRuleDoc: string | PathRuleDocFunction,
   configEmojis: ConfigEmojis,
-  ignoreConfig: readonly string[],
   ruleDocNotices: readonly NOTICE_TYPE[],
   urlConfigs?: string,
   urlRuleDoc?: string | UrlRuleDocFunction,
 ) {
-  const { path } = context;
+  const { path, options } = context;
+  const { ignoreConfig } = options;
 
   const lines: string[] = [];
 
@@ -501,7 +501,6 @@ export function generateRuleHeaderLines(
   pluginPrefix: string,
   pathRuleDoc: string | PathRuleDocFunction,
   configEmojis: ConfigEmojis,
-  ignoreConfig: readonly string[],
   ruleDocNotices: readonly NOTICE_TYPE[],
   ruleDocTitleFormat: RuleDocTitleFormat,
   urlConfigs?: string,
@@ -519,7 +518,6 @@ export function generateRuleHeaderLines(
       pluginPrefix,
       pathRuleDoc,
       configEmojis,
-      ignoreConfig,
       ruleDocNotices,
       urlConfigs,
       urlRuleDoc,

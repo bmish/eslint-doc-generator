@@ -79,13 +79,16 @@ function getPropertyFromRule(
 }
 
 function getConfigurationColumnValueForRule(
+  context: Context,
   ruleName: string,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: readonly string[],
   severityType: SEVERITY_TYPE,
 ): string {
+  const { options } = context;
+  const { ignoreConfig } = options;
+
   const configsToRulesWithoutIgnored = Object.fromEntries(
     Object.entries(configsToRules).filter(
       ([configName]) => !ignoreConfig.includes(configName),
@@ -124,7 +127,6 @@ function buildRuleRow(
   pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: readonly string[],
   urlRuleDoc?: string | UrlRuleDocFunction,
 ): readonly string[] {
   const columns: {
@@ -132,27 +134,27 @@ function buildRuleRow(
   } = {
     // Alphabetical order.
     [COLUMN_TYPE.CONFIGS_ERROR]: getConfigurationColumnValueForRule(
+      context,
       ruleName,
       configsToRules,
       pluginPrefix,
       configEmojis,
-      ignoreConfig,
       SEVERITY_TYPE.error,
     ),
     [COLUMN_TYPE.CONFIGS_OFF]: getConfigurationColumnValueForRule(
+      context,
       ruleName,
       configsToRules,
       pluginPrefix,
       configEmojis,
-      ignoreConfig,
       SEVERITY_TYPE.off,
     ),
     [COLUMN_TYPE.CONFIGS_WARN]: getConfigurationColumnValueForRule(
+      context,
       ruleName,
       configsToRules,
       pluginPrefix,
       configEmojis,
-      ignoreConfig,
       SEVERITY_TYPE.warn,
     ),
     [COLUMN_TYPE.DEPRECATED]: rule.meta?.deprecated ? EMOJI_DEPRECATED : '',
@@ -210,7 +212,6 @@ function generateRulesListMarkdown(
   pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: readonly string[],
   urlRuleDoc?: string | UrlRuleDocFunction,
 ): string {
   const listHeaderRow = (
@@ -242,7 +243,6 @@ function generateRulesListMarkdown(
           pathRuleDoc,
           pathRuleList,
           configEmojis,
-          ignoreConfig,
           urlRuleDoc,
         ),
       ),
@@ -265,7 +265,6 @@ function generateRuleListMarkdownForRulesAndHeaders(
   pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: readonly string[],
   urlRuleDoc?: string | UrlRuleDocFunction,
 ): string {
   const { endOfLine } = context;
@@ -286,7 +285,6 @@ function generateRuleListMarkdownForRulesAndHeaders(
         pathRuleDoc,
         pathRuleList,
         configEmojis,
-        ignoreConfig,
         urlRuleDoc,
       ),
     );
@@ -409,7 +407,6 @@ export function updateRulesList(
   pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: readonly string[],
   ruleListColumns: readonly COLUMN_TYPE[],
   ruleListSplit: readonly string[] | RuleListSplitFunction,
   urlConfigs?: string,
@@ -460,12 +457,12 @@ export function updateRulesList(
 
   // Determine columns to include in the rules list.
   const columns = getColumns(
+    context,
     plugin,
     ruleNamesAndRules,
     configsToRules,
     ruleListColumns,
     pluginPrefix,
-    ignoreConfig,
   );
 
   // New legend.
@@ -476,7 +473,6 @@ export function updateRulesList(
     configsToRules,
     configEmojis,
     pluginPrefix,
-    ignoreConfig,
     urlConfigs,
   );
 
@@ -551,7 +547,6 @@ export function updateRulesList(
     pathRuleDoc,
     pathRuleList,
     configEmojis,
-    ignoreConfig,
     urlRuleDoc,
   );
 

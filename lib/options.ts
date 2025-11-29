@@ -87,6 +87,10 @@ export function getResolvedOptions(
     options.configEmoji ?? OPTION_DEFAULTS[OPTION_TYPE.CONFIG_EMOJI];
   const configFormat =
     options.configFormat ?? OPTION_DEFAULTS[OPTION_TYPE.CONFIG_FORMAT];
+  const ignoreConfig = stringOrArrayWithFallback(
+    options?.ignoreConfig,
+    OPTION_DEFAULTS[OPTION_TYPE.IGNORE_CONFIG],
+  );
 
   // @ts-expect-error This will be filled in later with all the remaining options. This being
   // unfinished will not affect anything at runtime, because the options that are not yet present
@@ -95,5 +99,13 @@ export function getResolvedOptions(
     check,
     configEmoji,
     configFormat,
+    ignoreConfig,
   };
+}
+
+function stringOrArrayWithFallback<T extends string | readonly string[]>(
+  stringOrArray: undefined | T,
+  fallback: T,
+): T {
+  return stringOrArray && stringOrArray.length > 0 ? stringOrArray : fallback;
 }
