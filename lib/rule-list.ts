@@ -412,7 +412,6 @@ export function updateRulesList(
   pluginPrefix: string,
   pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
-  pathPlugin: string,
   configEmojis: ConfigEmojis,
   configFormat: ConfigFormat,
   ignoreConfig: readonly string[],
@@ -421,7 +420,7 @@ export function updateRulesList(
   urlConfigs?: string,
   urlRuleDoc?: string | UrlRuleDocFunction,
 ): string {
-  const { endOfLine } = context;
+  const { endOfLine, path } = context;
 
   let listStartIndex = markdown.indexOf(BEGIN_RULE_LIST_MARKER);
   let listEndIndex = markdown.indexOf(END_RULE_LIST_MARKER);
@@ -449,7 +448,7 @@ export function updateRulesList(
   if (listStartIndex === -1 || listEndIndex === -1) {
     throw new Error(
       `${relative(
-        getPluginRoot(pathPlugin),
+        getPluginRoot(path),
         pathRuleList,
       )} is missing rules list markers: ${BEGIN_RULE_LIST_MARKER}${END_RULE_LIST_MARKER}`,
     );
@@ -555,7 +554,7 @@ export function updateRulesList(
     configsToRules,
     plugin,
     pluginPrefix,
-    pathPlugin,
+    path,
     pathRuleDoc,
     pathRuleList,
     configEmojis,

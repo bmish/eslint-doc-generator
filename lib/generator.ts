@@ -63,7 +63,7 @@ function stringOrArrayToArrayWithFallback(
 
 // eslint-disable-next-line complexity
 export async function generate(path: string, options?: GenerateOptions) {
-  const context = await getContext();
+  const context = await getContext(path);
   const { endOfLine } = context;
 
   const plugin = await loadPlugin(path);
@@ -200,7 +200,6 @@ export async function generate(path: string, options?: GenerateOptions) {
       plugin,
       configsToRules,
       pluginPrefix,
-      path,
       pathRuleDoc,
       configEmojis,
       configFormat,
@@ -317,7 +316,6 @@ export async function generate(path: string, options?: GenerateOptions) {
           pluginPrefix,
           pathRuleDoc,
           pathToFile,
-          path,
           configEmojis,
           configFormat,
           ignoreConfig,

@@ -6,10 +6,12 @@ import { getEndOfLine } from './eol.js';
  */
 export interface Context {
   endOfLine: string;
+  path: string;
 }
 
-export async function getContext(): Promise<Context> {
+export async function getContext(path: string): Promise<Context> {
   return {
     endOfLine: await getEndOfLine(),
+    path,
   };
 }
