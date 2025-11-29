@@ -115,13 +115,13 @@ function getConfigurationColumnValueForRule(
 
 // eslint-disable-next-line complexity
 function buildRuleRow(
+  context: Context,
   ruleName: string,
   rule: RuleModule,
   columnsEnabled: Record<COLUMN_TYPE, boolean>,
   configsToRules: ConfigsToRules,
   plugin: Plugin,
   pluginPrefix: string,
-  pathPlugin: string,
   pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
@@ -167,10 +167,10 @@ function buildRuleRow(
       : '',
     [COLUMN_TYPE.NAME]() {
       return getLinkToRule(
+        context,
         ruleName,
         plugin,
         pluginPrefix,
-        pathPlugin,
         pathRuleDoc,
         pathRuleList,
         false,
@@ -208,7 +208,6 @@ function generateRulesListMarkdown(
   configsToRules: ConfigsToRules,
   plugin: Plugin,
   pluginPrefix: string,
-  pathPlugin: string,
   pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
@@ -234,13 +233,13 @@ function generateRulesListMarkdown(
       listHeaderRow,
       ...ruleNamesAndRules.map(([name, rule]) =>
         buildRuleRow(
+          context,
           name,
           rule,
           columns,
           configsToRules,
           plugin,
           pluginPrefix,
-          pathPlugin,
           pathRuleDoc,
           pathRuleList,
           configEmojis,
@@ -264,7 +263,6 @@ function generateRuleListMarkdownForRulesAndHeaders(
   configsToRules: ConfigsToRules,
   plugin: Plugin,
   pluginPrefix: string,
-  pathPlugin: string,
   pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
@@ -286,7 +284,6 @@ function generateRuleListMarkdownForRulesAndHeaders(
         configsToRules,
         plugin,
         pluginPrefix,
-        pathPlugin,
         pathRuleDoc,
         pathRuleList,
         configEmojis,
@@ -554,7 +551,6 @@ export function updateRulesList(
     configsToRules,
     plugin,
     pluginPrefix,
-    path,
     pathRuleDoc,
     pathRuleList,
     configEmojis,

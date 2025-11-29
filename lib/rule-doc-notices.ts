@@ -92,6 +92,7 @@ const RULE_NOTICES: {
     | string
     | undefined
     | ((data: {
+        context: Context;
         ruleName: string;
         configsError: readonly string[];
         configsWarn: readonly string[];
@@ -187,20 +188,20 @@ const RULE_NOTICES: {
 
   // Deprecated notice has optional "replaced by" rules list.
   [NOTICE_TYPE.DEPRECATED]: ({
+    context,
     replacedBy,
     plugin,
     pluginPrefix,
-    path,
     pathRuleDoc,
     ruleName,
     urlRuleDoc,
   }) => {
     const replacementRuleList = (replacedBy ?? []).map((replacementRuleName) =>
       getLinkToRule(
+        context,
         replacementRuleName,
         plugin,
         pluginPrefix,
-        path,
         pathRuleDoc,
         replaceRulePlaceholder(pathRuleDoc, ruleName),
         true,
@@ -382,6 +383,7 @@ function getRuleNoticeLines(
     lines.push(
       typeof ruleNoticeStrOrFn === 'function'
         ? ruleNoticeStrOrFn({
+            context,
             ruleName,
             configsError,
             configsWarn,
