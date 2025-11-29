@@ -105,7 +105,7 @@ const RULE_NOTICES: {
         replacedBy: readonly string[] | undefined;
         plugin: Plugin;
         pluginPrefix: string;
-        pathPlugin: string;
+        path: string;
         pathRuleDoc: string | PathRuleDocFunction;
         type?: `${RULE_TYPE}`;
         urlRuleDoc?: string | UrlRuleDocFunction;
@@ -190,7 +190,7 @@ const RULE_NOTICES: {
     replacedBy,
     plugin,
     pluginPrefix,
-    pathPlugin,
+    path,
     pathRuleDoc,
     ruleName,
     urlRuleDoc,
@@ -200,7 +200,7 @@ const RULE_NOTICES: {
         replacementRuleName,
         plugin,
         pluginPrefix,
-        pathPlugin,
+        path,
         pathRuleDoc,
         replaceRulePlaceholder(pathRuleDoc, ruleName),
         true,
@@ -301,11 +301,11 @@ function getNoticesForRule(
  * Get the lines for the notice section at the top of a rule doc.
  */
 function getRuleNoticeLines(
+  context: Context,
   ruleName: string,
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
-  pathPlugin: string,
   pathRuleDoc: string | PathRuleDocFunction,
   configEmojis: ConfigEmojis,
   configFormat: ConfigFormat,
@@ -314,6 +314,8 @@ function getRuleNoticeLines(
   urlConfigs?: string,
   urlRuleDoc?: string | UrlRuleDocFunction,
 ) {
+  const { path } = context;
+
   const lines: string[] = [];
 
   const rule = plugin.rules?.[ruleName];
@@ -393,7 +395,7 @@ function getRuleNoticeLines(
             replacedBy: rule.meta?.replacedBy,
             plugin,
             pluginPrefix,
-            pathPlugin,
+            path,
             pathRuleDoc,
             type: rule.meta?.type,
             urlRuleDoc,
@@ -498,7 +500,6 @@ export function generateRuleHeaderLines(
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
-  pathPlugin: string,
   pathRuleDoc: string | PathRuleDocFunction,
   configEmojis: ConfigEmojis,
   configFormat: ConfigFormat,
@@ -513,11 +514,11 @@ export function generateRuleHeaderLines(
   return [
     makeRuleDocTitle(name, description, pluginPrefix, ruleDocTitleFormat),
     ...getRuleNoticeLines(
+      context,
       name,
       plugin,
       configsToRules,
       pluginPrefix,
-      pathPlugin,
       pathRuleDoc,
       configEmojis,
       configFormat,
