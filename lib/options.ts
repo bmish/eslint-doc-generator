@@ -88,7 +88,9 @@ export function getResolvedOptions(
   const configFormat =
     options.configFormat ?? OPTION_DEFAULTS[OPTION_TYPE.CONFIG_FORMAT];
 
-  // @ts-expect-error This will be filled in later.
+  // @ts-expect-error This will be filled in later with all the remaining options. This being
+  // unfinished will not affect anything at runtime, because the options that are not yet present
+  // here are still being calculated in the old way.
   return {
     check,
     configEmoji,

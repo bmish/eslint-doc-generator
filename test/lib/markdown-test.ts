@@ -5,35 +5,31 @@ import { getResolvedOptions } from '../../lib/options.js';
 
 const cwd = process.cwd();
 const options = getResolvedOptions();
+const context = await getContext(cwd, options);
 
 describe('markdown', function () {
   describe('#findSectionHeader', function () {
-    it('handles standard section title', async function () {
-      const context = await getContext(cwd, options);
+    it('handles standard section title', function () {
       const title = '## Rules\n';
       expect(findSectionHeader(context, title, 'rules')).toBe(title);
     });
 
-    it('handles section title with leading emoji', async function () {
-      const context = await getContext(cwd, options);
+    it('handles section title with leading emoji', function () {
       const title = '## 🍟 Rules\n';
       expect(findSectionHeader(context, title, 'rules')).toBe(title);
     });
 
-    it('handles section title with html', async function () {
-      const context = await getContext(cwd, options);
+    it('handles section title with html', function () {
       const title = "## <a name='Rules'></a>Rules\n";
       expect(findSectionHeader(context, title, 'rules')).toBe(title);
     });
 
-    it('handles sentential section title', async function () {
-      const context = await getContext(cwd, options);
+    it('handles sentential section title', function () {
       const title = '## List of supported rules\n';
       expect(findSectionHeader(context, title, 'rules')).toBe(title);
     });
 
-    it('handles doc with multiple sections', async function () {
-      const context = await getContext(cwd, options);
+    it('handles doc with multiple sections', function () {
       expect(
         findSectionHeader(
           context,
@@ -50,8 +46,7 @@ describe('markdown', function () {
       ).toBe('## Rules\n');
     });
 
-    it('handles doc with multiple rules-related sections', async function () {
-      const context = await getContext(cwd, options);
+    it('handles doc with multiple rules-related sections', function () {
       expect(
         findSectionHeader(
           context,
