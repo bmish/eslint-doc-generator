@@ -20,46 +20,50 @@ export function parseConfigEmojiOptions(
   const configsSeen = new Set<string>();
   const configsWithDefaultEmojiRemoved: string[] = [];
   const configEmojis =
-    configEmoji?.flatMap((configEmojiItem) => {
-      const [config, emoji, ...extra] = configEmojiItem as
-        | typeof configEmojiItem
-        | [configName: string, emoji: string, extra: string[]];
+    configEmoji === undefined
+      ? []
+      : configEmoji.flatMap((configEmojiItem) => {
+          const [config, emoji, ...extra] = configEmojiItem as
+            | typeof configEmojiItem
+            | [configName: string, emoji: string, extra: string[]];
 
-      // Check for duplicate configs.
-      if (configsSeen.has(config)) {
-        throw new Error(
-          `Duplicate config name in configEmoji options: ${config}`,
-        );
-      } else {
-        configsSeen.add(config);
-      }
+          // Check for duplicate configs.
+          if (configsSeen.has(config)) {
+            throw new Error(
+              `Duplicate config name in configEmoji options: ${config}`,
+            );
+          } else {
+            configsSeen.add(config);
+          }
 
-      if (config && !emoji && Object.keys(EMOJI_CONFIGS).includes(config)) {
-        // User wants to remove the default emoji for this config.
-        configsWithDefaultEmojiRemoved.push(config);
-        return [];
-      }
+          if (config && !emoji && Object.keys(EMOJI_CONFIGS).includes(config)) {
+            // User wants to remove the default emoji for this config.
+            configsWithDefaultEmojiRemoved.push(config);
+            return [];
+          }
 
-      if (!config || !emoji || extra.length > 0) {
-        throw new Error(
-          `Invalid configEmoji option: ${String(
-            configEmojiItem,
-          )}. Expected format: config,emoji`,
-        );
-      }
+          if (!config || !emoji || extra.length > 0) {
+            throw new Error(
+              `Invalid configEmoji option: ${String(
+                configEmojiItem,
+              )}. Expected format: config,emoji`,
+            );
+          }
 
-      if (plugin.configs?.[config] === undefined) {
-        throw new Error(
-          `Invalid configEmoji option: ${config} config not found.`,
-        );
-      }
+          if (plugin.configs?.[config] === undefined) {
+            throw new Error(
+              `Invalid configEmoji option: ${config} config not found.`,
+            );
+          }
 
-      if (RESERVED_EMOJIS.includes(emoji)) {
-        throw new Error(`Cannot specify reserved emoji ${EMOJI_CONFIG_ERROR}.`);
-      }
+          if (RESERVED_EMOJIS.includes(emoji)) {
+            throw new Error(
+              `Cannot specify reserved emoji ${EMOJI_CONFIG_ERROR}.`,
+            );
+          }
 
-      return [{ config, emoji }];
-    }) || [];
+          return [{ config, emoji }];
+        });
 
   // Add default emojis for the common configs for which the user hasn't already specified an emoji.
   for (const [config, emoji] of Object.entries(EMOJI_CONFIGS)) {
