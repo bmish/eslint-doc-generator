@@ -38,7 +38,6 @@ import { noCase } from 'change-case';
 import { getProperty } from 'dot-prop';
 import { boolean, isBooleanable } from './boolean.js';
 import Ajv from 'ajv';
-import { ConfigFormat } from './config-format.js';
 import { Context } from './context.js';
 
 function isBooleanableTrue(value: unknown): boolean {
@@ -115,13 +114,13 @@ function getConfigurationColumnValueForRule(
 
 // eslint-disable-next-line complexity
 function buildRuleRow(
+  context: Context,
   ruleName: string,
   rule: RuleModule,
   columnsEnabled: Record<COLUMN_TYPE, boolean>,
   configsToRules: ConfigsToRules,
   plugin: Plugin,
   pluginPrefix: string,
-  pathPlugin: string,
   pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
@@ -167,10 +166,10 @@ function buildRuleRow(
       : '',
     [COLUMN_TYPE.NAME]() {
       return getLinkToRule(
+        context,
         ruleName,
         plugin,
         pluginPrefix,
-        pathPlugin,
         pathRuleDoc,
         pathRuleList,
         false,
@@ -208,7 +207,6 @@ function generateRulesListMarkdown(
   configsToRules: ConfigsToRules,
   plugin: Plugin,
   pluginPrefix: string,
-  pathPlugin: string,
   pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
@@ -234,13 +232,13 @@ function generateRulesListMarkdown(
       listHeaderRow,
       ...ruleNamesAndRules.map(([name, rule]) =>
         buildRuleRow(
+          context,
           name,
           rule,
           columns,
           configsToRules,
           plugin,
           pluginPrefix,
-          pathPlugin,
           pathRuleDoc,
           pathRuleList,
           configEmojis,
@@ -264,7 +262,6 @@ function generateRuleListMarkdownForRulesAndHeaders(
   configsToRules: ConfigsToRules,
   plugin: Plugin,
   pluginPrefix: string,
-  pathPlugin: string,
   pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
@@ -286,7 +283,6 @@ function generateRuleListMarkdownForRulesAndHeaders(
         configsToRules,
         plugin,
         pluginPrefix,
-        pathPlugin,
         pathRuleDoc,
         pathRuleList,
         configEmojis,
@@ -413,7 +409,6 @@ export function updateRulesList(
   pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
-  configFormat: ConfigFormat,
   ignoreConfig: readonly string[],
   ruleListColumns: readonly COLUMN_TYPE[],
   ruleListSplit: readonly string[] | RuleListSplitFunction,
@@ -480,7 +475,6 @@ export function updateRulesList(
     plugin,
     configsToRules,
     configEmojis,
-    configFormat,
     pluginPrefix,
     ignoreConfig,
     urlConfigs,
@@ -554,7 +548,6 @@ export function updateRulesList(
     configsToRules,
     plugin,
     pluginPrefix,
-    path,
     pathRuleDoc,
     pathRuleList,
     configEmojis,

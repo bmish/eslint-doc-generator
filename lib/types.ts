@@ -156,6 +156,7 @@ export type GenerateOptions = {
    * Default: `false`.
    */
   readonly check?: boolean;
+
   /**
    * List of configs and their associated emojis.
    * Array of `[configName, emoji]`.
@@ -166,22 +167,29 @@ export type GenerateOptions = {
     | [configName: string, emoji: string]
     | [configName: string]
   )[];
+
   /** The format to use for config names. Default: `name`. */
   readonly configFormat?: ConfigFormat;
+
   /** Configs to ignore from being displayed. Often used for an `all` config. */
   readonly ignoreConfig?: readonly string[];
+
   /** Whether to ignore deprecated rules from being checked, displayed, or updated. Default: `false`. */
   readonly ignoreDeprecatedRules?: boolean;
+
   /** Whether to create rule doc files if they don't yet exist. Default: `false`. */
   readonly initRuleDocs?: boolean;
+
   /**
    * Path (or function to generate a path) to to markdown file for each rule doc.
    * For the string version, use `{name}` placeholder for the rule name.
    * Default: `docs/rules/{name}.md`.
    */
   readonly pathRuleDoc?: string | PathRuleDocFunction;
+
   /** Path to markdown file(s) where the rules table list should live. Default: `README.md`. */
   readonly pathRuleList?: string | readonly string[];
+
   /**
    * Function to be called with the generated content and file path for each processed file.
    * Useful for applying custom transformations such as formatting with tools like prettier.
@@ -191,6 +199,7 @@ export type GenerateOptions = {
     content: string,
     pathToFile: string,
   ) => string | Promise<string>;
+
   /**
    * Ordered list of notices to display in rule doc.
    * Non-applicable notices will be hidden.
@@ -198,14 +207,19 @@ export type GenerateOptions = {
    * Default: `['deprecated', 'configs', 'fixableAndHasSuggestions', 'requiresTypeChecking']`.
    */
   readonly ruleDocNotices?: readonly `${NOTICE_TYPE}`[];
+
   /** Disallowed sections in each rule doc. Exit with failure if present. */
   readonly ruleDocSectionExclude?: readonly string[];
+
   /** Required sections in each rule doc. Exit with failure if missing. */
   readonly ruleDocSectionInclude?: readonly string[];
+
   /** Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options. Default: `true`. */
   readonly ruleDocSectionOptions?: boolean;
+
   /** The format to use for rule doc titles. Default: `desc-parens-prefix-name`. */
   readonly ruleDocTitleFormat?: RuleDocTitleFormat;
+
   /**
    * Ordered list of columns to display in rule list.
    * Empty columns will be hidden.
@@ -213,6 +227,7 @@ export type GenerateOptions = {
    * Default: `['name', 'description', 'configsError', 'configsWarn', 'configsOff', 'fixable', 'hasSuggestions', 'requiresTypeChecking', 'deprecated']`.
    */
   readonly ruleListColumns?: readonly `${COLUMN_TYPE}`[];
+
   /**
    * Rule property(s) or function to split the rules list by.
    * A separate list and header will be created for each value.
@@ -222,6 +237,7 @@ export type GenerateOptions = {
 
   /** Link to documentation about the ESLint configurations exported by the plugin. */
   readonly urlConfigs?: string;
+
   /**
    * Link (or function to generate a link) to documentation for each rule.
    * Useful when it differs from the rule doc path on disk (e.g. custom documentation site in use).
@@ -229,3 +245,5 @@ export type GenerateOptions = {
    */
   readonly urlRuleDoc?: string | UrlRuleDocFunction;
 };
+
+export type ResolvedGenerateOptions = Required<GenerateOptions>;

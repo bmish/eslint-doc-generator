@@ -6,6 +6,7 @@ import {
   UrlRuleDocFunction,
 } from './types.js';
 import { getPluginRoot } from './package-json.js';
+import { Context } from './context.js';
 
 export function replaceRulePlaceholder(
   pathOrUrl: string | PathRuleDocFunction,
@@ -29,14 +30,16 @@ function pathToUrl(path: string): string {
  * Will be relative to the current page.
  */
 export function getUrlToRule(
+  context: Context,
   ruleName: string,
   ruleSource: RULE_SOURCE,
   pluginPrefix: string,
-  pathPlugin: string,
   pathRuleDoc: string | PathRuleDocFunction,
   pathCurrentPage: string,
   urlRuleDoc?: string | UrlRuleDocFunction,
 ) {
+  const { path } = context;
+
   switch (ruleSource) {
     case RULE_SOURCE.eslintCore: {
       return `https://eslint.org/docs/latest/rules/${ruleName}`;
@@ -60,11 +63,11 @@ export function getUrlToRule(
   // If the URL is a function, evaluate it.
   const urlRuleDocFunctionEvaluated =
     typeof urlRuleDoc === 'function'
-      ? urlRuleDoc(ruleName, pathToUrl(relative(pathPlugin, pathCurrentPage)))
+      ? urlRuleDoc(ruleName, pathToUrl(relative(path, pathCurrentPage)))
       : undefined;
 
   const pathRuleDocEvaluated = join(
-    getPluginRoot(pathPlugin),
+    getPluginRoot(path),
     replaceRulePlaceholder(pathRuleDoc, ruleNameWithoutPluginPrefix),
   );
 
@@ -83,10 +86,10 @@ export function getUrlToRule(
  * Get the markdown link (title and URL) to the rule's documentation.
  */
 export function getLinkToRule(
+  context: Context,
   ruleName: string,
   plugin: Plugin,
   pluginPrefix: string,
-  pathPlugin: string,
   pathRuleDoc: string | PathRuleDocFunction,
   pathCurrentPage: string,
   includeBackticks: boolean,
@@ -115,10 +118,10 @@ export function getLinkToRule(
       : undefined;
 
   const urlToRule = getUrlToRule(
+    context,
     ruleName,
     ruleSource,
     pluginPrefix,
-    pathPlugin,
     pathRuleDoc,
     pathCurrentPage,
     urlRuleDoc,

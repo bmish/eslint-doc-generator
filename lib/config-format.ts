@@ -1,3 +1,5 @@
+import { Context } from './context.js';
+
 export const CONFIG_FORMATS = [
   'name',
   'plugin-colon-prefix-name',
@@ -7,10 +9,13 @@ export const CONFIG_FORMATS = [
 export type ConfigFormat = (typeof CONFIG_FORMATS)[number];
 
 export function configNameToDisplay(
+  context: Context,
   configName: string,
-  configFormat: ConfigFormat,
   pluginPrefix: string,
 ) {
+  const { options } = context;
+  const { configFormat } = options;
+
   switch (configFormat) {
     case 'name': {
       return configName;
