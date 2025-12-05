@@ -1,11 +1,9 @@
 import { outdent } from 'outdent';
 import { findSectionHeader } from '../../lib/markdown.js';
 import { getContext } from '../../lib/context.js';
-import { getResolvedOptions } from '../../lib/options.js';
 
 const cwd = process.cwd();
-const options = getResolvedOptions();
-const context = await getContext(cwd, options);
+const context = await getContext(cwd, undefined, true);
 
 describe('markdown', function () {
   describe('#findSectionHeader', function () {

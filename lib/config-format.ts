@@ -8,12 +8,8 @@ export const CONFIG_FORMATS = [
 
 export type ConfigFormat = (typeof CONFIG_FORMATS)[number];
 
-export function configNameToDisplay(
-  context: Context,
-  configName: string,
-  pluginPrefix: string,
-) {
-  const { options } = context;
+export function configNameToDisplay(context: Context, configName: string) {
+  const { options, pluginPrefix } = context;
   const { configFormat } = options;
 
   switch (configFormat) {

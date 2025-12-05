@@ -1,21 +1,15 @@
 import { join, sep, relative, dirname } from 'node:path';
-import {
-  PathRuleDocFunction,
-  Plugin,
-  RULE_SOURCE,
-  UrlRuleDocFunction,
-} from './types.js';
+import { PathRuleDocFunction, RULE_SOURCE } from './types.js';
 import { getPluginRoot } from './package-json.js';
 import { Context } from './context.js';
 
 export function replaceRulePlaceholder(
-  pathOrUrl: string | PathRuleDocFunction,
+  pathOrPathFunc: string | PathRuleDocFunction,
   ruleName: string,
 ) {
-  if (typeof pathOrUrl === 'function') {
-    return pathOrUrl(ruleName);
-  }
-  return pathOrUrl.replaceAll('{name}', ruleName);
+  return typeof pathOrPathFunc === 'function'
+    ? pathOrPathFunc(ruleName)
+    : pathOrPathFunc.replaceAll('{name}', ruleName);
 }
 
 /**
@@ -33,12 +27,10 @@ export function getUrlToRule(
   context: Context,
   ruleName: string,
   ruleSource: RULE_SOURCE,
-  pluginPrefix: string,
-  pathRuleDoc: string | PathRuleDocFunction,
-  pathCurrentPage: string,
-  urlRuleDoc?: string | UrlRuleDocFunction,
+  pathToFile: string,
 ) {
-  const { path } = context;
+  const { options, path, pluginPrefix } = context;
+  const { pathRuleDoc, urlRuleDoc } = options;
 
   switch (ruleSource) {
     case RULE_SOURCE.eslintCore: {
@@ -63,7 +55,7 @@ export function getUrlToRule(
   // If the URL is a function, evaluate it.
   const urlRuleDocFunctionEvaluated =
     typeof urlRuleDoc === 'function'
-      ? urlRuleDoc(ruleName, pathToUrl(relative(path, pathCurrentPage)))
+      ? urlRuleDoc(ruleName, pathToUrl(relative(path, pathToFile)))
       : undefined;
 
   const pathRuleDocEvaluated = join(
@@ -78,7 +70,7 @@ export function getUrlToRule(
       ? // Otherwise, use the URL if it's a string.
         replaceRulePlaceholder(urlRuleDoc, ruleNameWithoutPluginPrefix)
       : // Finally, fallback to the relative path.
-        pathToUrl(relative(dirname(pathCurrentPage), pathRuleDocEvaluated)))
+        pathToUrl(relative(dirname(pathToFile), pathRuleDocEvaluated)))
   );
 }
 
@@ -88,14 +80,12 @@ export function getUrlToRule(
 export function getLinkToRule(
   context: Context,
   ruleName: string,
-  plugin: Plugin,
-  pluginPrefix: string,
-  pathRuleDoc: string | PathRuleDocFunction,
-  pathCurrentPage: string,
+  pathToFile: string,
   includeBackticks: boolean,
   includePrefix: boolean,
-  urlRuleDoc?: string | UrlRuleDocFunction,
 ) {
+  const { plugin, pluginPrefix } = context;
+
   const ruleNameWithoutPluginPrefix = ruleName.startsWith(`${pluginPrefix}/`)
     ? ruleName.slice(pluginPrefix.length + 1)
     : ruleName;
@@ -117,15 +107,7 @@ export function getLinkToRule(
       ? `${pluginPrefix}/${ruleName}`
       : undefined;
 
-  const urlToRule = getUrlToRule(
-    context,
-    ruleName,
-    ruleSource,
-    pluginPrefix,
-    pathRuleDoc,
-    pathCurrentPage,
-    urlRuleDoc,
-  );
+  const urlToRule = getUrlToRule(context, ruleName, ruleSource, pathToFile);
 
   const ruleNameToDisplay = `${includeBackticks ? '`' : ''}${
     includePrefix && ruleNameWithPluginPrefix

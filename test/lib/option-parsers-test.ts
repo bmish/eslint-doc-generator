@@ -3,20 +3,12 @@ import {
   parseRuleListColumnsOption,
   parseRuleDocNoticesOption,
 } from '../../lib/option-parsers.js';
-import type { Plugin } from '../../lib/types.js';
+import { mockPlugin } from '../../lib/mock-plugin.js';
 
 describe('option-parsers', function () {
   describe('parseConfigEmojiOptions', function () {
     it('handles undefined configEmoji and returns default emojis', function () {
-      const plugin: Plugin = {
-        rules: {},
-        configs: {
-          recommended: { rules: {} },
-          all: { rules: {} },
-        },
-      };
-
-      const result = parseConfigEmojiOptions(plugin, undefined);
+      const result = parseConfigEmojiOptions(mockPlugin, undefined);
 
       // Should return default emojis for recognized configs.
       expect(result).toContainEqual({ config: 'recommended', emoji: '✅' });

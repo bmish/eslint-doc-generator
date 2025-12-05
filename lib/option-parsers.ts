@@ -10,9 +10,7 @@ import {
 } from './emojis.js';
 import type { Plugin, ConfigEmojis, GenerateOptions } from './types.js';
 
-/**
- * Parse the options, check for errors, and set defaults.
- */
+/** Parse the options, check for errors, and set defaults. */
 export function parseConfigEmojiOptions(
   plugin: Plugin,
   configEmoji: GenerateOptions['configEmoji'],
@@ -79,9 +77,7 @@ export function parseConfigEmojiOptions(
   return configEmojis;
 }
 
-/**
- * Parse the option, check for errors, and set defaults.
- */
+/** Parse the option, check for errors, and set defaults. */
 export function parseRuleListColumnsOption(
   ruleListColumns: readonly string[] | undefined,
 ): readonly COLUMN_TYPE[] {
@@ -109,9 +105,7 @@ export function parseRuleListColumnsOption(
   return values as readonly COLUMN_TYPE[];
 }
 
-/**
- * Parse the option, check for errors, and set defaults.
- */
+/** Parse the option, check for errors, and set defaults. */
 export function parseRuleDocNoticesOption(
   ruleDocNotices: readonly string[] | undefined,
 ): readonly NOTICE_TYPE[] {
