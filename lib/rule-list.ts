@@ -38,7 +38,6 @@ import { noCase } from 'change-case';
 import { getProperty } from 'dot-prop';
 import { boolean, isBooleanable } from './boolean.js';
 import Ajv from 'ajv';
-import { ConfigFormat } from './config-format.js';
 import { Context } from './context.js';
 
 function isBooleanableTrue(value: unknown): boolean {
@@ -80,13 +79,16 @@ function getPropertyFromRule(
 }
 
 function getConfigurationColumnValueForRule(
+  context: Context,
   ruleName: string,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: readonly string[],
   severityType: SEVERITY_TYPE,
 ): string {
+  const { options } = context;
+  const { ignoreConfig } = options;
+
   const configsToRulesWithoutIgnored = Object.fromEntries(
     Object.entries(configsToRules).filter(
       ([configName]) => !ignoreConfig.includes(configName),
@@ -115,17 +117,16 @@ function getConfigurationColumnValueForRule(
 
 // eslint-disable-next-line complexity
 function buildRuleRow(
+  context: Context,
   ruleName: string,
   rule: RuleModule,
   columnsEnabled: Record<COLUMN_TYPE, boolean>,
   configsToRules: ConfigsToRules,
   plugin: Plugin,
   pluginPrefix: string,
-  pathPlugin: string,
   pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: readonly string[],
   urlRuleDoc?: string | UrlRuleDocFunction,
 ): readonly string[] {
   const columns: {
@@ -133,27 +134,27 @@ function buildRuleRow(
   } = {
     // Alphabetical order.
     [COLUMN_TYPE.CONFIGS_ERROR]: getConfigurationColumnValueForRule(
+      context,
       ruleName,
       configsToRules,
       pluginPrefix,
       configEmojis,
-      ignoreConfig,
       SEVERITY_TYPE.error,
     ),
     [COLUMN_TYPE.CONFIGS_OFF]: getConfigurationColumnValueForRule(
+      context,
       ruleName,
       configsToRules,
       pluginPrefix,
       configEmojis,
-      ignoreConfig,
       SEVERITY_TYPE.off,
     ),
     [COLUMN_TYPE.CONFIGS_WARN]: getConfigurationColumnValueForRule(
+      context,
       ruleName,
       configsToRules,
       pluginPrefix,
       configEmojis,
-      ignoreConfig,
       SEVERITY_TYPE.warn,
     ),
     [COLUMN_TYPE.DEPRECATED]: rule.meta?.deprecated ? EMOJI_DEPRECATED : '',
@@ -167,10 +168,10 @@ function buildRuleRow(
       : '',
     [COLUMN_TYPE.NAME]() {
       return getLinkToRule(
+        context,
         ruleName,
         plugin,
         pluginPrefix,
-        pathPlugin,
         pathRuleDoc,
         pathRuleList,
         false,
@@ -208,11 +209,9 @@ function generateRulesListMarkdown(
   configsToRules: ConfigsToRules,
   plugin: Plugin,
   pluginPrefix: string,
-  pathPlugin: string,
   pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: readonly string[],
   urlRuleDoc?: string | UrlRuleDocFunction,
 ): string {
   const listHeaderRow = (
@@ -234,17 +233,16 @@ function generateRulesListMarkdown(
       listHeaderRow,
       ...ruleNamesAndRules.map(([name, rule]) =>
         buildRuleRow(
+          context,
           name,
           rule,
           columns,
           configsToRules,
           plugin,
           pluginPrefix,
-          pathPlugin,
           pathRuleDoc,
           pathRuleList,
           configEmojis,
-          ignoreConfig,
           urlRuleDoc,
         ),
       ),
@@ -264,11 +262,9 @@ function generateRuleListMarkdownForRulesAndHeaders(
   configsToRules: ConfigsToRules,
   plugin: Plugin,
   pluginPrefix: string,
-  pathPlugin: string,
   pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
-  ignoreConfig: readonly string[],
   urlRuleDoc?: string | UrlRuleDocFunction,
 ): string {
   const { endOfLine } = context;
@@ -286,11 +282,9 @@ function generateRuleListMarkdownForRulesAndHeaders(
         configsToRules,
         plugin,
         pluginPrefix,
-        pathPlugin,
         pathRuleDoc,
         pathRuleList,
         configEmojis,
-        ignoreConfig,
         urlRuleDoc,
       ),
     );
@@ -413,8 +407,6 @@ export function updateRulesList(
   pathRuleDoc: string | PathRuleDocFunction,
   pathRuleList: string,
   configEmojis: ConfigEmojis,
-  configFormat: ConfigFormat,
-  ignoreConfig: readonly string[],
   ruleListColumns: readonly COLUMN_TYPE[],
   ruleListSplit: readonly string[] | RuleListSplitFunction,
   urlConfigs?: string,
@@ -465,12 +457,12 @@ export function updateRulesList(
 
   // Determine columns to include in the rules list.
   const columns = getColumns(
+    context,
     plugin,
     ruleNamesAndRules,
     configsToRules,
     ruleListColumns,
     pluginPrefix,
-    ignoreConfig,
   );
 
   // New legend.
@@ -480,9 +472,7 @@ export function updateRulesList(
     plugin,
     configsToRules,
     configEmojis,
-    configFormat,
     pluginPrefix,
-    ignoreConfig,
     urlConfigs,
   );
 
@@ -554,11 +544,9 @@ export function updateRulesList(
     configsToRules,
     plugin,
     pluginPrefix,
-    path,
     pathRuleDoc,
     pathRuleList,
     configEmojis,
-    ignoreConfig,
     urlRuleDoc,
   );
 

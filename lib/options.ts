@@ -1,7 +1,13 @@
 import { join } from 'node:path';
 import { ConfigFormat } from './config-format.js';
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
-import { COLUMN_TYPE, NOTICE_TYPE, OPTION_TYPE } from './types.js';
+import {
+  COLUMN_TYPE,
+  GenerateOptions,
+  NOTICE_TYPE,
+  OPTION_TYPE,
+  ResolvedGenerateOptions,
+} from './types.js';
 
 export const COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
   [key in COLUMN_TYPE]: boolean;
@@ -71,3 +77,35 @@ export const OPTION_DEFAULTS = {
   [OPTION_TYPE.URL_CONFIGS]: undefined,
   [OPTION_TYPE.URL_RULE_DOC]: undefined,
 } satisfies Record<OPTION_TYPE, unknown>; // Satisfies is used to ensure all options are included, but without losing type information.
+
+/** Combines provided options with default options. */
+export function getResolvedOptions(
+  options: GenerateOptions = {},
+): ResolvedGenerateOptions {
+  const check = options.check ?? OPTION_DEFAULTS[OPTION_TYPE.CHECK];
+  const configEmoji =
+    options.configEmoji ?? OPTION_DEFAULTS[OPTION_TYPE.CONFIG_EMOJI];
+  const configFormat =
+    options.configFormat ?? OPTION_DEFAULTS[OPTION_TYPE.CONFIG_FORMAT];
+  const ignoreConfig = stringOrArrayWithFallback(
+    options?.ignoreConfig,
+    OPTION_DEFAULTS[OPTION_TYPE.IGNORE_CONFIG],
+  );
+
+  // @ts-expect-error This will be filled in later with all the remaining options. This being
+  // unfinished will not affect anything at runtime, because the options that are not yet present
+  // here are still being calculated in the old way.
+  return {
+    check,
+    configEmoji,
+    configFormat,
+    ignoreConfig,
+  };
+}
+
+function stringOrArrayWithFallback<T extends string | readonly string[]>(
+  stringOrArray: undefined | T,
+  fallback: T,
+): T {
+  return stringOrArray && stringOrArray.length > 0 ? stringOrArray : fallback;
+}

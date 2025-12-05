@@ -12,6 +12,7 @@ import { COLUMN_TYPE, SEVERITY_TYPE } from './types.js';
 import { getConfigsThatSetARule } from './plugin-configs.js';
 import { hasOptions } from './rule-options.js';
 import type { ConfigsToRules, Plugin, RuleNamesAndRules } from './types.js';
+import { Context } from './context.js';
 
 /**
  * An object containing the column header for each column (as a string or function to generate the string).
@@ -68,12 +69,12 @@ export const COLUMN_HEADER: {
  * Only display columns for which there is at least one rule that has a value for that column.
  */
 export function getColumns(
+  context: Context,
   plugin: Plugin,
   ruleNamesAndRules: RuleNamesAndRules,
   configsToRules: ConfigsToRules,
   ruleListColumns: readonly COLUMN_TYPE[],
   pluginPrefix: string,
-  ignoreConfig: readonly string[],
 ): Record<COLUMN_TYPE, boolean> {
   const columns: {
     [key in COLUMN_TYPE]: boolean;
@@ -81,26 +82,26 @@ export function getColumns(
     // Alphabetical order.
     [COLUMN_TYPE.CONFIGS_ERROR]:
       getConfigsThatSetARule(
+        context,
         plugin,
         configsToRules,
         pluginPrefix,
-        ignoreConfig,
         SEVERITY_TYPE.error,
       ).length > 0,
     [COLUMN_TYPE.CONFIGS_OFF]:
       getConfigsThatSetARule(
+        context,
         plugin,
         configsToRules,
         pluginPrefix,
-        ignoreConfig,
         SEVERITY_TYPE.off,
       ).length > 0,
     [COLUMN_TYPE.CONFIGS_WARN]:
       getConfigsThatSetARule(
+        context,
         plugin,
         configsToRules,
         pluginPrefix,
-        ignoreConfig,
         SEVERITY_TYPE.warn,
       ).length > 0,
     [COLUMN_TYPE.DEPRECATED]: ruleNamesAndRules.some(

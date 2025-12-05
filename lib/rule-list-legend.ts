@@ -16,7 +16,7 @@ import {
   SEVERITY_TYPE,
 } from './types.js';
 import { RULE_TYPE_MESSAGES_LEGEND, RULE_TYPES } from './rule-type.js';
-import { ConfigFormat, configNameToDisplay } from './config-format.js';
+import { configNameToDisplay } from './config-format.js';
 import { Context } from './context.js';
 
 export const SEVERITY_TYPE_TO_WORD: {
@@ -39,12 +39,11 @@ const LEGENDS: {
     | readonly string[]
     | undefined // For no legend.
     | ((data: {
+        context: Context;
         plugin: Plugin;
         configsToRules: ConfigsToRules;
         configEmojis: ConfigEmojis;
-        configFormat: ConfigFormat;
         pluginPrefix: string;
-        ignoreConfig: readonly string[];
         urlConfigs?: string;
       }) => readonly string[]);
 } = {
@@ -54,7 +53,6 @@ const LEGENDS: {
     configEmojis,
     pluginPrefix,
     urlConfigs,
-    ignoreConfig,
   }) => [
     getLegendForConfigColumnOfSeverity({
       plugin,
@@ -63,7 +61,6 @@ const LEGENDS: {
       pluginPrefix,
       urlConfigs,
       severityType: SEVERITY_TYPE.error,
-      ignoreConfig,
     }),
   ],
   [COLUMN_TYPE.CONFIGS_OFF]: ({
@@ -72,7 +69,6 @@ const LEGENDS: {
     configEmojis,
     pluginPrefix,
     urlConfigs,
-    ignoreConfig,
   }) => [
     getLegendForConfigColumnOfSeverity({
       plugin,
@@ -81,7 +77,6 @@ const LEGENDS: {
       pluginPrefix,
       urlConfigs,
       severityType: SEVERITY_TYPE.off,
-      ignoreConfig,
     }),
   ],
   [COLUMN_TYPE.CONFIGS_WARN]: ({
@@ -90,7 +85,6 @@ const LEGENDS: {
     configEmojis,
     pluginPrefix,
     urlConfigs,
-    ignoreConfig,
   }) => [
     getLegendForConfigColumnOfSeverity({
       plugin,
@@ -99,7 +93,6 @@ const LEGENDS: {
       pluginPrefix,
       urlConfigs,
       severityType: SEVERITY_TYPE.warn,
-      ignoreConfig,
     }),
   ],
 
@@ -158,7 +151,6 @@ function getLegendForConfigColumnOfSeverity({
   configsToRules: ConfigsToRules;
   configEmojis: ConfigEmojis;
   pluginPrefix: string;
-  ignoreConfig: readonly string[];
   severityType: SEVERITY_TYPE;
   urlConfigs?: string;
 }): string {
@@ -178,20 +170,18 @@ function getLegendForConfigColumnOfSeverity({
 }
 
 function getLegendsForIndividualConfigs({
+  context,
   plugin,
   configsToRules,
   configEmojis,
-  configFormat,
   pluginPrefix,
   urlConfigs,
-  ignoreConfig,
 }: {
+  context: Context;
   plugin: Plugin;
   configsToRules: ConfigsToRules;
   configEmojis: ConfigEmojis;
-  configFormat: ConfigFormat;
   pluginPrefix: string;
-  ignoreConfig: readonly string[];
   urlConfigs?: string;
 }): readonly string[] {
   /* istanbul ignore next -- this shouldn't happen */
@@ -207,10 +197,10 @@ function getLegendsForIndividualConfigs({
     : 'configuration';
 
   const configNamesThatSetRuleToThisSeverity = getConfigsThatSetARule(
+    context,
     plugin,
     configsToRules,
     pluginPrefix,
-    ignoreConfig,
   );
 
   return configNamesThatSetRuleToThisSeverity.flatMap((configName) => {
@@ -222,8 +212,8 @@ function getLegendsForIndividualConfigs({
 
     return [
       `${emoji} Set in the \`${configNameToDisplay(
+        context,
         configName,
-        configFormat,
         pluginPrefix,
       )}\` ${configLinkOrWord}.`,
     ];
@@ -236,9 +226,7 @@ export function generateLegend(
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   configEmojis: ConfigEmojis,
-  configFormat: ConfigFormat,
   pluginPrefix: string,
-  ignoreConfig: readonly string[],
   urlConfigs?: string,
 ) {
   const { endOfLine } = context;
@@ -257,13 +245,12 @@ export function generateLegend(
     }
     return typeof legendArrayOrFn === 'function'
       ? legendArrayOrFn({
+          context,
           plugin,
           configsToRules,
           configEmojis,
-          configFormat,
           pluginPrefix,
           urlConfigs,
-          ignoreConfig,
         })
       : legendArrayOrFn;
   });
@@ -271,13 +258,12 @@ export function generateLegend(
   if (legends.some((legend) => legend.includes('Configurations'))) {
     // Add legends for individual configs after the config column legend(s).
     const legendsForIndividualConfigs = getLegendsForIndividualConfigs({
+      context,
       plugin,
       configsToRules,
       configEmojis,
-      configFormat,
       pluginPrefix,
       urlConfigs,
-      ignoreConfig,
     });
     const finalConfigHeaderLegendPosition = Math.max(
       ...Object.values(SEVERITY_TYPE_TO_WORD).map((word) =>

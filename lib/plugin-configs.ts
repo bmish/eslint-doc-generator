@@ -1,3 +1,4 @@
+import { Context } from './context.js';
 import { SEVERITY_TYPE_TO_SET } from './types.js';
 import type {
   Plugin,
@@ -7,12 +8,15 @@ import type {
 } from './types.js';
 
 export function getConfigsThatSetARule(
+  context: Context,
   plugin: Plugin,
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
-  ignoreConfig: readonly string[],
   severityType?: SEVERITY_TYPE,
 ) {
+  const { options } = context;
+  const { ignoreConfig } = options;
+
   /* istanbul ignore next -- this shouldn't happen */
   if (!plugin.rules) {
     throw new Error('Missing rules in plugin.');

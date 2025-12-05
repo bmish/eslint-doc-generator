@@ -27,7 +27,7 @@ import {
   removeTrailingPeriod,
   addTrailingPeriod,
 } from './string.js';
-import { ConfigFormat, configNameToDisplay } from './config-format.js';
+import { configNameToDisplay } from './config-format.js';
 import { Context } from './context.js';
 
 function severityToTerminology(severity: SEVERITY_TYPE) {
@@ -49,12 +49,12 @@ function severityToTerminology(severity: SEVERITY_TYPE) {
 }
 
 function configsToNoticeSentence(
+  context: Context,
   configs: readonly string[],
   severity: SEVERITY_TYPE,
   configsLinkOrWord: string,
   configLinkOrWord: string,
   configEmojis: ConfigEmojis,
-  configFormat: ConfigFormat,
   pluginPrefix: string,
 ): string | undefined {
   // Create CSV list of configs with their emojis.
@@ -62,8 +62,8 @@ function configsToNoticeSentence(
     .map((config) => {
       const emoji = findConfigEmoji(configEmojis, config);
       return `${emoji ? `${emoji} ` : ''}\`${configNameToDisplay(
+        context,
         config,
-        configFormat,
         pluginPrefix,
       )}\``;
     })
@@ -92,12 +92,12 @@ const RULE_NOTICES: {
     | string
     | undefined
     | ((data: {
+        context: Context;
         ruleName: string;
         configsError: readonly string[];
         configsWarn: readonly string[];
         configsOff: readonly string[];
         configEmojis: ConfigEmojis;
-        configFormat: ConfigFormat;
         description?: string;
         fixable: boolean;
         hasSuggestions: boolean;
@@ -113,11 +113,11 @@ const RULE_NOTICES: {
 } = {
   // Configs notice varies based on whether the rule is configured in one or more configs.
   [NOTICE_TYPE.CONFIGS]: ({
+    context,
     configsError,
     configsWarn,
     configsOff,
     configEmojis,
-    configFormat,
     pluginPrefix,
     urlConfigs,
   }) => {
@@ -152,30 +152,30 @@ const RULE_NOTICES: {
 
     const sentences = [
       configsToNoticeSentence(
+        context,
         configsError,
         SEVERITY_TYPE.error,
         configsLinkOrWord,
         configLinkOrWord,
         configEmojis,
-        configFormat,
         pluginPrefix,
       ),
       configsToNoticeSentence(
+        context,
         configsWarn,
         SEVERITY_TYPE.warn,
         configsLinkOrWord,
         configLinkOrWord,
         configEmojis,
-        configFormat,
         pluginPrefix,
       ),
       configsToNoticeSentence(
+        context,
         configsOff,
         SEVERITY_TYPE.off,
         configsLinkOrWord,
         configLinkOrWord,
         configEmojis,
-        configFormat,
         pluginPrefix,
       ),
     ]
@@ -187,20 +187,20 @@ const RULE_NOTICES: {
 
   // Deprecated notice has optional "replaced by" rules list.
   [NOTICE_TYPE.DEPRECATED]: ({
+    context,
     replacedBy,
     plugin,
     pluginPrefix,
-    path,
     pathRuleDoc,
     ruleName,
     urlRuleDoc,
   }) => {
     const replacementRuleList = (replacedBy ?? []).map((replacementRuleName) =>
       getLinkToRule(
+        context,
         replacementRuleName,
         plugin,
         pluginPrefix,
-        path,
         pathRuleDoc,
         replaceRulePlaceholder(pathRuleDoc, ruleName),
         true,
@@ -308,13 +308,12 @@ function getRuleNoticeLines(
   pluginPrefix: string,
   pathRuleDoc: string | PathRuleDocFunction,
   configEmojis: ConfigEmojis,
-  configFormat: ConfigFormat,
-  ignoreConfig: readonly string[],
   ruleDocNotices: readonly NOTICE_TYPE[],
   urlConfigs?: string,
   urlRuleDoc?: string | UrlRuleDocFunction,
 ) {
-  const { path } = context;
+  const { path, options } = context;
+  const { ignoreConfig } = options;
 
   const lines: string[] = [];
 
@@ -382,12 +381,12 @@ function getRuleNoticeLines(
     lines.push(
       typeof ruleNoticeStrOrFn === 'function'
         ? ruleNoticeStrOrFn({
+            context,
             ruleName,
             configsError,
             configsWarn,
             configsOff,
             configEmojis,
-            configFormat,
             description: rule.meta?.docs?.description,
             fixable: Boolean(rule.meta?.fixable),
             hasSuggestions: Boolean(rule.meta?.hasSuggestions),
@@ -502,8 +501,6 @@ export function generateRuleHeaderLines(
   pluginPrefix: string,
   pathRuleDoc: string | PathRuleDocFunction,
   configEmojis: ConfigEmojis,
-  configFormat: ConfigFormat,
-  ignoreConfig: readonly string[],
   ruleDocNotices: readonly NOTICE_TYPE[],
   ruleDocTitleFormat: RuleDocTitleFormat,
   urlConfigs?: string,
@@ -521,8 +518,6 @@ export function generateRuleHeaderLines(
       pluginPrefix,
       pathRuleDoc,
       configEmojis,
-      configFormat,
-      ignoreConfig,
       ruleDocNotices,
       urlConfigs,
       urlRuleDoc,

@@ -4,7 +4,7 @@ import {
 } from './comment-markers.js';
 import { markdownTable } from 'markdown-table';
 import type { ConfigsToRules, ConfigEmojis, Plugin, Config } from './types.js';
-import { ConfigFormat, configNameToDisplay } from './config-format.js';
+import { configNameToDisplay } from './config-format.js';
 import { sanitizeMarkdownTable } from './string.js';
 import { Context } from './context.js';
 
@@ -35,9 +35,10 @@ function generateConfigListMarkdown(
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   configEmojis: ConfigEmojis,
-  configFormat: ConfigFormat,
-  ignoreConfig: readonly string[],
 ): string {
+  const { options } = context;
+  const { ignoreConfig } = options;
+
   /* istanbul ignore next -- configs are sure to exist at this point */
   const configs = Object.values(plugin.configs || {});
   const hasDescription = configs.some((config) => configToDescription(config));
@@ -57,7 +58,7 @@ function generateConfigListMarkdown(
         const description = config ? configToDescription(config) : undefined;
         return [
           configEmojis.find((obj) => obj.config === configName)?.emoji || '',
-          `\`${configNameToDisplay(configName, configFormat, pluginPrefix)}\``,
+          `\`${configNameToDisplay(context, configName, pluginPrefix)}\``,
           hasDescription ? description || '' : undefined,
         ].filter((col) => col !== undefined);
       }),
@@ -76,10 +77,9 @@ export function updateConfigsList(
   configsToRules: ConfigsToRules,
   pluginPrefix: string,
   configEmojis: ConfigEmojis,
-  configFormat: ConfigFormat,
-  ignoreConfig: readonly string[],
 ): string {
-  const { endOfLine } = context;
+  const { endOfLine, options } = context;
+  const { ignoreConfig } = options;
 
   const listStartIndex = markdown.indexOf(BEGIN_CONFIG_LIST_MARKER);
   let listEndIndex = markdown.indexOf(END_CONFIG_LIST_MARKER);
@@ -111,8 +111,6 @@ export function updateConfigsList(
     configsToRules,
     pluginPrefix,
     configEmojis,
-    configFormat,
-    ignoreConfig,
   );
 
   return `${preList}${BEGIN_CONFIG_LIST_MARKER}${endOfLine}${endOfLine}${list}${endOfLine}${endOfLine}${END_CONFIG_LIST_MARKER}${postList}`;
