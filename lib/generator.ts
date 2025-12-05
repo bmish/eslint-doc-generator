@@ -2,20 +2,12 @@ import { existsSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { getAllNamedOptions, hasOptions } from './rule-options.js';
 import {
-  loadPlugin,
-  getPluginName,
   getPluginRoot,
   getPathWithExactFileNameCasing,
 } from './package-json.js';
-import { getPluginPrefix } from './plugin-prefix.js';
 import { updateRulesList } from './rule-list.js';
 import { updateConfigsList } from './config-list.js';
 import { generateRuleHeaderLines } from './rule-doc-notices.js';
-import {
-  parseRuleDocNoticesOption,
-  parseRuleListColumnsOption,
-  parseConfigEmojiOptions,
-} from './option-parsers.js';
 import {
   BEGIN_RULE_OPTIONS_LIST_MARKER,
   END_RULE_HEADER_MARKER,
@@ -26,104 +18,36 @@ import {
   expectContentOrFail,
   expectSectionHeaderOrFail,
 } from './markdown.js';
-import { resolveConfigsToRules } from './plugin-config-resolution.js';
-import { getResolvedOptions, OPTION_DEFAULTS } from './options.js';
 import { diff } from 'jest-diff';
 import type { GenerateOptions } from './types.js';
-import { OPTION_TYPE, RuleModule } from './types.js';
+import { RuleModule } from './types.js';
 import { replaceRulePlaceholder } from './rule-link.js';
 import { updateRuleOptionsList } from './rule-options-list.js';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { getContext } from './context.js';
 
-function stringOrArrayWithFallback<T extends string | readonly string[]>(
-  stringOrArray: undefined | T,
-  fallback: T,
-): T {
-  return stringOrArray && stringOrArray.length > 0 ? stringOrArray : fallback;
-}
-
-function stringOrArrayToArrayWithFallback(
-  stringOrArray: undefined | string | readonly string[],
-  fallback: readonly string[],
-): readonly string[] {
-  const asArray =
-    stringOrArray instanceof Array // eslint-disable-line unicorn/no-instanceof-builtins -- using Array.isArray() loses type information about the array.
-      ? stringOrArray
-      : stringOrArray
-        ? [stringOrArray]
-        : [];
-  const csvStringItem = asArray.find((item) => item.includes(','));
-  if (csvStringItem) {
-    throw new Error(
-      `Provide property as array, not a CSV string: ${csvStringItem}`,
-    );
-  }
-  return asArray.length > 0 ? asArray : fallback;
-}
-
 // eslint-disable-next-line complexity
-export async function generate(path: string, options?: GenerateOptions) {
-  const resolvedOptions = getResolvedOptions(options);
-  const { check, configEmoji } = resolvedOptions;
+export async function generate(path: string, userOptions?: GenerateOptions) {
+  const context = await getContext(path, userOptions);
+  const { endOfLine, options, plugin } = context;
 
-  const context = await getContext(path, resolvedOptions);
-  const { endOfLine } = context;
-
-  const plugin = await loadPlugin(path);
-  const pluginPrefix = getPluginPrefix(
-    plugin.meta?.name ?? (await getPluginName(path)),
-  );
-  const configsToRules = await resolveConfigsToRules(plugin);
+  // Destructure options that are only used in this function. Other options are passed around using
+  // the "context" object.
+  const {
+    check,
+    ignoreDeprecatedRules,
+    initRuleDocs,
+    pathRuleDoc,
+    pathRuleList,
+    postprocess,
+    ruleDocSectionExclude,
+    ruleDocSectionInclude,
+    ruleDocSectionOptions,
+  } = options;
 
   if (!plugin.rules) {
     throw new Error('Could not find exported `rules` object in ESLint plugin.');
   }
-
-  // Options. Add default values as needed.
-  const ignoreDeprecatedRules =
-    options?.ignoreDeprecatedRules ??
-    OPTION_DEFAULTS[OPTION_TYPE.IGNORE_DEPRECATED_RULES];
-  const initRuleDocs =
-    options?.initRuleDocs ?? OPTION_DEFAULTS[OPTION_TYPE.INIT_RULE_DOCS];
-  const pathRuleDoc =
-    options?.pathRuleDoc ?? OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_DOC];
-  const pathRuleList = stringOrArrayToArrayWithFallback(
-    options?.pathRuleList,
-    OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_LIST],
-  );
-  const postprocess =
-    options?.postprocess ?? OPTION_DEFAULTS[OPTION_TYPE.POSTPROCESS];
-  const ruleDocNotices = parseRuleDocNoticesOption(options?.ruleDocNotices);
-  const ruleDocSectionExclude = stringOrArrayWithFallback(
-    options?.ruleDocSectionExclude,
-    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_EXCLUDE],
-  );
-  const ruleDocSectionInclude = stringOrArrayWithFallback(
-    options?.ruleDocSectionInclude,
-    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_INCLUDE],
-  );
-  const ruleDocSectionOptions =
-    options?.ruleDocSectionOptions ??
-    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_OPTIONS];
-  const ruleDocTitleFormat =
-    options?.ruleDocTitleFormat ??
-    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_TITLE_FORMAT];
-  const ruleListColumns = parseRuleListColumnsOption(options?.ruleListColumns);
-  const ruleListSplit =
-    typeof options?.ruleListSplit === 'function'
-      ? options.ruleListSplit
-      : stringOrArrayToArrayWithFallback(
-          options?.ruleListSplit,
-          OPTION_DEFAULTS[OPTION_TYPE.RULE_LIST_SPLIT],
-        );
-  const urlConfigs =
-    options?.urlConfigs ?? OPTION_DEFAULTS[OPTION_TYPE.URL_CONFIGS];
-  const urlRuleDoc =
-    options?.urlRuleDoc ?? OPTION_DEFAULTS[OPTION_TYPE.URL_RULE_DOC];
-
-  // Create some new data structures based on the options.
-  const configEmojis = parseConfigEmojiOptions(plugin, configEmoji);
 
   // Gather the normalized list of rules.
   const ruleNamesAndRules = Object.entries(plugin.rules)
@@ -157,7 +81,8 @@ export async function generate(path: string, options?: GenerateOptions) {
   for (const [name, rule] of ruleNamesAndRules) {
     const schema = rule.meta?.schema;
     const description = rule.meta?.docs?.description;
-    const pathToDoc = join(path, replaceRulePlaceholder(pathRuleDoc, name));
+    const pathCurrentPage = replaceRulePlaceholder(pathRuleDoc, name);
+    const pathToDoc = join(path, pathCurrentPage);
     const ruleHasOptions = hasOptions(schema);
 
     if (!existsSync(pathToDoc)) {
@@ -194,22 +119,10 @@ export async function generate(path: string, options?: GenerateOptions) {
     }
 
     // Regenerate the header (title/notices) of each rule doc.
-    const newHeaderLines = generateRuleHeaderLines(
-      context,
-      description,
-      name,
-      plugin,
-      configsToRules,
-      pluginPrefix,
-      pathRuleDoc,
-      configEmojis,
-      ruleDocNotices,
-      ruleDocTitleFormat,
-      urlConfigs,
-      urlRuleDoc,
-    );
+    const newHeaderLines = generateRuleHeaderLines(context, description, name);
 
-    const contentsOld = (await readFile(pathToDoc)).toString(); // eslint-disable-line unicorn/no-await-expression-member
+    const contentsOldBuffer = await readFile(pathToDoc);
+    const contentsOld = contentsOldBuffer.toString();
     const contentsNew = await postprocess(
       updateRuleOptionsList(
         context,
@@ -307,26 +220,10 @@ export async function generate(path: string, options?: GenerateOptions) {
       context,
       ruleNamesAndRules,
       fileContents,
-      plugin,
-      configsToRules,
-      pluginPrefix,
-      pathRuleDoc,
       pathToFile,
-      configEmojis,
-      ruleListColumns,
-      ruleListSplit,
-      urlConfigs,
-      urlRuleDoc,
     );
     const fileContentsNew = await postprocess(
-      updateConfigsList(
-        context,
-        rulesList,
-        plugin,
-        configsToRules,
-        pluginPrefix,
-        configEmojis,
-      ),
+      updateConfigsList(context, rulesList),
       resolve(pathToFile),
     );
 

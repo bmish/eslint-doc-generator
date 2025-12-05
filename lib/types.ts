@@ -245,5 +245,3 @@ export type GenerateOptions = {
    */
   readonly urlRuleDoc?: string | UrlRuleDocFunction;
 };
-
-export type ResolvedGenerateOptions = Required<GenerateOptions>;

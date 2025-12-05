@@ -6,8 +6,13 @@ import {
   GenerateOptions,
   NOTICE_TYPE,
   OPTION_TYPE,
-  ResolvedGenerateOptions,
+  Plugin,
 } from './types.js';
+import {
+  parseConfigEmojiOptions,
+  parseRuleDocNoticesOption,
+  parseRuleListColumnsOption,
+} from './option-parsers.js';
 
 export const COLUMN_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
   [key in COLUMN_TYPE]: boolean;
@@ -76,36 +81,122 @@ export const OPTION_DEFAULTS = {
   [OPTION_TYPE.RULE_LIST_SPLIT]: [],
   [OPTION_TYPE.URL_CONFIGS]: undefined,
   [OPTION_TYPE.URL_RULE_DOC]: undefined,
-} satisfies Record<OPTION_TYPE, unknown>; // Satisfies is used to ensure all options are included, but without losing type information.
+} satisfies Record<OPTION_TYPE, unknown>; // Satisfies is used to ensure all options are included without losing type information.
 
-/** Combines provided options with default options. */
+/**
+ * Combines user-provided options with default options. Additionally, this performs some basic
+ * normalization, like converting "foo" to "[foo]" for options that are lists.
+ */
 export function getResolvedOptions(
-  options: GenerateOptions = {},
-): ResolvedGenerateOptions {
-  const check = options.check ?? OPTION_DEFAULTS[OPTION_TYPE.CHECK];
+  plugin: Plugin,
+  userOptions: GenerateOptions = {},
+) {
+  const check = userOptions.check ?? OPTION_DEFAULTS[OPTION_TYPE.CHECK];
   const configEmoji =
-    options.configEmoji ?? OPTION_DEFAULTS[OPTION_TYPE.CONFIG_EMOJI];
+    userOptions.configEmoji ?? OPTION_DEFAULTS[OPTION_TYPE.CONFIG_EMOJI];
+  const configEmojis = parseConfigEmojiOptions(plugin, configEmoji);
   const configFormat =
-    options.configFormat ?? OPTION_DEFAULTS[OPTION_TYPE.CONFIG_FORMAT];
+    userOptions.configFormat ?? OPTION_DEFAULTS[OPTION_TYPE.CONFIG_FORMAT];
   const ignoreConfig = stringOrArrayWithFallback(
-    options?.ignoreConfig,
+    userOptions.ignoreConfig,
     OPTION_DEFAULTS[OPTION_TYPE.IGNORE_CONFIG],
   );
+  const ignoreDeprecatedRules =
+    userOptions.ignoreDeprecatedRules ??
+    OPTION_DEFAULTS[OPTION_TYPE.IGNORE_DEPRECATED_RULES];
+  const initRuleDocs =
+    userOptions.initRuleDocs ?? OPTION_DEFAULTS[OPTION_TYPE.INIT_RULE_DOCS];
+  const pathRuleDoc =
+    userOptions.pathRuleDoc ?? OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_DOC];
+  const pathRuleList = stringOrArrayToArrayWithFallback(
+    userOptions.pathRuleList,
+    OPTION_DEFAULTS[OPTION_TYPE.PATH_RULE_LIST],
+  );
+  const postprocess =
+    userOptions.postprocess ?? OPTION_DEFAULTS[OPTION_TYPE.POSTPROCESS];
+  const ruleDocNotices = parseRuleDocNoticesOption(userOptions.ruleDocNotices);
+  const ruleDocSectionExclude = stringOrArrayWithFallback(
+    userOptions.ruleDocSectionExclude,
+    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_EXCLUDE],
+  );
+  const ruleDocSectionInclude = stringOrArrayWithFallback(
+    userOptions.ruleDocSectionInclude,
+    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_INCLUDE],
+  );
+  const ruleDocSectionOptions =
+    userOptions.ruleDocSectionOptions ??
+    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_SECTION_OPTIONS];
+  const ruleDocTitleFormat =
+    userOptions.ruleDocTitleFormat ??
+    OPTION_DEFAULTS[OPTION_TYPE.RULE_DOC_TITLE_FORMAT];
+  const ruleListColumns = parseRuleListColumnsOption(
+    userOptions.ruleListColumns,
+  );
+  const ruleListSplit =
+    typeof userOptions.ruleListSplit === 'function'
+      ? userOptions.ruleListSplit
+      : stringOrArrayToArrayWithFallback(
+          userOptions.ruleListSplit,
+          OPTION_DEFAULTS[OPTION_TYPE.RULE_LIST_SPLIT],
+        );
+  const urlConfigs =
+    userOptions.urlConfigs ?? OPTION_DEFAULTS[OPTION_TYPE.URL_CONFIGS];
+  const urlRuleDoc =
+    userOptions.urlRuleDoc ?? OPTION_DEFAULTS[OPTION_TYPE.URL_RULE_DOC];
 
-  // @ts-expect-error This will be filled in later with all the remaining options. This being
-  // unfinished will not affect anything at runtime, because the options that are not yet present
-  // here are still being calculated in the old way.
   return {
     check,
-    configEmoji,
+    configEmojis,
     configFormat,
     ignoreConfig,
+    ignoreDeprecatedRules,
+    initRuleDocs,
+    pathRuleDoc,
+    pathRuleList,
+    postprocess,
+    ruleDocNotices,
+    ruleDocSectionExclude,
+    ruleDocSectionInclude,
+    ruleDocSectionOptions,
+    ruleDocTitleFormat,
+    ruleListColumns,
+    ruleListSplit,
+    urlConfigs,
+    urlRuleDoc,
   };
 }
+
+/** Dynamically calculated from the "getResolvedOptions" function. */
+export type ResolvedGenerateOptions = ReturnType<typeof getResolvedOptions>;
 
 function stringOrArrayWithFallback<T extends string | readonly string[]>(
   stringOrArray: undefined | T,
   fallback: T,
 ): T {
-  return stringOrArray && stringOrArray.length > 0 ? stringOrArray : fallback;
+  return stringOrArray !== undefined && stringOrArray.length > 0
+    ? stringOrArray
+    : fallback;
+}
+
+function stringOrArrayToArrayWithFallback(
+  stringOrArray: undefined | string | readonly string[],
+  fallback: readonly string[],
+): readonly string[] {
+  const asArray =
+    // Using the "Array.isArray" method loses type information about the array.
+    // eslint-disable-next-line unicorn/no-instanceof-builtins
+    stringOrArray instanceof Array
+      ? stringOrArray
+      : stringOrArray
+        ? [stringOrArray]
+        : [];
+
+  const csvStringItem = asArray.find((item) => item.includes(','));
+  if (csvStringItem !== undefined) {
+    throw new Error(
+      `Provide property as array, not a CSV string: ${csvStringItem}`,
+    );
+  }
+
+  return asArray.length > 0 ? asArray : fallback;
 }

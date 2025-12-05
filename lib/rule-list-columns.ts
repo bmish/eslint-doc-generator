@@ -11,7 +11,7 @@ import { RULE_TYPES } from './rule-type.js';
 import { COLUMN_TYPE, SEVERITY_TYPE } from './types.js';
 import { getConfigsThatSetARule } from './plugin-configs.js';
 import { hasOptions } from './rule-options.js';
-import type { ConfigsToRules, Plugin, RuleNamesAndRules } from './types.js';
+import type { RuleNamesAndRules } from './types.js';
 import { Context } from './context.js';
 
 /**
@@ -70,40 +70,21 @@ export const COLUMN_HEADER: {
  */
 export function getColumns(
   context: Context,
-  plugin: Plugin,
   ruleNamesAndRules: RuleNamesAndRules,
-  configsToRules: ConfigsToRules,
-  ruleListColumns: readonly COLUMN_TYPE[],
-  pluginPrefix: string,
 ): Record<COLUMN_TYPE, boolean> {
+  const { options } = context;
+  const { ruleListColumns } = options;
+
   const columns: {
     [key in COLUMN_TYPE]: boolean;
   } = {
     // Alphabetical order.
     [COLUMN_TYPE.CONFIGS_ERROR]:
-      getConfigsThatSetARule(
-        context,
-        plugin,
-        configsToRules,
-        pluginPrefix,
-        SEVERITY_TYPE.error,
-      ).length > 0,
+      getConfigsThatSetARule(context, SEVERITY_TYPE.error).length > 0,
     [COLUMN_TYPE.CONFIGS_OFF]:
-      getConfigsThatSetARule(
-        context,
-        plugin,
-        configsToRules,
-        pluginPrefix,
-        SEVERITY_TYPE.off,
-      ).length > 0,
+      getConfigsThatSetARule(context, SEVERITY_TYPE.off).length > 0,
     [COLUMN_TYPE.CONFIGS_WARN]:
-      getConfigsThatSetARule(
-        context,
-        plugin,
-        configsToRules,
-        pluginPrefix,
-        SEVERITY_TYPE.warn,
-      ).length > 0,
+      getConfigsThatSetARule(context, SEVERITY_TYPE.warn).length > 0,
     [COLUMN_TYPE.DEPRECATED]: ruleNamesAndRules.some(
       ([, rule]) => rule.meta?.deprecated,
     ),
