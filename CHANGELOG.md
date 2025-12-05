@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.4.0](https://github.com/bmish/eslint-doc-generator/compare/v2.3.0...v2.4.0) (2025-12-05)
+
+
+### Features
+
+* receive plugin name via plugin metadata ([712417b](https://github.com/bmish/eslint-doc-generator/commit/712417b7d146eaf2c7cf541b9bfea1b7a6057e3f))
+
+
+### Bug Fixes
+
+* prettier peer dep should be optional ([#821](https://github.com/bmish/eslint-doc-generator/issues/821)) ([5b331cf](https://github.com/bmish/eslint-doc-generator/commit/5b331cf258516e8dad242be4ac8d0f9de019b2d0))
+
 ## [2.3.0](https://github.com/bmish/eslint-doc-generator/compare/v2.2.2...v2.3.0) (2025-10-06)
 
 
