@@ -38,20 +38,19 @@ export const NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
 } = {
   // Object keys ordered in display order.
   // Object values indicate whether the column is displayed by default.
-  [NOTICE_TYPE.DEPRECATED]: true, // Most important.
   [NOTICE_TYPE.CONFIGS]: true,
+  [NOTICE_TYPE.DEPRECATED]: true, // Most important.
   [NOTICE_TYPE.FIXABLE]: false,
   [NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: true, // Default, consolidated notice.
   [NOTICE_TYPE.HAS_SUGGESTIONS]: false,
   [NOTICE_TYPE.OPTIONS]: false,
   [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]: true,
   [NOTICE_TYPE.TYPE]: false,
-  [NOTICE_TYPE.DESCRIPTION]: false,
+  [NOTICE_TYPE.DESCRIPTION]: true,
 };
 
 // Using these variables ensures they have the correct type (not just a plain string).
-const DEFAULT_RULE_DOC_TITLE_FORMAT: RuleDocTitleFormat =
-  'desc-parens-prefix-name';
+const DEFAULT_RULE_DOC_TITLE_FORMAT: RuleDocTitleFormat = 'prefix-name';
 const DEFAULT_CONFIG_FORMAT: ConfigFormat = 'name';
 
 export const OPTION_DEFAULTS = {

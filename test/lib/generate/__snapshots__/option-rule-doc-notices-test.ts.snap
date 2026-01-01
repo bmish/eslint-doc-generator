@@ -17,7 +17,7 @@ exports[`generate (--rule-doc-notices) basic shows the right rule doc notices 1`
 `;
 
 exports[`generate (--rule-doc-notices) basic shows the right rule doc notices 2`] = `
-"# Description for no-foo (\`test/no-foo\`)
+"# test/no-foo
 
 💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
@@ -25,7 +25,7 @@ exports[`generate (--rule-doc-notices) basic shows the right rule doc notices 2`
 
 ❌ This rule is deprecated.
 
-Description for no-foo.
+📝 Description for no-foo.
 
 ❗ This rule identifies problems that could cause errors or unexpected behavior.
 

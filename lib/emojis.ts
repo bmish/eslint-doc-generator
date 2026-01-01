@@ -69,6 +69,9 @@ export const EMOJI_TYPE = '🗂️';
 /** Rule is deprecated (from `meta.deprecated`). */
 export const EMOJI_DEPRECATED = '❌';
 
+/** Rule description (from `meta.docs.description`). */
+export const EMOJI_DESCRIPTION = '📝';
+
 /**
  * The user is not allowed to specify a reserved emoji to represent their config because we use these emojis for other purposes.
  * Note that the default emojis for common configs are intentionally not reserved.
@@ -83,4 +86,5 @@ export const RESERVED_EMOJIS = [
   EMOJI_REQUIRES_TYPE_CHECKING,
   EMOJI_TYPE,
   EMOJI_DEPRECATED,
+  EMOJI_DESCRIPTION,
 ];

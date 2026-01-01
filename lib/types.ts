@@ -218,7 +218,7 @@ export type GenerateOptions = {
   /** Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options. Default: `true`. */
   readonly ruleDocSectionOptions?: boolean;
 
-  /** The format to use for rule doc titles. Default: `desc-parens-prefix-name`. */
+  /** The format to use for rule doc titles. Default: `prefix-name`. */
   readonly ruleDocTitleFormat?: RuleDocTitleFormat;
 
   /**
