@@ -10,6 +10,7 @@ export type Rules = TSESLint.Linter.RulesRecord;
 
 export type RuleSeverity = TSESLint.Linter.RuleLevel;
 
+// eslint-disable-next-line @typescript-eslint/no-deprecated
 export type Config = TSESLint.Linter.Config;
 
 export type Plugin = TSESLint.Linter.Plugin;

@@ -356,6 +356,7 @@ function getRuleNoticeLines(context: Context, ruleName: string) {
             description: rule.meta?.docs?.description,
             fixable: Boolean(rule.meta?.fixable),
             hasSuggestions: Boolean(rule.meta?.hasSuggestions),
+            // eslint-disable-next-line @typescript-eslint/no-deprecated
             replacedBy: rule.meta?.replacedBy,
             path,
             type: rule.meta?.type,
@@ -399,9 +400,9 @@ function makeRuleDocTitle(
       /* istanbul ignore next -- this shouldn't happen */
       default: {
         throw new Error(
-          `Unhandled rule doc title format fallback: ${String(
-            ruleDocTitleFormatWithFallback,
-          )}`,
+          `Unhandled rule doc title format fallback: ${
+            ruleDocTitleFormatWithFallback
+          }`,
         );
       }
     }
