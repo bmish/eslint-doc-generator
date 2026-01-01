@@ -21,6 +21,51 @@ import {
 import { configNameToDisplay } from './config-format.js';
 import { Context } from './context.js';
 
+/**
+ * Extract the list of replacement rule names from a rule's metadata.
+ * Handles both the old format (rule.meta.replacedBy as string[])
+ * and the new format (rule.meta.deprecated.replacedBy as ReplacedByInfo[]).
+ */
+function getReplacedByRuleNames(
+  rule: RuleModule,
+): readonly string[] | undefined {
+  // Check the new location first (rule.meta.deprecated.replacedBy)
+  if (
+    rule.meta?.deprecated &&
+    typeof rule.meta.deprecated === 'object' &&
+    'replacedBy' in rule.meta.deprecated
+  ) {
+    const replacedBy = rule.meta.deprecated.replacedBy;
+    if (replacedBy) {
+      // ReplacedByInfo[] format - extract rule names from info.rule.name
+      // and optionally prepend plugin name if specified
+      return replacedBy
+        .map((info) => {
+          if (typeof info === 'object' && 'rule' in info && info.rule) {
+            const ruleName = info.rule.name;
+            const pluginName = info.plugin?.name;
+            // If plugin is specified, construct the full rule name (plugin/rule)
+            if (pluginName && ruleName) {
+              return `${pluginName}/${ruleName}`;
+            }
+            return ruleName;
+          }
+          return undefined;
+        })
+        .filter((name): name is string => name !== undefined);
+    }
+  }
+
+  // Fall back to the old location (rule.meta.replacedBy)
+  // Note: rule.meta.replacedBy is deprecated in favor of rule.meta.deprecated.replacedBy,
+  // but we need to support it for backward compatibility with older ESLint versions.
+  if (rule.meta && 'replacedBy' in rule.meta) {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- accessing deprecated replacedBy for backward compatibility
+    return rule.meta.replacedBy;
+  }
+  return undefined;
+}
+
 function severityToTerminology(severity: SEVERITY_TYPE) {
   switch (severity) {
     case SEVERITY_TYPE.error: {
@@ -256,7 +301,7 @@ function getNoticesForRule(
       configsError.length > 0 ||
       configsWarn.length > 0 ||
       configsOff.length > 0,
-    [NOTICE_TYPE.DEPRECATED]: rule.meta?.deprecated || false,
+    [NOTICE_TYPE.DEPRECATED]: Boolean(rule.meta?.deprecated),
     [NOTICE_TYPE.DESCRIPTION]: Boolean(rule.meta?.docs?.description) || false,
 
     // Fixable/suggestions.
@@ -356,7 +401,7 @@ function getRuleNoticeLines(context: Context, ruleName: string) {
             description: rule.meta?.docs?.description,
             fixable: Boolean(rule.meta?.fixable),
             hasSuggestions: Boolean(rule.meta?.hasSuggestions),
-            replacedBy: rule.meta?.replacedBy,
+            replacedBy: getReplacedByRuleNames(rule),
             path,
             type: rule.meta?.type,
           })
@@ -399,9 +444,7 @@ function makeRuleDocTitle(
       /* istanbul ignore next -- this shouldn't happen */
       default: {
         throw new Error(
-          `Unhandled rule doc title format fallback: ${String(
-            ruleDocTitleFormatWithFallback,
-          )}`,
+          `Unhandled rule doc title format fallback: ${ruleDocTitleFormatWithFallback as string}`,
         );
       }
     }
@@ -450,9 +493,7 @@ function makeRuleDocTitle(
     /* istanbul ignore next -- this shouldn't happen */
     default: {
       throw new Error(
-        `Unhandled rule doc title format: ${String(
-          ruleDocTitleFormatWithFallback,
-        )}`,
+        `Unhandled rule doc title format: ${ruleDocTitleFormatWithFallback as string}`,
       );
     }
   }

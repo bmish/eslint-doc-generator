@@ -213,6 +213,122 @@ exports[`generate (deprecated rules) with nested rule names has the correct link
 "
 `;
 
+exports[`generate (deprecated rules) with new DeprecatedInfo format (deprecated as object) updates the documentation with new format 1`] = `
+"<!-- begin auto-generated rules list -->
+
+❌ Deprecated.
+
+| Name                           | Description  | ❌  |
+| :----------------------------- | :----------- | :- |
+| [no-bar](docs/rules/no-bar.md) | Description. |    |
+| [no-foo](docs/rules/no-foo.md) | Description. | ❌  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (deprecated rules) with new DeprecatedInfo format (deprecated as object) updates the documentation with new format 2`] = `
+"# Description (\`test/no-foo\`)
+
+❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](no-bar.md).
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (deprecated rules) with new DeprecatedInfo format (deprecated as object) updates the documentation with new format 3`] = `
+"# Description (\`test/no-bar\`)
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (deprecated rules) with new DeprecatedInfo format - external plugin replacement updates the documentation with external plugin replacement 1`] = `
+"<!-- begin auto-generated rules list -->
+
+❌ Deprecated.
+
+| Name                           | Description  | ❌  |
+| :----------------------------- | :----------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description. | ❌  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (deprecated rules) with new DeprecatedInfo format - external plugin replacement updates the documentation with external plugin replacement 2`] = `
+"# Description (\`test/no-foo\`)
+
+❌ This rule is deprecated. It was replaced by \`other-plugin/no-foo\`.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (deprecated rules) with new DeprecatedInfo format - malformed replacement info ignores malformed replacement info and shows valid ones 1`] = `
+"<!-- begin auto-generated rules list -->
+
+❌ Deprecated.
+
+| Name                           | Description  | ❌  |
+| :----------------------------- | :----------- | :- |
+| [no-bar](docs/rules/no-bar.md) | Description. |    |
+| [no-foo](docs/rules/no-foo.md) | Description. | ❌  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (deprecated rules) with new DeprecatedInfo format - malformed replacement info ignores malformed replacement info and shows valid ones 2`] = `
+"# Description (\`test/no-foo\`)
+
+❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](no-bar.md).
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (deprecated rules) with new DeprecatedInfo format - multiple replacements updates the documentation with multiple replacements 1`] = `
+"<!-- begin auto-generated rules list -->
+
+❌ Deprecated.
+
+| Name                           | Description  | ❌  |
+| :----------------------------- | :----------- | :- |
+| [no-bar](docs/rules/no-bar.md) | Description. |    |
+| [no-baz](docs/rules/no-baz.md) | Description. |    |
+| [no-foo](docs/rules/no-foo.md) | Description. | ❌  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (deprecated rules) with new DeprecatedInfo format - multiple replacements updates the documentation with multiple replacements 2`] = `
+"# Description (\`test/no-foo\`)
+
+❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](no-bar.md), [\`test/no-baz\`](no-baz.md).
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (deprecated rules) with new DeprecatedInfo format - no replacement updates the documentation without replacement rules 1`] = `
+"<!-- begin auto-generated rules list -->
+
+❌ Deprecated.
+
+| Name                           | Description  | ❌  |
+| :----------------------------- | :----------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description. | ❌  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (deprecated rules) with new DeprecatedInfo format - no replacement updates the documentation without replacement rules 2`] = `
+"# Description (\`test/no-foo\`)
+
+❌ This rule is deprecated.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
 exports[`generate (deprecated rules) with no rule doc but --ignore-deprecated-rules omits the rule from the README and does not try to update its non-existent rule doc 1`] = `
 "<!-- begin auto-generated rules list -->
 

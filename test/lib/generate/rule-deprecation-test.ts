@@ -451,4 +451,302 @@ describe('generate (deprecated rules)', function () {
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
     });
   });
+
+  describe('with new DeprecatedInfo format (deprecated as object)', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: {
+                  docs: { description: 'Description.' },
+                  deprecated: {
+                    message: 'This rule is deprecated.',
+                    replacedBy: [
+                      {
+                        rule: { name: 'no-bar' }
+                      }
+                    ]
+                  }
+                },
+                create(context) {}
+              },
+              'no-bar': {
+                meta: {
+                  docs: { description: 'Description.' },
+                },
+                create(context) {}
+              },
+            },
+            configs: {}
+          };`,
+
+        'README.md':
+          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+        'docs/rules/no-foo.md': '',
+        'docs/rules/no-bar.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('updates the documentation with new format', async function () {
+      await generate('.');
+
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
+  describe('with new DeprecatedInfo format - multiple replacements', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: {
+                  docs: { description: 'Description.' },
+                  deprecated: {
+                    message: 'This rule is deprecated.',
+                    replacedBy: [
+                      {
+                        rule: { name: 'no-bar' }
+                      },
+                      {
+                        rule: { name: 'no-baz' }
+                      }
+                    ]
+                  }
+                },
+                create(context) {}
+              },
+              'no-bar': {
+                meta: {
+                  docs: { description: 'Description.' },
+                },
+                create(context) {}
+              },
+              'no-baz': {
+                meta: {
+                  docs: { description: 'Description.' },
+                },
+                create(context) {}
+              },
+            },
+            configs: {}
+          };`,
+
+        'README.md':
+          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+        'docs/rules/no-foo.md': '',
+        'docs/rules/no-bar.md': '',
+        'docs/rules/no-baz.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('updates the documentation with multiple replacements', async function () {
+      await generate('.');
+
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
+  describe('with new DeprecatedInfo format - no replacement', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: {
+                  docs: { description: 'Description.' },
+                  deprecated: {
+                    message: 'This rule is deprecated with no replacement.',
+                  }
+                },
+                create(context) {}
+              },
+            },
+            configs: {}
+          };`,
+
+        'README.md':
+          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+        'docs/rules/no-foo.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('updates the documentation without replacement rules', async function () {
+      await generate('.');
+
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
+  describe('with new DeprecatedInfo format - external plugin replacement', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: {
+                  docs: { description: 'Description.' },
+                  deprecated: {
+                    message: 'Use the rule from other-plugin instead.',
+                    replacedBy: [
+                      {
+                        plugin: { name: 'other-plugin' },
+                        rule: { name: 'no-foo' }
+                      }
+                    ]
+                  }
+                },
+                create(context) {}
+              },
+            },
+            configs: {}
+          };`,
+
+        'README.md':
+          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+        'docs/rules/no-foo.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('updates the documentation with external plugin replacement', async function () {
+      await generate('.');
+
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
+  describe('with new DeprecatedInfo format - malformed replacement info', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: {
+                  docs: { description: 'Description.' },
+                  deprecated: {
+                    message: 'This rule is deprecated.',
+                    replacedBy: [
+                      {
+                        // Malformed - no rule property
+                        message: 'See the documentation.'
+                      },
+                      {
+                        // Valid replacement
+                        rule: { name: 'no-bar' }
+                      }
+                    ]
+                  }
+                },
+                create(context) {}
+              },
+              'no-bar': {
+                meta: {
+                  docs: { description: 'Description.' },
+                },
+                create(context) {}
+              },
+            },
+            configs: {}
+          };`,
+
+        'README.md':
+          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+
+        'docs/rules/no-foo.md': '',
+        'docs/rules/no-bar.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('ignores malformed replacement info and shows valid ones', async function () {
+      await generate('.');
+
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+    });
+  });
 });
