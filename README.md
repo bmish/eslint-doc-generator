@@ -185,11 +185,11 @@ There's also a `postprocess` option that's only available via a [config file](#c
 | `--init-rule-docs` | Whether to create rule doc files if they don't yet exist. | `false` |
 | `--path-rule-doc` | Path to markdown file for each rule doc. Use `{name}` placeholder for the rule name. A function can also be provided for this option via a [config file](#configuration-file). | `docs/rules/{name}.md` |
 | `--path-rule-list` | Path to markdown file where the rules table list should live. Option can be repeated. | `README.md` |
-| `--rule-doc-notices` | Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. See choices in below [table](#column-and-notice-types). | `configs`, `deprecated`, `fixableAndHasSuggestions`, `requiresTypeChecking` |
+| `--rule-doc-notices` | Ordered, comma-separated list of notices to display in rule doc. Non-applicable notices will be hidden. See choices in below [table](#column-and-notice-types). | `configs`, `deprecated`, `fixableAndHasSuggestions`, `requiresTypeChecking`, `description` |
 | `--rule-doc-section-exclude` | Disallowed section in each rule doc. Exit with failure if present. Option can be repeated. | |
 | `--rule-doc-section-include` | Required section in each rule doc. Exit with failure if missing. Option can be repeated. | |
 | `--rule-doc-section-options` | Whether to require an "Options" or "Config" rule doc section and mention of any named options for rules with options. | `true` |
-| `--rule-doc-title-format` | The format to use for rule doc titles. See choices in below [table](#--rule-doc-title-format). | `desc-parens-prefix-name` |
+| `--rule-doc-title-format` | The format to use for rule doc titles. See choices in below [table](#--rule-doc-title-format). | `prefix-name` |
 | `--rule-list-columns` | Ordered, comma-separated list of columns to display in rule list. Empty columns will be hidden. See choices in below [table](#column-and-notice-types). | `name`, `description`, `configsError`, `configsWarn`, `configsOff`, `fixable`, `hasSuggestions`, `requiresTypeChecking`, `deprecated` |
 | `--rule-list-split` | Rule property(s) to split the rules list by. A separate list and header will be created for each value. Example: `meta.type`. A function can also be provided for this option via a [config file](#configuration-file). | |
 | `--url-configs` | Link to documentation about the ESLint configurations exported by the plugin. | |
@@ -206,7 +206,7 @@ These are the types of rule metadata that are available for display in rule list
 | ⚠️ | `configsWarn` | Yes | No | Whether a rule is set to `warn` in a config. |
 | 💼 | `configs` | No | Yes | What configs set a rule to what [severities](https://eslint.org/docs/latest/user-guide/configuring/rules#rule-severities). |
 | ❌ | `deprecated` | Yes | Yes | Whether a rule is deprecated (i.e. likely to be removed/renamed in a future major version). |
-| | `description` | Yes | Yes | The rule description. |
+| 📝 | `description` | Yes | Yes | The rule description. |
 | 🔧💡 | `fixableAndHasSuggestions` | Yes | Yes | Whether a rule is [fixable](https://eslint.org/docs/latest/developer-guide/working-with-rules#applying-fixes) and/or has [suggestions](https://eslint.org/docs/latest/developer-guide/working-with-rules#providing-suggestions). |
 | 🔧 | `fixable` | Yes | Yes | Whether a rule is [fixable](https://eslint.org/docs/latest/developer-guide/working-with-rules#applying-fixes). |
 | 💡 | `hasSuggestions` | Yes | Yes | Whether a rule has [suggestions](https://eslint.org/docs/latest/developer-guide/working-with-rules#providing-suggestions). |
@@ -233,9 +233,9 @@ Where `no-foo` is the rule name, `Disallow use of foo` is the rule description, 
 | :-- | :-- |
 | `desc` | `# Disallow use of foo` |
 | `desc-parens-name` | `# Disallow use of foo (no-foo)` |
-| `desc-parens-prefix-name` (default) | `# Disallow use of foo (test/no-foo)` |
+| `desc-parens-prefix-name` | `# Disallow use of foo (test/no-foo)` |
 | `name` | `# no-foo` |
-| `prefix-name` | `# test/no-foo` |
+| `prefix-name` (default) | `# test/no-foo` |
 
 ### Configuration file
 

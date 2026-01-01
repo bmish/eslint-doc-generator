@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`generate (rule descriptions) Rule description needs to be formatted capitalizes the first letter and removes the trailing period from the description 1`] = `
-"# Disallow foo (\`test/no-foo\`)
+"# test/no-foo
+
+📝 Disallow foo.
 
 <!-- end auto-generated rule header -->
 "
@@ -40,7 +42,9 @@ exports[`generate (rule descriptions) one rule missing description generates the
 `;
 
 exports[`generate (rule descriptions) one rule missing description generates the documentation 2`] = `
-"# Description for no-foo (\`test/no-foo\`)
+"# test/no-foo
+
+📝 Description for no-foo.
 
 <!-- end auto-generated rule header -->
 "
@@ -66,7 +70,9 @@ exports[`generate (rule descriptions) rule with long-enough description to requi
 `;
 
 exports[`generate (rule descriptions) rule with long-enough description to require name column wrapping avoidance adds spaces to the name column 2`] = `
-"# Over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars (\`test/no-foo\`)
+"# test/no-foo
+
+📝 Over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars.
 
 <!-- end auto-generated rule header -->
 "
@@ -85,7 +91,9 @@ exports[`generate (rule descriptions) rule with long-enough description to requi
 `;
 
 exports[`generate (rule descriptions) rule with long-enough description to require name column wrapping avoidance but rule name too short does not add spaces to name column 2`] = `
-"# Over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars (\`test/foo\`)
+"# test/foo
+
+📝 Over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars.
 
 <!-- end auto-generated rule header -->
 "

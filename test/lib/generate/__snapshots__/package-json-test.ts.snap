@@ -15,7 +15,9 @@ exports[`generate (package.json) No configs found omits the config column 1`] = 
 `;
 
 exports[`generate (package.json) No configs found omits the config column 2`] = `
-"# Disallow foo (\`test/no-foo\`)
+"# test/no-foo
+
+📝 Disallow foo.
 
 <!-- end auto-generated rule header -->
 "
@@ -24,9 +26,11 @@ exports[`generate (package.json) No configs found omits the config column 2`] = 
 exports[`generate (package.json) No exported rules object found throws an error 1`] = `"Could not find exported \`rules\` object in ESLint plugin."`;
 
 exports[`generate (package.json) Scoped plugin name determines the correct plugin prefix 1`] = `
-"# Disallow foo (\`@my-scope/no-foo\`)
+"# @my-scope/no-foo
 
 💼 This rule is enabled in the ✅ \`recommended\` config.
+
+📝 Disallow foo.
 
 <!-- end auto-generated rule header -->
 "
@@ -46,9 +50,11 @@ exports[`generate (package.json) Scoped plugin with custom plugin name determine
 `;
 
 exports[`generate (package.json) Scoped plugin with custom plugin name determines the correct plugin prefix 2`] = `
-"# Disallow foo (\`@my-scope/foo/no-foo\`)
+"# @my-scope/foo/no-foo
 
 💼 This rule is enabled in the ✅ \`recommended\` config.
+
+📝 Disallow foo.
 
 <!-- end auto-generated rule header -->
 "
@@ -68,9 +74,11 @@ exports[`generate (package.json) plugin entry point in JSON format generates the
 `;
 
 exports[`generate (package.json) plugin entry point in JSON format generates the documentation 2`] = `
-"# Description for no-foo (\`test/no-foo\`)
+"# test/no-foo
 
 💼 This rule is enabled in the ✅ \`recommended\` config.
+
+📝 Description for no-foo.
 
 <!-- end auto-generated rule header -->
 "

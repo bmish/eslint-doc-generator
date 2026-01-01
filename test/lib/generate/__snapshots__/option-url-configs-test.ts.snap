@@ -18,18 +18,22 @@ exports[`generate (--url-configs) basic includes the config link 1`] = `
 `;
 
 exports[`generate (--url-configs) basic includes the config link 2`] = `
-"# Description for no-foo (\`test/no-foo\`)
+"# test/no-foo
 
 💼 This rule is enabled in the 🔥 \`recommended\` [config](https://example.com/configs).
+
+📝 Description for no-foo.
 
 <!-- end auto-generated rule header -->
 "
 `;
 
 exports[`generate (--url-configs) basic includes the config link 3`] = `
-"# Description for no-bar (\`test/no-bar\`)
+"# test/no-bar
 
 💼 This rule is enabled in the ⭐ \`customConfig\` [config](https://example.com/configs).
+
+📝 Description for no-bar.
 
 <!-- end auto-generated rule header -->
 "
@@ -51,9 +55,11 @@ exports[`generate (--url-configs) with only recommended config includes the conf
 `;
 
 exports[`generate (--url-configs) with only recommended config includes the config link 2`] = `
-"# Description for no-foo (\`test/no-foo\`)
+"# test/no-foo
 
 💼 This rule is enabled in the ✅ \`recommended\` [config](https://example.com/configs).
+
+📝 Description for no-foo.
 
 <!-- end auto-generated rule header -->
 "

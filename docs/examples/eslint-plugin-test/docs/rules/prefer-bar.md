@@ -1,4 +1,4 @@
-# Enforce using bar (`test/prefer-bar`)
+# test/prefer-bar
 
 💼⚠️ This rule is enabled in the ✅ `recommended` config. This rule _warns_ in the 🎨 `stylistic` config.
 
@@ -7,6 +7,8 @@
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 📖 This rule identifies potential improvements.
+
+📝 Enforce using bar.
 
 <!-- end auto-generated rule header -->
 

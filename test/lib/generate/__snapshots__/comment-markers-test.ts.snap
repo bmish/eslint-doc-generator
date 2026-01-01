@@ -38,9 +38,11 @@ exports[`generate (comment markers) no existing comment markers - minimal doc co
 `;
 
 exports[`generate (comment markers) no existing comment markers - minimal doc content generates the documentation 2`] = `
-"# Description of no-foo (\`test/no-foo\`)
+"# test/no-foo
 
 🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+📝 Description of no-foo.
 
 <!-- end auto-generated rule header -->
 "
@@ -54,9 +56,11 @@ title: "plugin/rule-name"
 description: "disallow foo"
 since: "v0.12.0"
 ---
-# Description (\`test/no-foo\`)
+# test/no-foo
 
 💼 This rule is enabled in the ✅ \`recommended\` config.
+
+📝 Description.
 
 <!-- end auto-generated rule header -->
 Pre-existing notice about the rule being recommended.
@@ -79,9 +83,11 @@ Existing rules section content."
 `;
 
 exports[`generate (comment markers) no existing comment markers - with no blank lines in existing content generates the documentation 2`] = `
-"# Description of no-foo (\`test/no-foo\`)
+"# test/no-foo
 
 🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+📝 Description of no-foo.
 
 <!-- end auto-generated rule header -->
 Existing rule doc content."
@@ -103,9 +109,11 @@ Existing rules section content."
 `;
 
 exports[`generate (comment markers) no existing comment markers - with one blank line around existing content generates the documentation 2`] = `
-"# Description of no-foo (\`test/no-foo\`)
+"# test/no-foo
 
 🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+📝 Description of no-foo.
 
 <!-- end auto-generated rule header -->
 
@@ -120,9 +128,11 @@ title: "plugin/rule-name"
 description: "disallow foo"
 since: "v0.12.0"
 ---
-# Description (\`test/no-foo\`)
+# test/no-foo
 
 💼 This rule is enabled in the ✅ \`recommended\` config.
+
+📝 Description.
 
 <!-- end auto-generated rule header -->
 ## Rule details
@@ -137,18 +147,22 @@ title: "plugin/rule-name"
 description: "disallow foo"
 since: "v0.12.0"
 ---
-# Description (\`test/no-foo\`)
+# test/no-foo
 
 💼 This rule is enabled in the ✅ \`recommended\` config.
+
+📝 Description.
 
 <!-- end auto-generated rule header -->
 "
 `;
 
 exports[`generate (comment markers) rule doc without header marker but pre-existing header updates the documentation 1`] = `
-"# Description (\`test/no-foo\`)
+"# test/no-foo
 
 💼 This rule is enabled in the ✅ \`recommended\` config.
+
+📝 Description.
 
 <!-- end auto-generated rule header -->
 Pre-existing notice about the rule being recommended.
@@ -173,9 +187,11 @@ No blank line before this."
 `;
 
 exports[`generate (comment markers) with no blank lines around comment markers generates the documentation 2`] = `
-"# Description of no-foo (\`test/no-foo\`)
+"# test/no-foo
 
 🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+📝 Description of no-foo.
 
 <!-- end auto-generated rule header -->
 No blank line before this."
@@ -200,9 +216,11 @@ One blank line before this."
 `;
 
 exports[`generate (comment markers) with one blank line around comment markers generates the documentation 2`] = `
-"# Description of no-foo (\`test/no-foo\`)
+"# test/no-foo
 
 🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+📝 Description of no-foo.
 
 <!-- end auto-generated rule header -->
 

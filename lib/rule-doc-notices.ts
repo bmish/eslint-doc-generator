@@ -1,6 +1,7 @@
 import { END_RULE_HEADER_MARKER } from './comment-markers.js';
 import {
   EMOJI_DEPRECATED,
+  EMOJI_DESCRIPTION,
   EMOJI_FIXABLE,
   EMOJI_HAS_SUGGESTIONS,
   EMOJI_REQUIRES_TYPE_CHECKING,
@@ -199,7 +200,7 @@ const RULE_NOTICES: {
     }
 
     // Return the description like a normal body sentence.
-    return addTrailingPeriod(toSentenceCase(description));
+    return `${EMOJI_DESCRIPTION} ${addTrailingPeriod(toSentenceCase(description))}`;
   },
 
   [NOTICE_TYPE.TYPE]: ({ type }) => {

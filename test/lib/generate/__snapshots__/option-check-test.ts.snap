@@ -5,11 +5,12 @@ exports[`generate (--check) basic prints the issues, exits with failure, and doe
   "[32m- Expected[39m
 [31m+ Received[39m
 
-[32m- # Description for no-foo (\`test/no-foo\`)[39m
+[2m  # test/no-foo[22m
+[32m-[39m
+[32m- 📝 Description for no-foo.[39m
 [32m-[39m
 [32m- <!-- end auto-generated rule header -->[39m
-[32m-[39m
-[31m+ # test/no-foo[39m",
+[32m-[39m",
 ]
 `;
 

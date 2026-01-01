@@ -46,12 +46,11 @@ export const NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
   [NOTICE_TYPE.OPTIONS]: false,
   [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]: true,
   [NOTICE_TYPE.TYPE]: false,
-  [NOTICE_TYPE.DESCRIPTION]: false,
+  [NOTICE_TYPE.DESCRIPTION]: true,
 };
 
 // Using these variables ensures they have the correct type (not just a plain string).
-const DEFAULT_RULE_DOC_TITLE_FORMAT: RuleDocTitleFormat =
-  'desc-parens-prefix-name';
+const DEFAULT_RULE_DOC_TITLE_FORMAT: RuleDocTitleFormat = 'prefix-name';
 const DEFAULT_CONFIG_FORMAT: ConfigFormat = 'name';
 
 export const OPTION_DEFAULTS = {
