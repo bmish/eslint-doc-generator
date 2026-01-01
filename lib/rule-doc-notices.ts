@@ -256,7 +256,7 @@ function getNoticesForRule(
       configsError.length > 0 ||
       configsWarn.length > 0 ||
       configsOff.length > 0,
-    [NOTICE_TYPE.DEPRECATED]: rule.meta?.deprecated || false,
+    [NOTICE_TYPE.DEPRECATED]: Boolean(rule.meta?.deprecated),
     [NOTICE_TYPE.DESCRIPTION]: Boolean(rule.meta?.docs?.description) || false,
 
     // Fixable/suggestions.
