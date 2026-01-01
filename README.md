@@ -160,6 +160,7 @@ This tool is used by popular ESLint plugins like:
 - [eslint-plugin-promise](https://github.com/eslint-community/eslint-plugin-promise#rules)
 - [eslint-plugin-qunit](https://github.com/platinumazure/eslint-plugin-qunit#rules)
 - [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react#list-of-supported-rules)
+- [eslint-plugin-testing-library](https://github.com/testing-library/eslint-plugin-testing-library)
 - [eslint-plugin-unicorn](https://github.com/sindresorhus/eslint-plugin-unicorn#rules)
 
 ## Configuration options

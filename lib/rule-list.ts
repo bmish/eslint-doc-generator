@@ -15,21 +15,9 @@ import { findSectionHeader, findFinalHeaderLevel } from './markdown.js';
 import { getPluginRoot } from './package-json.js';
 import { generateLegend } from './rule-list-legend.js';
 import { relative } from 'node:path';
-import {
-  COLUMN_TYPE,
-  RuleListSplitFunction,
-  RuleModule,
-  SEVERITY_TYPE,
-  UrlRuleDocFunction,
-} from './types.js';
+import { COLUMN_TYPE, RuleModule, SEVERITY_TYPE } from './types.js';
 import { markdownTable } from 'markdown-table';
-import type {
-  Plugin,
-  ConfigsToRules,
-  ConfigEmojis,
-  RuleNamesAndRules,
-  PathRuleDocFunction,
-} from './types.js';
+import type { RuleNamesAndRules } from './types.js';
 import { EMOJIS_TYPE } from './rule-type.js';
 import { hasOptions } from './rule-options.js';
 import { getLinkToRule } from './rule-link.js';
@@ -38,7 +26,6 @@ import { noCase } from 'change-case';
 import { getProperty } from 'dot-prop';
 import { boolean, isBooleanable } from './boolean.js';
 import Ajv from 'ajv';
-import { ConfigFormat } from './config-format.js';
 import { Context } from './context.js';
 
 function isBooleanableTrue(value: unknown): boolean {
@@ -63,10 +50,12 @@ function isBadge(emojiOrBadge: string) {
 }
 
 function getPropertyFromRule(
-  plugin: Plugin,
+  context: Context,
   ruleName: string,
   property: string,
 ) {
+  const { plugin } = context;
+
   /* istanbul ignore next -- this shouldn't happen */
   if (!plugin.rules) {
     throw new Error(
@@ -80,25 +69,14 @@ function getPropertyFromRule(
 }
 
 function getConfigurationColumnValueForRule(
+  context: Context,
   ruleName: string,
-  configsToRules: ConfigsToRules,
-  pluginPrefix: string,
-  configEmojis: ConfigEmojis,
-  ignoreConfig: readonly string[],
   severityType: SEVERITY_TYPE,
 ): string {
-  const configsToRulesWithoutIgnored = Object.fromEntries(
-    Object.entries(configsToRules).filter(
-      ([configName]) => !ignoreConfig.includes(configName),
-    ),
-  );
-
   // Collect the emojis/badges for the configs that set the rule to this severity level.
   const emojisAndBadges = getEmojisForConfigsSettingRuleToSeverity(
+    context,
     ruleName,
-    configsToRulesWithoutIgnored,
-    pluginPrefix,
-    configEmojis,
     severityType,
   );
 
@@ -115,45 +93,29 @@ function getConfigurationColumnValueForRule(
 
 // eslint-disable-next-line complexity
 function buildRuleRow(
+  context: Context,
   ruleName: string,
   rule: RuleModule,
   columnsEnabled: Record<COLUMN_TYPE, boolean>,
-  configsToRules: ConfigsToRules,
-  plugin: Plugin,
-  pluginPrefix: string,
-  pathPlugin: string,
-  pathRuleDoc: string | PathRuleDocFunction,
-  pathRuleList: string,
-  configEmojis: ConfigEmojis,
-  ignoreConfig: readonly string[],
-  urlRuleDoc?: string | UrlRuleDocFunction,
+  pathToFile: string,
 ): readonly string[] {
   const columns: {
     [key in COLUMN_TYPE]: string | (() => string);
   } = {
     // Alphabetical order.
     [COLUMN_TYPE.CONFIGS_ERROR]: getConfigurationColumnValueForRule(
+      context,
       ruleName,
-      configsToRules,
-      pluginPrefix,
-      configEmojis,
-      ignoreConfig,
       SEVERITY_TYPE.error,
     ),
     [COLUMN_TYPE.CONFIGS_OFF]: getConfigurationColumnValueForRule(
+      context,
       ruleName,
-      configsToRules,
-      pluginPrefix,
-      configEmojis,
-      ignoreConfig,
       SEVERITY_TYPE.off,
     ),
     [COLUMN_TYPE.CONFIGS_WARN]: getConfigurationColumnValueForRule(
+      context,
       ruleName,
-      configsToRules,
-      pluginPrefix,
-      configEmojis,
-      ignoreConfig,
       SEVERITY_TYPE.warn,
     ),
     [COLUMN_TYPE.DEPRECATED]: rule.meta?.deprecated ? EMOJI_DEPRECATED : '',
@@ -166,17 +128,7 @@ function buildRuleRow(
       ? EMOJI_HAS_SUGGESTIONS
       : '',
     [COLUMN_TYPE.NAME]() {
-      return getLinkToRule(
-        ruleName,
-        plugin,
-        pluginPrefix,
-        pathPlugin,
-        pathRuleDoc,
-        pathRuleList,
-        false,
-        false,
-        urlRuleDoc,
-      );
+      return getLinkToRule(context, ruleName, pathToFile, false, false);
     },
     [COLUMN_TYPE.OPTIONS]: hasOptions(rule.meta?.schema) ? EMOJI_OPTIONS : '',
     // @ts-expect-error -- TODO: requiresTypeChecking type not present
@@ -205,15 +157,7 @@ function generateRulesListMarkdown(
   context: Context,
   ruleNamesAndRules: RuleNamesAndRules,
   columns: Record<COLUMN_TYPE, boolean>,
-  configsToRules: ConfigsToRules,
-  plugin: Plugin,
-  pluginPrefix: string,
-  pathPlugin: string,
-  pathRuleDoc: string | PathRuleDocFunction,
-  pathRuleList: string,
-  configEmojis: ConfigEmojis,
-  ignoreConfig: readonly string[],
-  urlRuleDoc?: string | UrlRuleDocFunction,
+  pathToFile: string,
 ): string {
   const listHeaderRow = (
     Object.entries(columns) as readonly [COLUMN_TYPE, boolean][]
@@ -233,20 +177,7 @@ function generateRulesListMarkdown(
     sanitizeMarkdownTable(context, [
       listHeaderRow,
       ...ruleNamesAndRules.map(([name, rule]) =>
-        buildRuleRow(
-          name,
-          rule,
-          columns,
-          configsToRules,
-          plugin,
-          pluginPrefix,
-          pathPlugin,
-          pathRuleDoc,
-          pathRuleList,
-          configEmojis,
-          ignoreConfig,
-          urlRuleDoc,
-        ),
+        buildRuleRow(context, name, rule, columns, pathToFile),
       ),
     ]),
     { align: 'l' }, // Left-align headers.
@@ -261,15 +192,7 @@ function generateRuleListMarkdownForRulesAndHeaders(
   rulesAndHeaders: RulesAndHeadersReadOnly,
   headerLevel: number,
   columns: Record<COLUMN_TYPE, boolean>,
-  configsToRules: ConfigsToRules,
-  plugin: Plugin,
-  pluginPrefix: string,
-  pathPlugin: string,
-  pathRuleDoc: string | PathRuleDocFunction,
-  pathRuleList: string,
-  configEmojis: ConfigEmojis,
-  ignoreConfig: readonly string[],
-  urlRuleDoc?: string | UrlRuleDocFunction,
+  pathToFile: string,
 ): string {
   const { endOfLine } = context;
   const parts: string[] = [];
@@ -278,22 +201,7 @@ function generateRuleListMarkdownForRulesAndHeaders(
     if (title) {
       parts.push(`${'#'.repeat(headerLevel)} ${title}`);
     }
-    parts.push(
-      generateRulesListMarkdown(
-        context,
-        rules,
-        columns,
-        configsToRules,
-        plugin,
-        pluginPrefix,
-        pathPlugin,
-        pathRuleDoc,
-        pathRuleList,
-        configEmojis,
-        ignoreConfig,
-        urlRuleDoc,
-      ),
-    );
+    parts.push(generateRulesListMarkdown(context, rules, columns, pathToFile));
   }
 
   return parts.join(`${endOfLine}${endOfLine}`);
@@ -303,8 +211,8 @@ function generateRuleListMarkdownForRulesAndHeaders(
  * Get the pairs of rules and headers for a given split property.
  */
 function getRulesAndHeadersForSplit(
+  context: Context,
   ruleNamesAndRules: RuleNamesAndRules,
-  plugin: Plugin,
   ruleListSplit: readonly string[],
 ): RulesAndHeadersReadOnly {
   const rulesAndHeaders: RulesAndHeaders = [];
@@ -321,14 +229,14 @@ function getRulesAndHeadersForSplit(
     const valuesForThisPropertyFromUnusedRules = [
       ...new Set(
         unusedRules.map(([name]) =>
-          getPropertyFromRule(plugin, name, ruleListSplitItem),
+          getPropertyFromRule(context, name, ruleListSplitItem),
         ),
       ).values(),
     ];
     const valuesForThisPropertyFromAllRules = [
       ...new Set(
         ruleNamesAndRules.map(([name]) =>
-          getPropertyFromRule(plugin, name, ruleListSplitItem),
+          getPropertyFromRule(context, name, ruleListSplitItem),
         ),
       ).values(),
     ];
@@ -360,7 +268,7 @@ function getRulesAndHeadersForSplit(
     )) {
       // Rules with the property set to this value.
       const rulesForThisValue = unusedRules.filter(([name]) => {
-        const property = getPropertyFromRule(plugin, name, ruleListSplitItem);
+        const property = getPropertyFromRule(context, name, ruleListSplitItem);
         return (
           property === value || (value === true && isBooleanableTrue(property))
         );
@@ -407,21 +315,10 @@ export function updateRulesList(
   context: Context,
   ruleNamesAndRules: RuleNamesAndRules,
   markdown: string,
-  plugin: Plugin,
-  configsToRules: ConfigsToRules,
-  pluginPrefix: string,
-  pathRuleDoc: string | PathRuleDocFunction,
-  pathRuleList: string,
-  pathPlugin: string,
-  configEmojis: ConfigEmojis,
-  configFormat: ConfigFormat,
-  ignoreConfig: readonly string[],
-  ruleListColumns: readonly COLUMN_TYPE[],
-  ruleListSplit: readonly string[] | RuleListSplitFunction,
-  urlConfigs?: string,
-  urlRuleDoc?: string | UrlRuleDocFunction,
+  pathToFile: string,
 ): string {
-  const { endOfLine } = context;
+  const { endOfLine, path, options } = context;
+  const { ruleListSplit } = options;
 
   let listStartIndex = markdown.indexOf(BEGIN_RULE_LIST_MARKER);
   let listEndIndex = markdown.indexOf(END_RULE_LIST_MARKER);
@@ -449,8 +346,8 @@ export function updateRulesList(
   if (listStartIndex === -1 || listEndIndex === -1) {
     throw new Error(
       `${relative(
-        getPluginRoot(pathPlugin),
-        pathRuleList,
+        getPluginRoot(path),
+        pathToFile,
       )} is missing rules list markers: ${BEGIN_RULE_LIST_MARKER}${END_RULE_LIST_MARKER}`,
     );
   }
@@ -465,27 +362,10 @@ export function updateRulesList(
     : 1;
 
   // Determine columns to include in the rules list.
-  const columns = getColumns(
-    plugin,
-    ruleNamesAndRules,
-    configsToRules,
-    ruleListColumns,
-    pluginPrefix,
-    ignoreConfig,
-  );
+  const columns = getColumns(context, ruleNamesAndRules);
 
   // New legend.
-  const legend = generateLegend(
-    context,
-    columns,
-    plugin,
-    configsToRules,
-    configEmojis,
-    configFormat,
-    pluginPrefix,
-    ignoreConfig,
-    urlConfigs,
-  );
+  const legend = generateLegend(context, columns);
 
   // Determine the pairs of rules and headers based on any split property.
   const rulesAndHeaders: RulesAndHeaders = [];
@@ -540,7 +420,7 @@ export function updateRulesList(
     rulesAndHeaders.push(...userDefinedLists);
   } else if (ruleListSplit.length > 0) {
     rulesAndHeaders.push(
-      ...getRulesAndHeadersForSplit(ruleNamesAndRules, plugin, ruleListSplit),
+      ...getRulesAndHeadersForSplit(context, ruleNamesAndRules, ruleListSplit),
     );
   } else {
     rulesAndHeaders.push({ rules: ruleNamesAndRules });
@@ -552,15 +432,7 @@ export function updateRulesList(
     rulesAndHeaders,
     ruleListSplitHeaderLevel,
     columns,
-    configsToRules,
-    plugin,
-    pluginPrefix,
-    pathPlugin,
-    pathRuleDoc,
-    pathRuleList,
-    configEmojis,
-    ignoreConfig,
-    urlRuleDoc,
+    pathToFile,
   );
 
   const newContent = `${legend ? `${legend}${endOfLine}${endOfLine}` : ''}${list}`;

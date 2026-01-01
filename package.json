@@ -1,6 +1,6 @@
 {
   "name": "eslint-doc-generator",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Automatic documentation generator for ESLint plugins and rules.",
   "keywords": [
     "doc",
@@ -89,6 +89,11 @@
   "peerDependencies": {
     "eslint": ">= 8.57.1",
     "prettier": ">= 3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "prettier": {
+      "optional": true
+    }
   },
   "engines": {
     "node": "^20.19.0 || ^22.13.1 || >=24.0.0"
