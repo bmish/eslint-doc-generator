@@ -74,7 +74,7 @@ export async function generate(path: string, userOptions?: GenerateOptions) {
       // Filter out deprecated rules from being checked, displayed, or updated if the option is set.
       ([, rule]) => !ignoreDeprecatedRules || !rule.meta?.deprecated,
     )
-    .sort(([a], [b]) => a.toLowerCase().localeCompare(b.toLowerCase()));
+    .toSorted(([a], [b]) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
   // Update rule doc for each rule.
   let initializedRuleDoc = false;

@@ -68,7 +68,7 @@ export function findSectionHeader(
   }
 
   // Otherwise assume the shortest match is the correct one.
-  return sectionPotentialMatches.sort(
+  return sectionPotentialMatches.toSorted(
     (a: string, b: string) => a.length - b.length,
   )[0];
 }
@@ -77,7 +77,9 @@ export function findFinalHeaderLevel(context: Context, str: string) {
   const { endOfLine } = context;
 
   const lines = str.split(endOfLine);
-  const finalHeader = lines.reverse().find((line) => line.match('^(#+) .+$'));
+  const finalHeader = lines
+    .toReversed()
+    .find((line) => line.match('^(#+) .+$'));
   return finalHeader ? finalHeader.indexOf(' ') : undefined;
 }
 
