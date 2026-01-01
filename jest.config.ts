@@ -1,19 +1,26 @@
 import type { Config } from 'jest';
-// https://kulshekhar.github.io/ts-jest/docs/guides/esm-support/
-import { createDefaultEsmPreset } from 'ts-jest';
 
-const defaultEsmPreset = createDefaultEsmPreset();
-
-// https://kulshekhar.github.io/ts-jest/docs/guides/esm-support/
 const config: Config = {
   testEnvironment: 'node',
   testMatch: ['<rootDir>/test/**/*-test.ts'],
   setupFiles: ['<rootDir>/test/jest.setup.cjs'],
-  ...defaultEsmPreset,
+  extensionsToTreatAsEsm: ['.ts'],
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
     '#(.*)': '<rootDir>/node_modules/$1',
   },
+  transform: {
+    '^.+\\.ts$': [
+      'ts-jest',
+      {
+        useESM: true,
+      },
+    ],
+  },
+  testEnvironmentOptions: {
+    globalsCleanup: 'off',
+  },
+  workerIdleMemoryLimit: '512MB',
   coveragePathIgnorePatterns: [
     '<rootDir>/node_modules/',
     '<rootDir>/test/',

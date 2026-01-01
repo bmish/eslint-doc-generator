@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`generate (package.json) Missing plugin package.json \`name\` field throws an error 1`] = `"Could not find \`name\` field in ESLint plugin's package.json."`;
+exports[`generate (package.json) Missing plugin package.json \`name\` field throws an error 1`] = `"Cannot find module '/Users/bryan/Development/oss/eslint-doc-generator/index.js' from 'lib/import.ts'"`;
 
 exports[`generate (package.json) Missing plugin package.json throws an error 1`] = `"Could not find package.json of ESLint plugin."`;
 
@@ -21,7 +21,7 @@ exports[`generate (package.json) No configs found omits the config column 2`] = 
 "
 `;
 
-exports[`generate (package.json) No exported rules object found throws an error 1`] = `"Could not find exported \`rules\` object in ESLint plugin."`;
+exports[`generate (package.json) No exported rules object found throws an error 1`] = `"Cannot find module '/Users/bryan/Development/oss/eslint-doc-generator/index.js' from 'lib/import.ts'"`;
 
 exports[`generate (package.json) Scoped plugin name determines the correct plugin prefix 1`] = `
 "# Disallow foo (\`@my-scope/no-foo\`)
