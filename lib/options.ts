@@ -38,8 +38,8 @@ export const NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
 } = {
   // Object keys ordered in display order.
   // Object values indicate whether the column is displayed by default.
-  [NOTICE_TYPE.CONFIGS]: true,
   [NOTICE_TYPE.DEPRECATED]: true, // Most important.
+  [NOTICE_TYPE.CONFIGS]: true,
   [NOTICE_TYPE.FIXABLE]: false,
   [NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: true, // Default, consolidated notice.
   [NOTICE_TYPE.HAS_SUGGESTIONS]: false,
