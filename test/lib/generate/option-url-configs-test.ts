@@ -57,6 +57,10 @@ describe('generate (--url-configs)', function () {
     it('includes the config link', async function () {
       await generate('.', {
         urlConfigs: 'https://example.com/configs',
+        configEmoji: [
+          ['recommended', '🔥'],
+          ['customConfig', '⭐'],
+        ],
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
