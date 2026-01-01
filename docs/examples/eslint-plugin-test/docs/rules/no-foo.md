@@ -1,4 +1,4 @@
-# Disallow using foo (`test/no-foo`)
+# test/no-foo
 
 💼 This rule is enabled in the ✅ `recommended` config.
 
@@ -9,6 +9,8 @@
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 ❗ This rule identifies problems that could cause errors or unexpected behavior.
+
+📝 Disallow using foo.
 
 <!-- end auto-generated rule header -->
 

@@ -1,4 +1,4 @@
-# Require using baz (`test/require-baz`)
+# test/require-baz
 
 ❌ This rule is deprecated. It was replaced by [`test/prefer-bar`](prefer-bar.md).
 
@@ -7,6 +7,8 @@
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
 📏 This rule focuses on code formatting.
+
+📝 Require using baz.
 
 <!-- end auto-generated rule header -->
 
