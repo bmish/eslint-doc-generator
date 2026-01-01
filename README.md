@@ -175,7 +175,7 @@ eslint-doc-generator path/to/eslint-plugin
 
 There's also a `postprocess` option that's only available via a [config file](#configuration-file).
 
-| Name | Description | Default |
+| Name | Description | Default |
 | :-- | :-- | :-- |
 | `--check` | Whether to check for and fail if there is a diff. Any diff will be displayed but no output will be written to files. Typically used during CI. | `false` |
 | `--config-emoji` | Custom emoji to use for a config. Format is `config-name,emoji`. Option can be repeated. | Default emojis are provided for [common configs](./lib/emojis.ts). Configs without emojis will cause an error; use `--ignore-config` to exclude them. See [Badges](#badges) for using custom badges as emojis. |
@@ -205,8 +205,8 @@ These are the types of rule metadata that are available for display in rule list
 | 🚫 | `configsOff` | Yes | No | Whether a rule is set to `off` in a config. |
 | ⚠️ | `configsWarn` | Yes | No | Whether a rule is set to `warn` in a config. |
 | 💼 | `configs` | No | Yes | What configs set a rule to what [severities](https://eslint.org/docs/latest/user-guide/configuring/rules#rule-severities). |
-| ❌ | `deprecated`  | Yes | Yes | Whether a rule is deprecated (i.e. likely to be removed/renamed in a future major version). |
-| | `description`  | Yes | Yes | The rule description. |
+| ❌ | `deprecated` | Yes | Yes | Whether a rule is deprecated (i.e. likely to be removed/renamed in a future major version). |
+| | `description` | Yes | Yes | The rule description. |
 | 🔧💡 | `fixableAndHasSuggestions` | Yes | Yes | Whether a rule is [fixable](https://eslint.org/docs/latest/developer-guide/working-with-rules#applying-fixes) and/or has [suggestions](https://eslint.org/docs/latest/developer-guide/working-with-rules#providing-suggestions). |
 | 🔧 | `fixable` | Yes | Yes | Whether a rule is [fixable](https://eslint.org/docs/latest/developer-guide/working-with-rules#applying-fixes). |
 | 💡 | `hasSuggestions` | Yes | Yes | Whether a rule has [suggestions](https://eslint.org/docs/latest/developer-guide/working-with-rules#providing-suggestions). |

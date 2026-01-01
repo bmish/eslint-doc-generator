@@ -126,7 +126,7 @@ function generateRuleOptionsListMarkdown(
     .map((type) => HEADERS[type as COLUMN_TYPE]);
 
   const rows = [...ruleOptions]
-    .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+    .toSorted((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
     .map((ruleOption) => {
       const ruleOptionColumnValues = ruleOptionToColumnValues(ruleOption);
 
