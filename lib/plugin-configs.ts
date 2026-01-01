@@ -27,7 +27,7 @@ export function getConfigsThatSetARule(
       // Filter out ignored configs.
       .filter(([configName]) => !ignoreConfig.includes(configName))
       .map(([configName]) => configName)
-      .toSorted((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+      .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
   );
 }
 
@@ -70,7 +70,7 @@ export function getConfigsForRule(
     }
   }
 
-  return configNames.toSorted((a, b) =>
+  return configNames.sort((a, b) =>
     a.toLowerCase().localeCompare(b.toLowerCase()),
   );
 }

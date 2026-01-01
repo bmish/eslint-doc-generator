@@ -251,7 +251,7 @@ function getRulesAndHeadersForSplit(
       ...valuesNotFalseAndNotTrue,
       ...(valuesTrue.length > 0 ? [true] : []), // If there are multiple true values, combine them all into one.
     ];
-    for (const value of valuesNew.toSorted((a, b) =>
+    for (const value of valuesNew.sort((a, b) =>
       String(a).toLowerCase().localeCompare(String(b).toLowerCase()),
     )) {
       // Rules with the property set to this value.

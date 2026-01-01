@@ -45,7 +45,7 @@ function generateConfigListMarkdown(context: Context): string {
     listHeaderRow,
     ...Object.keys(configsToRules)
       .filter((configName) => !ignoreConfig.includes(configName))
-      .toSorted((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+      .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
       .map((configName) => {
         const config = plugin.configs?.[configName];
         /* istanbul ignore next -- config should exist at this point */
