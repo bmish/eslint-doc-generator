@@ -50,7 +50,13 @@ describe('generate (sorting)', function () {
     });
 
     it('sorts correctly', async function () {
-      await generate('.');
+      await generate('.', {
+        configEmoji: [
+          ['a', '🅰️'],
+          ['B', '🅱️'],
+          ['c', '🌊'],
+        ],
+      });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/a.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/B.md', 'utf8')).toMatchSnapshot();

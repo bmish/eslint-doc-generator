@@ -3,8 +3,8 @@ import {
   END_CONFIG_LIST_MARKER,
 } from './comment-markers.js';
 import { markdownTable } from 'markdown-table';
-import type { ConfigsToRules, ConfigEmojis, Plugin, Config } from './types.js';
-import { ConfigFormat, configNameToDisplay } from './config-format.js';
+import type { Config } from './types.js';
+import { configNameToDisplay } from './config-format.js';
 import { sanitizeMarkdownTable } from './string.js';
 import { Context } from './context.js';
 
@@ -29,15 +29,10 @@ function configToDescription(config: Config): string | undefined {
   );
 }
 
-function generateConfigListMarkdown(
-  context: Context,
-  plugin: Plugin,
-  configsToRules: ConfigsToRules,
-  pluginPrefix: string,
-  configEmojis: ConfigEmojis,
-  configFormat: ConfigFormat,
-  ignoreConfig: readonly string[],
-): string {
+function generateConfigListMarkdown(context: Context): string {
+  const { configsToRules, options, plugin } = context;
+  const { configEmojis, ignoreConfig } = options;
+
   /* istanbul ignore next -- configs are sure to exist at this point */
   const configs = Object.values(plugin.configs || {});
   const hasDescription = configs.some((config) => configToDescription(config));
@@ -57,7 +52,7 @@ function generateConfigListMarkdown(
         const description = config ? configToDescription(config) : undefined;
         return [
           configEmojis.find((obj) => obj.config === configName)?.emoji || '',
-          `\`${configNameToDisplay(configName, configFormat, pluginPrefix)}\``,
+          `\`${configNameToDisplay(context, configName)}\``,
           hasDescription ? description || '' : undefined,
         ].filter((col) => col !== undefined);
       }),
@@ -69,17 +64,9 @@ function generateConfigListMarkdown(
   );
 }
 
-export function updateConfigsList(
-  context: Context,
-  markdown: string,
-  plugin: Plugin,
-  configsToRules: ConfigsToRules,
-  pluginPrefix: string,
-  configEmojis: ConfigEmojis,
-  configFormat: ConfigFormat,
-  ignoreConfig: readonly string[],
-): string {
-  const { endOfLine } = context;
+export function updateConfigsList(context: Context, markdown: string): string {
+  const { configsToRules, endOfLine, options } = context;
+  const { ignoreConfig } = options;
 
   const listStartIndex = markdown.indexOf(BEGIN_CONFIG_LIST_MARKER);
   let listEndIndex = markdown.indexOf(END_CONFIG_LIST_MARKER);
@@ -105,15 +92,7 @@ export function updateConfigsList(
   const postList = markdown.slice(Math.max(0, listEndIndex));
 
   // New config list.
-  const list = generateConfigListMarkdown(
-    context,
-    plugin,
-    configsToRules,
-    pluginPrefix,
-    configEmojis,
-    configFormat,
-    ignoreConfig,
-  );
+  const list = generateConfigListMarkdown(context);
 
   return `${preList}${BEGIN_CONFIG_LIST_MARKER}${endOfLine}${endOfLine}${list}${endOfLine}${endOfLine}${END_CONFIG_LIST_MARKER}${postList}`;
 }

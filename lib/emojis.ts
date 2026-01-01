@@ -12,6 +12,7 @@ export const EMOJI_CONFIGS = {
   a11y: EMOJI_A11Y,
   accessibility: EMOJI_A11Y,
   all: '🌐',
+  base: '🧱',
   error: EMOJI_ERROR,
   errors: EMOJI_ERROR,
   recommended: '✅',

@@ -192,7 +192,12 @@ describe('generate (configs)', function () {
     });
 
     it('generates the documentation', async function () {
-      await generate('.');
+      await generate('.', {
+        configEmoji: [
+          ['recommended', '🔥'],
+          ['other', '🌟'],
+        ],
+      });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
       expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
