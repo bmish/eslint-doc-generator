@@ -11,8 +11,6 @@ import tseslint from 'typescript-eslint';
 export default tseslint.config(
   // Configs:
   js.configs.recommended,
-  // @ts-expect-error This config is not properly typed. In the future, we might want to use
-  // `eslint-plugin-import-x` instead of `eslint-pluginimport`, as it is better maintained.
   eslintPluginImport.flatConfigs.typescript,
   eslintPluginJest.configs['flat/recommended'],
   eslintPluginN.configs['flat/recommended'],
@@ -137,6 +135,7 @@ export default tseslint.config(
     languageOptions: {
       parserOptions: {
         projectService: true,
+        // eslint-disable-next-line n/no-unsupported-features/node-builtins
         tsconfigRootDir: import.meta.dirname,
       },
     },
