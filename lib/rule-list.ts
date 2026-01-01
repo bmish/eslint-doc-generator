@@ -45,10 +45,6 @@ function isConsideredFalse(value: unknown): boolean {
   );
 }
 
-function isBadge(emojiOrBadge: string) {
-  return emojiOrBadge.startsWith('![badge-');
-}
-
 function getPropertyFromRule(
   context: Context,
   ruleName: string,
@@ -73,22 +69,14 @@ function getConfigurationColumnValueForRule(
   ruleName: string,
   severityType: SEVERITY_TYPE,
 ): string {
-  // Collect the emojis/badges for the configs that set the rule to this severity level.
-  const emojisAndBadges = getEmojisForConfigsSettingRuleToSeverity(
+  // Collect the emojis for the configs that set the rule to this severity level.
+  const emojis = getEmojisForConfigsSettingRuleToSeverity(
     context,
     ruleName,
     severityType,
   );
 
-  const emojis = emojisAndBadges.filter(
-    (emojiOrBadge) => !isBadge(emojiOrBadge),
-  );
-  const badges = emojisAndBadges.filter((emojiOrBadge) =>
-    isBadge(emojiOrBadge),
-  );
-
-  // Sort emojis before badges for aesthetics.
-  return [...emojis, ...badges].join(' ');
+  return emojis.join(' ');
 }
 
 // eslint-disable-next-line complexity

@@ -77,37 +77,24 @@ export function getConfigsForRule(
 
 /**
  * Find the representation of a config to display.
- * @param configEmojis - known list of configs and corresponding emojis
+ * @param context - the context object
  * @param configName - name of the config to find an emoji for
- * @param options
- * @param options.fallback - if true and no emoji is found, choose whether to fallback to a badge.
- * @returns the string to display for the config
+ * @returns the emoji string to display for the config, or undefined if not found
  */
 export function findConfigEmoji(
   context: Context,
   configName: string,
-  fallback?: 'badge',
-) {
+): string | undefined {
   const { options } = context;
   const { configEmojis } = options;
 
-  let emoji = configEmojis.find(
-    (configEmoji) => configEmoji.config === configName,
-  )?.emoji;
-  if (!emoji) {
-    if (fallback === 'badge') {
-      emoji = `![badge-${configName}][]`;
-    } else {
-      // No fallback.
-      return undefined;
-    }
-  }
-
-  return emoji;
+  return configEmojis.find((configEmoji) => configEmoji.config === configName)
+    ?.emoji;
 }
 
 /**
  * Get the emojis for the configs that set a rule to a certain severity.
+ * Only returns emojis for configs that have an emoji defined.
  */
 export function getEmojisForConfigsSettingRuleToSeverity(
   context: Context,
@@ -122,13 +109,10 @@ export function getEmojisForConfigsSettingRuleToSeverity(
 
   const emojis: string[] = [];
   for (const configName of configsOfThisSeverity) {
-    // Find the emoji for each config or otherwise use a badge that can be defined in markdown.
-    const emoji = findConfigEmoji(context, configName, 'badge');
-    /* istanbul ignore next -- this shouldn't happen */
-    if (typeof emoji !== 'string') {
-      throw new TypeError('Emoji will always be a string thanks to fallback');
+    const emoji = findConfigEmoji(context, configName);
+    if (emoji) {
+      emojis.push(emoji);
     }
-    emojis.push(emoji);
   }
 
   return emojis;

@@ -111,11 +111,11 @@ describe('generate (--config-emoji)', function () {
       jest.resetModules();
     });
 
-    it('sorts emojis before badges', async function () {
+    it('omits configs without emojis', async function () {
       await generate('.', {
         configEmoji: [
           ['bar', '🎨'],
-          // no emoji for baz (uses badge instead)
+          // no emoji for baz - it will be omitted
           ['foo', '🔥'],
         ],
       });
@@ -243,7 +243,7 @@ describe('generate (--config-emoji)', function () {
       jest.resetModules();
     });
 
-    it('reverts to using a badge for the config', async function () {
+    it('omits config when no emoji is provided', async function () {
       await generate('.', {
         configEmoji: [['recommended']],
       });
