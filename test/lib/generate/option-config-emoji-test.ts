@@ -71,6 +71,48 @@ describe('generate (--config-emoji)', function () {
     });
   });
 
+  describe('with default emoji for common config', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+              export default {
+                rules: {
+                  'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
+                },
+                configs: {
+                  recommended: {
+                    rules: { 'test/no-foo': 'error' },
+                  }
+                }
+              };`,
+
+        'README.md': '## Rules\n',
+
+        'docs/rules/no-foo.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('uses the default emoji when no configEmoji option is provided', async function () {
+      await generate('.'); // No configEmoji option - should use default ✅ for recommended
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
   describe('with manually supplied badge markdown', function () {
     beforeEach(function () {
       mockFs({

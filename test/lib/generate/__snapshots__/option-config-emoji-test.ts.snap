@@ -46,6 +46,30 @@ exports[`generate (--config-emoji) basic shows the correct emojis 4`] = `
 "
 `;
 
+exports[`generate (--config-emoji) with default emoji for common config uses the default emoji when no configEmoji option is provided 1`] = `
+"## Rules
+<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description             | 💼 |
+| :----------------------------- | :---------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅  |
+
+<!-- end auto-generated rules list -->
+"
+`;
+
+exports[`generate (--config-emoji) with default emoji for common config uses the default emoji when no configEmoji option is provided 2`] = `
+"# Description for no-foo (\`test/no-foo\`)
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
 exports[`generate (--config-emoji) with manually supplied badge markdown uses the badge markdown as provided 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
