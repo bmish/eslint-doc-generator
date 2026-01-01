@@ -34,7 +34,7 @@ describe('generate (--config-emoji)', function () {
                   stylistic: {
                     rules: { 'test/no-bar': 'error', 'test/no-baz': 'error' },
                   },
-                  configWithoutEmoji: {
+                  custom: {
                     rules: { 'test/no-baz': 'error' },
                   }
                 }
@@ -61,6 +61,7 @@ describe('generate (--config-emoji)', function () {
         configEmoji: [
           ['recommended', '🔥'],
           ['stylistic', '🎨'],
+          ['custom', '🌟'],
         ],
       });
       expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
@@ -70,7 +71,98 @@ describe('generate (--config-emoji)', function () {
     });
   });
 
-  describe('rule with emoji and badge configs', function () {
+  describe('with default emoji for common config', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+              export default {
+                rules: {
+                  'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
+                },
+                configs: {
+                  recommended: {
+                    rules: { 'test/no-foo': 'error' },
+                  }
+                }
+              };`,
+
+        'README.md': '## Rules\n',
+
+        'docs/rules/no-foo.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('uses the default emoji when no configEmoji option is provided', async function () {
+      await generate('.'); // No configEmoji option - should use default ✅ for recommended
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
+  describe('with manually supplied badge markdown', function () {
+    beforeEach(function () {
+      mockFs({
+        'package.json': JSON.stringify({
+          name: 'eslint-plugin-test',
+          exports: 'index.js',
+          type: 'module',
+        }),
+
+        'index.js': `
+              export default {
+                rules: {
+                  'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
+                },
+                configs: {
+                  funConfig: {
+                    rules: { 'test/no-foo': 'error' },
+                  }
+                }
+              };`,
+
+        'README.md': '## Rules\n',
+
+        'docs/rules/no-foo.md': '',
+
+        // Needed for some of the test infrastructure to work.
+        node_modules: mockFs.load(PATH_NODE_MODULES),
+      });
+    });
+
+    afterEach(function () {
+      mockFs.restore();
+      jest.resetModules();
+    });
+
+    it('uses the badge markdown as provided', async function () {
+      await generate('.', {
+        configEmoji: [
+          [
+            'funConfig',
+            '![fun config badge](https://img.shields.io/badge/-fun-blue.svg)',
+          ],
+        ],
+      });
+      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+    });
+  });
+
+  describe('with missing emoji for a config', function () {
     beforeEach(function () {
       mockFs({
         'package.json': JSON.stringify({
@@ -111,16 +203,18 @@ describe('generate (--config-emoji)', function () {
       jest.resetModules();
     });
 
-    it('sorts emojis before badges', async function () {
-      await generate('.', {
-        configEmoji: [
-          ['bar', '🎨'],
-          // no emoji for baz (uses badge instead)
-          ['foo', '🔥'],
-        ],
-      });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+    it('throws an error for configs without emojis', async function () {
+      await expect(
+        generate('.', {
+          configEmoji: [
+            ['bar', '🎨'],
+            // no emoji for baz - should throw error
+            ['foo', '🔥'],
+          ],
+        }),
+      ).rejects.toThrow(
+        'Config "baz" does not have an emoji. Please provide one using the --config-emoji option or ignore the config using --ignore-config.',
+      );
     });
   });
 
@@ -243,12 +337,14 @@ describe('generate (--config-emoji)', function () {
       jest.resetModules();
     });
 
-    it('reverts to using a badge for the config', async function () {
-      await generate('.', {
-        configEmoji: [['recommended']],
-      });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+    it('throws an error when no emoji is provided', async function () {
+      await expect(
+        generate('.', {
+          configEmoji: [['recommended']],
+        }),
+      ).rejects.toThrow(
+        'Config "recommended" does not have an emoji. Please provide one using the --config-emoji option or ignore the config using --ignore-config.',
+      );
     });
   });
 
@@ -390,14 +486,14 @@ describe('generate (--config-emoji)', function () {
         }),
 
         'index.js': `
-          export default {
-            rules: {
-              'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-            },
-            configs: {
-              configWithoutEmoji: { rules: { 'test/no-foo': 'error' } },
-            }
-          };`,
+              export default {
+                rules: {
+                  'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
+                },
+                configs: {
+                  configWithoutEmoji: { rules: { 'test/no-foo': 'error' } },
+                }
+              };`,
 
         'README.md': '## Rules\n',
 
@@ -413,10 +509,10 @@ describe('generate (--config-emoji)', function () {
       jest.resetModules();
     });
 
-    it('shows the default config emoji', async function () {
-      await generate('.');
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+    it('throws an error', async function () {
+      await expect(generate('.')).rejects.toThrow(
+        'Config "configWithoutEmoji" does not have an emoji. Please provide one using the --config-emoji option or ignore the config using --ignore-config.',
+      );
     });
   });
 });
