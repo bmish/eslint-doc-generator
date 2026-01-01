@@ -50,13 +50,13 @@
     "commander": "^14.0.0",
     "cosmiconfig": "^9.0.0",
     "deepmerge": "^4.2.2",
-    "dot-prop": "^9.0.0",
+    "dot-prop": "^10.1.0",
     "editorconfig": "^3.0.1",
-    "jest-diff": "^29.2.1",
+    "jest-diff": "^30.2.0",
     "json-schema": "^0.4.0",
     "json-schema-traverse": "^1.0.0",
     "markdown-table": "^3.0.3",
-    "type-fest": "^4.0.0"
+    "type-fest": "^5.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
