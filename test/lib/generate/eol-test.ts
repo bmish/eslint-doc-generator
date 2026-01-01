@@ -23,7 +23,7 @@ describe('getEndOfLine', function () {
         mockFs({
           '.editorconfig': `
                   root = true
-      
+
                   [*]
                   end_of_line = lf`,
         });
@@ -35,7 +35,7 @@ describe('getEndOfLine', function () {
         mockFs({
           '.editorconfig': `
                 root = true
-    
+
                 [*]
                 end_of_line = crlf`,
         });
@@ -47,10 +47,10 @@ describe('getEndOfLine', function () {
         mockFs({
           '.editorconfig': `
                   root = true
-      
+
                   [*]
                   end_of_line = lf
-                  
+
                   [*.md]
                   end_of_line = crlf`,
         });
@@ -100,11 +100,17 @@ describe('getEndOfLine', function () {
           'README.md': '## Rules\n',
           '.editorconfig': `
                   root = true
-      
+
                   [*]
                   end_of_line = lf`,
         });
-        await generate('.');
+        await generate('.', {
+          configEmoji: [
+            ['a', '🅰️'],
+            ['B', '🅱️'],
+            ['c', '🌊'],
+          ],
+        });
         expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/a.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/B.md', 'utf8')).toMatchSnapshot();
@@ -117,12 +123,18 @@ describe('getEndOfLine', function () {
           'README.md': '## Rules\r\n',
           '.editorconfig': `
                   root = true
-      
+
                   [*]
                   end_of_line = crlf`,
         });
 
-        await generate('.');
+        await generate('.', {
+          configEmoji: [
+            ['a', '🅰️'],
+            ['B', '🅱️'],
+            ['c', '🌊'],
+          ],
+        });
         expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/a.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/B.md', 'utf8')).toMatchSnapshot();
@@ -135,14 +147,20 @@ describe('getEndOfLine', function () {
           'README.md': '## Rules\r\n',
           '.editorconfig': `
                   root = true
-      
+
                   [*]
                   end_of_line = lf
-                  
+
                   [*.md]
                   end_of_line = crlf`,
         });
-        await generate('.');
+        await generate('.', {
+          configEmoji: [
+            ['a', '🅰️'],
+            ['B', '🅱️'],
+            ['c', '🌊'],
+          ],
+        });
         expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/a.md', 'utf8')).toMatchSnapshot();
         expect(readFileSync('docs/rules/B.md', 'utf8')).toMatchSnapshot();

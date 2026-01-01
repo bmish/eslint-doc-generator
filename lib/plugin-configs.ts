@@ -94,7 +94,7 @@ export function findConfigEmoji(
 
 /**
  * Get the emojis for the configs that set a rule to a certain severity.
- * Only returns emojis for configs that have an emoji defined.
+ * Throws an error if a config is missing an emoji.
  */
 export function getEmojisForConfigsSettingRuleToSeverity(
   context: Context,
@@ -110,9 +110,12 @@ export function getEmojisForConfigsSettingRuleToSeverity(
   const emojis: string[] = [];
   for (const configName of configsOfThisSeverity) {
     const emoji = findConfigEmoji(context, configName);
-    if (emoji) {
-      emojis.push(emoji);
+    if (!emoji) {
+      throw new Error(
+        `Config "${configName}" does not have an emoji. Please provide one using the --config-emoji option or ignore the config using --ignore-config.`,
+      );
     }
+    emojis.push(emoji);
   }
 
   return emojis;

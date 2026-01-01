@@ -5,14 +5,15 @@ exports[`generate (--config-emoji) basic shows the correct emojis 1`] = `
 <!-- begin auto-generated rules list -->
 
 💼 Configurations enabled in.\\
+🌟 Set in the \`custom\` configuration.\\
 🔥 Set in the \`recommended\` configuration.\\
 🎨 Set in the \`stylistic\` configuration.
 
-| Name                           | Description             | 💼     |
-| :----------------------------- | :---------------------- | :----- |
-| [no-bar](docs/rules/no-bar.md) | Description for no-bar. | 🔥 🎨  |
-| [no-baz](docs/rules/no-baz.md) | Description for no-boz. | 🎨     |
-| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | 🔥     |
+| Name                           | Description             | 💼    |
+| :----------------------------- | :---------------------- | :---- |
+| [no-bar](docs/rules/no-bar.md) | Description for no-bar. | 🔥 🎨 |
+| [no-baz](docs/rules/no-baz.md) | Description for no-boz. | 🌟 🎨 |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | 🔥    |
 
 <!-- end auto-generated rules list -->
 "
@@ -39,70 +40,31 @@ exports[`generate (--config-emoji) basic shows the correct emojis 3`] = `
 exports[`generate (--config-emoji) basic shows the correct emojis 4`] = `
 "# Description for no-boz (\`test/no-baz\`)
 
-💼 This rule is enabled in the 🎨 \`stylistic\` config.
+💼 This rule is enabled in the following configs: 🌟 \`custom\`, 🎨 \`stylistic\`.
 
 <!-- end auto-generated rule header -->
 "
 `;
 
-exports[`generate (--config-emoji) removing default emoji for a config omits config when no emoji is provided 1`] = `
-"## Rules
-<!-- begin auto-generated rules list -->
-
-| Name                           | Description             |
-| :----------------------------- | :---------------------- |
-| [no-foo](docs/rules/no-foo.md) | Description for no-foo. |
-
-<!-- end auto-generated rules list -->
-"
-`;
-
-exports[`generate (--config-emoji) removing default emoji for a config omits config when no emoji is provided 2`] = `
-"# Description for no-foo (\`test/no-foo\`)
-
-<!-- end auto-generated rule header -->
-"
-`;
-
-exports[`generate (--config-emoji) rule with emoji and badge configs omits configs without emojis 1`] = `
+exports[`generate (--config-emoji) with manually supplied badge markdown uses the badge markdown as provided 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
 💼 Configurations enabled in.\\
-🎨 Set in the \`bar\` configuration.\\
-🔥 Set in the \`foo\` configuration.
+![fun config badge](https://img.shields.io/badge/-fun-blue.svg) Set in the \`funConfig\` configuration.
 
-| Name                           | Description             | 💼     |
-| :----------------------------- | :---------------------- | :----- |
-| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | 🎨 🔥  |
-
-<!-- end auto-generated rules list -->
-"
-`;
-
-exports[`generate (--config-emoji) rule with emoji and badge configs omits configs without emojis 2`] = `
-"# Description for no-foo (\`test/no-foo\`)
-
-💼 This rule is enabled in the following configs: 🎨 \`bar\`, 🔥 \`foo\`.
-
-<!-- end auto-generated rule header -->
-"
-`;
-
-exports[`generate (--config-emoji) with one config that does not have emoji shows the default config emoji 1`] = `
-"## Rules
-<!-- begin auto-generated rules list -->
-
-| Name                           | Description             |
-| :----------------------------- | :---------------------- |
-| [no-foo](docs/rules/no-foo.md) | Description for no-foo. |
+| Name                           | Description             | 💼                                                              |
+| :----------------------------- | :---------------------- | :-------------------------------------------------------------- |
+| [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ![fun config badge](https://img.shields.io/badge/-fun-blue.svg) |
 
 <!-- end auto-generated rules list -->
 "
 `;
 
-exports[`generate (--config-emoji) with one config that does not have emoji shows the default config emoji 2`] = `
+exports[`generate (--config-emoji) with manually supplied badge markdown uses the badge markdown as provided 2`] = `
 "# Description for no-foo (\`test/no-foo\`)
+
+💼 This rule is enabled in the ![fun config badge](https://img.shields.io/badge/-fun-blue.svg) \`funConfig\` config.
 
 <!-- end auto-generated rule header -->
 "

@@ -4,13 +4,16 @@ exports[`generate (sorting) sorting rules and configs case-insensitive sorts cor
 "## Rules
 <!-- begin auto-generated rules list -->
 
-💼 Configurations enabled in.
+💼 Configurations enabled in.\\
+🅰️ Set in the \`a\` configuration.\\
+🅱️ Set in the \`B\` configuration.\\
+🌊 Set in the \`c\` configuration.
 
-| Name                 | 💼                                     |
-| :------------------- | :------------------------------------- |
-| [a](docs/rules/a.md) | ![badge-a][] ![badge-B][] ![badge-c][] |
-| [B](docs/rules/B.md) |                                        |
-| [c](docs/rules/c.md) |                                        |
+| Name                 | 💼         |
+| :------------------- | :--------- |
+| [a](docs/rules/a.md) | 🅰️ 🅱️ 🌊 |
+| [B](docs/rules/B.md) |            |
+| [c](docs/rules/c.md) |            |
 
 <!-- end auto-generated rules list -->
 "
@@ -19,7 +22,7 @@ exports[`generate (sorting) sorting rules and configs case-insensitive sorts cor
 exports[`generate (sorting) sorting rules and configs case-insensitive sorts correctly 2`] = `
 "# test/a
 
-💼 This rule is enabled in the following configs: \`a\`, \`B\`, \`c\`.
+💼 This rule is enabled in the following configs: 🅰️ \`a\`, 🅱️ \`B\`, 🌊 \`c\`.
 
 <!-- end auto-generated rule header -->
 "
