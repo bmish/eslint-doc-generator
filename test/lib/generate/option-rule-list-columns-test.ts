@@ -128,8 +128,8 @@ describe('generate (--rule-list-columns)', function () {
 
     it('throws an error', async function () {
       await expect(
-        // @ts-expect-error -- testing non-existent column type
         generate(fixture.path, {
+          // @ts-expect-error -- testing non-existent column type
           ruleListColumns: [COLUMN_TYPE.NAME, 'non-existent'],
         }),
       ).rejects.toThrow('Invalid ruleListColumns option: non-existent');

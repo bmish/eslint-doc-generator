@@ -1,11 +1,34 @@
-import { cpSync } from 'node:fs';
-import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import {
+  copyFile,
+  mkdir,
+  mkdtemp,
+  readdir,
+  readFile,
+  rm,
+  stat,
+  writeFile,
+} from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const FIXTURES_DIR = join(__dirname, '..', 'fixtures');
+
+// TODO: Replace with `cp` from 'node:fs/promises' when minimum Node.js version is 22.3.0+
+/** Recursively copy a directory (using stable Node.js APIs) */
+async function copyDir(src: string, dest: string): Promise<void> {
+  await mkdir(dest, { recursive: true });
+  const entries = await readdir(src);
+  for (const entry of entries) {
+    const srcPath = join(src, entry);
+    const destPath = join(dest, entry);
+    const stats = await stat(srcPath);
+    await (stats.isDirectory()
+      ? copyDir(srcPath, destPath)
+      : copyFile(srcPath, destPath));
+  }
+}
 
 export interface SetupFixtureOptions {
   /** Name of the fixture directory in test/fixtures/ (e.g., 'esm-base') */
@@ -37,7 +60,7 @@ export async function setupFixture(
   const tempDir = await mkdtemp(join(tmpdir(), 'eslint-doc-generator-test-'));
 
   // Copy the fixture to temp directory
-  cpSync(sourceDir, tempDir, { recursive: true });
+  await copyDir(sourceDir, tempDir);
 
   // Apply any overrides
   if (overrides) {
@@ -56,6 +79,7 @@ export async function setupFixture(
     cleanup: async () => {
       await rm(tempDir, { recursive: true, force: true });
     },
+    // eslint-disable-next-line require-await
     readFile: async (relativePath: string) => {
       return readFile(join(tempDir, relativePath), 'utf8');
     },
