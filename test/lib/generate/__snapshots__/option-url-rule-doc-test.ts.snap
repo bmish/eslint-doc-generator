@@ -18,9 +18,9 @@ exports[`generate (--url-rule-doc) basic uses the right URLs 1`] = `
 exports[`generate (--url-rule-doc) basic uses the right URLs 2`] = `
 "# test/no-foo
 
-❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](https://example.com/rule-docs/no-bar/).
-
 📝 Description for no-foo.
+
+❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](https://example.com/rule-docs/no-bar/).
 
 <!-- end auto-generated rule header -->
 "
@@ -68,9 +68,9 @@ exports[`generate (--url-rule-doc) function returns undefined should fallback to
 exports[`generate (--url-rule-doc) function returns undefined should fallback to the normal URL 3`] = `
 "# test/no-foo
 
-❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](no-bar.md).
-
 📝 Description for no-foo.
+
+❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](no-bar.md).
 
 <!-- end auto-generated rule header -->
 "
@@ -118,9 +118,9 @@ exports[`generate (--url-rule-doc) function uses the custom URL 2`] = `
 exports[`generate (--url-rule-doc) function uses the custom URL 3`] = `
 "# test/no-foo
 
-❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](https://example.com/rule-docs/name:no-bar/path:docs/rules/no-foo.md).
-
 📝 Description for no-foo.
+
+❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](https://example.com/rule-docs/name:no-bar/path:docs/rules/no-foo.md).
 
 <!-- end auto-generated rule header -->
 "

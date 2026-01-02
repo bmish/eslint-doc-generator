@@ -326,9 +326,40 @@ function getRuleNoticeLines(context: Context, ruleName: string) {
     configsWarn,
     configsOff,
   );
-  let noticeType: keyof typeof notices;
 
-  for (noticeType in notices) {
+  const {
+    [NOTICE_TYPE.DESCRIPTION]: hasDescription,
+    //
+    ...otherNotices
+  } = notices;
+
+  if (hasDescription) {
+    const descNotice = RULE_NOTICES[NOTICE_TYPE.DESCRIPTION] as Extract<
+      (typeof RULE_NOTICES)[NOTICE_TYPE.DESCRIPTION],
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+      Function
+    >;
+
+    lines.push(
+      '',
+      descNotice({
+        context,
+        ruleName,
+        configsError: [],
+        configsWarn: [],
+        configsOff: [],
+        description: rule.meta?.docs?.description,
+        fixable: false,
+        hasSuggestions: false,
+        replacedBy: [],
+        path: context.path,
+        type: undefined,
+      }),
+    );
+  }
+
+  let noticeType: NOTICE_TYPE;
+  for (noticeType in otherNotices) {
     const expected = notices[noticeType];
 
     if (!expected) {

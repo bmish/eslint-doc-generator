@@ -26,11 +26,11 @@ more content."
 exports[`generate (general) basic updates the documentation 2`] = `
 "# test/no-foo
 
+📝 Description of no-foo.
+
 💼 This rule is enabled in the following configs: 🌐 \`all\`, ✅ \`recommended\`.
 
 🔧💡 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
-
-📝 Description of no-foo.
 
 <!-- end auto-generated rule header -->
 ## Rule details
@@ -43,11 +43,11 @@ optionToDoSomething2 - explanation"
 exports[`generate (general) basic updates the documentation 3`] = `
 "# test/no-bar
 
+📝 Description of no-bar.
+
 💼 This rule is enabled in the following configs: 🌐 \`all\`, 🎨 \`style\`.
 
 🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
-
-📝 Description of no-bar.
 
 <!-- end auto-generated rule header -->
 ## Rule details
@@ -86,9 +86,9 @@ more content."
 exports[`generate (general) plugin prefix uses \`plugin.meta.name\` as source for rule prefix 2`] = `
 "# custom/no-foo
 
-🔧💡 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
-
 📝 Description of no-foo.
+
+🔧💡 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
 <!-- end auto-generated rule header -->
 ## Rule details
@@ -101,9 +101,9 @@ optionToDoSomething2 - explanation"
 exports[`generate (general) plugin prefix uses \`plugin.meta.name\` as source for rule prefix 3`] = `
 "# custom/no-bar
 
-🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
-
 📝 Description of no-bar.
+
+🔧 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
 <!-- end auto-generated rule header -->
 ## Rule details

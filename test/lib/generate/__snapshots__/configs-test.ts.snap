@@ -17,9 +17,9 @@ exports[`generate (configs) config as flat config updates the documentation 1`] 
 exports[`generate (configs) config as flat config updates the documentation 2`] = `
 "# test/no-foo
 
-💼 This rule is enabled in the ✅ \`recommended\` config.
-
 📝 Description of no-foo.
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -28,9 +28,9 @@ exports[`generate (configs) config as flat config updates the documentation 2`] 
 exports[`generate (configs) config as flat config updates the documentation 3`] = `
 "# test/no-bar
 
-💼 This rule is enabled in the ✅ \`recommended\` config.
-
 📝 Description of no-bar.
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -54,9 +54,9 @@ exports[`generate (configs) config with overrides generates the documentation 1`
 exports[`generate (configs) config with overrides generates the documentation 2`] = `
 "# test/no-foo
 
-💼 This rule is enabled in the ✅ \`recommended\` config.
-
 📝 Description of no-foo.
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -78,9 +78,9 @@ exports[`generate (configs) only a \`recommended\` config updates the documentat
 exports[`generate (configs) only a \`recommended\` config updates the documentation 2`] = `
 "# test/no-foo
 
-💼 This rule is enabled in the ✅ \`recommended\` config.
-
 📝 Description.
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -104,9 +104,9 @@ exports[`generate (configs) rule config with options generates the documentation
 exports[`generate (configs) rule config with options generates the documentation 2`] = `
 "# test/no-foo
 
-💼 This rule is enabled in the ✅ \`recommended\` config.
-
 📝 Description of no-foo.
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -139,9 +139,9 @@ exports[`generate (configs) rules that are disabled or set to warn generates the
 exports[`generate (configs) rules that are disabled or set to warn generates the documentation 2`] = `
 "# test/no-foo
 
-🚫 This rule is _disabled_ in the 🔥 \`recommended\` config.
-
 📝 Description of no-foo.
+
+🚫 This rule is _disabled_ in the 🔥 \`recommended\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -150,9 +150,9 @@ exports[`generate (configs) rules that are disabled or set to warn generates the
 exports[`generate (configs) rules that are disabled or set to warn generates the documentation 3`] = `
 "# test/no-bar
 
-🚫 This rule is _disabled_ in the following configs: 🌟 \`other\`, 🔥 \`recommended\`.
-
 📝 Description of no-bar.
+
+🚫 This rule is _disabled_ in the following configs: 🌟 \`other\`, 🔥 \`recommended\`.
 
 <!-- end auto-generated rule header -->
 "
@@ -161,9 +161,9 @@ exports[`generate (configs) rules that are disabled or set to warn generates the
 exports[`generate (configs) rules that are disabled or set to warn generates the documentation 4`] = `
 "# test/no-baz
 
-💼🚫 This rule is enabled in the 🔥 \`recommended\` config. This rule is _disabled_ in the 🌟 \`other\` config.
-
 📝 Description of no-baz.
+
+💼🚫 This rule is enabled in the 🔥 \`recommended\` config. This rule is _disabled_ in the 🌟 \`other\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -172,9 +172,9 @@ exports[`generate (configs) rules that are disabled or set to warn generates the
 exports[`generate (configs) rules that are disabled or set to warn generates the documentation 5`] = `
 "# test/no-biz
 
-🚫 This rule is _disabled_ in the 🌟 \`other\` config.
-
 📝 Description of no-biz.
+
+🚫 This rule is _disabled_ in the 🌟 \`other\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -183,9 +183,9 @@ exports[`generate (configs) rules that are disabled or set to warn generates the
 exports[`generate (configs) rules that are disabled or set to warn generates the documentation 6`] = `
 "# test/no-boz
 
-⚠️ This rule _warns_ in the 🔥 \`recommended\` config.
-
 📝 Description of no-boz.
+
+⚠️ This rule _warns_ in the 🔥 \`recommended\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -194,9 +194,9 @@ exports[`generate (configs) rules that are disabled or set to warn generates the
 exports[`generate (configs) rules that are disabled or set to warn generates the documentation 7`] = `
 "# test/no-buz
 
-⚠️ This rule _warns_ in the following configs: 🌟 \`other\`, 🔥 \`recommended\`.
-
 📝 Description of no-buz.
+
+⚠️ This rule _warns_ in the following configs: 🌟 \`other\`, 🔥 \`recommended\`.
 
 <!-- end auto-generated rule header -->
 "
@@ -205,9 +205,9 @@ exports[`generate (configs) rules that are disabled or set to warn generates the
 exports[`generate (configs) rules that are disabled or set to warn generates the documentation 8`] = `
 "# test/no-bez
 
-⚠️ This rule _warns_ in the 🌟 \`other\` config.
-
 📝 Description of no-bez.
+
+⚠️ This rule _warns_ in the 🌟 \`other\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -233,9 +233,9 @@ exports[`generate (configs) rules that are disabled or set to warn, only one con
 exports[`generate (configs) rules that are disabled or set to warn, only one config present generates the documentation 2`] = `
 "# test/no-foo
 
-⚠️ This rule _warns_ in the ✅ \`recommended\` config.
-
 📝 Description of no-foo.
+
+⚠️ This rule _warns_ in the ✅ \`recommended\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -244,9 +244,9 @@ exports[`generate (configs) rules that are disabled or set to warn, only one con
 exports[`generate (configs) rules that are disabled or set to warn, only one config present generates the documentation 3`] = `
 "# test/no-bar
 
-🚫 This rule is _disabled_ in the ✅ \`recommended\` config.
-
 📝 Description of no-bar.
+
+🚫 This rule is _disabled_ in the ✅ \`recommended\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -272,9 +272,9 @@ exports[`generate (configs) rules that are disabled or set to warn, two configs 
 exports[`generate (configs) rules that are disabled or set to warn, two configs present generates the documentation 2`] = `
 "# test/no-foo
 
-⚠️🚫 This rule _warns_ in the ✅ \`recommended\` config. This rule is _disabled_ in the ⌨️ \`typescript\` config.
-
 📝 Description of no-foo.
+
+⚠️🚫 This rule _warns_ in the ✅ \`recommended\` config. This rule is _disabled_ in the ⌨️ \`typescript\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -298,9 +298,9 @@ exports[`generate (configs) with --ignore-config hides the ignored config 1`] = 
 exports[`generate (configs) with --ignore-config hides the ignored config 2`] = `
 "# test/no-foo
 
-💼 This rule is enabled in the ✅ \`recommended\` config.
-
 📝 Description for no-foo.
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -324,9 +324,9 @@ exports[`generate (configs) with config that does not have any rules uses recomm
 exports[`generate (configs) with config that does not have any rules uses recommended config emoji since it is the only relevant config 2`] = `
 "# test/no-foo
 
-💼 This rule is enabled in the ✅ \`recommended\` config.
-
 📝 Description for no-foo.
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
 
 <!-- end auto-generated rule header -->
 "
