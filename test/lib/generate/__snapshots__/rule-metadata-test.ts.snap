@@ -50,7 +50,9 @@ optionToDoSomething
 `;
 
 exports[`generate (rule metadata) rule with no meta object generates the documentation 1`] = `
-"## Rules
+"# eslint-plugin-test
+Description.
+## Rules
 <!-- begin auto-generated rules list -->
 
 💼 Configurations enabled in.\\
@@ -61,6 +63,7 @@ exports[`generate (rule metadata) rule with no meta object generates the documen
 | [no-foo](docs/rules/no-foo.md) | ✅  |
 
 <!-- end auto-generated rules list -->
+more content.
 
 "
 `;

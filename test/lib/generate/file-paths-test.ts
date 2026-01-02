@@ -44,7 +44,7 @@ describe('generate (file paths)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'file-paths', 'missing-rule-doc-with-section-include'),
+        getFixturePath('edge-cases', 'missing-rule-doc-with-section-include'),
       );
     });
 
@@ -67,7 +67,7 @@ describe('generate (file paths)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'file-paths', 'no-missing-rule-doc'),
+        getFixturePath('edge-cases', 'no-missing-rule-doc'),
       );
     });
 
@@ -107,7 +107,7 @@ describe('generate (file paths)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'file-paths', 'lowercase-readme'),
+        getFixturePath('edge-cases', 'lowercase-readme'),
       );
     });
 
@@ -126,7 +126,7 @@ describe('generate (file paths)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'file-paths', 'custom-paths'),
+        getFixturePath('edge-cases', 'custom-paths'),
       );
     });
 
@@ -157,7 +157,7 @@ describe('generate (file paths)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'file-paths', 'multiple-rules-lists'),
+        getFixturePath('edge-cases', 'multiple-rules-lists'),
       );
     });
 
@@ -184,7 +184,7 @@ describe('generate (file paths)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'file-paths', 'csv-string-error'),
+        getFixturePath('edge-cases', 'csv-string-error'),
       );
     });
 
@@ -222,7 +222,7 @@ describe('generate (file paths)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'file-paths', 'empty-array'),
+        getFixturePath('edge-cases', 'empty-array'),
       );
     });
 

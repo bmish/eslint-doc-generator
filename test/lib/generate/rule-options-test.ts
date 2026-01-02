@@ -15,7 +15,7 @@ describe('generate (rule options)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-options', 'rule-doc-has-options-section-but-rule-has-no-options'),
+        getFixturePath('edge-cases', 'rule-doc-has-options-section-but-rule-has-no-options'),
       );
     });
 
@@ -39,7 +39,7 @@ describe('generate (rule options)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-options', 'rule-doc-missing-options-section'),
+        getFixturePath('edge-cases', 'rule-doc-missing-options-section'),
       );
     });
 
@@ -63,7 +63,7 @@ describe('generate (rule options)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-options', 'rule-doc-missing-options-section-with-rule-doc-section-options-true'),
+        getFixturePath('edge-cases', 'rule-doc-missing-options-section-with-rule-doc-section-options-true'),
       );
     });
 
@@ -87,7 +87,7 @@ describe('generate (rule options)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-options', 'rule-doc-missing-options-section-with-rule-doc-section-options-false'),
+        getFixturePath('edge-cases', 'rule-doc-missing-options-section-with-rule-doc-section-options-false'),
       );
     });
 
@@ -108,7 +108,7 @@ describe('generate (rule options)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-options', 'rule-has-options-with-quotes'),
+        getFixturePath('edge-cases', 'rule-has-options-with-quotes'),
       );
     });
 
@@ -129,7 +129,7 @@ describe('generate (rule options)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-options', 'rule-doc-does-not-mention-an-option'),
+        getFixturePath('edge-cases', 'rule-doc-does-not-mention-an-option'),
       );
     });
 
@@ -153,7 +153,7 @@ describe('generate (rule options)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-options', 'rule-with-options-options-column-notice-enabled'),
+        getFixturePath('edge-cases', 'rule-with-options-options-column-notice-enabled'),
       );
     });
 

@@ -57,27 +57,46 @@ exports[`generate (--rule-list-split) by nested property meta.docs.category spli
 `;
 
 exports[`generate (--rule-list-split) by type splits the list 1`] = `
-"## Rules
+"# eslint-plugin-test
+Description.
+## Rules
 <!-- begin auto-generated rules list -->
 
-| Name                           |
-| :----------------------------- |
-| [no-biz](docs/rules/no-biz.md) |
+💼 Configurations enabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description            | 💼 |
+| :----------------------------- | :--------------------- | :- |
+| [no-buz](docs/rules/no-buz.md) | Description of no-buz. |    |
+
+### layout
+
+| Name                           | Description            | 💼 |
+| :----------------------------- | :--------------------- | :- |
+| [no-biz](docs/rules/no-biz.md) | Description of no-biz. |    |
 
 ### problem
 
-| Name                           |
-| :----------------------------- |
-| [no-foo](docs/rules/no-foo.md) |
+| Name                           | Description            | 💼 |
+| :----------------------------- | :--------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
 
 ### suggestion
 
-| Name                           |
-| :----------------------------- |
-| [no-bar](docs/rules/no-bar.md) |
-| [no-baz](docs/rules/no-baz.md) |
+| Name                           | Description            | 💼 |
+| :----------------------------- | :--------------------- | :- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | ✅  |
 
-<!-- end auto-generated rules list -->"
+### unknown
+
+| Name                           | Description            | 💼 |
+| :----------------------------- | :--------------------- | :- |
+| [no-boz](docs/rules/no-boz.md) | Description of no-boz. |    |
+
+<!-- end auto-generated rules list -->
+more content.
+
+"
 `;
 
 exports[`generate (--rule-list-split) ignores case when sorting headers splits the list 1`] = `

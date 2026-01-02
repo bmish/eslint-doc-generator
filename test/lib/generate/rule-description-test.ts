@@ -13,7 +13,7 @@ describe('generate (rule descriptions)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-description', 'long-description-name-column-wrapping'),
+        getFixturePath('edge-cases', 'long-description-name-column-wrapping'),
       );
     });
 
@@ -33,7 +33,7 @@ describe('generate (rule descriptions)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-description', 'long-description-name-column-wrapping-short-name'),
+        getFixturePath('edge-cases', 'long-description-name-column-wrapping-short-name'),
       );
     });
 
@@ -53,7 +53,7 @@ describe('generate (rule descriptions)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-description', 'rule-description-formatting'),
+        getFixturePath('edge-cases', 'rule-description-formatting'),
       );
     });
 
@@ -72,7 +72,7 @@ describe('generate (rule descriptions)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-description', 'no-rules-with-description'),
+        getFixturePath('edge-cases', 'no-rules-with-description'),
       );
     });
 
@@ -92,7 +92,7 @@ describe('generate (rule descriptions)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-description', 'one-rule-missing-description'),
+        getFixturePath('edge-cases', 'one-rule-missing-description'),
       );
     });
 
@@ -113,7 +113,7 @@ describe('generate (rule descriptions)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-description', 'rule-description-escaped-in-table'),
+        getFixturePath('edge-cases', 'rule-description-escaped-in-table'),
       );
     });
 

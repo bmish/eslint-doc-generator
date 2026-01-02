@@ -146,7 +146,7 @@ describe('generate (--config-emoji)', function () {
 
     beforeEach(function () {
       tempDirNoEmoji = setupFixture(
-        getFixturePath('generate', 'option-config-emoji', 'config-without-emoji'),
+        getFixturePath('edge-cases', 'config-without-emoji'),
       );
     });
 

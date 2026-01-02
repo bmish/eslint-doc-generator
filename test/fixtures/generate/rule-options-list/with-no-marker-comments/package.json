@@ -1,5 +1,0 @@
-{
-  "name": "eslint-plugin-test",
-  "type": "module",
-  "exports": "./index.js"
-}

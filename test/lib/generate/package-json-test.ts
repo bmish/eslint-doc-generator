@@ -14,7 +14,7 @@ describe('generate (package.json)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'package-json', 'missing-plugin-package-json'),
+        getFixturePath('edge-cases', 'missing-plugin-package-json'),
       );
     });
 
@@ -32,7 +32,7 @@ describe('generate (package.json)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'package-json', 'missing-plugin-package-json-name-field'),
+        getFixturePath('edge-cases', 'missing-plugin-package-json-name-field'),
       );
     });
 
@@ -50,7 +50,7 @@ describe('generate (package.json)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'package-json', 'scoped-plugin-name'),
+        getFixturePath('edge-cases', 'scoped-plugin-name'),
       );
     });
 
@@ -69,7 +69,7 @@ describe('generate (package.json)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'package-json', 'scoped-plugin-with-custom-plugin-name'),
+        getFixturePath('edge-cases', 'scoped-plugin-with-custom-plugin-name'),
       );
     });
 
@@ -89,7 +89,7 @@ describe('generate (package.json)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'package-json', 'no-configs-found'),
+        getFixturePath('edge-cases', 'no-configs-found'),
       );
     });
 
@@ -109,7 +109,7 @@ describe('generate (package.json)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'package-json', 'no-exported-rules-object-found'),
+        getFixturePath('edge-cases', 'no-exported-rules-object-found'),
       );
     });
 
@@ -127,7 +127,7 @@ describe('generate (package.json)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'package-json', 'package-json-using-exports-as-string'),
+        getFixturePath('edge-cases', 'package-json-using-exports-as-string'),
       );
     });
 
@@ -145,7 +145,7 @@ describe('generate (package.json)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'package-json', 'package-json-using-exports-object-with-dot'),
+        getFixturePath('edge-cases', 'package-json-using-exports-object-with-dot'),
       );
     });
 
@@ -163,7 +163,7 @@ describe('generate (package.json)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'package-json', 'plugin-entry-point-in-json-format'),
+        getFixturePath('edge-cases', 'plugin-entry-point-in-json-format'),
       );
     });
 
@@ -185,7 +185,7 @@ describe('generate (package.json)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'package-json', 'plugin-entry-point-specified-but-does-not-exist'),
+        getFixturePath('edge-cases', 'plugin-entry-point-specified-but-does-not-exist'),
       );
     });
 
@@ -205,7 +205,7 @@ describe('generate (package.json)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'package-json', 'plugin-entry-point-with-type-module-and-main-field-specified'),
+        getFixturePath('edge-cases', 'plugin-entry-point-with-type-module-and-main-field-specified'),
       );
     });
 
@@ -222,7 +222,7 @@ describe('generate (package.json)', function () {
     let tempDir: string;
 
     beforeEach(function () {
-      const fixturePath = getFixturePath('generate', 'package-json', 'no-configs-found');
+      const fixturePath = getFixturePath('edge-cases', 'no-configs-found');
       tempDir = mkdtempSync(join(tmpdir(), 'eslint-doc-gen-'));
       cpSync(fixturePath, tempDir, { recursive: true });
       // Write minimal files for this test

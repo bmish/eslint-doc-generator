@@ -12,9 +12,7 @@ describe('generate (--rule-list-split)', function () {
     let tempDir: string;
 
     beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-split', 'by-type'),
-      );
+      tempDir = setupFixture(getFixturePath('standard-types'));
     });
 
     afterEach(function () {
@@ -34,7 +32,7 @@ describe('generate (--rule-list-split)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-split', 'by-nested-property'),
+        getFixturePath('edge-cases', 'by-nested-property'),
       );
     });
 
@@ -53,7 +51,7 @@ describe('generate (--rule-list-split)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-split', 'property-no-rules-have'),
+        getFixturePath('edge-cases', 'property-no-rules-have'),
       );
     });
 
@@ -75,7 +73,7 @@ describe('generate (--rule-list-split)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-split', 'boolean-camelcase'),
+        getFixturePath('edge-cases', 'boolean-camelcase'),
       );
     });
 
@@ -96,7 +94,7 @@ describe('generate (--rule-list-split)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-split', 'boolean-snake-case'),
+        getFixturePath('edge-cases', 'boolean-snake-case'),
       );
     });
 
@@ -117,7 +115,7 @@ describe('generate (--rule-list-split)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-split', 'boolean-pascalcase'),
+        getFixturePath('edge-cases', 'boolean-pascalcase'),
       );
     });
 
@@ -138,7 +136,7 @@ describe('generate (--rule-list-split)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-split', 'boolean-constant-case'),
+        getFixturePath('edge-cases', 'boolean-constant-case'),
       );
     });
 
@@ -159,7 +157,7 @@ describe('generate (--rule-list-split)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-split', 'boolean-unknown-type'),
+        getFixturePath('edge-cases', 'boolean-unknown-type'),
       );
     });
 
@@ -180,7 +178,7 @@ describe('generate (--rule-list-split)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-split', 'boolean-various-values'),
+        getFixturePath('edge-cases', 'boolean-various-values'),
       );
     });
 
@@ -201,7 +199,7 @@ describe('generate (--rule-list-split)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-split', 'no-existing-headers'),
+        getFixturePath('edge-cases', 'no-existing-headers'),
       );
     });
 
@@ -220,7 +218,7 @@ describe('generate (--rule-list-split)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-split', 'only-title'),
+        getFixturePath('edge-cases', 'only-title'),
       );
     });
 
@@ -239,7 +237,7 @@ describe('generate (--rule-list-split)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-split', 'ignores-case'),
+        getFixturePath('edge-cases', 'ignores-case'),
       );
     });
 
@@ -260,7 +258,7 @@ describe('generate (--rule-list-split)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-split', 'one-sublist-no-rules'),
+        getFixturePath('edge-cases', 'one-sublist-no-rules'),
       );
     });
 
@@ -281,7 +279,7 @@ describe('generate (--rule-list-split)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-split', 'multiple-properties'),
+        getFixturePath('edge-cases', 'multiple-properties'),
       );
     });
 
@@ -302,7 +300,7 @@ describe('generate (--rule-list-split)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-split', 'multiple-properties-no-rules'),
+        getFixturePath('edge-cases', 'multiple-properties-no-rules'),
       );
     });
 
@@ -323,7 +321,7 @@ describe('generate (--rule-list-split)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-split', 'multiple-properties-no-rules-second'),
+        getFixturePath('edge-cases', 'multiple-properties-no-rules-second'),
       );
     });
 
@@ -347,7 +345,7 @@ describe('generate (--rule-list-split)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-split', 'as-function'),
+        getFixturePath('edge-cases', 'as-function'),
       );
     });
 
@@ -385,7 +383,7 @@ describe('generate (--rule-list-split)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-split', 'as-function-invalid'),
+        getFixturePath('edge-cases', 'as-function-invalid'),
       );
     });
 

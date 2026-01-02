@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`generate (--url-rule-doc) function returns undefined should fallback to the normal URL 1`] = `
+exports[`generate (--url-rule-doc) function cases should fallback to the normal URL when function returns undefined 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -14,7 +14,7 @@ exports[`generate (--url-rule-doc) function returns undefined should fallback to
 <!-- end auto-generated rules list -->"
 `;
 
-exports[`generate (--url-rule-doc) function returns undefined should fallback to the normal URL 2`] = `
+exports[`generate (--url-rule-doc) function cases should fallback to the normal URL when function returns undefined 2`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -28,7 +28,7 @@ exports[`generate (--url-rule-doc) function returns undefined should fallback to
 <!-- end auto-generated rules list -->"
 `;
 
-exports[`generate (--url-rule-doc) function returns undefined should fallback to the normal URL 3`] = `
+exports[`generate (--url-rule-doc) function cases should fallback to the normal URL when function returns undefined 3`] = `
 "# test/no-foo
 
 ❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](no-bar.md).
@@ -39,7 +39,7 @@ exports[`generate (--url-rule-doc) function returns undefined should fallback to
 "
 `;
 
-exports[`generate (--url-rule-doc) function returns undefined should fallback to the normal URL 4`] = `
+exports[`generate (--url-rule-doc) function cases should fallback to the normal URL when function returns undefined 4`] = `
 "# test/no-bar
 
 📝 Description for no-bar.
@@ -48,7 +48,7 @@ exports[`generate (--url-rule-doc) function returns undefined should fallback to
 "
 `;
 
-exports[`generate (--url-rule-doc) function uses the custom URL 1`] = `
+exports[`generate (--url-rule-doc) function cases uses the custom URL with function 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -62,7 +62,7 @@ exports[`generate (--url-rule-doc) function uses the custom URL 1`] = `
 <!-- end auto-generated rules list -->"
 `;
 
-exports[`generate (--url-rule-doc) function uses the custom URL 2`] = `
+exports[`generate (--url-rule-doc) function cases uses the custom URL with function 2`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -76,7 +76,7 @@ exports[`generate (--url-rule-doc) function uses the custom URL 2`] = `
 <!-- end auto-generated rules list -->"
 `;
 
-exports[`generate (--url-rule-doc) function uses the custom URL 3`] = `
+exports[`generate (--url-rule-doc) function cases uses the custom URL with function 3`] = `
 "# test/no-foo
 
 ❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](https://example.com/rule-docs/name:no-bar/path:docs/rules/no-foo.md).
@@ -87,7 +87,7 @@ exports[`generate (--url-rule-doc) function uses the custom URL 3`] = `
 "
 `;
 
-exports[`generate (--url-rule-doc) function uses the custom URL 4`] = `
+exports[`generate (--url-rule-doc) function cases uses the custom URL with function 4`] = `
 "# test/no-bar
 
 📝 Description for no-bar.

@@ -31,7 +31,7 @@ describe('generate (comment markers)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'comment-markers', 'no-blank-lines-around-comment-markers'),
+        getFixturePath('edge-cases', 'no-blank-lines-around-comment-markers'),
       );
     });
 
@@ -53,7 +53,7 @@ describe('generate (comment markers)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'comment-markers', 'no-existing-comment-markers-no-blank-lines'),
+        getFixturePath('edge-cases', 'no-existing-comment-markers-no-blank-lines'),
       );
     });
 
@@ -75,7 +75,7 @@ describe('generate (comment markers)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'comment-markers', 'no-existing-comment-markers-one-blank-line'),
+        getFixturePath('edge-cases', 'no-existing-comment-markers-one-blank-line'),
       );
     });
 
@@ -97,7 +97,7 @@ describe('generate (comment markers)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'comment-markers', 'no-existing-comment-markers-minimal-doc'),
+        getFixturePath('edge-cases', 'no-existing-comment-markers-minimal-doc'),
       );
     });
 
@@ -119,7 +119,7 @@ describe('generate (comment markers)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'comment-markers', 'no-existing-comment-markers-yaml-front-matter'),
+        getFixturePath('edge-cases', 'no-existing-comment-markers-yaml-front-matter'),
       );
     });
 
@@ -139,7 +139,7 @@ describe('generate (comment markers)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'comment-markers', 'readme-missing-rule-list-markers-with-rules-section'),
+        getFixturePath('edge-cases', 'readme-missing-rule-list-markers-with-rules-section'),
       );
     });
 
@@ -158,7 +158,7 @@ describe('generate (comment markers)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'comment-markers', 'readme-missing-rule-list-markers-no-rules-section'),
+        getFixturePath('edge-cases', 'readme-missing-rule-list-markers-no-rules-section'),
       );
     });
 
@@ -176,7 +176,7 @@ describe('generate (comment markers)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'comment-markers', 'rule-doc-without-header-marker-pre-existing-header'),
+        getFixturePath('edge-cases', 'rule-doc-without-header-marker-pre-existing-header'),
       );
     });
 
@@ -196,7 +196,7 @@ describe('generate (comment markers)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'comment-markers', 'rule-doc-yaml-front-matter-above-title-and-comment-marker'),
+        getFixturePath('edge-cases', 'rule-doc-yaml-front-matter-above-title-and-comment-marker'),
       );
     });
 
@@ -216,7 +216,7 @@ describe('generate (comment markers)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'comment-markers', 'rule-doc-yaml-front-matter-only'),
+        getFixturePath('edge-cases', 'rule-doc-yaml-front-matter-only'),
       );
     });
 

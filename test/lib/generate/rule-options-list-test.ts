@@ -9,26 +9,22 @@ import {
 } from '../fixture-helper.js';
 
 describe('generate (rule options list)', function () {
-  describe('basic', function () {
-    let tempDir: string;
+  let tempDir: string;
 
-    beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'rule-options-list', 'basic'),
-      );
-    });
+  beforeEach(function () {
+    tempDir = setupFixture(getFixturePath('standard'));
+  });
 
-    afterEach(function () {
-      cleanupFixture(tempDir);
-    });
+  afterEach(function () {
+    cleanupFixture(tempDir);
+  });
 
-    it('generates the documentation', async function () {
-      const consoleErrorStub = sinon.stub(console, 'error');
-      await generate(tempDir);
-      expect(consoleErrorStub.callCount).toBe(0);
-      consoleErrorStub.restore();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-    });
+  it('generates the documentation', async function () {
+    const consoleErrorStub = sinon.stub(console, 'error');
+    await generate(tempDir);
+    expect(consoleErrorStub.callCount).toBe(0);
+    consoleErrorStub.restore();
+    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
   });
 
   describe('displays default column even when only falsy value, hiding deprecated/required cols with only falsy value', function () {
@@ -36,7 +32,7 @@ describe('generate (rule options list)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-options-list', 'displays-default-column-even-when-only-falsy-value'),
+        getFixturePath('edge-cases', 'displays-default-column-even-when-only-falsy-value'),
       );
     });
 
@@ -58,7 +54,7 @@ describe('generate (rule options list)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-options-list', 'with-no-options'),
+        getFixturePath('edge-cases', 'with-no-options'),
       );
     });
 
@@ -80,7 +76,7 @@ describe('generate (rule options list)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-options-list', 'with-no-marker-comments'),
+        getFixturePath('edge-cases', 'with-no-marker-comments'),
       );
     });
 
@@ -102,7 +98,7 @@ describe('generate (rule options list)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-options-list', 'with-string-that-needs-to-be-escaped-in-table'),
+        getFixturePath('edge-cases', 'with-string-that-needs-to-be-escaped-in-table'),
       );
     });
 

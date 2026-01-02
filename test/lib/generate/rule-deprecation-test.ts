@@ -34,7 +34,7 @@ describe('generate (deprecated rules)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-deprecation', 'with-nested-rule-names'),
+        getFixturePath('edge-cases', 'with-nested-rule-names'),
       );
     });
 
@@ -61,7 +61,7 @@ describe('generate (deprecated rules)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-deprecation', 'with-path-rule-doc'),
+        getFixturePath('edge-cases', 'with-path-rule-doc'),
       );
     });
 
@@ -88,7 +88,7 @@ describe('generate (deprecated rules)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-deprecation', 'using-prefix-ahead-of-replacement-rule-name'),
+        getFixturePath('edge-cases', 'using-prefix-ahead-of-replacement-rule-name'),
       );
     });
 
@@ -111,7 +111,7 @@ describe('generate (deprecated rules)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-deprecation', 'with-no-rule-doc-but-ignore-deprecated-rules'),
+        getFixturePath('edge-cases', 'with-no-rule-doc-but-ignore-deprecated-rules'),
       );
     });
 
@@ -131,7 +131,7 @@ describe('generate (deprecated rules)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-deprecation', 'replaced-by-eslint-core-rule'),
+        getFixturePath('edge-cases', 'replaced-by-eslint-core-rule'),
       );
     });
 
@@ -152,7 +152,7 @@ describe('generate (deprecated rules)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-deprecation', 'replaced-by-third-party-plugin-rule'),
+        getFixturePath('edge-cases', 'replaced-by-third-party-plugin-rule'),
       );
     });
 
@@ -173,7 +173,7 @@ describe('generate (deprecated rules)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-deprecation', 'replaced-by-third-party-plugin-rule-same-name'),
+        getFixturePath('edge-cases', 'replaced-by-third-party-plugin-rule-same-name'),
       );
     });
 

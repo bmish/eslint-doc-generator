@@ -38,7 +38,7 @@ describe('generate (configs list)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'configs-list', 'configs-not-defined-in-alphabetical-order'),
+        getFixturePath('edge-cases', 'configs-not-defined-in-alphabetical-order'),
       );
     });
 
@@ -58,7 +58,7 @@ describe('generate (configs list)', function () {
 
       beforeEach(function () {
         tempDir = setupFixture(
-          getFixturePath('generate', 'configs-list', 'when-config-exports-description-property-description'),
+          getFixturePath('edge-cases', 'when-config-exports-description-property-description'),
         );
       });
 
@@ -77,7 +77,7 @@ describe('generate (configs list)', function () {
 
       beforeEach(function () {
         tempDir = setupFixture(
-          getFixturePath('generate', 'configs-list', 'when-config-exports-description-property-meta-description'),
+          getFixturePath('edge-cases', 'when-config-exports-description-property-meta-description'),
         );
       });
 
@@ -96,7 +96,7 @@ describe('generate (configs list)', function () {
 
       beforeEach(function () {
         tempDir = setupFixture(
-          getFixturePath('generate', 'configs-list', 'when-config-exports-description-property-meta-docs-description'),
+          getFixturePath('edge-cases', 'when-config-exports-description-property-meta-docs-description'),
         );
       });
 
@@ -116,7 +116,7 @@ describe('generate (configs list)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'configs-list', 'when-config-description-needs-to-be-escaped-in-table'),
+        getFixturePath('edge-cases', 'when-config-description-needs-to-be-escaped-in-table'),
       );
     });
 
@@ -135,7 +135,7 @@ describe('generate (configs list)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'configs-list', 'when-there-are-no-configs'),
+        getFixturePath('edge-cases', 'when-there-are-no-configs'),
       );
     });
 
@@ -154,7 +154,7 @@ describe('generate (configs list)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'configs-list', 'when-all-configs-are-ignored'),
+        getFixturePath('edge-cases', 'when-all-configs-are-ignored'),
       );
     });
 

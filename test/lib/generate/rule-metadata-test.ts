@@ -13,7 +13,7 @@ describe('generate (rule metadata)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-metadata', 'function-style'),
+        getFixturePath('edge-cases', 'function-style-rule'),
       );
     });
 
@@ -33,7 +33,7 @@ describe('generate (rule metadata)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-metadata', 'function-style-with-props'),
+        getFixturePath('edge-cases', 'function-style-rule-with-props'),
       );
     });
 
@@ -56,7 +56,7 @@ describe('generate (rule metadata)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'rule-metadata', 'no-meta'),
+        getFixturePath('edge-cases', 'no-meta'),
       );
     });
 

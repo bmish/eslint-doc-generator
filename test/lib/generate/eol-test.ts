@@ -27,19 +27,19 @@ describe('getEndOfLine', function () {
       });
 
       it('returns lf end of line when ".editorconfig" is configured with lf', async function () {
-        tempDir = setupFixture(getFixturePath('generate', 'eol', 'editorconfig-lf'));
+        tempDir = setupFixture(getFixturePath('edge-cases', 'editorconfig-lf'));
         process.chdir(tempDir);
         expect(await getEndOfLine()).toStrictEqual('\n');
       });
 
       it('returns crlf end of line when ".editorconfig" is configured with crlf', async function () {
-        tempDir = setupFixture(getFixturePath('generate', 'eol', 'editorconfig-crlf'));
+        tempDir = setupFixture(getFixturePath('edge-cases', 'editorconfig-crlf'));
         process.chdir(tempDir);
         expect(await getEndOfLine()).toStrictEqual('\r\n');
       });
 
       it('respects the .md specific end of line settings when ".editorconfig" is configured', async function () {
-        tempDir = setupFixture(getFixturePath('generate', 'eol', 'editorconfig-md-specific'));
+        tempDir = setupFixture(getFixturePath('edge-cases', 'editorconfig-md-specific'));
         process.chdir(tempDir);
         expect(await getEndOfLine()).toStrictEqual('\r\n');
       });
@@ -55,7 +55,7 @@ describe('getEndOfLine', function () {
       });
 
       it('generates using lf end of line from ".editorconfig"', async function () {
-        tempDir = setupFixture(getFixturePath('generate', 'eol', 'editorconfig-lf'));
+        tempDir = setupFixture(getFixturePath('edge-cases', 'editorconfig-lf'));
         await generate(tempDir, {
           configEmoji: [
             ['a', '🅰️'],
@@ -70,7 +70,7 @@ describe('getEndOfLine', function () {
       });
 
       it('generates using crlf end of line from ".editorconfig"', async function () {
-        tempDir = setupFixture(getFixturePath('generate', 'eol', 'editorconfig-crlf'));
+        tempDir = setupFixture(getFixturePath('edge-cases', 'editorconfig-crlf'));
         await generate(tempDir, {
           configEmoji: [
             ['a', '🅰️'],
@@ -85,7 +85,7 @@ describe('getEndOfLine', function () {
       });
 
       it('generates using the end of line from ".editorconfig" while respecting the .md specific end of line setting', async function () {
-        tempDir = setupFixture(getFixturePath('generate', 'eol', 'editorconfig-md-specific'));
+        tempDir = setupFixture(getFixturePath('edge-cases', 'editorconfig-md-specific'));
         await generate(tempDir, {
           configEmoji: [
             ['a', '🅰️'],
@@ -117,19 +117,19 @@ describe('getEndOfLine', function () {
     });
 
     it('returns lf end of line when ".prettierrc.json" is configured with lf', async function () {
-      tempDir = setupFixture(getFixturePath('generate', 'eol', 'prettier-lf'));
+      tempDir = setupFixture(getFixturePath('edge-cases', 'prettier-lf'));
       process.chdir(tempDir);
       expect(await getEndOfLine()).toStrictEqual('\n');
     });
 
     it('returns crlf end of line when ".prettierrc.json" is configured with crlf', async function () {
-      tempDir = setupFixture(getFixturePath('generate', 'eol', 'prettier-crlf'));
+      tempDir = setupFixture(getFixturePath('edge-cases', 'prettier-crlf'));
       process.chdir(tempDir);
       expect(await getEndOfLine()).toStrictEqual('\r\n');
     });
 
     it('returns lf when ".prettierrc.json" is not configured with the "endOfLine" option', async function () {
-      tempDir = setupFixture(getFixturePath('generate', 'eol', 'prettier-no-eol'));
+      tempDir = setupFixture(getFixturePath('edge-cases', 'prettier-no-eol'));
       process.chdir(tempDir);
       expect(await getEndOfLine()).toStrictEqual('\n');
     });

@@ -27,57 +27,43 @@ describe('generate (--url-rule-doc)', function () {
     expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
   });
 
-  describe('function', function () {
-    let tempDir: string;
+  describe('function cases', function () {
+    let tempDirFunc: string;
 
     beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'option-url-rule-doc', 'function'),
+      tempDirFunc = setupFixture(
+        getFixturePath('edge-cases', 'function'),
       );
     });
 
     afterEach(function () {
-      cleanupFixture(tempDir);
+      cleanupFixture(tempDirFunc);
     });
 
-    it('uses the custom URL', async function () {
-      await generate(tempDir, {
+    it('uses the custom URL with function', async function () {
+      await generate(tempDirFunc, {
         pathRuleList: ['README.md', 'nested/README.md'],
         urlRuleDoc(name, path) {
           return `https://example.com/rule-docs/name:${name}/path:${path}`;
         },
       });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'nested/README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
-    });
-  });
-
-  describe('function returns undefined', function () {
-    let tempDir: string;
-
-    beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'option-url-rule-doc', 'function-returns-undefined'),
-      );
+      expect(readFileSync(join(tempDirFunc, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDirFunc, 'nested/README.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDirFunc, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDirFunc, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
     });
 
-    afterEach(function () {
-      cleanupFixture(tempDir);
-    });
-
-    it('should fallback to the normal URL', async function () {
-      await generate(tempDir, {
+    it('should fallback to the normal URL when function returns undefined', async function () {
+      await generate(tempDirFunc, {
         pathRuleList: ['README.md', 'nested/README.md'],
         urlRuleDoc() {
           return undefined;
         },
       });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'nested/README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDirFunc, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDirFunc, 'nested/README.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDirFunc, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDirFunc, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
     });
   });
 });

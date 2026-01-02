@@ -1,29 +1,5 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`generate (rule options list) basic generates the documentation 1`] = `
-"# test/no-foo
-
-<!-- end auto-generated rule header -->
-## Options
-<!-- begin auto-generated rule options list -->
-
-| Name                       | Description                   | Type                | Choices           | Default                                | Required | Deprecated |
-| :------------------------- | :---------------------------- | :------------------ | :---------------- | :------------------------------------- | :------- | :--------- |
-| \`arr1\`                     |                               | Array               |                   |                                        |          |            |
-| \`arrWithArrType\`           |                               | String, Boolean     |                   |                                        |          |            |
-| \`arrWithArrTypeSingleItem\` |                               | String              |                   |                                        |          |            |
-| \`arrWithDefault\`           |                               | Array               |                   | [\`hello world\`, \`1\`, \`2\`, \`3\`, \`true\`] |          |            |
-| \`arrWithDefaultEmpty\`      |                               | Array               |                   | \`[]\`                                   |          |            |
-| \`arrWithItemsArrayType\`    |                               | (String, Boolean)[] |                   |                                        |          |            |
-| \`arrWithItemsType\`         |                               | String[]            |                   |                                        |          |            |
-| \`bar\`                      | Choose how to use the rule.   | String              | \`always\`, \`never\` | \`always\`                               | Yes      |            |
-| \`baz\`                      |                               |                     |                   | \`true\`                                 | Yes      |            |
-| \`biz\`                      |                               |                     |                   |                                        |          |            |
-| \`foo\`                      | Enable some kind of behavior. | Boolean             |                   | \`false\`                                |          | Yes        |
-
-<!-- end auto-generated rule options list -->"
-`;
-
 exports[`generate (rule options list) displays default column even when only falsy value, hiding deprecated/required cols with only falsy value generates the documentation 1`] = `
 "# test/no-foo
 
@@ -36,6 +12,24 @@ exports[`generate (rule options list) displays default column even when only fal
 | \`foo\` | \`false\` |
 
 <!-- end auto-generated rule options list -->"
+`;
+
+exports[`generate (rule options list) generates the documentation 1`] = `
+"# test/no-foo
+
+💼 This rule is enabled in the following configs: 🌐 \`all\`, ✅ \`recommended\`.
+
+🔧💡 This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+📝 Description of no-foo.
+
+<!-- end auto-generated rule header -->
+## Rule details
+details
+## Options
+optionToDoSomething1 - explanation
+optionToDoSomething2 - explanation
+"
 `;
 
 exports[`generate (rule options list) with no marker comments generates the documentation 1`] = `
