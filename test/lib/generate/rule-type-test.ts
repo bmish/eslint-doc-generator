@@ -3,7 +3,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
 import { COLUMN_TYPE } from '../../../lib/types.js';
 
 describe('generate (rule type)', function () {
@@ -28,7 +27,6 @@ describe('generate (rule type)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('hides the type column', async function () {
@@ -67,7 +65,6 @@ describe('generate (rule type)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('displays the type', async function () {
@@ -104,7 +101,6 @@ describe('generate (rule type)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('hides the type column and notice', async function () {

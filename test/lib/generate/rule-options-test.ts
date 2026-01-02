@@ -3,7 +3,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
 import * as sinon from 'sinon';
 import { COLUMN_TYPE, NOTICE_TYPE } from '../../../lib/types.js';
 
@@ -40,7 +39,6 @@ describe('generate (rule options)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('prints an error', async function () {
@@ -82,7 +80,6 @@ describe('generate (rule options)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('prints an error', async function () {
@@ -124,7 +121,6 @@ describe('generate (rule options)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('prints an error', async function () {
@@ -166,7 +162,6 @@ describe('generate (rule options)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('has no error', async function () {
@@ -221,7 +216,6 @@ describe('generate (rule options)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('successfully finds the options mentioned in the rule doc despite quote escaping', async function () {
@@ -278,7 +272,6 @@ describe('generate (rule options)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('prints an error', async function () {
@@ -319,7 +312,6 @@ describe('generate (rule options)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('displays the column and notice', async function () {

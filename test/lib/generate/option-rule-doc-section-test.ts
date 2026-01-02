@@ -3,7 +3,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
 import * as sinon from 'sinon';
 
 describe('generate (rule doc sections)', function () {
@@ -28,7 +27,6 @@ describe('generate (rule doc sections)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('has no issues', async function () {
@@ -62,7 +60,6 @@ describe('generate (rule doc sections)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('prints errors', async function () {

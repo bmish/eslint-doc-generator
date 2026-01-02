@@ -3,7 +3,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
 import { rm } from 'node:fs/promises';
 import { join } from 'node:path';
 
@@ -24,7 +23,6 @@ describe('generate (package.json)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error', async function () {
@@ -50,7 +48,6 @@ describe('generate (package.json)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error', async function () {
@@ -91,7 +88,6 @@ describe('generate (package.json)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('determines the correct plugin prefix', async function () {
@@ -133,7 +129,6 @@ describe('generate (package.json)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('determines the correct plugin prefix', async function () {
@@ -168,7 +163,6 @@ describe('generate (package.json)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('omits the config column', async function () {
@@ -195,7 +189,6 @@ describe('generate (package.json)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error', async function () {
@@ -232,7 +225,6 @@ describe('generate (package.json)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('finds the entry point', async function () {
@@ -269,7 +261,6 @@ describe('generate (package.json)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('finds the entry point', async function () {
@@ -318,7 +309,6 @@ describe('generate (package.json)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -347,7 +337,6 @@ describe('generate (package.json)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error', async function () {
@@ -386,7 +375,6 @@ describe('generate (package.json)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('finds the entry point', async function () {
@@ -410,7 +398,6 @@ describe('generate (package.json)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('finds the entry point', async function () {

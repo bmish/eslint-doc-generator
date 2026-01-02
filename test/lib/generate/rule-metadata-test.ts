@@ -3,8 +3,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
-
 describe('generate (rule metadata)', function () {
   describe('deprecated function-style rule', function () {
     let fixture: FixtureContext;
@@ -34,7 +32,6 @@ describe('generate (rule metadata)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -79,7 +76,6 @@ describe('generate (rule metadata)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -120,7 +116,6 @@ describe('generate (rule metadata)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {

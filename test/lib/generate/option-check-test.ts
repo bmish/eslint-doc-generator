@@ -4,7 +4,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
 import * as sinon from 'sinon';
 
 describe('generate (--check)', function () {
@@ -29,7 +28,6 @@ describe('generate (--check)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('prints the issues, exits with failure, and does not write changes', async function () {

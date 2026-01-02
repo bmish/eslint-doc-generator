@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals';
 import { generate } from '../../../lib/generator.js';
 import { type FixtureContext, setupFixture } from '../../helpers/fixture.js';
 
@@ -37,7 +36,6 @@ describe('generate (configs)', () => {
 
     afterAll(async () => {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async () => {
@@ -79,7 +77,6 @@ describe('generate (configs)', () => {
 
     afterAll(async () => {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async () => {
@@ -163,7 +160,6 @@ describe('generate (configs)', () => {
 
     afterAll(async () => {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async () => {
@@ -221,7 +217,6 @@ describe('generate (configs)', () => {
 
     afterAll(async () => {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async () => {
@@ -268,7 +263,6 @@ describe('generate (configs)', () => {
 
     afterAll(async () => {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async () => {
@@ -303,7 +297,6 @@ describe('generate (configs)', () => {
 
     afterAll(async () => {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('uses recommended config emoji since it is the only relevant config', async () => {
@@ -343,7 +336,6 @@ describe('generate (configs)', () => {
 
     afterAll(async () => {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('ignores external rules', async () => {
@@ -379,7 +371,6 @@ describe('generate (configs)', () => {
 
     afterAll(async () => {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('updates the documentation', async () => {
@@ -420,7 +411,6 @@ describe('generate (configs)', () => {
 
     afterAll(async () => {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('hides the ignored config', async () => {
@@ -477,7 +467,6 @@ describe('generate (configs)', () => {
 
     afterAll(async () => {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('updates the documentation', async () => {

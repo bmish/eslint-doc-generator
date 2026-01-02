@@ -3,8 +3,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
-
 describe('generate (--url-rule-doc)', function () {
   describe('basic', function () {
     let fixture: FixtureContext;
@@ -41,7 +39,6 @@ describe('generate (--url-rule-doc)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('uses the right URLs', async function () {
@@ -90,7 +87,6 @@ describe('generate (--url-rule-doc)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('uses the custom URL', async function () {
@@ -143,7 +139,6 @@ describe('generate (--url-rule-doc)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('should fallback to the normal URL', async function () {

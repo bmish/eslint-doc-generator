@@ -3,7 +3,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
 import * as sinon from 'sinon';
 
 describe('generate (rule options list)', function () {
@@ -90,7 +89,6 @@ describe('generate (rule options list)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -139,7 +137,6 @@ describe('generate (rule options list)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -180,7 +177,6 @@ describe('generate (rule options list)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -218,7 +214,6 @@ describe('generate (rule options list)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -259,7 +254,6 @@ describe('generate (rule options list)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {

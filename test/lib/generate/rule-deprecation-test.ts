@@ -3,8 +3,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
-
 describe('generate (deprecated rules)', function () {
   describe('several deprecated rules', function () {
     let fixture: FixtureContext;
@@ -70,7 +68,6 @@ describe('generate (deprecated rules)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('updates the documentation', async function () {
@@ -125,7 +122,6 @@ describe('generate (deprecated rules)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('has the correct links, especially replacement rule link', async function () {
@@ -181,7 +177,6 @@ describe('generate (deprecated rules)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('has the correct links, especially replacement rule link', async function () {
@@ -233,7 +228,6 @@ describe('generate (deprecated rules)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('uses correct replacement rule link', async function () {
@@ -271,7 +265,6 @@ describe('generate (deprecated rules)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('omits the rule from the README and does not try to update its non-existent rule doc', async function () {
@@ -310,7 +303,6 @@ describe('generate (deprecated rules)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('uses correct replacement rule link', async function () {
@@ -350,7 +342,6 @@ describe('generate (deprecated rules)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('uses correct replacement rule link', async function () {
@@ -390,7 +381,6 @@ describe('generate (deprecated rules)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('uses correct replacement rule link', async function () {

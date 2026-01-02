@@ -4,8 +4,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
-
 describe('generate (general)', function () {
   describe('basic', function () {
     let fixture: FixtureContext;
@@ -124,7 +122,6 @@ describe('generate (general)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('updates the documentation', async function () {
@@ -258,7 +255,6 @@ describe('generate (general)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('uses `plugin.meta.name` as source for rule prefix', async function () {

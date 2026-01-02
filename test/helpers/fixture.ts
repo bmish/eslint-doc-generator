@@ -1,6 +1,6 @@
-import { mkdtemp, rm, cp, writeFile, readFile, mkdir } from 'node:fs/promises';
+import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join, dirname } from 'node:path';
+import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -33,7 +33,7 @@ export async function setupFixture(
   const sourceDir = join(FIXTURES_DIR, fixture);
 
   // Create a unique temp directory
-  const tempDir = await mkdtemp(join(tmpdir(), `eslint-doc-gen-test-`));
+  const tempDir = await mkdtemp(join(tmpdir(), `eslint-doc-generator-test-`));
 
   // Copy the fixture to temp directory
   await cp(sourceDir, tempDir, { recursive: true });
@@ -60,4 +60,3 @@ export async function setupFixture(
     },
   };
 }
-

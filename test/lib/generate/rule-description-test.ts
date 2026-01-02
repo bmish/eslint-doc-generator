@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals';
 import { generate } from '../../../lib/generator.js';
 import { type FixtureContext, setupFixture } from '../../helpers/fixture.js';
 
@@ -24,7 +23,6 @@ describe('generate (rule descriptions)', () => {
 
     afterAll(async () => {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('adds spaces to the name column', async () => {
@@ -55,7 +53,6 @@ describe('generate (rule descriptions)', () => {
 
     afterAll(async () => {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('does not add spaces to name column', async () => {
@@ -91,7 +88,6 @@ describe('generate (rule descriptions)', () => {
 
     afterAll(async () => {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('capitalizes the first letter and removes the trailing period from the description', async () => {
@@ -124,7 +120,6 @@ describe('generate (rule descriptions)', () => {
 
     afterAll(async () => {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async () => {
@@ -163,7 +158,6 @@ describe('generate (rule descriptions)', () => {
 
     afterAll(async () => {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async () => {
@@ -198,7 +192,6 @@ describe('generate (rule descriptions)', () => {
 
     afterAll(async () => {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async () => {

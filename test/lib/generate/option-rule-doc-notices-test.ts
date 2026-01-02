@@ -3,7 +3,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
 import { NOTICE_TYPE } from '../../../lib/types.js';
 
 describe('generate (--rule-doc-notices)', function () {
@@ -37,7 +36,6 @@ describe('generate (--rule-doc-notices)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('shows description before other notices when using default notice ordering', async function () {
@@ -81,7 +79,6 @@ describe('generate (--rule-doc-notices)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error', async function () {
@@ -115,7 +112,6 @@ describe('generate (--rule-doc-notices)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error', async function () {
@@ -148,7 +144,6 @@ describe('generate (--rule-doc-notices)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('has no issues', async function () {

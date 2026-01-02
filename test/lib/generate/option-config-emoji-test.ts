@@ -3,7 +3,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
 import { EMOJI_CONFIG_ERROR } from '../../../lib/emojis.js';
 
 describe('generate (--config-emoji)', function () {
@@ -43,7 +42,6 @@ describe('generate (--config-emoji)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('shows the correct emojis', async function () {
@@ -87,7 +85,6 @@ describe('generate (--config-emoji)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('uses the default emoji when no configEmoji option is provided', async function () {
@@ -123,7 +120,6 @@ describe('generate (--config-emoji)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('uses the badge markdown as provided', async function () {
@@ -172,7 +168,6 @@ describe('generate (--config-emoji)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error for configs without emojis', async function () {
@@ -211,7 +206,6 @@ describe('generate (--config-emoji)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error', async function () {
@@ -252,7 +246,6 @@ describe('generate (--config-emoji)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error', async function () {
@@ -288,7 +281,6 @@ describe('generate (--config-emoji)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error when no emoji is provided', async function () {
@@ -324,7 +316,6 @@ describe('generate (--config-emoji)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error', async function () {
@@ -361,7 +352,6 @@ describe('generate (--config-emoji)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error', async function () {
@@ -395,7 +385,6 @@ describe('generate (--config-emoji)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error', async function () {
@@ -436,7 +425,6 @@ describe('generate (--config-emoji)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error', async function () {

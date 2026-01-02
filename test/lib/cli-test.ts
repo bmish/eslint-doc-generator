@@ -1,10 +1,7 @@
 import * as sinon from 'sinon';
 import { run } from '../../lib/cli.js';
 import { OPTION_TYPE } from '../../lib/types.js';
-import {
-  setupFixture,
-  type FixtureContext,
-} from '../helpers/fixture.js';
+import { type FixtureContext, setupFixture } from '../helpers/fixture.js';
 
 const configFileOptionsAll: { [key in OPTION_TYPE]: unknown } = {
   check: true,
@@ -107,9 +104,9 @@ const cliOptionsAll: { [key in OPTION_TYPE]: readonly string[] } = {
   ],
 };
 
-describe('cli', function () {
-  describe('no options', function () {
-    it('is called correctly', async function () {
+describe('cli', () => {
+  describe('no options', () => {
+    it('is called correctly', async () => {
       const stub = sinon.stub().resolves();
       await run(
         [
@@ -123,8 +120,8 @@ describe('cli', function () {
     });
   });
 
-  describe('all CLI options, no config file options', function () {
-    it('is called correctly', async function () {
+  describe('all CLI options, no config file options', () => {
+    it('is called correctly', async () => {
       const stub = sinon.stub().resolves();
       await run(
         [
@@ -140,11 +137,11 @@ describe('cli', function () {
     });
   });
 
-  describe('all config files options, no CLI options', function () {
+  describe('all config files options, no CLI options', () => {
     let fixture: FixtureContext;
     let originalCwd: string;
 
-    beforeAll(async function () {
+    beforeAll(async () => {
       fixture = await setupFixture({
         fixture: 'esm-base',
         overrides: {
@@ -161,12 +158,12 @@ describe('cli', function () {
       process.chdir(fixture.path);
     });
 
-    afterAll(async function () {
+    afterAll(async () => {
       process.chdir(originalCwd);
       await fixture.cleanup();
     });
 
-    it('is called correctly', async function () {
+    it('is called correctly', async () => {
       const stub = sinon.stub().resolves();
       await run(
         [
@@ -180,11 +177,11 @@ describe('cli', function () {
     });
   });
 
-  describe('all CLI options and all config files options', function () {
+  describe('all CLI options and all config files options', () => {
     let fixture: FixtureContext;
     let originalCwd: string;
 
-    beforeAll(async function () {
+    beforeAll(async () => {
       fixture = await setupFixture({
         fixture: 'esm-base',
         overrides: {
@@ -201,12 +198,12 @@ describe('cli', function () {
       process.chdir(fixture.path);
     });
 
-    afterAll(async function () {
+    afterAll(async () => {
       process.chdir(originalCwd);
       await fixture.cleanup();
     });
 
-    it('merges correctly, with CLI options taking precedence', async function () {
+    it('merges correctly, with CLI options taking precedence', async () => {
       const stub = sinon.stub().resolves();
       await run(
         [
@@ -222,11 +219,11 @@ describe('cli', function () {
     });
   });
 
-  describe('pathRuleList as array in config file and CLI', function () {
+  describe('pathRuleList as array in config file and CLI', () => {
     let fixture: FixtureContext;
     let originalCwd: string;
 
-    beforeAll(async function () {
+    beforeAll(async () => {
       fixture = await setupFixture({
         fixture: 'esm-base',
         overrides: {
@@ -245,12 +242,12 @@ describe('cli', function () {
       process.chdir(fixture.path);
     });
 
-    afterAll(async function () {
+    afterAll(async () => {
       process.chdir(originalCwd);
       await fixture.cleanup();
     });
 
-    it('merges correctly', async function () {
+    it('merges correctly', async () => {
       const stub = sinon.stub().resolves();
       await run(
         [
@@ -269,8 +266,8 @@ describe('cli', function () {
     });
   });
 
-  describe('boolean option - false (explicit)', function () {
-    it('is called correctly', async function () {
+  describe('boolean option - false (explicit)', () => {
+    it('is called correctly', async () => {
       const stub = sinon.stub().resolves();
       await run(
         [
@@ -287,8 +284,8 @@ describe('cli', function () {
     });
   });
 
-  describe('boolean option - true (explicit)', function () {
-    it('is called correctly', async function () {
+  describe('boolean option - true (explicit)', () => {
+    it('is called correctly', async () => {
       const stub = sinon.stub().resolves();
       await run(
         [
@@ -305,8 +302,8 @@ describe('cli', function () {
     });
   });
 
-  describe('boolean option - true (implicit)', function () {
-    it('is called correctly', async function () {
+  describe('boolean option - true (implicit)', () => {
+    it('is called correctly', async () => {
       const stub = sinon.stub().resolves();
       await run(
         [
@@ -326,12 +323,12 @@ describe('cli', function () {
   // getCurrentPackageVersion() reads the tool's own package.json via import.meta.url,
   // which cannot be mocked with real filesystem fixtures.;
 
-  describe('invalid config file', function () {
-    describe('unknown option', function () {
+  describe('invalid config file', () => {
+    describe('unknown option', () => {
       let fixture: FixtureContext;
       let originalCwd: string;
 
-      beforeAll(async function () {
+      beforeAll(async () => {
         fixture = await setupFixture({
           fixture: 'esm-base',
           overrides: {
@@ -351,12 +348,12 @@ describe('cli', function () {
         process.chdir(fixture.path);
       });
 
-      afterAll(async function () {
+      afterAll(async () => {
         process.chdir(originalCwd);
         await fixture.cleanup();
       });
 
-      it('throws an error', async function () {
+      it('throws an error', async () => {
         const stub = sinon.stub().resolves();
         await expect(
           run(
@@ -370,11 +367,11 @@ describe('cli', function () {
       });
     });
 
-    describe('postprocess must be a function', function () {
+    describe('postprocess must be a function', () => {
       let fixture: FixtureContext;
       let originalCwd: string;
 
-      beforeAll(async function () {
+      beforeAll(async () => {
         fixture = await setupFixture({
           fixture: 'esm-base',
           overrides: {
@@ -394,12 +391,12 @@ describe('cli', function () {
         process.chdir(fixture.path);
       });
 
-      afterAll(async function () {
+      afterAll(async () => {
         process.chdir(originalCwd);
         await fixture.cleanup();
       });
 
-      it('requires that postprocess be a function', async function () {
+      it('requires that postprocess be a function', async () => {
         const stub = sinon.stub().resolves();
         await expect(
           run(
@@ -413,11 +410,11 @@ describe('cli', function () {
       });
     });
 
-    describe('ruleListSplit is the wrong primitive type', function () {
+    describe('ruleListSplit is the wrong primitive type', () => {
       let fixture: FixtureContext;
       let originalCwd: string;
 
-      beforeAll(async function () {
+      beforeAll(async () => {
         fixture = await setupFixture({
           fixture: 'esm-base',
           overrides: {
@@ -437,12 +434,12 @@ describe('cli', function () {
         process.chdir(fixture.path);
       });
 
-      afterAll(async function () {
+      afterAll(async () => {
         process.chdir(originalCwd);
         await fixture.cleanup();
       });
 
-      it('throws an error', async function () {
+      it('throws an error', async () => {
         const stub = sinon.stub().resolves();
         await expect(
           run(
@@ -458,11 +455,11 @@ describe('cli', function () {
       });
     });
 
-    describe('ruleListSplit is the wrong array type', function () {
+    describe('ruleListSplit is the wrong array type', () => {
       let fixture: FixtureContext;
       let originalCwd: string;
 
-      beforeAll(async function () {
+      beforeAll(async () => {
         fixture = await setupFixture({
           fixture: 'esm-base',
           overrides: {
@@ -482,12 +479,12 @@ describe('cli', function () {
         process.chdir(fixture.path);
       });
 
-      afterAll(async function () {
+      afterAll(async () => {
         process.chdir(originalCwd);
         await fixture.cleanup();
       });
 
-      it('throws an error', async function () {
+      it('throws an error', async () => {
         const stub = sinon.stub().resolves();
         await expect(
           run(
@@ -503,11 +500,11 @@ describe('cli', function () {
       });
     });
 
-    describe('ruleListSplit is an empty array', function () {
+    describe('ruleListSplit is an empty array', () => {
       let fixture: FixtureContext;
       let originalCwd: string;
 
-      beforeAll(async function () {
+      beforeAll(async () => {
         fixture = await setupFixture({
           fixture: 'esm-base',
           overrides: {
@@ -527,12 +524,12 @@ describe('cli', function () {
         process.chdir(fixture.path);
       });
 
-      afterAll(async function () {
+      afterAll(async () => {
         process.chdir(originalCwd);
         await fixture.cleanup();
       });
 
-      it('throws an error', async function () {
+      it('throws an error', async () => {
         const stub = sinon.stub().resolves();
         await expect(
           run(

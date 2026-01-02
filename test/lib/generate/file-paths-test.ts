@@ -4,8 +4,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
-
 describe('generate (file paths)', function () {
   describe('missing rule doc', function () {
     let fixture: FixtureContext;
@@ -35,7 +33,6 @@ describe('generate (file paths)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     describe('when initRuleDocs is false', () => {
@@ -80,7 +77,6 @@ describe('generate (file paths)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     describe('when initRuleDocs is true', () => {
@@ -120,7 +116,6 @@ describe('generate (file paths)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('creates the rule doc including the mandatory section', async function () {
@@ -158,7 +153,6 @@ describe('generate (file paths)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error', async function () {
@@ -193,7 +187,6 @@ describe('generate (file paths)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error', async function () {
@@ -233,7 +226,6 @@ describe('generate (file paths)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -266,7 +258,6 @@ describe('generate (file paths)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -301,7 +292,6 @@ describe('generate (file paths)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation using a function for pathRuleDoc', async function () {
@@ -339,7 +329,6 @@ describe('generate (file paths)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -380,7 +369,6 @@ describe('generate (file paths)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error', async function () {
@@ -430,7 +418,6 @@ describe('generate (file paths)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('falls back to default rules list', async function () {

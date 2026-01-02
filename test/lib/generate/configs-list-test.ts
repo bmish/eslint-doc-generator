@@ -3,8 +3,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
-
 describe('generate (configs list)', function () {
   describe('basic', function () {
     let fixture: FixtureContext;
@@ -36,7 +34,6 @@ describe('generate (configs list)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -76,7 +73,6 @@ describe('generate (configs list)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -115,7 +111,6 @@ describe('generate (configs list)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -155,7 +150,6 @@ describe('generate (configs list)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -196,7 +190,6 @@ describe('generate (configs list)', function () {
 
       afterAll(async function () {
         await fixture.cleanup();
-        jest.resetModules();
       });
 
       it('generates the documentation', async function () {
@@ -236,7 +229,6 @@ describe('generate (configs list)', function () {
 
       afterAll(async function () {
         await fixture.cleanup();
-        jest.resetModules();
       });
 
       it('generates the documentation', async function () {
@@ -276,7 +268,6 @@ describe('generate (configs list)', function () {
 
       afterAll(async function () {
         await fixture.cleanup();
-        jest.resetModules();
       });
 
       it('generates the documentation', async function () {
@@ -316,7 +307,6 @@ describe('generate (configs list)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -352,7 +342,6 @@ describe('generate (configs list)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -391,7 +380,6 @@ describe('generate (configs list)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {

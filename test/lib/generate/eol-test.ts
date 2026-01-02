@@ -1,5 +1,4 @@
 import { generate } from '../../../lib/generator.js';
-import { jest } from '@jest/globals';
 import { getEndOfLine } from '../../../lib/eol.js';
 import { EOL } from 'node:os';
 import {
@@ -20,7 +19,6 @@ describe('getEndOfLine', function () {
       afterEach(async function () {
         process.chdir(originalCwd);
         await fixture.cleanup();
-        jest.resetModules();
       });
 
       it('returns lf end of line when ".editorconfig" is configured with lf', async function () {
@@ -80,7 +78,6 @@ describe('getEndOfLine', function () {
 
       afterEach(async function () {
         await fixture.cleanup();
-        jest.resetModules();
       });
 
       it('generates using lf end of line from ".editorconfig"', async function () {
@@ -225,7 +222,6 @@ describe('getEndOfLine', function () {
     afterEach(async function () {
       process.chdir(originalCwd);
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('returns lf end of line when ".prettierrc.json" is configured with lf', async function () {
@@ -287,7 +283,6 @@ describe('getEndOfLine', function () {
     afterEach(async function () {
       process.chdir(originalCwd);
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('handles fallback to to `EOL` from `node:os` when config files do not exist', async function () {

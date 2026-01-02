@@ -3,7 +3,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
 import { outdent } from 'outdent';
 
 describe('generate (comment markers)', function () {
@@ -46,7 +45,6 @@ describe('generate (comment markers)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -92,7 +90,6 @@ describe('generate (comment markers)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -134,7 +131,6 @@ describe('generate (comment markers)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -178,7 +174,6 @@ describe('generate (comment markers)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -214,7 +209,6 @@ describe('generate (comment markers)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('generates the documentation', async function () {
@@ -259,7 +253,6 @@ describe('generate (comment markers)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('updates the documentation', async function () {
@@ -306,7 +299,6 @@ describe('generate (comment markers)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('adds rule list markers to rule section', async function () {
@@ -339,7 +331,6 @@ describe('generate (comment markers)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error', async function () {
@@ -373,7 +364,6 @@ describe('generate (comment markers)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('updates the documentation', async function () {
@@ -417,7 +407,6 @@ describe('generate (comment markers)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('updates the documentation', async function () {
@@ -456,7 +445,6 @@ describe('generate (comment markers)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('updates the documentation', async function () {

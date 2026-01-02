@@ -4,8 +4,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
-
 describe('generate (postprocess option)', function () {
   describe('basic', function () {
     let fixture: FixtureContext;
@@ -31,7 +29,6 @@ describe('generate (postprocess option)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('calls the postprocessor', async function () {

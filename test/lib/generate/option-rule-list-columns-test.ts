@@ -3,7 +3,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
 import { COLUMN_TYPE } from '../../../lib/types.js';
 
 describe('generate (--rule-list-columns)', function () {
@@ -36,7 +35,6 @@ describe('generate (--rule-list-columns)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('shows the right columns and legend', async function () {
@@ -95,7 +93,6 @@ describe('generate (--rule-list-columns)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('shows the right columns and legend', async function () {
@@ -130,7 +127,6 @@ describe('generate (--rule-list-columns)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error', async function () {
@@ -162,7 +158,6 @@ describe('generate (--rule-list-columns)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('throws an error', async function () {
@@ -211,7 +206,6 @@ describe('generate (--rule-list-columns)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('updates the documentation', async function () {

@@ -3,8 +3,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
-
 describe('generate (--rule-doc-title-format)', function () {
   describe('desc-parens-prefix-name', function () {
     let fixture: FixtureContext;
@@ -29,7 +27,6 @@ describe('generate (--rule-doc-title-format)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('uses the right rule doc title format, with fallback when missing description', async function () {
@@ -64,7 +61,6 @@ describe('generate (--rule-doc-title-format)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('uses the right rule doc title format', async function () {
@@ -99,7 +95,6 @@ describe('generate (--rule-doc-title-format)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('uses the right rule doc title format', async function () {
@@ -132,7 +127,6 @@ describe('generate (--rule-doc-title-format)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('uses the right rule doc title format', async function () {
@@ -164,7 +158,6 @@ describe('generate (--rule-doc-title-format)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('uses the right rule doc title format', async function () {

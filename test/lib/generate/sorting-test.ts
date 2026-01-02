@@ -3,8 +3,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
-
 describe('generate (sorting)', function () {
   describe('sorting rules and configs case-insensitive', function () {
     let fixture: FixtureContext;
@@ -36,7 +34,6 @@ describe('generate (sorting)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('sorts correctly', async function () {

@@ -3,8 +3,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
-
 describe('generate (--config-format)', function () {
   describe('name', function () {
     let fixture: FixtureContext;
@@ -34,7 +32,6 @@ describe('generate (--config-format)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('uses the right format', async function () {
@@ -74,7 +71,6 @@ describe('generate (--config-format)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('uses the right format', async function () {
@@ -114,7 +110,6 @@ describe('generate (--config-format)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('uses the right format', async function () {

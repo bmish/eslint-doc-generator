@@ -3,8 +3,6 @@ import {
   setupFixture,
   type FixtureContext,
 } from '../../helpers/fixture.js';
-import { jest } from '@jest/globals';
-
 describe('generate (--url-configs)', function () {
   describe('basic', function () {
     let fixture: FixtureContext;
@@ -41,7 +39,6 @@ describe('generate (--url-configs)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('includes the config link', async function () {
@@ -86,7 +83,6 @@ describe('generate (--url-configs)', function () {
 
     afterAll(async function () {
       await fixture.cleanup();
-      jest.resetModules();
     });
 
     it('includes the config link', async function () {
