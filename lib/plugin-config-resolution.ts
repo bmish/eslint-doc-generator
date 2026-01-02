@@ -1,8 +1,8 @@
 import { TSESLint } from '@typescript-eslint/utils';
-import {
+import type {
   ClassicConfig,
   FlatConfig,
-} from '@typescript-eslint/utils/dist/ts-eslint'; // eslint-disable-line import/extensions -- false positive
+} from '@typescript-eslint/utils/ts-eslint';
 import { existsSync } from 'node:fs';
 import { importAbs } from './import.js';
 import type { Config, ConfigsToRules, Plugin, Rules } from './types.js';

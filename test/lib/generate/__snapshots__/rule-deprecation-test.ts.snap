@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`generate (deprecated rules) replaced by ESLint core rule uses correct replacement rule link 1`] = `
+exports[`generate (deprecated rules) > replaced by ESLint core rule > uses correct replacement rule link 1`] = `
 "<!-- begin auto-generated rules list -->
 
 ❌ Deprecated.
@@ -12,7 +12,7 @@ exports[`generate (deprecated rules) replaced by ESLint core rule uses correct r
 <!-- end auto-generated rules list -->"
 `;
 
-exports[`generate (deprecated rules) replaced by ESLint core rule uses correct replacement rule link 2`] = `
+exports[`generate (deprecated rules) > replaced by ESLint core rule > uses correct replacement rule link 2`] = `
 "# test/no-foo
 
 📝 Description.
@@ -23,7 +23,7 @@ exports[`generate (deprecated rules) replaced by ESLint core rule uses correct r
 "
 `;
 
-exports[`generate (deprecated rules) replaced by third-party plugin rule uses correct replacement rule link 1`] = `
+exports[`generate (deprecated rules) > replaced by third-party plugin rule > uses correct replacement rule link 1`] = `
 "<!-- begin auto-generated rules list -->
 
 ❌ Deprecated.
@@ -35,7 +35,7 @@ exports[`generate (deprecated rules) replaced by third-party plugin rule uses co
 <!-- end auto-generated rules list -->"
 `;
 
-exports[`generate (deprecated rules) replaced by third-party plugin rule uses correct replacement rule link 2`] = `
+exports[`generate (deprecated rules) > replaced by third-party plugin rule > uses correct replacement rule link 2`] = `
 "# test/no-foo
 
 📝 Description.
@@ -46,7 +46,7 @@ exports[`generate (deprecated rules) replaced by third-party plugin rule uses co
 "
 `;
 
-exports[`generate (deprecated rules) replaced by third-party plugin rule with same rule name as one of our rules uses correct replacement rule link 1`] = `
+exports[`generate (deprecated rules) > replaced by third-party plugin rule with same rule name as one of our rules > uses correct replacement rule link 1`] = `
 "<!-- begin auto-generated rules list -->
 
 ❌ Deprecated.
@@ -58,7 +58,7 @@ exports[`generate (deprecated rules) replaced by third-party plugin rule with sa
 <!-- end auto-generated rules list -->"
 `;
 
-exports[`generate (deprecated rules) replaced by third-party plugin rule with same rule name as one of our rules uses correct replacement rule link 2`] = `
+exports[`generate (deprecated rules) > replaced by third-party plugin rule with same rule name as one of our rules > uses correct replacement rule link 2`] = `
 "# test/no-foo
 
 📝 Description.
@@ -69,7 +69,7 @@ exports[`generate (deprecated rules) replaced by third-party plugin rule with sa
 "
 `;
 
-exports[`generate (deprecated rules) several deprecated rules updates the documentation 1`] = `
+exports[`generate (deprecated rules) > several deprecated rules > updates the documentation 1`] = `
 "<!-- begin auto-generated rules list -->
 
 ❌ Deprecated.
@@ -85,7 +85,7 @@ exports[`generate (deprecated rules) several deprecated rules updates the docume
 <!-- end auto-generated rules list -->"
 `;
 
-exports[`generate (deprecated rules) several deprecated rules updates the documentation 2`] = `
+exports[`generate (deprecated rules) > several deprecated rules > updates the documentation 2`] = `
 "# test/no-foo
 
 📝 Description.
@@ -96,7 +96,7 @@ exports[`generate (deprecated rules) several deprecated rules updates the docume
 "
 `;
 
-exports[`generate (deprecated rules) several deprecated rules updates the documentation 3`] = `
+exports[`generate (deprecated rules) > several deprecated rules > updates the documentation 3`] = `
 "# test/no-bar
 
 📝 Description.
@@ -107,7 +107,7 @@ exports[`generate (deprecated rules) several deprecated rules updates the docume
 "
 `;
 
-exports[`generate (deprecated rules) several deprecated rules updates the documentation 4`] = `
+exports[`generate (deprecated rules) > several deprecated rules > updates the documentation 4`] = `
 "# test/no-baz
 
 📝 Description.
@@ -118,7 +118,7 @@ exports[`generate (deprecated rules) several deprecated rules updates the docume
 "
 `;
 
-exports[`generate (deprecated rules) several deprecated rules updates the documentation 5`] = `
+exports[`generate (deprecated rules) > several deprecated rules > updates the documentation 5`] = `
 "# test/no-biz
 
 📝 Description.
@@ -127,7 +127,7 @@ exports[`generate (deprecated rules) several deprecated rules updates the docume
 "
 `;
 
-exports[`generate (deprecated rules) several deprecated rules updates the documentation 6`] = `
+exports[`generate (deprecated rules) > several deprecated rules > updates the documentation 6`] = `
 "# test/no-boz
 
 📝 Description.
@@ -138,7 +138,7 @@ exports[`generate (deprecated rules) several deprecated rules updates the docume
 "
 `;
 
-exports[`generate (deprecated rules) using prefix ahead of replacement rule name uses correct replacement rule link 1`] = `
+exports[`generate (deprecated rules) > using prefix ahead of replacement rule name > uses correct replacement rule link 1`] = `
 "<!-- begin auto-generated rules list -->
 
 ❌ Deprecated.
@@ -151,7 +151,7 @@ exports[`generate (deprecated rules) using prefix ahead of replacement rule name
 <!-- end auto-generated rules list -->"
 `;
 
-exports[`generate (deprecated rules) using prefix ahead of replacement rule name uses correct replacement rule link 2`] = `
+exports[`generate (deprecated rules) > using prefix ahead of replacement rule name > uses correct replacement rule link 2`] = `
 "# test/no-foo
 
 📝 Description.
@@ -162,7 +162,7 @@ exports[`generate (deprecated rules) using prefix ahead of replacement rule name
 "
 `;
 
-exports[`generate (deprecated rules) using prefix ahead of replacement rule name uses correct replacement rule link 3`] = `
+exports[`generate (deprecated rules) > using prefix ahead of replacement rule name > uses correct replacement rule link 3`] = `
 "# test/no-bar
 
 📝 Description.
@@ -171,7 +171,7 @@ exports[`generate (deprecated rules) using prefix ahead of replacement rule name
 "
 `;
 
-exports[`generate (deprecated rules) with --path-rule-doc has the correct links, especially replacement rule link 1`] = `
+exports[`generate (deprecated rules) > with --path-rule-doc > has the correct links, especially replacement rule link 1`] = `
 "<!-- begin auto-generated rules list -->
 
 ❌ Deprecated.
@@ -184,7 +184,7 @@ exports[`generate (deprecated rules) with --path-rule-doc has the correct links,
 <!-- end auto-generated rules list -->"
 `;
 
-exports[`generate (deprecated rules) with --path-rule-doc has the correct links, especially replacement rule link 2`] = `
+exports[`generate (deprecated rules) > with --path-rule-doc > has the correct links, especially replacement rule link 2`] = `
 "# test/category/no-foo
 
 📝 Description.
@@ -195,7 +195,7 @@ exports[`generate (deprecated rules) with --path-rule-doc has the correct links,
 "
 `;
 
-exports[`generate (deprecated rules) with --path-rule-doc has the correct links, especially replacement rule link 3`] = `
+exports[`generate (deprecated rules) > with --path-rule-doc > has the correct links, especially replacement rule link 3`] = `
 "# test/category/no-bar
 
 📝 Description.
@@ -206,7 +206,7 @@ exports[`generate (deprecated rules) with --path-rule-doc has the correct links,
 "
 `;
 
-exports[`generate (deprecated rules) with nested rule names has the correct links, especially replacement rule link 1`] = `
+exports[`generate (deprecated rules) > with nested rule names > has the correct links, especially replacement rule link 1`] = `
 "<!-- begin auto-generated rules list -->
 
 ❌ Deprecated.
@@ -219,7 +219,7 @@ exports[`generate (deprecated rules) with nested rule names has the correct link
 <!-- end auto-generated rules list -->"
 `;
 
-exports[`generate (deprecated rules) with nested rule names has the correct links, especially replacement rule link 2`] = `
+exports[`generate (deprecated rules) > with nested rule names > has the correct links, especially replacement rule link 2`] = `
 "# test/category/no-foo
 
 📝 Description.
@@ -230,7 +230,7 @@ exports[`generate (deprecated rules) with nested rule names has the correct link
 "
 `;
 
-exports[`generate (deprecated rules) with nested rule names has the correct links, especially replacement rule link 3`] = `
+exports[`generate (deprecated rules) > with nested rule names > has the correct links, especially replacement rule link 3`] = `
 "# test/category/no-bar
 
 📝 Description.
@@ -241,7 +241,7 @@ exports[`generate (deprecated rules) with nested rule names has the correct link
 "
 `;
 
-exports[`generate (deprecated rules) with no rule doc but --ignore-deprecated-rules omits the rule from the README and does not try to update its non-existent rule doc 1`] = `
+exports[`generate (deprecated rules) > with no rule doc but --ignore-deprecated-rules > omits the rule from the README and does not try to update its non-existent rule doc 1`] = `
 "<!-- begin auto-generated rules list -->
 
 | Name |
