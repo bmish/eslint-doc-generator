@@ -2,7 +2,9 @@
 
 exports[`generate (rule type) displays the type when type column is enabled 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -21,7 +23,6 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
@@ -34,8 +35,11 @@ exports[`generate (rule type) displays the type when type column is enabled 2`] 
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
+
 ## Options
+
 optionToDoSomething1 - explanation
 optionToDoSomething2 - explanation
 "
@@ -81,7 +85,9 @@ exports[`generate (rule type) displays the type when type column is enabled 6`] 
 
 exports[`generate (rule type) hides the type column when not enabled 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -98,7 +104,6 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
@@ -111,8 +116,11 @@ exports[`generate (rule type) hides the type column when not enabled 2`] = `
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
+
 ## Options
+
 optionToDoSomething1 - explanation
 optionToDoSomething2 - explanation
 "
@@ -120,7 +128,9 @@ optionToDoSomething2 - explanation
 
 exports[`generate (rule type) hides the type column when only unknown types exist 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -130,7 +140,6 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
@@ -141,8 +150,11 @@ exports[`generate (rule type) hides the type column when only unknown types exis
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
+
 ## Options
+
 optionToDoSomething1 - explanation
 optionToDoSomething2 - explanation
 "

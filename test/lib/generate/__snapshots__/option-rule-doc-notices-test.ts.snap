@@ -2,7 +2,9 @@
 
 exports[`generate (--rule-doc-notices) shows the right rule doc notices 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -22,7 +24,6 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
@@ -37,8 +38,11 @@ exports[`generate (--rule-doc-notices) shows the right rule doc notices 2`] = `
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
+
 ## Options
+
 optionToDoSomething1 - explanation
 optionToDoSomething2 - explanation
 "

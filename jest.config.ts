@@ -1,5 +1,4 @@
 import type { Config } from 'jest';
-// https://kulshekhar.github.io/ts-jest/docs/guides/esm-support/
 import { createDefaultEsmPreset } from 'ts-jest';
 
 const defaultEsmPreset = createDefaultEsmPreset();
@@ -9,10 +8,21 @@ const config: Config = {
   testEnvironment: 'node',
   testMatch: ['<rootDir>/test/**/*-test.ts'],
   setupFiles: ['<rootDir>/test/jest.setup.cjs'],
+  transformIgnorePatterns: [],
   ...defaultEsmPreset,
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
     '#(.*)': '<rootDir>/node_modules/$1',
+  },
+  transform: {
+    '^.+\\.m?tsx?$': [
+      'ts-jest',
+      {
+        useESM: true,
+        isolatedModules: true,
+        tsconfig: 'tsconfig.test.json',
+      },
+    ],
   },
   testEnvironmentOptions: {
     globalsCleanup: 'off',

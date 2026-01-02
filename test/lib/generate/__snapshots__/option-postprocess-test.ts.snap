@@ -2,7 +2,9 @@
 
 exports[`generate (postprocess option) calls the postprocessor 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -24,7 +26,6 @@ Description.
 more content.
 
 
-
 Located at README.md"
 `;
 
@@ -39,8 +40,11 @@ exports[`generate (postprocess option) calls the postprocessor 2`] = `
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
+
 ## Options
+
 optionToDoSomething1 - explanation
 optionToDoSomething2 - explanation
 

@@ -2,7 +2,9 @@
 
 exports[`generate (--url-configs) includes the config link 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -22,7 +24,6 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
@@ -37,8 +38,11 @@ exports[`generate (--url-configs) includes the config link 2`] = `
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
+
 ## Options
+
 optionToDoSomething1 - explanation
 optionToDoSomething2 - explanation
 "
@@ -57,13 +61,16 @@ exports[`generate (--url-configs) includes the config link 3`] = `
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
 "
 `;
 
 exports[`generate (--url-configs) includes the config link with only recommended config 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -83,7 +90,6 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
@@ -98,8 +104,11 @@ exports[`generate (--url-configs) includes the config link with only recommended
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
+
 ## Options
+
 optionToDoSomething1 - explanation
 optionToDoSomething2 - explanation
 "

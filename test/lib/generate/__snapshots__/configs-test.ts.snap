@@ -112,7 +112,9 @@ exports[`generate (configs) rule config with options generates the documentation
 
 exports[`generate (configs) rules that are disabled or set to warn generates the documentation 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -134,7 +136,6 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
@@ -229,7 +230,6 @@ exports[`generate (configs) rules that are disabled or set to warn, only one con
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |    |
 
 <!-- end auto-generated rules list -->
-
 "
 `;
 

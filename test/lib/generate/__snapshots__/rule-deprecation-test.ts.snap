@@ -71,7 +71,9 @@ exports[`generate (deprecated rules) replaced by third-party plugin rule with sa
 
 exports[`generate (deprecated rules) updates the documentation 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -88,7 +90,6 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
@@ -103,8 +104,11 @@ exports[`generate (deprecated rules) updates the documentation 2`] = `
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
+
 ## Options
+
 optionToDoSomething1 - explanation
 optionToDoSomething2 - explanation
 "
@@ -130,6 +134,7 @@ exports[`generate (deprecated rules) updates the documentation 4`] = `
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
 "
 `;

@@ -2,7 +2,9 @@
 
 exports[`generate (general) plugin prefix uses \`plugin.meta.name\` as source for rule prefix 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -21,7 +23,6 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
@@ -36,8 +37,11 @@ exports[`generate (general) plugin prefix uses \`plugin.meta.name\` as source fo
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
+
 ## Options
+
 optionToDoSomething1 - explanation
 optionToDoSomething2 - explanation
 "
@@ -54,6 +58,7 @@ exports[`generate (general) plugin prefix uses \`plugin.meta.name\` as source fo
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
 "
 `;
@@ -65,13 +70,16 @@ exports[`generate (general) plugin prefix uses \`plugin.meta.name\` as source fo
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
 "
 `;
 
 exports[`generate (general) updates the documentation 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -91,7 +99,6 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
@@ -106,8 +113,11 @@ exports[`generate (general) updates the documentation 2`] = `
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
+
 ## Options
+
 optionToDoSomething1 - explanation
 optionToDoSomething2 - explanation
 "
@@ -126,6 +136,7 @@ exports[`generate (general) updates the documentation 3`] = `
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
 "
 `;
@@ -137,6 +148,7 @@ exports[`generate (general) updates the documentation 4`] = `
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
 "
 `;

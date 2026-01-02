@@ -2,7 +2,9 @@
 
 exports[`generate (configs list) generates the documentation 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -22,13 +24,14 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
 exports[`generate (configs list) generates the documentation with --config-format 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -48,13 +51,14 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
 exports[`generate (configs list) generates the documentation with --ignore-config 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -73,7 +77,6 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
@@ -105,7 +108,7 @@ exports[`generate (configs list) when a config exports a description property=de
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. |
 
 <!-- end auto-generated rules list -->
-  ## Configs
+## Configs
   <!-- begin auto-generated configs list -->
 
 |    | Name          | Description                              |
@@ -125,7 +128,7 @@ exports[`generate (configs list) when a config exports a description property=me
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. |
 
 <!-- end auto-generated rules list -->
-  ## Configs
+## Configs
   <!-- begin auto-generated configs list -->
 
 |    | Name          | Description                              |
@@ -145,7 +148,7 @@ exports[`generate (configs list) when a config exports a description property=me
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. |
 
 <!-- end auto-generated rules list -->
-  ## Configs
+## Configs
   <!-- begin auto-generated configs list -->
 
 |    | Name          | Description                              |

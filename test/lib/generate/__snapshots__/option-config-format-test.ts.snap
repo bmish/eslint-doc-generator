@@ -2,7 +2,9 @@
 
 exports[`generate (--config-format) uses the name format 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -22,7 +24,6 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
@@ -37,8 +38,11 @@ exports[`generate (--config-format) uses the name format 2`] = `
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
+
 ## Options
+
 optionToDoSomething1 - explanation
 optionToDoSomething2 - explanation
 "
@@ -46,7 +50,9 @@ optionToDoSomething2 - explanation
 
 exports[`generate (--config-format) uses the plugin-colon-prefix-name format 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -66,7 +72,6 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
@@ -81,8 +86,11 @@ exports[`generate (--config-format) uses the plugin-colon-prefix-name format 2`]
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
+
 ## Options
+
 optionToDoSomething1 - explanation
 optionToDoSomething2 - explanation
 "
@@ -90,7 +98,9 @@ optionToDoSomething2 - explanation
 
 exports[`generate (--config-format) uses the prefix-name format 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -110,7 +120,6 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
@@ -125,8 +134,11 @@ exports[`generate (--config-format) uses the prefix-name format 2`] = `
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
+
 ## Options
+
 optionToDoSomething1 - explanation
 optionToDoSomething2 - explanation
 "

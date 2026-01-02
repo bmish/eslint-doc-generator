@@ -25,8 +25,11 @@ exports[`generate (rule options list) generates the documentation 1`] = `
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
+
 ## Options
+
 optionToDoSomething1 - explanation
 optionToDoSomething2 - explanation
 "
@@ -37,7 +40,9 @@ exports[`generate (rule options list) with no marker comments generates the docu
 
 <!-- end auto-generated rule header -->
 ## Options
-foo"
+
+foo
+"
 `;
 
 exports[`generate (rule options list) with no options generates the documentation 1`] = `

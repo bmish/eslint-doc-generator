@@ -58,7 +58,9 @@ exports[`generate (--rule-list-split) by nested property meta.docs.category spli
 
 exports[`generate (--rule-list-split) by type splits the list 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -95,7 +97,6 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 

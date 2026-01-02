@@ -12,7 +12,6 @@ exports[`generate (rule metadata) deprecated function-style rule generates the d
 | [no-foo](docs/rules/no-foo.md) | ✅  |
 
 <!-- end auto-generated rules list -->
-
 "
 `;
 
@@ -35,7 +34,6 @@ exports[`generate (rule metadata) deprecated function-style rule with deprecated
 | [no-foo](docs/rules/no-foo.md) | ❌  | ⚙️ |
 
 <!-- end auto-generated rules list -->
-
 "
 `;
 
@@ -44,14 +42,16 @@ exports[`generate (rule metadata) deprecated function-style rule with deprecated
 
 <!-- end auto-generated rule header -->
 ## Options
-optionToDoSomething
 
+optionToDoSomething
 "
 `;
 
 exports[`generate (rule metadata) rule with no meta object generates the documentation 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -64,7 +64,6 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 

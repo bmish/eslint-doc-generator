@@ -2,7 +2,9 @@
 
 exports[`generate (--config-emoji) shows the correct emojis 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -22,7 +24,6 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
@@ -37,8 +38,11 @@ exports[`generate (--config-emoji) shows the correct emojis 2`] = `
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
+
 ## Options
+
 optionToDoSomething1 - explanation
 optionToDoSomething2 - explanation
 "
@@ -57,6 +61,7 @@ exports[`generate (--config-emoji) shows the correct emojis 3`] = `
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
 "
 `;
@@ -68,13 +73,16 @@ exports[`generate (--config-emoji) shows the correct emojis 4`] = `
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
 "
 `;
 
 exports[`generate (--config-emoji) uses the badge markdown as provided 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -94,7 +102,6 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
@@ -109,8 +116,11 @@ exports[`generate (--config-emoji) uses the badge markdown as provided 2`] = `
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
+
 ## Options
+
 optionToDoSomething1 - explanation
 optionToDoSomething2 - explanation
 "
@@ -118,7 +128,9 @@ optionToDoSomething2 - explanation
 
 exports[`generate (--config-emoji) uses the default emoji when no configEmoji option is provided 1`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 
@@ -138,7 +150,6 @@ Description.
 
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
@@ -153,8 +164,11 @@ exports[`generate (--config-emoji) uses the default emoji when no configEmoji op
 
 <!-- end auto-generated rule header -->
 ## Rule details
+
 details
+
 ## Options
+
 optionToDoSomething1 - explanation
 optionToDoSomething2 - explanation
 "

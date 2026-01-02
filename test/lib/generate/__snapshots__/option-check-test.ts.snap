@@ -19,8 +19,10 @@ exports[`generate (--check) prints the issues, exits with failure, and does not 
   "- Expected
 + Received
 
-  # eslint-plugin-test
+@@ -2,13 +2,9 @@
+
   Description.
+
   ## Rules
   <!-- begin auto-generated rules list -->
 -
@@ -31,20 +33,20 @@ exports[`generate (--check) prints the issues, exits with failure, and does not 
 + ...
   <!-- end auto-generated rules list -->
   more content.
-
 ",
 ]
 `;
 
 exports[`generate (--check) prints the issues, exits with failure, and does not write changes 3`] = `
 "# eslint-plugin-test
+
 Description.
+
 ## Rules
 <!-- begin auto-generated rules list -->
 ...
 <!-- end auto-generated rules list -->
 more content.
-
 "
 `;
 
