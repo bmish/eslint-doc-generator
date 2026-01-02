@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`generate (package.json) Missing plugin package.json \`name\` field throws an error 1`] = `"Could not find \`name\` field in ESLint plugin's package.json."`;
 

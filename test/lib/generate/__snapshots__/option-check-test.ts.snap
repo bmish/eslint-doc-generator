@@ -1,32 +1,32 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`generate (--check) basic prints the issues, exits with failure, and does not write changes 1`] = `
 [
-  "[32m- Expected[39m
-[31m+ Received[39m
+  "- Expected
++ Received
 
-[2m  # test/no-foo[22m
-[32m-[39m
-[32m- 📝 Description for no-foo.[39m
-[32m-[39m
-[32m- <!-- end auto-generated rule header -->[39m
-[32m-[39m",
+  # test/no-foo
+-
+- 📝 Description for no-foo.
+-
+- <!-- end auto-generated rule header -->
+-",
 ]
 `;
 
 exports[`generate (--check) basic prints the issues, exits with failure, and does not write changes 2`] = `
 [
-  "[32m- Expected[39m
-[31m+ Received[39m
+  "- Expected
++ Received
 
-[2m  ## Rules[22m
-[32m- <!-- begin auto-generated rules list -->[39m
-[32m-[39m
-[32m- | Name                           | Description             |[39m
-[32m- | :----------------------------- | :---------------------- |[39m
-[32m- | [no-foo](docs/rules/no-foo.md) | Description for no-foo. |[39m
-[32m-[39m
-[32m- <!-- end auto-generated rules list -->[39m
+  ## Rules
+- <!-- begin auto-generated rules list -->
+-
+- | Name                           | Description             |
+- | :----------------------------- | :---------------------- |
+- | [no-foo](docs/rules/no-foo.md) | Description for no-foo. |
+-
+- <!-- end auto-generated rules list -->
 ",
 ]
 `;

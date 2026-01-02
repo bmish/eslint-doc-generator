@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`generate (rule options) rule with options, options column/notice enabled displays the column and notice 1`] = `
 "## Rules
