@@ -32,4 +32,3 @@ export function setupFixture(fixturePath: string): string {
 export function cleanupFixture(tempDir: string): void {
   rmSync(tempDir, { recursive: true, force: true });
 }
-

@@ -38,7 +38,10 @@ describe('generate (configs list)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'configs-not-defined-in-alphabetical-order'),
+        getFixturePath(
+          'edge-cases',
+          'configs-not-defined-in-alphabetical-order',
+        ),
       );
     });
 
@@ -48,7 +51,9 @@ describe('generate (configs list)', function () {
 
     it('generates the documentation', async function () {
       await generate(tempDir);
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -58,7 +63,10 @@ describe('generate (configs list)', function () {
 
       beforeEach(function () {
         tempDir = setupFixture(
-          getFixturePath('edge-cases', 'when-config-exports-description-property-description'),
+          getFixturePath(
+            'edge-cases',
+            'when-config-exports-description-property-description',
+          ),
         );
       });
 
@@ -68,7 +76,9 @@ describe('generate (configs list)', function () {
 
       it('generates the documentation', async function () {
         await generate(tempDir);
-        expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+        expect(
+          readFileSync(join(tempDir, 'README.md'), 'utf8'),
+        ).toMatchSnapshot();
       });
     });
 
@@ -77,7 +87,10 @@ describe('generate (configs list)', function () {
 
       beforeEach(function () {
         tempDir = setupFixture(
-          getFixturePath('edge-cases', 'when-config-exports-description-property-meta-description'),
+          getFixturePath(
+            'edge-cases',
+            'when-config-exports-description-property-meta-description',
+          ),
         );
       });
 
@@ -87,7 +100,9 @@ describe('generate (configs list)', function () {
 
       it('generates the documentation', async function () {
         await generate(tempDir);
-        expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+        expect(
+          readFileSync(join(tempDir, 'README.md'), 'utf8'),
+        ).toMatchSnapshot();
       });
     });
 
@@ -96,7 +111,10 @@ describe('generate (configs list)', function () {
 
       beforeEach(function () {
         tempDir = setupFixture(
-          getFixturePath('edge-cases', 'when-config-exports-description-property-meta-docs-description'),
+          getFixturePath(
+            'edge-cases',
+            'when-config-exports-description-property-meta-docs-description',
+          ),
         );
       });
 
@@ -106,7 +124,9 @@ describe('generate (configs list)', function () {
 
       it('generates the documentation', async function () {
         await generate(tempDir);
-        expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+        expect(
+          readFileSync(join(tempDir, 'README.md'), 'utf8'),
+        ).toMatchSnapshot();
       });
     });
   });
@@ -116,7 +136,10 @@ describe('generate (configs list)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'when-config-description-needs-to-be-escaped-in-table'),
+        getFixturePath(
+          'edge-cases',
+          'when-config-description-needs-to-be-escaped-in-table',
+        ),
       );
     });
 
@@ -126,7 +149,9 @@ describe('generate (configs list)', function () {
 
     it('generates the documentation', async function () {
       await generate(tempDir);
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -145,7 +170,9 @@ describe('generate (configs list)', function () {
 
     it('generates the documentation', async function () {
       await generate(tempDir);
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -164,7 +191,9 @@ describe('generate (configs list)', function () {
 
     it('generates the documentation', async function () {
       await generate(tempDir, { ignoreConfig: ['recommended'] });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 });

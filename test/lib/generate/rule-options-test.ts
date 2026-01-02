@@ -15,7 +15,10 @@ describe('generate (rule options)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'rule-doc-has-options-section-but-rule-has-no-options'),
+        getFixturePath(
+          'edge-cases',
+          'rule-doc-has-options-section-but-rule-has-no-options',
+        ),
       );
     });
 
@@ -63,7 +66,10 @@ describe('generate (rule options)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'rule-doc-missing-options-section-with-rule-doc-section-options-true'),
+        getFixturePath(
+          'edge-cases',
+          'rule-doc-missing-options-section-with-rule-doc-section-options-true',
+        ),
       );
     });
 
@@ -87,7 +93,10 @@ describe('generate (rule options)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'rule-doc-missing-options-section-with-rule-doc-section-options-false'),
+        getFixturePath(
+          'edge-cases',
+          'rule-doc-missing-options-section-with-rule-doc-section-options-false',
+        ),
       );
     });
 
@@ -153,7 +162,10 @@ describe('generate (rule options)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'rule-with-options-options-column-notice-enabled'),
+        getFixturePath(
+          'edge-cases',
+          'rule-with-options-options-column-notice-enabled',
+        ),
       );
     });
 
@@ -166,11 +178,21 @@ describe('generate (rule options)', function () {
         ruleListColumns: [COLUMN_TYPE.NAME, COLUMN_TYPE.OPTIONS],
         ruleDocNotices: [NOTICE_TYPE.OPTIONS],
       });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-biz.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-baz.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-biz.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-baz.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 });

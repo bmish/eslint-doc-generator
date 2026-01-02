@@ -35,6 +35,8 @@ describe('generate (--check)', function () {
     consoleErrorStub.restore();
 
     expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+    ).toMatchSnapshot();
   });
 });

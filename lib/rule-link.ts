@@ -108,9 +108,11 @@ export function getLinkToRule(
       : undefined;
 
   // Make pathToFile absolute if it's relative
-  const pathToFileAbs = pathToFile.startsWith('/') || (process.platform === 'win32' && /^[A-Z]:/.test(pathToFile))
-    ? pathToFile
-    : join(getPluginRoot(path), pathToFile);
+  const pathToFileAbs =
+    pathToFile.startsWith('/') ||
+    (process.platform === 'win32' && /^[A-Z]:/u.test(pathToFile))
+      ? pathToFile
+      : join(getPluginRoot(path), pathToFile);
 
   const urlToRule = getUrlToRule(context, ruleName, ruleSource, pathToFileAbs);
 

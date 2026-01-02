@@ -23,8 +23,12 @@ describe('generate (rule metadata)', function () {
 
     it('generates the documentation', async function () {
       await generate(tempDir);
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -46,8 +50,12 @@ describe('generate (rule metadata)', function () {
         // Ensure the relevant properties are shown for the test.
         ruleListColumns: ['name', 'deprecated', 'options'],
       });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -55,9 +63,7 @@ describe('generate (rule metadata)', function () {
     let tempDir: string;
 
     beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('edge-cases', 'no-meta'),
-      );
+      tempDir = setupFixture(getFixturePath('edge-cases', 'no-meta'));
     });
 
     afterEach(function () {
@@ -66,8 +72,12 @@ describe('generate (rule metadata)', function () {
 
     it('generates the documentation', async function () {
       await generate(tempDir);
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 });

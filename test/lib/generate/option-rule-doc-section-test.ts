@@ -11,9 +11,7 @@ describe('generate (rule doc sections)', function () {
     let tempDir: string;
 
     beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('edge-cases', 'no-problems'),
-      );
+      tempDir = setupFixture(getFixturePath('edge-cases', 'no-problems'));
     });
 
     afterEach(function () {
@@ -34,9 +32,7 @@ describe('generate (rule doc sections)', function () {
     let tempDir: string;
 
     beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('edge-cases', 'with-problems'),
-      );
+      tempDir = setupFixture(getFixturePath('edge-cases', 'with-problems'));
     });
 
     afterEach(function () {

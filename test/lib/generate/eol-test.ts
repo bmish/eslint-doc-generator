@@ -33,13 +33,17 @@ describe('getEndOfLine', function () {
       });
 
       it('returns crlf end of line when ".editorconfig" is configured with crlf', async function () {
-        tempDir = setupFixture(getFixturePath('edge-cases', 'editorconfig-crlf'));
+        tempDir = setupFixture(
+          getFixturePath('edge-cases', 'editorconfig-crlf'),
+        );
         process.chdir(tempDir);
         expect(await getEndOfLine()).toStrictEqual('\r\n');
       });
 
       it('respects the .md specific end of line settings when ".editorconfig" is configured', async function () {
-        tempDir = setupFixture(getFixturePath('edge-cases', 'editorconfig-md-specific'));
+        tempDir = setupFixture(
+          getFixturePath('edge-cases', 'editorconfig-md-specific'),
+        );
         process.chdir(tempDir);
         expect(await getEndOfLine()).toStrictEqual('\r\n');
       });
@@ -63,14 +67,24 @@ describe('getEndOfLine', function () {
             ['c', '🌊'],
           ],
         });
-        expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-        expect(readFileSync(join(tempDir, 'docs/rules/a.md'), 'utf8')).toMatchSnapshot();
-        expect(readFileSync(join(tempDir, 'docs/rules/B.md'), 'utf8')).toMatchSnapshot();
-        expect(readFileSync(join(tempDir, 'docs/rules/c.md'), 'utf8')).toMatchSnapshot();
+        expect(
+          readFileSync(join(tempDir, 'README.md'), 'utf8'),
+        ).toMatchSnapshot();
+        expect(
+          readFileSync(join(tempDir, 'docs/rules/a.md'), 'utf8'),
+        ).toMatchSnapshot();
+        expect(
+          readFileSync(join(tempDir, 'docs/rules/B.md'), 'utf8'),
+        ).toMatchSnapshot();
+        expect(
+          readFileSync(join(tempDir, 'docs/rules/c.md'), 'utf8'),
+        ).toMatchSnapshot();
       });
 
       it('generates using crlf end of line from ".editorconfig"', async function () {
-        tempDir = setupFixture(getFixturePath('edge-cases', 'editorconfig-crlf'));
+        tempDir = setupFixture(
+          getFixturePath('edge-cases', 'editorconfig-crlf'),
+        );
         await generate(tempDir, {
           configEmoji: [
             ['a', '🅰️'],
@@ -78,14 +92,24 @@ describe('getEndOfLine', function () {
             ['c', '🌊'],
           ],
         });
-        expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-        expect(readFileSync(join(tempDir, 'docs/rules/a.md'), 'utf8')).toMatchSnapshot();
-        expect(readFileSync(join(tempDir, 'docs/rules/B.md'), 'utf8')).toMatchSnapshot();
-        expect(readFileSync(join(tempDir, 'docs/rules/c.md'), 'utf8')).toMatchSnapshot();
+        expect(
+          readFileSync(join(tempDir, 'README.md'), 'utf8'),
+        ).toMatchSnapshot();
+        expect(
+          readFileSync(join(tempDir, 'docs/rules/a.md'), 'utf8'),
+        ).toMatchSnapshot();
+        expect(
+          readFileSync(join(tempDir, 'docs/rules/B.md'), 'utf8'),
+        ).toMatchSnapshot();
+        expect(
+          readFileSync(join(tempDir, 'docs/rules/c.md'), 'utf8'),
+        ).toMatchSnapshot();
       });
 
       it('generates using the end of line from ".editorconfig" while respecting the .md specific end of line setting', async function () {
-        tempDir = setupFixture(getFixturePath('edge-cases', 'editorconfig-md-specific'));
+        tempDir = setupFixture(
+          getFixturePath('edge-cases', 'editorconfig-md-specific'),
+        );
         await generate(tempDir, {
           configEmoji: [
             ['a', '🅰️'],
@@ -93,10 +117,18 @@ describe('getEndOfLine', function () {
             ['c', '🌊'],
           ],
         });
-        expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-        expect(readFileSync(join(tempDir, 'docs/rules/a.md'), 'utf8')).toMatchSnapshot();
-        expect(readFileSync(join(tempDir, 'docs/rules/B.md'), 'utf8')).toMatchSnapshot();
-        expect(readFileSync(join(tempDir, 'docs/rules/c.md'), 'utf8')).toMatchSnapshot();
+        expect(
+          readFileSync(join(tempDir, 'README.md'), 'utf8'),
+        ).toMatchSnapshot();
+        expect(
+          readFileSync(join(tempDir, 'docs/rules/a.md'), 'utf8'),
+        ).toMatchSnapshot();
+        expect(
+          readFileSync(join(tempDir, 'docs/rules/B.md'), 'utf8'),
+        ).toMatchSnapshot();
+        expect(
+          readFileSync(join(tempDir, 'docs/rules/c.md'), 'utf8'),
+        ).toMatchSnapshot();
       });
     });
   });

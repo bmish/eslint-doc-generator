@@ -23,10 +23,18 @@ describe('generate (deprecated rules)', function () {
 
     expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
 
-    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-baz.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-qux.md'), 'utf8')).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+    ).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8'),
+    ).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-baz.md'), 'utf8'),
+    ).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-qux.md'), 'utf8'),
+    ).toMatchSnapshot();
   });
 
   describe('with nested rule names', function () {
@@ -45,7 +53,9 @@ describe('generate (deprecated rules)', function () {
     it('has the correct links, especially replacement rule link', async function () {
       await generate(tempDir);
 
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
 
       expect(
         readFileSync(join(tempDir, 'docs/rules/category/no-foo.md'), 'utf8'),
@@ -72,7 +82,9 @@ describe('generate (deprecated rules)', function () {
     it('has the correct links, especially replacement rule link', async function () {
       await generate(tempDir, { pathRuleDoc: 'docs/{name}/README.md' });
 
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
 
       expect(
         readFileSync(join(tempDir, 'docs/category/no-foo/README.md'), 'utf8'),
@@ -88,7 +100,10 @@ describe('generate (deprecated rules)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'using-prefix-ahead-of-replacement-rule-name'),
+        getFixturePath(
+          'edge-cases',
+          'using-prefix-ahead-of-replacement-rule-name',
+        ),
       );
     });
 
@@ -99,10 +114,16 @@ describe('generate (deprecated rules)', function () {
     it('uses correct replacement rule link', async function () {
       await generate(tempDir);
 
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
 
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -111,7 +132,10 @@ describe('generate (deprecated rules)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'with-no-rule-doc-but-ignore-deprecated-rules'),
+        getFixturePath(
+          'edge-cases',
+          'with-no-rule-doc-but-ignore-deprecated-rules',
+        ),
       );
     });
 
@@ -122,7 +146,9 @@ describe('generate (deprecated rules)', function () {
     it('omits the rule from the README and does not try to update its non-existent rule doc', async function () {
       await generate(tempDir, { ignoreDeprecatedRules: true });
 
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -142,8 +168,12 @@ describe('generate (deprecated rules)', function () {
     it('uses correct replacement rule link', async function () {
       await generate(tempDir);
 
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -163,8 +193,12 @@ describe('generate (deprecated rules)', function () {
     it('uses correct replacement rule link', async function () {
       await generate(tempDir);
 
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -173,7 +207,10 @@ describe('generate (deprecated rules)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'replaced-by-third-party-plugin-rule-same-name'),
+        getFixturePath(
+          'edge-cases',
+          'replaced-by-third-party-plugin-rule-same-name',
+        ),
       );
     });
 
@@ -184,8 +221,12 @@ describe('generate (deprecated rules)', function () {
     it('uses correct replacement rule link', async function () {
       await generate(tempDir);
 
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 });

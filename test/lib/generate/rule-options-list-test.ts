@@ -24,7 +24,9 @@ describe('generate (rule options list)', function () {
     await generate(tempDir);
     expect(consoleErrorStub.callCount).toBe(0);
     consoleErrorStub.restore();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+    ).toMatchSnapshot();
   });
 
   describe('displays default column even when only falsy value, hiding deprecated/required cols with only falsy value', function () {
@@ -32,7 +34,10 @@ describe('generate (rule options list)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'displays-default-column-even-when-only-falsy-value'),
+        getFixturePath(
+          'edge-cases',
+          'displays-default-column-even-when-only-falsy-value',
+        ),
       );
     });
 
@@ -45,7 +50,9 @@ describe('generate (rule options list)', function () {
       await generate(tempDir);
       expect(consoleErrorStub.callCount).toBe(0);
       consoleErrorStub.restore();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -53,9 +60,7 @@ describe('generate (rule options list)', function () {
     let tempDir: string;
 
     beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('edge-cases', 'with-no-options'),
-      );
+      tempDir = setupFixture(getFixturePath('edge-cases', 'with-no-options'));
     });
 
     afterEach(function () {
@@ -67,7 +72,9 @@ describe('generate (rule options list)', function () {
       await generate(tempDir);
       expect(consoleErrorStub.callCount).toBe(0);
       consoleErrorStub.restore();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -89,7 +96,9 @@ describe('generate (rule options list)', function () {
       await generate(tempDir);
       expect(consoleErrorStub.callCount).toBe(0);
       consoleErrorStub.restore();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -98,7 +107,10 @@ describe('generate (rule options list)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'with-string-that-needs-to-be-escaped-in-table'),
+        getFixturePath(
+          'edge-cases',
+          'with-string-that-needs-to-be-escaped-in-table',
+        ),
       );
     });
 
@@ -111,7 +123,9 @@ describe('generate (rule options list)', function () {
       await generate(tempDir);
       expect(consoleErrorStub.callCount).toBe(0);
       consoleErrorStub.restore();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 });

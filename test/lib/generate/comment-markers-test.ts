@@ -23,7 +23,9 @@ describe('generate (comment markers)', function () {
 
     expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
 
-    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+    ).toMatchSnapshot();
   });
 
   describe('with no blank lines around comment markers', function () {
@@ -42,9 +44,13 @@ describe('generate (comment markers)', function () {
     it('generates the documentation', async function () {
       await generate(tempDir);
 
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
 
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -53,7 +59,10 @@ describe('generate (comment markers)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'no-existing-comment-markers-no-blank-lines'),
+        getFixturePath(
+          'edge-cases',
+          'no-existing-comment-markers-no-blank-lines',
+        ),
       );
     });
 
@@ -64,9 +73,13 @@ describe('generate (comment markers)', function () {
     it('generates the documentation', async function () {
       await generate(tempDir);
 
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
 
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -75,7 +88,10 @@ describe('generate (comment markers)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'no-existing-comment-markers-one-blank-line'),
+        getFixturePath(
+          'edge-cases',
+          'no-existing-comment-markers-one-blank-line',
+        ),
       );
     });
 
@@ -86,9 +102,13 @@ describe('generate (comment markers)', function () {
     it('generates the documentation', async function () {
       await generate(tempDir);
 
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
 
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -108,9 +128,13 @@ describe('generate (comment markers)', function () {
     it('generates the documentation', async function () {
       await generate(tempDir);
 
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
 
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -119,7 +143,10 @@ describe('generate (comment markers)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'no-existing-comment-markers-yaml-front-matter'),
+        getFixturePath(
+          'edge-cases',
+          'no-existing-comment-markers-yaml-front-matter',
+        ),
       );
     });
 
@@ -130,7 +157,9 @@ describe('generate (comment markers)', function () {
     it('updates the documentation', async function () {
       await generate(tempDir);
 
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -139,7 +168,10 @@ describe('generate (comment markers)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'readme-missing-rule-list-markers-with-rules-section'),
+        getFixturePath(
+          'edge-cases',
+          'readme-missing-rule-list-markers-with-rules-section',
+        ),
       );
     });
 
@@ -149,7 +181,9 @@ describe('generate (comment markers)', function () {
 
     it('adds rule list markers to rule section', async function () {
       await generate(tempDir);
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -158,7 +192,10 @@ describe('generate (comment markers)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'readme-missing-rule-list-markers-no-rules-section'),
+        getFixturePath(
+          'edge-cases',
+          'readme-missing-rule-list-markers-no-rules-section',
+        ),
       );
     });
 
@@ -176,7 +213,10 @@ describe('generate (comment markers)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'rule-doc-without-header-marker-pre-existing-header'),
+        getFixturePath(
+          'edge-cases',
+          'rule-doc-without-header-marker-pre-existing-header',
+        ),
       );
     });
 
@@ -187,7 +227,9 @@ describe('generate (comment markers)', function () {
     it('updates the documentation', async function () {
       await generate(tempDir);
 
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -196,7 +238,10 @@ describe('generate (comment markers)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'rule-doc-yaml-front-matter-above-title-and-comment-marker'),
+        getFixturePath(
+          'edge-cases',
+          'rule-doc-yaml-front-matter-above-title-and-comment-marker',
+        ),
       );
     });
 
@@ -207,7 +252,9 @@ describe('generate (comment markers)', function () {
     it('updates the documentation', async function () {
       await generate(tempDir);
 
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -227,7 +274,9 @@ describe('generate (comment markers)', function () {
     it('updates the documentation', async function () {
       await generate(tempDir);
 
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 });

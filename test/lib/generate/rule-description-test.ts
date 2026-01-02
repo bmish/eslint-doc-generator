@@ -23,8 +23,12 @@ describe('generate (rule descriptions)', function () {
 
     it('adds spaces to the name column', async function () {
       await generate(tempDir);
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -33,7 +37,10 @@ describe('generate (rule descriptions)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'long-description-name-column-wrapping-short-name'),
+        getFixturePath(
+          'edge-cases',
+          'long-description-name-column-wrapping-short-name',
+        ),
       );
     });
 
@@ -43,8 +50,12 @@ describe('generate (rule descriptions)', function () {
 
     it('does not add spaces to name column', async function () {
       await generate(tempDir);
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -63,7 +74,9 @@ describe('generate (rule descriptions)', function () {
 
     it('capitalizes the first letter and removes the trailing period from the description', async function () {
       await generate(tempDir);
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -82,8 +95,12 @@ describe('generate (rule descriptions)', function () {
 
     it('generates the documentation', async function () {
       await generate(tempDir);
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -102,9 +119,15 @@ describe('generate (rule descriptions)', function () {
 
     it('generates the documentation', async function () {
       await generate(tempDir);
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -123,7 +146,9 @@ describe('generate (rule descriptions)', function () {
 
     it('generates the documentation', async function () {
       await generate(tempDir);
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 });

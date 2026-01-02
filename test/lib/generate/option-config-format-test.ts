@@ -23,7 +23,9 @@ describe('generate (--config-format)', function () {
       configFormat: 'name',
     });
     expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+    ).toMatchSnapshot();
   });
 
   it('uses the plugin-colon-prefix-name format', async function () {
@@ -31,7 +33,9 @@ describe('generate (--config-format)', function () {
       configFormat: 'plugin-colon-prefix-name',
     });
     expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+    ).toMatchSnapshot();
   });
 
   it('uses the prefix-name format', async function () {
@@ -39,6 +43,8 @@ describe('generate (--config-format)', function () {
       configFormat: 'prefix-name',
     });
     expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+    ).toMatchSnapshot();
   });
 });

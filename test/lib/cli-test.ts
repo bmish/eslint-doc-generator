@@ -146,13 +146,23 @@ describe('cli', function () {
     beforeEach(function () {
       originalCwd = process.cwd();
       tempDir = mkdtempSync(join(tmpdir(), 'eslint-doc-gen-'));
-      writeFileSync(join(tempDir, 'package.json'), JSON.stringify({
-        name: 'eslint-plugin-test',
-        main: 'index.js',
-        type: 'module',
-        version: '1.0.0',
-      }, null, 2));
-      writeFileSync(join(tempDir, '.eslint-doc-generatorrc.json'), JSON.stringify(configFileOptionsAll, null, 2));
+      writeFileSync(
+        join(tempDir, 'package.json'),
+        JSON.stringify(
+          {
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+            version: '1.0.0',
+          },
+          null,
+          2,
+        ),
+      );
+      writeFileSync(
+        join(tempDir, '.eslint-doc-generatorrc.json'),
+        JSON.stringify(configFileOptionsAll, null, 2),
+      );
       process.chdir(tempDir);
     });
 
@@ -182,13 +192,23 @@ describe('cli', function () {
     beforeEach(function () {
       originalCwd = process.cwd();
       tempDir = mkdtempSync(join(tmpdir(), 'eslint-doc-gen-'));
-      writeFileSync(join(tempDir, 'package.json'), JSON.stringify({
-        name: 'eslint-plugin-test',
-        main: 'index.js',
-        type: 'module',
-        version: '1.0.0',
-      }, null, 2));
-      writeFileSync(join(tempDir, '.eslint-doc-generatorrc.json'), JSON.stringify(configFileOptionsAll, null, 2));
+      writeFileSync(
+        join(tempDir, 'package.json'),
+        JSON.stringify(
+          {
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+            version: '1.0.0',
+          },
+          null,
+          2,
+        ),
+      );
+      writeFileSync(
+        join(tempDir, '.eslint-doc-generatorrc.json'),
+        JSON.stringify(configFileOptionsAll, null, 2),
+      );
       process.chdir(tempDir);
     });
 
@@ -220,15 +240,29 @@ describe('cli', function () {
     beforeEach(function () {
       originalCwd = process.cwd();
       tempDir = mkdtempSync(join(tmpdir(), 'eslint-doc-gen-'));
-      writeFileSync(join(tempDir, 'package.json'), JSON.stringify({
-        name: 'eslint-plugin-test',
-        main: 'index.js',
-        type: 'module',
-        version: '1.0.0',
-      }, null, 2));
-      writeFileSync(join(tempDir, '.eslint-doc-generatorrc.json'), JSON.stringify({
-        pathRuleList: ['listFromConfigFile1.md', 'listFromConfigFile2.md'],
-      }, null, 2));
+      writeFileSync(
+        join(tempDir, 'package.json'),
+        JSON.stringify(
+          {
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+            version: '1.0.0',
+          },
+          null,
+          2,
+        ),
+      );
+      writeFileSync(
+        join(tempDir, '.eslint-doc-generatorrc.json'),
+        JSON.stringify(
+          {
+            pathRuleList: ['listFromConfigFile1.md', 'listFromConfigFile2.md'],
+          },
+          null,
+          2,
+        ),
+      );
       process.chdir(tempDir);
     });
 
@@ -321,11 +355,18 @@ describe('cli', function () {
     beforeEach(function () {
       originalCwd = process.cwd();
       tempDir = mkdtempSync(join(tmpdir(), 'eslint-doc-gen-'));
-      writeFileSync(join(tempDir, 'package.json'), JSON.stringify({
-        name: 'eslint-plugin-test',
-        main: 'index.js',
-        type: 'module',
-      }, null, 2));
+      writeFileSync(
+        join(tempDir, 'package.json'),
+        JSON.stringify(
+          {
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+          },
+          null,
+          2,
+        ),
+      );
       process.chdir(tempDir);
     });
 
@@ -362,16 +403,30 @@ describe('cli', function () {
     it('throws an error', async function () {
       originalCwd = process.cwd();
       tempDir = mkdtempSync(join(tmpdir(), 'eslint-doc-gen-'));
-      writeFileSync(join(tempDir, 'package.json'), JSON.stringify({
-        name: 'eslint-plugin-test',
-        main: 'index.js',
-        type: 'module',
-        version: '1.0.0',
-      }, null, 2));
-      writeFileSync(join(tempDir, '.eslint-doc-generatorrc.json'), JSON.stringify({
-        // Doesn't match schema.
-        unknown: true,
-      }, null, 2));
+      writeFileSync(
+        join(tempDir, 'package.json'),
+        JSON.stringify(
+          {
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+            version: '1.0.0',
+          },
+          null,
+          2,
+        ),
+      );
+      writeFileSync(
+        join(tempDir, '.eslint-doc-generatorrc.json'),
+        JSON.stringify(
+          {
+            // Doesn't match schema.
+            unknown: true,
+          },
+          null,
+          2,
+        ),
+      );
       process.chdir(tempDir);
 
       const stub = sinon.stub().resolves();
@@ -389,16 +444,30 @@ describe('cli', function () {
     it('requires that postprocess be a function', async function () {
       originalCwd = process.cwd();
       tempDir = mkdtempSync(join(tmpdir(), 'eslint-doc-gen-'));
-      writeFileSync(join(tempDir, 'package.json'), JSON.stringify({
-        name: 'eslint-plugin-test',
-        main: 'index.js',
-        type: 'module',
-        version: '1.0.0',
-      }, null, 2));
-      writeFileSync(join(tempDir, '.eslint-doc-generatorrc.json'), JSON.stringify({
-        // Doesn't match schema.
-        postprocess: './my-file.js',
-      }, null, 2));
+      writeFileSync(
+        join(tempDir, 'package.json'),
+        JSON.stringify(
+          {
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+            version: '1.0.0',
+          },
+          null,
+          2,
+        ),
+      );
+      writeFileSync(
+        join(tempDir, '.eslint-doc-generatorrc.json'),
+        JSON.stringify(
+          {
+            // Doesn't match schema.
+            postprocess: './my-file.js',
+          },
+          null,
+          2,
+        ),
+      );
       process.chdir(tempDir);
 
       const stub = sinon.stub().resolves();
@@ -419,16 +488,30 @@ describe('cli', function () {
     it('ruleListSplit is the wrong primitive type', async function () {
       originalCwd = process.cwd();
       tempDir = mkdtempSync(join(tmpdir(), 'eslint-doc-gen-'));
-      writeFileSync(join(tempDir, 'package.json'), JSON.stringify({
-        name: 'eslint-plugin-test',
-        main: 'index.js',
-        type: 'module',
-        version: '1.0.0',
-      }, null, 2));
-      writeFileSync(join(tempDir, '.eslint-doc-generatorrc.json'), JSON.stringify({
-        // Doesn't match schema.
-        ruleListSplit: 123,
-      }, null, 2));
+      writeFileSync(
+        join(tempDir, 'package.json'),
+        JSON.stringify(
+          {
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+            version: '1.0.0',
+          },
+          null,
+          2,
+        ),
+      );
+      writeFileSync(
+        join(tempDir, '.eslint-doc-generatorrc.json'),
+        JSON.stringify(
+          {
+            // Doesn't match schema.
+            ruleListSplit: 123,
+          },
+          null,
+          2,
+        ),
+      );
       process.chdir(tempDir);
 
       const stub = sinon.stub().resolves();
@@ -451,16 +534,30 @@ describe('cli', function () {
     it('ruleListSplit is the wrong array type', async function () {
       originalCwd = process.cwd();
       tempDir = mkdtempSync(join(tmpdir(), 'eslint-doc-gen-'));
-      writeFileSync(join(tempDir, 'package.json'), JSON.stringify({
-        name: 'eslint-plugin-test',
-        main: 'index.js',
-        type: 'module',
-        version: '1.0.0',
-      }, null, 2));
-      writeFileSync(join(tempDir, '.eslint-doc-generatorrc.json'), JSON.stringify({
-        // Doesn't match schema.
-        ruleListSplit: [123],
-      }, null, 2));
+      writeFileSync(
+        join(tempDir, 'package.json'),
+        JSON.stringify(
+          {
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+            version: '1.0.0',
+          },
+          null,
+          2,
+        ),
+      );
+      writeFileSync(
+        join(tempDir, '.eslint-doc-generatorrc.json'),
+        JSON.stringify(
+          {
+            // Doesn't match schema.
+            ruleListSplit: [123],
+          },
+          null,
+          2,
+        ),
+      );
       process.chdir(tempDir);
 
       const stub = sinon.stub().resolves();
@@ -483,16 +580,30 @@ describe('cli', function () {
     it('ruleListSplit is an empty array', async function () {
       originalCwd = process.cwd();
       tempDir = mkdtempSync(join(tmpdir(), 'eslint-doc-gen-'));
-      writeFileSync(join(tempDir, 'package.json'), JSON.stringify({
-        name: 'eslint-plugin-test',
-        main: 'index.js',
-        type: 'module',
-        version: '1.0.0',
-      }, null, 2));
-      writeFileSync(join(tempDir, '.eslint-doc-generatorrc.json'), JSON.stringify({
-        // Doesn't match schema.
-        ruleListSplit: [],
-      }, null, 2));
+      writeFileSync(
+        join(tempDir, 'package.json'),
+        JSON.stringify(
+          {
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+            version: '1.0.0',
+          },
+          null,
+          2,
+        ),
+      );
+      writeFileSync(
+        join(tempDir, '.eslint-doc-generatorrc.json'),
+        JSON.stringify(
+          {
+            // Doesn't match schema.
+            ruleListSplit: [],
+          },
+          null,
+          2,
+        ),
+      );
       process.chdir(tempDir);
 
       const stub = sinon.stub().resolves();

@@ -1,6 +1,12 @@
 import { generate } from '../../../lib/generator.js';
 import { join, resolve } from 'node:path';
-import { readFileSync, mkdtempSync, cpSync, rmSync, writeFileSync } from 'node:fs';
+import {
+  readFileSync,
+  mkdtempSync,
+  cpSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import {
   setupFixture,
@@ -60,7 +66,9 @@ describe('generate (package.json)', function () {
 
     it('determines the correct plugin prefix', async function () {
       await generate(tempDir);
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -79,8 +87,12 @@ describe('generate (package.json)', function () {
 
     it('determines the correct plugin prefix', async function () {
       await generate(tempDir);
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -88,9 +100,7 @@ describe('generate (package.json)', function () {
     let tempDir: string;
 
     beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('edge-cases', 'no-configs-found'),
-      );
+      tempDir = setupFixture(getFixturePath('edge-cases', 'no-configs-found'));
     });
 
     afterEach(function () {
@@ -99,8 +109,12 @@ describe('generate (package.json)', function () {
 
     it('omits the config column', async function () {
       await generate(tempDir);
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -145,7 +159,10 @@ describe('generate (package.json)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'package-json-using-exports-object-with-dot'),
+        getFixturePath(
+          'edge-cases',
+          'package-json-using-exports-object-with-dot',
+        ),
       );
     });
 
@@ -174,9 +191,13 @@ describe('generate (package.json)', function () {
     it('generates the documentation', async function () {
       await generate(tempDir);
 
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
 
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -185,7 +206,10 @@ describe('generate (package.json)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'plugin-entry-point-specified-but-does-not-exist'),
+        getFixturePath(
+          'edge-cases',
+          'plugin-entry-point-specified-but-does-not-exist',
+        ),
       );
     });
 
@@ -205,7 +229,10 @@ describe('generate (package.json)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('edge-cases', 'plugin-entry-point-with-type-module-and-main-field-specified'),
+        getFixturePath(
+          'edge-cases',
+          'plugin-entry-point-with-type-module-and-main-field-specified',
+        ),
       );
     });
 
@@ -226,13 +253,26 @@ describe('generate (package.json)', function () {
       tempDir = mkdtempSync(join(tmpdir(), 'eslint-doc-gen-'));
       cpSync(fixturePath, tempDir, { recursive: true });
       // Write minimal files for this test
-      writeFileSync(join(tempDir, 'package.json'), JSON.stringify({
-        name: 'eslint-plugin-test',
-        exports: './index.js',
-        type: 'module',
-      }, null, 2));
-      writeFileSync(join(tempDir, 'index.js'), 'export default { rules: {}, configs: {} };');
-      writeFileSync(join(tempDir, 'README.md'), '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->');
+      writeFileSync(
+        join(tempDir, 'package.json'),
+        JSON.stringify(
+          {
+            name: 'eslint-plugin-test',
+            exports: './index.js',
+            type: 'module',
+          },
+          null,
+          2,
+        ),
+      );
+      writeFileSync(
+        join(tempDir, 'index.js'),
+        'export default { rules: {}, configs: {} };',
+      );
+      writeFileSync(
+        join(tempDir, 'README.md'),
+        '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+      );
     });
 
     afterEach(function () {

@@ -28,7 +28,9 @@ describe('generate (--rule-list-columns)', function () {
       ],
     });
     expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+    ).toMatchSnapshot();
   });
 
   it('shows consolidated fixableAndHasSuggestions column', async function () {
@@ -44,7 +46,9 @@ describe('generate (--rule-list-columns)', function () {
   it('throws an error for non-existent column', async function () {
     await expect(
       // @ts-expect-error -- testing non-existent column type
-      generate(tempDir, { ruleListColumns: [COLUMN_TYPE.NAME, 'non-existent'] }),
+      generate(tempDir, {
+        ruleListColumns: [COLUMN_TYPE.NAME, 'non-existent'],
+      }),
     ).rejects.toThrow('Invalid ruleListColumns option: non-existent');
   });
 
@@ -60,7 +64,11 @@ describe('generate (--rule-list-columns)', function () {
     await generate(tempDir);
 
     expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+    ).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8'),
+    ).toMatchSnapshot();
   });
 });

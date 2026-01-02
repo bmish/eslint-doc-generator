@@ -22,7 +22,9 @@ describe('generate (rule type)', function () {
   it('hides the type column when not enabled', async function () {
     await generate(tempDir);
     expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+    ).toMatchSnapshot();
   });
 
   it('displays the type when type column is enabled', async function () {
@@ -30,11 +32,21 @@ describe('generate (rule type)', function () {
       ruleListColumns: [COLUMN_TYPE.NAME, COLUMN_TYPE.TYPE],
     });
     expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-biz.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-boz.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-buz.md'), 'utf8')).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+    ).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8'),
+    ).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-biz.md'), 'utf8'),
+    ).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-boz.md'), 'utf8'),
+    ).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-buz.md'), 'utf8'),
+    ).toMatchSnapshot();
   });
 
   it('hides the type column when only unknown types exist', async function () {
@@ -53,8 +65,12 @@ describe('generate (rule type)', function () {
     await generate(tempDirUnknown, {
       ruleListColumns: [COLUMN_TYPE.NAME, COLUMN_TYPE.TYPE],
     });
-    expect(readFileSync(join(tempDirUnknown, 'README.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDirUnknown, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDirUnknown, 'README.md'), 'utf8'),
+    ).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDirUnknown, 'docs/rules/no-foo.md'), 'utf8'),
+    ).toMatchSnapshot();
     cleanupFixture(tempDirUnknown);
   });
 });

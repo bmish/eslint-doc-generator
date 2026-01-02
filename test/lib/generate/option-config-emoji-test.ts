@@ -28,15 +28,23 @@ describe('generate (--config-emoji)', function () {
       ],
     });
     expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-baz.md'), 'utf8')).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+    ).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8'),
+    ).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-baz.md'), 'utf8'),
+    ).toMatchSnapshot();
   });
 
   it('uses the default emoji when no configEmoji option is provided', async function () {
     await generate(tempDir); // No configEmoji option - should use default ✅ for recommended
     expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+    ).toMatchSnapshot();
   });
 
   it('uses the badge markdown as provided', async function () {
@@ -49,7 +57,9 @@ describe('generate (--config-emoji)', function () {
       ],
     });
     expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+    ).toMatchSnapshot();
   });
 
   describe('with missing emoji for a config', function () {

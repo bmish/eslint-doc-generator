@@ -12,9 +12,7 @@ describe('generate (file paths)', function () {
     let tempDir: string;
 
     beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('error-cases', 'missing-rule-doc'),
-      );
+      tempDir = setupFixture(getFixturePath('error-cases', 'missing-rule-doc'));
     });
 
     afterEach(function () {
@@ -33,8 +31,12 @@ describe('generate (file paths)', function () {
     describe('when initRuleDocs is true', () => {
       it('creates the rule doc', async function () {
         await generate(tempDir, { initRuleDocs: true });
-        expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-        expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot(); // Should add options section.
+        expect(
+          readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+        ).toMatchSnapshot();
+        expect(
+          readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8'),
+        ).toMatchSnapshot(); // Should add options section.
       });
     });
   });
@@ -57,8 +59,12 @@ describe('generate (file paths)', function () {
         initRuleDocs: true,
         ruleDocSectionInclude: ['Examples'],
       });
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot(); // Should add options section.
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8'),
+      ).toMatchSnapshot(); // Should add options section.
     });
   });
 
@@ -86,9 +92,7 @@ describe('generate (file paths)', function () {
     let tempDir: string;
 
     beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('error-cases', 'missing-readme'),
-      );
+      tempDir = setupFixture(getFixturePath('error-cases', 'missing-readme'));
     });
 
     afterEach(function () {
@@ -106,9 +110,7 @@ describe('generate (file paths)', function () {
     let tempDir: string;
 
     beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('edge-cases', 'lowercase-readme'),
-      );
+      tempDir = setupFixture(getFixturePath('edge-cases', 'lowercase-readme'));
     });
 
     afterEach(function () {
@@ -117,7 +119,9 @@ describe('generate (file paths)', function () {
 
     it('generates the documentation', async function () {
       await generate(tempDir);
-      expect(readFileSync(join(tempDir, 'readme.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'readme.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -125,9 +129,7 @@ describe('generate (file paths)', function () {
     let tempDir: string;
 
     beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('edge-cases', 'custom-paths'),
-      );
+      tempDir = setupFixture(getFixturePath('edge-cases', 'custom-paths'));
     });
 
     afterEach(function () {
@@ -139,16 +141,24 @@ describe('generate (file paths)', function () {
         pathRuleDoc: join('rules', '{name}', '{name}.md'),
         pathRuleList: join('rules', 'list.md'),
       });
-      expect(readFileSync(join(tempDir, 'rules/list.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'rules/no-foo/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'rules/list.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'rules/no-foo/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
 
     it('generates the documentation using a function for pathRuleDoc', async function () {
       await generate(tempDir, {
         pathRuleDoc: (ruleName) => join('rules', ruleName, `${ruleName}.md`),
       });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'rules/no-foo/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'rules/no-foo/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -173,9 +183,15 @@ describe('generate (file paths)', function () {
           join('docs', 'rules', 'index.md'),
         ],
       });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'rules/list.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/index.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'rules/list.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'docs/rules/index.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -183,9 +199,7 @@ describe('generate (file paths)', function () {
     let tempDir: string;
 
     beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('edge-cases', 'csv-string-error'),
-      );
+      tempDir = setupFixture(getFixturePath('edge-cases', 'csv-string-error'));
     });
 
     afterEach(function () {
@@ -221,9 +235,7 @@ describe('generate (file paths)', function () {
     let tempDir: string;
 
     beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('edge-cases', 'empty-array'),
-      );
+      tempDir = setupFixture(getFixturePath('edge-cases', 'empty-array'));
     });
 
     afterEach(function () {
@@ -234,7 +246,9 @@ describe('generate (file paths)', function () {
       await generate(tempDir, {
         pathRuleList: [],
       });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 });

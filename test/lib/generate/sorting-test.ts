@@ -27,8 +27,14 @@ describe('generate (sorting)', function () {
       ],
     });
     expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/a.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/B.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/c.md'), 'utf8')).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/a.md'), 'utf8'),
+    ).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/B.md'), 'utf8'),
+    ).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/c.md'), 'utf8'),
+    ).toMatchSnapshot();
   });
 });

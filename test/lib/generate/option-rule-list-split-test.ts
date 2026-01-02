@@ -23,7 +23,9 @@ describe('generate (--rule-list-split)', function () {
       await generate(tempDir, {
         ruleListSplit: 'meta.type',
       });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -42,7 +44,9 @@ describe('generate (--rule-list-split)', function () {
 
     it('splits the list', async function () {
       await generate(tempDir, { ruleListSplit: 'meta.docs.category' });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -72,9 +76,7 @@ describe('generate (--rule-list-split)', function () {
     let tempDir: string;
 
     beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('edge-cases', 'boolean-camelcase'),
-      );
+      tempDir = setupFixture(getFixturePath('edge-cases', 'boolean-camelcase'));
     });
 
     afterEach(function () {
@@ -85,7 +87,9 @@ describe('generate (--rule-list-split)', function () {
       await generate(tempDir, {
         ruleListSplit: 'meta.hasSuggestions',
       });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -106,7 +110,9 @@ describe('generate (--rule-list-split)', function () {
       await generate(tempDir, {
         ruleListSplit: 'meta.hello_world',
       });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -127,7 +133,9 @@ describe('generate (--rule-list-split)', function () {
       await generate(tempDir, {
         ruleListSplit: 'meta.HelloWorld',
       });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -148,7 +156,9 @@ describe('generate (--rule-list-split)', function () {
       await generate(tempDir, {
         ruleListSplit: 'meta.HELLO_WORLD',
       });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -169,7 +179,9 @@ describe('generate (--rule-list-split)', function () {
       await generate(tempDir, {
         ruleListSplit: 'foo_barBIZ-baz3bOz',
       });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -190,7 +202,9 @@ describe('generate (--rule-list-split)', function () {
       await generate(tempDir, {
         ruleListSplit: 'meta.foo',
       });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -209,7 +223,9 @@ describe('generate (--rule-list-split)', function () {
 
     it('uses the proper sub-list header level', async function () {
       await generate(tempDir, { ruleListSplit: 'meta.docs.category' });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -217,9 +233,7 @@ describe('generate (--rule-list-split)', function () {
     let tempDir: string;
 
     beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('edge-cases', 'only-title'),
-      );
+      tempDir = setupFixture(getFixturePath('edge-cases', 'only-title'));
     });
 
     afterEach(function () {
@@ -228,7 +242,9 @@ describe('generate (--rule-list-split)', function () {
 
     it('uses the proper sub-list header level', async function () {
       await generate(tempDir, { ruleListSplit: 'meta.docs.category' });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -236,9 +252,7 @@ describe('generate (--rule-list-split)', function () {
     let tempDir: string;
 
     beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('edge-cases', 'ignores-case'),
-      );
+      tempDir = setupFixture(getFixturePath('edge-cases', 'ignores-case'));
     });
 
     afterEach(function () {
@@ -249,7 +263,9 @@ describe('generate (--rule-list-split)', function () {
       await generate(tempDir, {
         ruleListSplit: 'meta.foo',
       });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -270,7 +286,9 @@ describe('generate (--rule-list-split)', function () {
       await generate(tempDir, {
         ruleListSplit: 'type',
       });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -291,7 +309,9 @@ describe('generate (--rule-list-split)', function () {
       await generate(tempDir, {
         ruleListSplit: ['meta.deprecated', 'meta.docs.category'],
       });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -312,7 +332,9 @@ describe('generate (--rule-list-split)', function () {
       await generate(tempDir, {
         ruleListSplit: ['meta.deprecated', 'meta.docs.category'],
       });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -344,9 +366,7 @@ describe('generate (--rule-list-split)', function () {
     let tempDir: string;
 
     beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('edge-cases', 'as-function'),
-      );
+      tempDir = setupFixture(getFixturePath('edge-cases', 'as-function'));
     });
 
     afterEach(function () {
@@ -374,7 +394,9 @@ describe('generate (--rule-list-split)', function () {
           return [list1, list2, list3, list4];
         },
       });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDir, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 

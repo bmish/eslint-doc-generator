@@ -23,9 +23,15 @@ describe('generate (general)', function () {
 
     expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
 
-    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
-    expect(readFileSync(join(tempDir, 'docs/rules/no-baz.md'), 'utf8')).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8'),
+    ).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8'),
+    ).toMatchSnapshot();
+    expect(
+      readFileSync(join(tempDir, 'docs/rules/no-baz.md'), 'utf8'),
+    ).toMatchSnapshot();
   });
 
   describe('plugin prefix', function () {
@@ -42,11 +48,19 @@ describe('generate (general)', function () {
     it('uses `plugin.meta.name` as source for rule prefix', async function () {
       await generate(tempDirPrefix);
 
-      expect(readFileSync(join(tempDirPrefix, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDirPrefix, 'README.md'), 'utf8'),
+      ).toMatchSnapshot();
 
-      expect(readFileSync(join(tempDirPrefix, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDirPrefix, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDirPrefix, 'docs/rules/no-baz.md'), 'utf8')).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDirPrefix, 'docs/rules/no-foo.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDirPrefix, 'docs/rules/no-bar.md'), 'utf8'),
+      ).toMatchSnapshot();
+      expect(
+        readFileSync(join(tempDirPrefix, 'docs/rules/no-baz.md'), 'utf8'),
+      ).toMatchSnapshot();
     });
   });
 });
