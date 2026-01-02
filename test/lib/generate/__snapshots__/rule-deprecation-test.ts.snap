@@ -15,9 +15,9 @@ exports[`generate (deprecated rules) replaced by ESLint core rule uses correct r
 exports[`generate (deprecated rules) replaced by ESLint core rule uses correct replacement rule link 2`] = `
 "# test/no-foo
 
-❌ This rule is deprecated. It was replaced by [\`no-unused-vars\`](https://eslint.org/docs/latest/rules/no-unused-vars).
-
 📝 Description.
+
+❌ This rule is deprecated. It was replaced by [\`no-unused-vars\`](https://eslint.org/docs/latest/rules/no-unused-vars).
 
 <!-- end auto-generated rule header -->
 "
@@ -38,9 +38,9 @@ exports[`generate (deprecated rules) replaced by third-party plugin rule uses co
 exports[`generate (deprecated rules) replaced by third-party plugin rule uses correct replacement rule link 2`] = `
 "# test/no-foo
 
-❌ This rule is deprecated. It was replaced by \`other-plugin/no-unused-vars\`.
-
 📝 Description.
+
+❌ This rule is deprecated. It was replaced by \`other-plugin/no-unused-vars\`.
 
 <!-- end auto-generated rule header -->
 "
@@ -61,9 +61,9 @@ exports[`generate (deprecated rules) replaced by third-party plugin rule with sa
 exports[`generate (deprecated rules) replaced by third-party plugin rule with same rule name as one of our rules uses correct replacement rule link 2`] = `
 "# test/no-foo
 
-❌ This rule is deprecated. It was replaced by \`other-plugin/no-foo\`.
-
 📝 Description.
+
+❌ This rule is deprecated. It was replaced by \`other-plugin/no-foo\`.
 
 <!-- end auto-generated rule header -->
 "
@@ -88,9 +88,9 @@ exports[`generate (deprecated rules) several deprecated rules updates the docume
 exports[`generate (deprecated rules) several deprecated rules updates the documentation 2`] = `
 "# test/no-foo
 
-❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](no-bar.md).
-
 📝 Description.
+
+❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](no-bar.md).
 
 <!-- end auto-generated rule header -->
 "
@@ -99,9 +99,9 @@ exports[`generate (deprecated rules) several deprecated rules updates the docume
 exports[`generate (deprecated rules) several deprecated rules updates the documentation 3`] = `
 "# test/no-bar
 
-❌ This rule is deprecated.
-
 📝 Description.
+
+❌ This rule is deprecated.
 
 <!-- end auto-generated rule header -->
 "
@@ -110,9 +110,9 @@ exports[`generate (deprecated rules) several deprecated rules updates the docume
 exports[`generate (deprecated rules) several deprecated rules updates the documentation 4`] = `
 "# test/no-baz
 
-❌ This rule is deprecated.
-
 📝 Description.
+
+❌ This rule is deprecated.
 
 <!-- end auto-generated rule header -->
 "
@@ -130,9 +130,9 @@ exports[`generate (deprecated rules) several deprecated rules updates the docume
 exports[`generate (deprecated rules) several deprecated rules updates the documentation 6`] = `
 "# test/no-boz
 
-❌ This rule is deprecated. It was replaced by [\`test/no-baz\`](no-baz.md), [\`test/no-biz\`](no-biz.md).
-
 📝 Description.
+
+❌ This rule is deprecated. It was replaced by [\`test/no-baz\`](no-baz.md), [\`test/no-biz\`](no-biz.md).
 
 <!-- end auto-generated rule header -->
 "
@@ -154,9 +154,9 @@ exports[`generate (deprecated rules) using prefix ahead of replacement rule name
 exports[`generate (deprecated rules) using prefix ahead of replacement rule name uses correct replacement rule link 2`] = `
 "# test/no-foo
 
-❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](no-bar.md).
-
 📝 Description.
+
+❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](no-bar.md).
 
 <!-- end auto-generated rule header -->
 "
@@ -187,9 +187,9 @@ exports[`generate (deprecated rules) with --path-rule-doc has the correct links,
 exports[`generate (deprecated rules) with --path-rule-doc has the correct links, especially replacement rule link 2`] = `
 "# test/category/no-foo
 
-❌ This rule is deprecated. It was replaced by [\`test/category/no-bar\`](../no-bar/README.md).
-
 📝 Description.
+
+❌ This rule is deprecated. It was replaced by [\`test/category/no-bar\`](../no-bar/README.md).
 
 <!-- end auto-generated rule header -->
 "
@@ -198,9 +198,9 @@ exports[`generate (deprecated rules) with --path-rule-doc has the correct links,
 exports[`generate (deprecated rules) with --path-rule-doc has the correct links, especially replacement rule link 3`] = `
 "# test/category/no-bar
 
-❌ This rule is deprecated. It was replaced by [\`test/category/no-foo\`](../no-foo/README.md).
-
 📝 Description.
+
+❌ This rule is deprecated. It was replaced by [\`test/category/no-foo\`](../no-foo/README.md).
 
 <!-- end auto-generated rule header -->
 "
@@ -222,9 +222,9 @@ exports[`generate (deprecated rules) with nested rule names has the correct link
 exports[`generate (deprecated rules) with nested rule names has the correct links, especially replacement rule link 2`] = `
 "# test/category/no-foo
 
-❌ This rule is deprecated. It was replaced by [\`test/category/no-bar\`](no-bar.md).
-
 📝 Description.
+
+❌ This rule is deprecated. It was replaced by [\`test/category/no-bar\`](no-bar.md).
 
 <!-- end auto-generated rule header -->
 "
@@ -233,9 +233,9 @@ exports[`generate (deprecated rules) with nested rule names has the correct link
 exports[`generate (deprecated rules) with nested rule names has the correct links, especially replacement rule link 3`] = `
 "# test/category/no-bar
 
-❌ This rule is deprecated. It was replaced by [\`test/category/no-foo\`](no-foo.md).
-
 📝 Description.
+
+❌ This rule is deprecated. It was replaced by [\`test/category/no-foo\`](no-foo.md).
 
 <!-- end auto-generated rule header -->
 "

@@ -38,6 +38,7 @@ export const NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
 } = {
   // Object keys ordered in display order.
   // Object values indicate whether the column is displayed by default.
+  [NOTICE_TYPE.DESCRIPTION]: true,
   [NOTICE_TYPE.DEPRECATED]: true, // Most important.
   [NOTICE_TYPE.CONFIGS]: true,
   [NOTICE_TYPE.FIXABLE]: false,
@@ -46,7 +47,6 @@ export const NOTICE_TYPE_DEFAULT_PRESENCE_AND_ORDERING: {
   [NOTICE_TYPE.OPTIONS]: false,
   [NOTICE_TYPE.REQUIRES_TYPE_CHECKING]: true,
   [NOTICE_TYPE.TYPE]: false,
-  [NOTICE_TYPE.DESCRIPTION]: true,
 };
 
 // Using these variables ensures they have the correct type (not just a plain string).

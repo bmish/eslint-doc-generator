@@ -18,9 +18,9 @@ exports[`generate (--config-format) name uses the right format 1`] = `
 exports[`generate (--config-format) name uses the right format 2`] = `
 "# test/no-foo
 
-💼 This rule is enabled in the ✅ \`recommended\` config.
-
 📝 Description for no-foo.
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -44,9 +44,9 @@ exports[`generate (--config-format) plugin-colon-prefix-name uses the right form
 exports[`generate (--config-format) plugin-colon-prefix-name uses the right format 2`] = `
 "# test/no-foo
 
-💼 This rule is enabled in the ✅ \`plugin:test/recommended\` config.
-
 📝 Description for no-foo.
+
+💼 This rule is enabled in the ✅ \`plugin:test/recommended\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -70,9 +70,9 @@ exports[`generate (--config-format) prefix-name uses the right format 1`] = `
 exports[`generate (--config-format) prefix-name uses the right format 2`] = `
 "# test/no-foo
 
-💼 This rule is enabled in the ✅ \`test/recommended\` config.
-
 📝 Description for no-foo.
+
+💼 This rule is enabled in the ✅ \`test/recommended\` config.
 
 <!-- end auto-generated rule header -->
 "

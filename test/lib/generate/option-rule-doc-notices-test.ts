@@ -50,6 +50,11 @@ describe('generate (--rule-doc-notices)', function () {
       jest.resetModules();
     });
 
+    it('shows description before other notices when using default notice ordering', async function () {
+      await generate('.');
+      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+    });
+
     it('shows the right rule doc notices', async function () {
       await generate('.', {
         ruleDocNotices: [

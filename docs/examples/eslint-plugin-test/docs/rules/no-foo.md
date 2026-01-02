@@ -1,5 +1,7 @@
 # test/no-foo
 
+📝 Disallow using foo.
+
 💼 This rule is enabled in the ✅ `recommended` config.
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
@@ -9,8 +11,6 @@
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 ❗ This rule identifies problems that could cause errors or unexpected behavior.
-
-📝 Disallow using foo.
 
 <!-- end auto-generated rule header -->
 

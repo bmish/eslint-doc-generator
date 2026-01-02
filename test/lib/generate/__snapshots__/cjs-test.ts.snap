@@ -46,9 +46,9 @@ exports[`generate (cjs) config that extends another config generates the documen
 exports[`generate (cjs) config that extends another config generates the documentation 2`] = `
 "# test/no-foo
 
-💼 This rule is enabled in the ✅ \`recommended\` config.
-
 📝 Description of no-foo.
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -57,9 +57,9 @@ exports[`generate (cjs) config that extends another config generates the documen
 exports[`generate (cjs) config that extends another config generates the documentation 3`] = `
 "# test/no-bar
 
-💼 This rule is enabled in the ✅ \`recommended\` config.
-
 📝 Description of no-bar.
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -68,9 +68,9 @@ exports[`generate (cjs) config that extends another config generates the documen
 exports[`generate (cjs) config that extends another config generates the documentation 4`] = `
 "# test/no-baz
 
-💼 This rule is enabled in the ✅ \`recommended\` config.
-
 📝 Description of no-baz.
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
 
 <!-- end auto-generated rule header -->
 "
@@ -79,9 +79,9 @@ exports[`generate (cjs) config that extends another config generates the documen
 exports[`generate (cjs) config that extends another config generates the documentation 5`] = `
 "# test/no-biz
 
-💼 This rule is enabled in the ✅ \`recommended\` config.
-
 📝 Description of no-biz.
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
 
 <!-- end auto-generated rule header -->
 "
