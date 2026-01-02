@@ -56,7 +56,6 @@ exports[`generate (file paths) lowercase README file generates the documentation
 | [no-foo](docs/rules/no-foo.md) |
 
 <!-- end auto-generated rules list -->
-
 "
 `;
 
