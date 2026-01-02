@@ -348,6 +348,7 @@ describe('cli', function () {
   // via import.meta.url and cannot be mocked with real file system fixtures.
   // The functionality is still tested indirectly through other tests that
   // successfully call getCurrentPackageVersion().
+  // eslint-disable-next-line jest/no-disabled-tests
   describe.skip('missing package.json `version` field', function () {
     let tempDir: string;
     let originalCwd: string;
