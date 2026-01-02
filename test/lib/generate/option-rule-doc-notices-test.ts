@@ -1,57 +1,29 @@
 import { generate } from '../../../lib/generator.js';
-import mockFs from 'mock-fs';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 import { readFileSync } from 'node:fs';
-import { jest } from '@jest/globals';
 import { NOTICE_TYPE } from '../../../lib/types.js';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const PATH_NODE_MODULES = resolve(__dirname, '..', '..', '..', 'node_modules');
+import {
+  setupFixture,
+  cleanupFixture,
+  getFixturePath,
+} from '../fixture-helper.js';
 
 describe('generate (--rule-doc-notices)', function () {
   describe('basic', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': {
-                meta: {
-                  docs: { description: 'Description for no-foo.' },
-                  hasSuggestions: true,
-                  fixable: 'code',
-                  deprecated: true,
-                  type: 'problem'
-                },
-                create(context) {}
-              },
-            },
-          };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-doc-notices', 'basic'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('shows the right rule doc notices', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         ruleDocNotices: [
           NOTICE_TYPE.HAS_SUGGESTIONS,
           NOTICE_TYPE.FIXABLE,
@@ -60,44 +32,27 @@ describe('generate (--rule-doc-notices)', function () {
           NOTICE_TYPE.TYPE,
         ], // Random values including all the optional notices.
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('non-existent notice', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-            },
-          };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-doc-notices', 'non-existent-notice'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('throws an error', async function () {
       await expect(
-        generate('.', {
+        generate(tempDir, {
           // @ts-expect-error -- testing non-existent notice type
           ruleDocNotices: [NOTICE_TYPE.FIXABLE, 'non-existent'],
         }),
@@ -106,38 +61,21 @@ describe('generate (--rule-doc-notices)', function () {
   });
 
   describe('duplicate notice', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-            },
-          };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-doc-notices', 'duplicate-notice'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('throws an error', async function () {
       await expect(
-        generate('.', {
+        generate(tempDir, {
           ruleDocNotices: [NOTICE_TYPE.FIXABLE, NOTICE_TYPE.FIXABLE],
         }),
       ).rejects.toThrow('Duplicate value detected in ruleDocNotices option.');
@@ -145,38 +83,21 @@ describe('generate (--rule-doc-notices)', function () {
   });
 
   describe('passing string instead of enum to simulate real-world usage where enum type is not available', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-            },
-          };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '## Examples\n',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-doc-notices', 'string-instead-of-enum'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('has no issues', async function () {
       await expect(
-        generate('.', {
+        generate(tempDir, {
           ruleDocNotices: ['type'],
           ruleListColumns: ['name'],
         }),

@@ -1,132 +1,69 @@
 import { generate } from '../../../lib/generator.js';
-import mockFs from 'mock-fs';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 import { readFileSync } from 'node:fs';
-import { jest } from '@jest/globals';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const PATH_NODE_MODULES = resolve(__dirname, '..', '..', '..', 'node_modules');
+import {
+  setupFixture,
+  cleanupFixture,
+  getFixturePath,
+} from '../fixture-helper.js';
 
 describe('generate (--rule-list-split)', function () {
   describe('by type', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { meta: { type: 'problem' }, create(context) {} },
-                  'no-bar': { meta: { type: 'suggestion' }, create(context) {} },
-                  'no-baz': { meta: { type: 'suggestion' }, create(context) {} },
-                  'no-biz': { meta: { /* no type */ }, create(context) {} },
-                },
-              };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-        'docs/rules/no-baz.md': '',
-        'docs/rules/no-biz.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-list-split', 'by-type'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('splits the list', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         ruleListSplit: 'meta.type',
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('by nested property meta.docs.category', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { meta: { docs: { category: 'fruits' } }, create(context) {} },
-                  'no-bar': { meta: { docs: { category: 'candy' } }, create(context) {} },
-                  'no-baz': { meta: { /* no nested object */ }, create(context) {} },
-                },
-              };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-        'docs/rules/no-baz.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-list-split', 'by-nested-property'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('splits the list', async function () {
-      await generate('.', { ruleListSplit: 'meta.docs.category' });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      await generate(tempDir, { ruleListSplit: 'meta.docs.category' });
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('by property that no rules have', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { meta: {  }, create(context) {} },
-                },
-              };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-list-split', 'property-no-rules-have'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('throws an error', async function () {
       await expect(
-        generate('.', { ruleListSplit: 'non-existent-property' }),
+        generate(tempDir, { ruleListSplit: 'non-existent-property' }),
       ).rejects.toThrow(
         'No rules found with --rule-list-split property "non-existent-property".',
       );
@@ -134,565 +71,269 @@ describe('generate (--rule-list-split)', function () {
   });
 
   describe('with boolean (camelCase)', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': { meta: { hasSuggestions: true }, create(context) {} },
-              'no-bar': { meta: {  }, create(context) {} },
-              'no-baz': { meta: { hasSuggestions: false }, create(context) {} },
-            },
-          };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-        'docs/rules/no-baz.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-list-split', 'boolean-camelcase'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('splits the list with the right header', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         ruleListSplit: 'meta.hasSuggestions',
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('with boolean (snake_case)', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': { meta: { hello_world: true }, create(context) {} },
-              'no-bar': { meta: {  }, create(context) {} },
-              'no-baz': { meta: { hello_world: false }, create(context) {} },
-            },
-          };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-        'docs/rules/no-baz.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-list-split', 'boolean-snake-case'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('splits the list with the right header', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         ruleListSplit: 'meta.hello_world',
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('with boolean (PascalCase)', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': { meta: { HelloWorld: true }, create(context) {} },
-              'no-bar': { meta: {  }, create(context) {} },
-              'no-baz': { meta: { HelloWorld: false }, create(context) {} },
-            },
-          };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-        'docs/rules/no-baz.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-list-split', 'boolean-pascalcase'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('splits the list with the right header', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         ruleListSplit: 'meta.HelloWorld',
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('with boolean (CONSTANT_CASE)', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': { meta: { HELLO_WORLD: true }, create(context) {} },
-              'no-bar': { meta: {  }, create(context) {} },
-              'no-baz': { meta: { HELLO_WORLD: false }, create(context) {} },
-            },
-          };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-        'docs/rules/no-baz.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-list-split', 'boolean-constant-case'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('splits the list with the right header', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         ruleListSplit: 'meta.HELLO_WORLD',
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('with boolean (unknown variable type)', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': { 'foo_barBIZ-baz3bOz': false, meta: { }, create(context) {} },
-              'no-bar': { 'foo_barBIZ-baz3bOz': true, meta: { }, create(context) {} },
-            },
-          };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-list-split', 'boolean-unknown-type'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('splits the list and does the best it can with the header', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         ruleListSplit: 'foo_barBIZ-baz3bOz',
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('with boolean (various boolean equivalent values)', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              // true
-              'noOn': { meta: { foo: 'on' }, create(context) {} },
-              'noYes': { meta: { foo: 'yes' }, create(context) {} },
-              'noTrueString': { meta: { foo: 'true' }, create(context) {} },
-              'noTrue': { meta: { foo: true }, create(context) {} },
-
-              // false
-              'no': { meta: {  }, create(context) {} },
-              'noUndefined': { meta: { foo: undefined }, create(context) {} },
-              'noOff': { meta: { foo: 'off' }, create(context) {} },
-              'noNo': { meta: { foo: 'no' }, create(context) {} },
-              'noFalseString': { meta: { foo: 'false' }, create(context) {} },
-              'noFalse': { meta: { foo: false }, create(context) {} },
-              'noNull': { meta: { foo: null }, create(context) {} },
-              'noEmptyString': { meta: { foo: '' }, create(context) {} },
-            },
-          };`,
-
-        'README.md': '## Rules\n',
-
-        // true
-        'docs/rules/noOn.md': '',
-        'docs/rules/noYes.md': '',
-        'docs/rules/noTrueString.md': '',
-        'docs/rules/noTrue.md': '',
-
-        // false
-        'docs/rules/no.md': '',
-        'docs/rules/noUndefined.md': '',
-        'docs/rules/noOff.md': '',
-        'docs/rules/noNo.md': '',
-        'docs/rules/noFalseString.md': '',
-        'docs/rules/noFalse.md': '',
-        'docs/rules/noNull.md': '',
-        'docs/rules/noEmptyString.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-list-split', 'boolean-various-values'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('splits the list', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         ruleListSplit: 'meta.foo',
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('with no existing headers in file', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { meta: { docs: { category: 'fruits' } }, create(context) {} },
-                  'no-bar': { meta: { docs: { category: 'candy' } }, create(context) {} },
-                  'no-baz': { meta: { /* no nested object */ }, create(context) {} },
-                },
-              };`,
-
-        'README.md':
-          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-        'docs/rules/no-baz.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-list-split', 'no-existing-headers'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('uses the proper sub-list header level', async function () {
-      await generate('.', { ruleListSplit: 'meta.docs.category' });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      await generate(tempDir, { ruleListSplit: 'meta.docs.category' });
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('with only a title in the rules file', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { meta: { docs: { category: 'fruits' } }, create(context) {} },
-                  'no-bar': { meta: { docs: { category: 'candy' } }, create(context) {} },
-                  'no-baz': { meta: { /* no nested object */ }, create(context) {} },
-                },
-              };`,
-
-        'README.md':
-          '# Rules\n<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-        'docs/rules/no-baz.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-list-split', 'only-title'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('uses the proper sub-list header level', async function () {
-      await generate('.', { ruleListSplit: 'meta.docs.category' });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      await generate(tempDir, { ruleListSplit: 'meta.docs.category' });
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('ignores case when sorting headers', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { meta: { foo: 'c' }, create(context) {} },
-                  'no-bar': { meta: { foo: 'a' }, create(context) {} },
-                  'no-baz': { meta: { foo: 'B' }, create(context) {} },
-                },
-              };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-        'docs/rules/no-baz.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-list-split', 'ignores-case'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('splits the list', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         ruleListSplit: 'meta.foo',
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('with one sub-list having no rules enabled by the config', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { 'type': 'foo', meta: { }, create(context) {} },
-                  'no-bar': { 'type': 'bar', meta: { }, create(context) {} },
-                },
-                configs: {
-                  recommended: { rules: { 'test/no-foo': 'error' } },
-                }
-              };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-list-split', 'one-sublist-no-rules'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('splits the list and still uses recommended config emoji in both lists', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         ruleListSplit: 'type',
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('multiple properties', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': { meta: { deprecated: false, docs: { category: 'Hello' } }, create(context) {} },
-              'no-bar': { meta: { deprecated: true, docs: { category: 'Should Not Show Since Deprecated' } }, create(context) {} },
-              'no-baz': { meta: { deprecated: true, docs: { category: 'Should Not Show Since Deprecated' } }, create(context) {} },
-              'no-biz': { meta: { deprecated: false, docs: { category: 'World' } }, create(context) {} },
-            },
-          };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-        'docs/rules/no-baz.md': '',
-        'docs/rules/no-biz.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-list-split', 'multiple-properties'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('splits the list by multiple properties', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         ruleListSplit: ['meta.deprecated', 'meta.docs.category'],
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('multiple properties and no rules left for second property (already shown for first property)', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': { meta: { deprecated: true, docs: { category: 'Apples' } }, create(context) {} },
-              'no-bar': { meta: { deprecated: true, docs: { category: 'Bananas' } }, create(context) {} },
-            },
-          };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-list-split', 'multiple-properties-no-rules'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('does not show the property with no rules left and does not throw', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         ruleListSplit: ['meta.deprecated', 'meta.docs.category'],
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('multiple properties and no rules could exist for second property', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': { meta: { deprecated: true, }, create(context) {} },
-              'no-bar': { meta: { deprecated: true, }, create(context) {} },
-            },
-          };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-list-split', 'multiple-properties-no-rules-second'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('throws an error', async function () {
       await expect(
-        generate('.', {
+        generate(tempDir, {
           ruleListSplit: ['meta.deprecated', 'non-existent-property'],
         }),
       ).rejects.toThrow(
@@ -702,43 +343,20 @@ describe('generate (--rule-list-split)', function () {
   });
 
   describe('as a function', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': { meta: { deprecated: true, }, create(context) {} },
-              'no-bar': { meta: { deprecated: false, }, create(context) {} },
-              'no-baz': { meta: { deprecated: false, }, create(context) {} },
-              'no-biz': { meta: { type: 'suggestion' }, create(context) {} },
-            },
-          };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-        'docs/rules/no-baz.md': '',
-        'docs/rules/no-biz.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-list-split', 'as-function'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('generates the documentation', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         ruleListSplit: (rules) => {
           const list1 = {
             rules: rules.filter(([, rule]) => rule.meta.type === 'suggestion'),
@@ -758,43 +376,26 @@ describe('generate (--rule-list-split)', function () {
           return [list1, list2, list3, list4];
         },
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('as a function but invalid return value', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': { meta: { deprecated: true, }, create(context) {} },
-            },
-          };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-list-split', 'as-function-invalid'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('throws an error when no return value', async function () {
       await expect(
-        generate('.', {
+        generate(tempDir, {
           // @ts-expect-error -- intentionally invalid return value
           ruleListSplit: () => {
             return null; // eslint-disable-line unicorn/no-null -- intentionally invalid return value
@@ -805,7 +406,7 @@ describe('generate (--rule-list-split)', function () {
 
     it('throws an error when returning an empty array', async function () {
       await expect(
-        generate('.', {
+        generate(tempDir, {
           ruleListSplit: () => {
             return [];
           },
@@ -817,7 +418,7 @@ describe('generate (--rule-list-split)', function () {
 
     it('throws an error when a sub-list has wrong type for rules', async function () {
       await expect(
-        generate('.', {
+        generate(tempDir, {
           // @ts-expect-error -- intentionally invalid return value
           ruleListSplit: () => {
             return [{ title: 'Foo', rules: null }]; // eslint-disable-line unicorn/no-null -- intentionally invalid return value
@@ -828,7 +429,7 @@ describe('generate (--rule-list-split)', function () {
 
     it('throws an error when a sub-list has no rules', async function () {
       await expect(
-        generate('.', {
+        generate(tempDir, {
           ruleListSplit: () => {
             return [{ title: 'Foo', rules: [] }];
           },
@@ -840,7 +441,7 @@ describe('generate (--rule-list-split)', function () {
 
     it('throws an error when a sub-list has a non-string title', async function () {
       await expect(
-        generate('.', {
+        generate(tempDir, {
           // @ts-expect-error -- intentionally invalid type
           ruleListSplit: (rules) => {
             return [{ title: 123, rules }];
@@ -851,7 +452,7 @@ describe('generate (--rule-list-split)', function () {
 
     it('throws an error when same rule in list twice', async function () {
       await expect(
-        generate('.', {
+        generate(tempDir, {
           ruleListSplit: (rules) => {
             return [{ title: 'Foo', rules: [rules[0], rules[0]] }];
           },

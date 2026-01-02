@@ -47,8 +47,7 @@ exports[`generate (configs) config with overrides generates the documentation 1`
 | :----------------------------- | :--------------------- | :- |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`generate (configs) config with overrides generates the documentation 2`] = `
@@ -97,8 +96,7 @@ exports[`generate (configs) rule config with options generates the documentation
 | :----------------------------- | :--------------------- | :- |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`generate (configs) rule config with options generates the documentation 2`] = `
@@ -132,8 +130,7 @@ exports[`generate (configs) rules that are disabled or set to warn generates the
 | [no-buz](docs/rules/no-buz.md) | Description of no-buz. |    | 🌟 🔥 |       |
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. |    |       | 🔥    |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`generate (configs) rules that are disabled or set to warn generates the documentation 2`] = `
@@ -227,6 +224,7 @@ exports[`generate (configs) rules that are disabled or set to warn, only one con
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |    |
 
 <!-- end auto-generated rules list -->
+
 "
 `;
 
@@ -291,8 +289,7 @@ exports[`generate (configs) with --ignore-config hides the ignored config 1`] = 
 | :----------------------------- | :---------------------- | :- |
 | [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅  |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`generate (configs) with --ignore-config hides the ignored config 2`] = `
@@ -317,8 +314,7 @@ exports[`generate (configs) with config that does not have any rules uses recomm
 | :----------------------------- | :---------------------- | :- |
 | [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅  |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`generate (configs) with config that does not have any rules uses recommended config emoji since it is the only relevant config 2`] = `
@@ -343,6 +339,5 @@ exports[`generate (configs) with external rules in config ignores external rules
 | :----------------------------- | :---------------------- | :- |
 | [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅  |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;

@@ -1,48 +1,28 @@
 import { generate } from '../../../lib/generator.js';
-import mockFs from 'mock-fs';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { jest } from '@jest/globals';
 import * as sinon from 'sinon';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const PATH_NODE_MODULES = resolve(__dirname, '..', '..', '..', 'node_modules');
+import {
+  setupFixture,
+  cleanupFixture,
+  getFixturePath,
+} from '../fixture-helper.js';
 
 describe('generate (rule doc sections)', function () {
   describe('with `--rule-doc-section-include` and `--rule-doc-section-exclude` and no problems', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-                },
-              };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '## Examples\n',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-doc-section', 'no-problems'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('has no issues', async function () {
       await expect(
-        generate('.', {
+        generate(tempDir, {
           ruleDocSectionInclude: ['Examples'],
           ruleDocSectionExclude: ['Unwanted Section'],
         }),
@@ -51,38 +31,21 @@ describe('generate (rule doc sections)', function () {
   });
 
   describe('with `--rule-doc-section-include` and `--rule-doc-section-exclude` and problems', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-                },
-              };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '## Unwanted Section\n',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-rule-doc-section', 'with-problems'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('prints errors', async function () {
       const consoleErrorStub = sinon.stub(console, 'error');
-      await generate('.', {
+      await generate(tempDir, {
         ruleDocSectionInclude: ['Examples'],
         ruleDocSectionExclude: ['Unwanted Section'],
       });

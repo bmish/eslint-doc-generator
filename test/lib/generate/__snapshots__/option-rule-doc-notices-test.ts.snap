@@ -12,8 +12,7 @@ exports[`generate (--rule-doc-notices) basic shows the right rule doc notices 1`
 | :----------------------------- | :---------------------- | :- | :- | :- |
 | [no-foo](docs/rules/no-foo.md) | Description for no-foo. | 🔧 | 💡 | ❌  |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`generate (--rule-doc-notices) basic shows the right rule doc notices 2`] = `

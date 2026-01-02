@@ -1,155 +1,77 @@
 import { generate } from '../../../lib/generator.js';
-import mockFs from 'mock-fs';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 import { readFileSync } from 'node:fs';
-import { jest } from '@jest/globals';
 import { EMOJI_CONFIG_ERROR } from '../../../lib/emojis.js';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const PATH_NODE_MODULES = resolve(__dirname, '..', '..', '..', 'node_modules');
+import {
+  setupFixture,
+  cleanupFixture,
+  getFixturePath,
+} from '../fixture-helper.js';
 
 describe('generate (--config-emoji)', function () {
   describe('basic', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-                  'no-bar': { meta: { docs: { description: 'Description for no-bar.'} }, create(context) {} },
-                  'no-baz': { meta: { docs: { description: 'Description for no-boz.'} }, create(context) {} },
-                },
-                configs: {
-                  recommended: {
-                    rules: { 'test/no-foo': 'error', 'test/no-bar': 'error' },
-                  },
-                  stylistic: {
-                    rules: { 'test/no-bar': 'error', 'test/no-baz': 'error' },
-                  },
-                  custom: {
-                    rules: { 'test/no-baz': 'error' },
-                  }
-                }
-              };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-        'docs/rules/no-baz.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-config-emoji', 'basic'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('shows the correct emojis', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         configEmoji: [
           ['recommended', '🔥'],
           ['stylistic', '🎨'],
           ['custom', '🌟'],
         ],
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-baz.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'docs/rules/no-baz.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('with default emoji for common config', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-                },
-                configs: {
-                  recommended: {
-                    rules: { 'test/no-foo': 'error' },
-                  }
-                }
-              };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-config-emoji', 'default-emoji'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('uses the default emoji when no configEmoji option is provided', async function () {
-      await generate('.'); // No configEmoji option - should use default ✅ for recommended
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      await generate(tempDir); // No configEmoji option - should use default ✅ for recommended
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('with manually supplied badge markdown', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-                },
-                configs: {
-                  funConfig: {
-                    rules: { 'test/no-foo': 'error' },
-                  }
-                }
-              };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-config-emoji', 'badge-markdown'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('uses the badge markdown as provided', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         configEmoji: [
           [
             'funConfig',
@@ -157,55 +79,27 @@ describe('generate (--config-emoji)', function () {
           ],
         ],
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('with missing emoji for a config', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-            },
-            configs: {
-              foo: {
-                rules: { 'test/no-foo': 'error', },
-              },
-              bar: {
-                rules: { 'test/no-foo': 'error', },
-              },
-              baz: {
-                rules: { 'test/no-foo': 'error', },
-              }
-            }
-          };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-config-emoji', 'missing-emoji'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('throws an error for configs without emojis', async function () {
       await expect(
-        generate('.', {
+        generate(tempDir, {
           configEmoji: [
             ['bar', '🎨'],
             // no emoji for baz - should throw error
@@ -219,46 +113,29 @@ describe('generate (--config-emoji)', function () {
   });
 
   describe('invalid format', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-                },
-              };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-config-emoji', 'invalid-format'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('throws an error', async function () {
       await expect(
         // @ts-expect-error -- testing invalid input (too many items)
-        generate('.', { configEmoji: [['foo', 'bar', 'baz']] }),
+        generate(tempDir, { configEmoji: [['foo', 'bar', 'baz']] }),
       ).rejects.toThrow(
         'Invalid configEmoji option: foo,bar,baz. Expected format: config,emoji',
       );
 
       await expect(
         // @ts-expect-error -- testing invalid input (too few items)
-        generate('.', { configEmoji: [[]] }),
+        generate(tempDir, { configEmoji: [[]] }),
       ).rejects.toThrow(
         'Invalid configEmoji option: . Expected format: config,emoji',
       );
@@ -266,38 +143,21 @@ describe('generate (--config-emoji)', function () {
   });
 
   describe('trying to remove a default emoji that does not exist', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-                },
-              };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-config-emoji', 'invalid-format'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('throws an error', async function () {
       await expect(
-        generate('.', { configEmoji: [['config-without-default-emoji']] }),
+        generate(tempDir, { configEmoji: [['config-without-default-emoji']] }),
       ).rejects.toThrow(
         'Invalid configEmoji option: config-without-default-emoji. Expected format: config,emoji',
       );
@@ -305,41 +165,21 @@ describe('generate (--config-emoji)', function () {
   });
 
   describe('removing default emoji for a config', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-                },
-                configs: {
-                  recommended: { rules: { 'test/no-foo': 'error' } },
-                }
-              };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-config-emoji', 'remove-default-emoji'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('throws an error when no emoji is provided', async function () {
       await expect(
-        generate('.', {
+        generate(tempDir, {
           configEmoji: [['recommended']],
         }),
       ).rejects.toThrow(
@@ -349,39 +189,21 @@ describe('generate (--config-emoji)', function () {
   });
 
   describe('non-existent config', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-                },
-                configs: {}
-              };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-config-emoji', 'non-existent-config'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('throws an error', async function () {
       await expect(
-        generate('.', { configEmoji: [['config-does-not-exist', '🔥']] }),
+        generate(tempDir, { configEmoji: [['config-does-not-exist', '🔥']] }),
       ).rejects.toThrow(
         'Invalid configEmoji option: config-does-not-exist config not found.',
       );
@@ -389,82 +211,41 @@ describe('generate (--config-emoji)', function () {
   });
 
   describe('using a reserved emoji', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-                },
-                configs: {
-                  recommended: { rules: { 'test/no-foo': 'error' } },
-                  style: { rules: { 'test/no-foo': 'error' } },
-                }
-              };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-config-emoji', 'reserved-emoji'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('throws an error', async function () {
       await expect(
-        generate('.', { configEmoji: [['recommended', EMOJI_CONFIG_ERROR]] }),
+        generate(tempDir, { configEmoji: [['recommended', EMOJI_CONFIG_ERROR]] }),
       ).rejects.toThrow(`Cannot specify reserved emoji ${EMOJI_CONFIG_ERROR}.`);
     });
   });
 
   describe('duplicate config name', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-                },
-                configs: {
-                  recommended: { rules: { 'test/no-foo': 'error' } },
-                }
-              };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-config-emoji', 'duplicate-config'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('throws an error', async function () {
       await expect(
-        generate('.', {
+        generate(tempDir, {
           configEmoji: [
             ['recommended', '🔥'],
             ['recommended', '😋'],
@@ -477,40 +258,20 @@ describe('generate (--config-emoji)', function () {
   });
 
   describe('with one config that does not have emoji', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-              export default {
-                rules: {
-                  'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-                },
-                configs: {
-                  configWithoutEmoji: { rules: { 'test/no-foo': 'error' } },
-                }
-              };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-config-emoji', 'config-without-emoji'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('throws an error', async function () {
-      await expect(generate('.')).rejects.toThrow(
+      await expect(generate(tempDir)).rejects.toThrow(
         'Config "configWithoutEmoji" does not have an emoji. Please provide one using the --config-emoji option or ignore the config using --ignore-config.',
       );
     });

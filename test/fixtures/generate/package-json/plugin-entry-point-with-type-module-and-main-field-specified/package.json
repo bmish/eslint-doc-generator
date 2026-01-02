@@ -1,0 +1,5 @@
+{
+  "name": "eslint-plugin-test",
+  "main": "./index.js",
+  "type": "module"
+}

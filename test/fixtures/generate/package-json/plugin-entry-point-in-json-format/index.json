@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "no-foo": {
+      "meta": {
+        "docs": {
+          "description": "Description for no-foo"
+        }
+      }
+    }
+  },
+  "configs": {
+    "recommended": {
+      "rules": {
+        "test/no-foo": "error"
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "name": "@my-scope/eslint-plugin-foo",
+  "type": "module",
+  "exports": "./index.js"
+}

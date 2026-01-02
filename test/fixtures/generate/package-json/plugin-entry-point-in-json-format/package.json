@@ -1,0 +1,5 @@
+{
+  "name": "eslint-plugin-test",
+  "exports": "./index.json",
+  "type": "module"
+}

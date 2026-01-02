@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`generate (comment markers) README missing rule list markers and no rules section throws an error 1`] = `"Cannot find module '/Users/bryan/Development/oss/eslint-doc-generator/index.js' from 'lib/import.ts'"`;
+exports[`generate (comment markers) README missing rule list markers and no rules section throws an error 1`] = `"README.md is missing rules list markers: <!-- begin auto-generated rules list --><!-- end auto-generated rules list -->"`;
 
 exports[`generate (comment markers) README missing rule list markers but with rules section adds rule list markers to rule section 1`] = `
 "# eslint-plugin-test
@@ -20,7 +20,8 @@ Old rules list.
 
 ## Other
 
-Bar."
+Bar.
+"
 `;
 
 exports[`generate (comment markers) no existing comment markers - minimal doc content generates the documentation 1`] = `
@@ -65,7 +66,8 @@ since: "v0.12.0"
 <!-- end auto-generated rule header -->
 Pre-existing notice about the rule being recommended.
 ## Rule details
-Details."
+Details.
+"
 `;
 
 exports[`generate (comment markers) no existing comment markers - with no blank lines in existing content generates the documentation 1`] = `
@@ -79,7 +81,8 @@ exports[`generate (comment markers) no existing comment markers - with no blank 
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧 |
 
 <!-- end auto-generated rules list -->
-Existing rules section content."
+Existing rules section content.
+"
 `;
 
 exports[`generate (comment markers) no existing comment markers - with no blank lines in existing content generates the documentation 2`] = `
@@ -90,7 +93,8 @@ exports[`generate (comment markers) no existing comment markers - with no blank 
 📝 Description of no-foo.
 
 <!-- end auto-generated rule header -->
-Existing rule doc content."
+Existing rule doc content.
+"
 `;
 
 exports[`generate (comment markers) no existing comment markers - with one blank line around existing content generates the documentation 1`] = `
@@ -105,7 +109,8 @@ exports[`generate (comment markers) no existing comment markers - with one blank
 
 <!-- end auto-generated rules list -->
 
-Existing rules section content."
+Existing rules section content.
+"
 `;
 
 exports[`generate (comment markers) no existing comment markers - with one blank line around existing content generates the documentation 2`] = `
@@ -117,7 +122,8 @@ exports[`generate (comment markers) no existing comment markers - with one blank
 
 <!-- end auto-generated rule header -->
 
-Existing rule doc content."
+Existing rule doc content.
+"
 `;
 
 exports[`generate (comment markers) rule doc with YAML-formatted metadata (front matter) above title and comment marker updates the documentation 1`] = `
@@ -136,7 +142,8 @@ since: "v0.12.0"
 
 <!-- end auto-generated rule header -->
 ## Rule details
-Details."
+Details.
+"
 `;
 
 exports[`generate (comment markers) rule doc with YAML-formatted metadata (front matter) and nothing else updates the documentation 1`] = `
@@ -167,7 +174,8 @@ exports[`generate (comment markers) rule doc without header marker but pre-exist
 <!-- end auto-generated rule header -->
 Pre-existing notice about the rule being recommended.
 ## Rule details
-Details."
+Details.
+"
 `;
 
 exports[`generate (comment markers) with no blank lines around comment markers generates the documentation 1`] = `
@@ -183,7 +191,8 @@ No blank line after this.
 | [no-foo](docs/rules/no-foo.md) | Description of no-foo. | 🔧 |
 
 <!-- end auto-generated rules list -->
-No blank line before this."
+No blank line before this.
+"
 `;
 
 exports[`generate (comment markers) with no blank lines around comment markers generates the documentation 2`] = `
@@ -194,7 +203,8 @@ exports[`generate (comment markers) with no blank lines around comment markers g
 📝 Description of no-foo.
 
 <!-- end auto-generated rule header -->
-No blank line before this."
+No blank line before this.
+"
 `;
 
 exports[`generate (comment markers) with one blank line around comment markers generates the documentation 1`] = `
@@ -212,7 +222,8 @@ One blank line after this.
 
 <!-- end auto-generated rules list -->
 
-One blank line before this."
+One blank line before this.
+"
 `;
 
 exports[`generate (comment markers) with one blank line around comment markers generates the documentation 2`] = `
@@ -224,5 +235,6 @@ exports[`generate (comment markers) with one blank line around comment markers g
 
 <!-- end auto-generated rule header -->
 
-One blank line before this."
+One blank line before this.
+"
 `;

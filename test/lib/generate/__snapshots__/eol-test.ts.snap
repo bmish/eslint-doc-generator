@@ -16,6 +16,7 @@ exports[`getEndOfLine with a ".editorconfig" file generates using the correct en
 | [c](docs/rules/c.md) |            |
 
 <!-- end auto-generated rules list -->
+
 "
 `;
 
@@ -58,6 +59,7 @@ exports[`getEndOfLine with a ".editorconfig" file generates using the correct en
 | [c](docs/rules/c.md) |            |
 
 <!-- end auto-generated rules list -->
+
 "
 `;
 
@@ -100,6 +102,7 @@ exports[`getEndOfLine with a ".editorconfig" file generates using the correct en
 | [c](docs/rules/c.md) |            |
 
 <!-- end auto-generated rules list -->
+
 "
 `;
 

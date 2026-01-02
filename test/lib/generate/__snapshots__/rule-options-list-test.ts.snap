@@ -65,9 +65,9 @@ exports[`generate (rule options list) with string that needs to be escaped in ta
 ## Options
 <!-- begin auto-generated rule options list -->
 
-| Name  | Description                     | Type           |
-| :---- | :------------------------------ | :------------- |
-| \`foo\` | test<br/>                  desc | String\\|number |
+| Name  | Description           | Type           |
+| :---- | :-------------------- | :------------- |
+| \`foo\` | test<br/>        desc | String\\|number |
 
 <!-- end auto-generated rule options list -->"
 `;

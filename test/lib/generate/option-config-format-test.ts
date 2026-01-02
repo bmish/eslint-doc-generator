@@ -1,150 +1,76 @@
 import { generate } from '../../../lib/generator.js';
-import mockFs from 'mock-fs';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 import { readFileSync } from 'node:fs';
-import { jest } from '@jest/globals';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const PATH_NODE_MODULES = resolve(__dirname, '..', '..', '..', 'node_modules');
+import {
+  setupFixture,
+  cleanupFixture,
+  getFixturePath,
+} from '../fixture-helper.js';
 
 describe('generate (--config-format)', function () {
   describe('name', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-            },
-            configs: {
-              recommended: {
-                rules: {
-                  'test/no-foo': 'error',
-                }
-              }
-            }
-          };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-config-format', 'name'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('uses the right format', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         configFormat: 'name',
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('plugin-colon-prefix-name', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-            },
-            configs: {
-              recommended: {
-                rules: {
-                  'test/no-foo': 'error',
-                }
-              }
-            }
-          };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-config-format', 'plugin-colon-prefix-name'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('uses the right format', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         configFormat: 'plugin-colon-prefix-name',
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('prefix-name', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': { meta: { docs: { description: 'Description for no-foo.'} }, create(context) {} },
-            },
-            configs: {
-              recommended: {
-                rules: {
-                  'test/no-foo': 'error',
-                }
-              }
-            }
-          };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-config-format', 'prefix-name'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('uses the right format', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         configFormat: 'prefix-name',
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
     });
   });
 });

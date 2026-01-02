@@ -11,8 +11,7 @@ exports[`generate (--url-rule-doc) basic uses the right URLs 1`] = `
 | [no-bar](https://example.com/rule-docs/no-bar/) | Description for no-bar. |    |
 | [no-foo](https://example.com/rule-docs/no-foo/) | Description for no-foo. | ❌  |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`generate (--url-rule-doc) basic uses the right URLs 2`] = `
@@ -46,8 +45,7 @@ exports[`generate (--url-rule-doc) function returns undefined should fallback to
 | [no-bar](docs/rules/no-bar.md) | Description for no-bar. |    |
 | [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ❌  |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`generate (--url-rule-doc) function returns undefined should fallback to the normal URL 2`] = `
@@ -61,8 +59,7 @@ exports[`generate (--url-rule-doc) function returns undefined should fallback to
 | [no-bar](../docs/rules/no-bar.md) | Description for no-bar. |    |
 | [no-foo](../docs/rules/no-foo.md) | Description for no-foo. | ❌  |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`generate (--url-rule-doc) function returns undefined should fallback to the normal URL 3`] = `
@@ -96,8 +93,7 @@ exports[`generate (--url-rule-doc) function uses the custom URL 1`] = `
 | [no-bar](https://example.com/rule-docs/name:no-bar/path:README.md) | Description for no-bar. |    |
 | [no-foo](https://example.com/rule-docs/name:no-foo/path:README.md) | Description for no-foo. | ❌  |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`generate (--url-rule-doc) function uses the custom URL 2`] = `
@@ -111,8 +107,7 @@ exports[`generate (--url-rule-doc) function uses the custom URL 2`] = `
 | [no-bar](https://example.com/rule-docs/name:no-bar/path:nested/README.md) | Description for no-bar. |    |
 | [no-foo](https://example.com/rule-docs/name:no-foo/path:nested/README.md) | Description for no-foo. | ❌  |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`generate (--url-rule-doc) function uses the custom URL 3`] = `

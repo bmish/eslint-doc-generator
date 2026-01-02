@@ -11,8 +11,7 @@ exports[`generate (--rule-list-columns) basic shows the right columns and legend
 | :- | :- | :----------------------------- |
 | 💡 | 🔧 | [no-foo](docs/rules/no-foo.md) |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`generate (--rule-list-columns) basic shows the right columns and legend 2`] = `
@@ -41,8 +40,7 @@ exports[`generate (--rule-list-columns) consolidated fixableAndHasSuggestions co
 | [no-baz](docs/rules/no-baz.md) |      |
 | [no-foo](docs/rules/no-foo.md) | 🔧💡 |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`generate (--rule-list-columns) shows column and notice for requiresTypeChecking updates the documentation 1`] = `

@@ -84,7 +84,7 @@ export function getLinkToRule(
   includeBackticks: boolean,
   includePrefix: boolean,
 ) {
-  const { plugin, pluginPrefix } = context;
+  const { plugin, pluginPrefix, path } = context;
 
   const ruleNameWithoutPluginPrefix = ruleName.startsWith(`${pluginPrefix}/`)
     ? ruleName.slice(pluginPrefix.length + 1)
@@ -107,7 +107,12 @@ export function getLinkToRule(
       ? `${pluginPrefix}/${ruleName}`
       : undefined;
 
-  const urlToRule = getUrlToRule(context, ruleName, ruleSource, pathToFile);
+  // Make pathToFile absolute if it's relative
+  const pathToFileAbs = pathToFile.startsWith('/') || (process.platform === 'win32' && /^[A-Z]:/.test(pathToFile))
+    ? pathToFile
+    : join(getPluginRoot(path), pathToFile);
+
+  const urlToRule = getUrlToRule(context, ruleName, ruleSource, pathToFileAbs);
 
   const ruleNameToDisplay = `${includeBackticks ? '`' : ''}${
     includePrefix && ruleNameWithPluginPrefix

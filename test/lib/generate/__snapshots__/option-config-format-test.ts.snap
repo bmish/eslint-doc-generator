@@ -11,8 +11,7 @@ exports[`generate (--config-format) name uses the right format 1`] = `
 | :----------------------------- | :---------------------- | :- |
 | [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅  |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`generate (--config-format) name uses the right format 2`] = `
@@ -37,8 +36,7 @@ exports[`generate (--config-format) plugin-colon-prefix-name uses the right form
 | :----------------------------- | :---------------------- | :- |
 | [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅  |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`generate (--config-format) plugin-colon-prefix-name uses the right format 2`] = `
@@ -63,8 +61,7 @@ exports[`generate (--config-format) prefix-name uses the right format 1`] = `
 | :----------------------------- | :---------------------- | :- |
 | [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅  |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`generate (--config-format) prefix-name uses the right format 2`] = `

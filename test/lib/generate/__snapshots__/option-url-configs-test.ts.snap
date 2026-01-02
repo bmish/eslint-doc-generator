@@ -13,8 +13,7 @@ exports[`generate (--url-configs) basic includes the config link 1`] = `
 | [no-bar](docs/rules/no-bar.md) | Description for no-bar. | ⭐  |
 | [no-foo](docs/rules/no-foo.md) | Description for no-foo. | 🔥 |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`generate (--url-configs) basic includes the config link 2`] = `
@@ -50,8 +49,7 @@ exports[`generate (--url-configs) with only recommended config includes the conf
 | :----------------------------- | :---------------------- | :- |
 | [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅  |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`generate (--url-configs) with only recommended config includes the config link 2`] = `

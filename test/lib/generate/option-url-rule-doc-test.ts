@@ -1,184 +1,87 @@
 import { generate } from '../../../lib/generator.js';
-import mockFs from 'mock-fs';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 import { readFileSync } from 'node:fs';
-import { jest } from '@jest/globals';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const PATH_NODE_MODULES = resolve(__dirname, '..', '..', '..', 'node_modules');
+import {
+  setupFixture,
+  cleanupFixture,
+  getFixturePath,
+} from '../fixture-helper.js';
 
 describe('generate (--url-rule-doc)', function () {
   describe('basic', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': {
-                meta: {
-                  docs: { description: 'Description for no-foo.' },
-                  deprecated: true,
-                  replacedBy: ['no-bar']
-                },
-                create(context) {}
-              },
-              'no-bar': {
-                meta: {
-                  docs: { description: 'Description for no-bar.' }
-                },
-                create(context) {}
-              },
-            },
-          };`,
-
-        'README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-url-rule-doc', 'basic'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('uses the right URLs', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         urlRuleDoc: 'https://example.com/rule-docs/{name}/',
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('function', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': {
-                meta: {
-                  docs: { description: 'Description for no-foo.' },
-                  deprecated: true,
-                  replacedBy: ['no-bar']
-                },
-                create(context) {}
-              },
-              'no-bar': {
-                meta: {
-                  docs: { description: 'Description for no-bar.' }
-                },
-                create(context) {}
-              },
-            },
-          };`,
-
-        'README.md': '## Rules\n',
-        'nested/README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-url-rule-doc', 'function'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('uses the custom URL', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         pathRuleList: ['README.md', 'nested/README.md'],
         urlRuleDoc(name, path) {
           return `https://example.com/rule-docs/name:${name}/path:${path}`;
         },
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('nested/README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'nested/README.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
     });
   });
 
   describe('function returns undefined', function () {
+    let tempDir: string;
+
     beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
-
-        'index.js': `
-          export default {
-            rules: {
-              'no-foo': {
-                meta: {
-                  docs: { description: 'Description for no-foo.' },
-                  deprecated: true,
-                  replacedBy: ['no-bar']
-                },
-                create(context) {}
-              },
-              'no-bar': {
-                meta: {
-                  docs: { description: 'Description for no-bar.' }
-                },
-                create(context) {}
-              },
-            },
-          };`,
-
-        'README.md': '## Rules\n',
-        'nested/README.md': '## Rules\n',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      });
+      tempDir = setupFixture(
+        getFixturePath('generate', 'option-url-rule-doc', 'function-returns-undefined'),
+      );
     });
 
     afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+      cleanupFixture(tempDir);
     });
 
     it('should fallback to the normal URL', async function () {
-      await generate('.', {
+      await generate(tempDir, {
         pathRuleList: ['README.md', 'nested/README.md'],
         urlRuleDoc() {
           return undefined;
         },
       });
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('nested/README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'nested/README.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+      expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
     });
   });
 });

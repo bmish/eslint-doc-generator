@@ -1,0 +1,7 @@
+{
+  "name": "eslint-plugin-test",
+  "exports": {
+    ".": "./index-foo.js"
+  },
+  "type": "module"
+}
