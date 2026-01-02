@@ -1,4 +1,5 @@
-import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { cpSync } from 'node:fs';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -36,7 +37,7 @@ export async function setupFixture(
   const tempDir = await mkdtemp(join(tmpdir(), 'eslint-doc-generator-test-'));
 
   // Copy the fixture to temp directory
-  await cp(sourceDir, tempDir, { recursive: true });
+  cpSync(sourceDir, tempDir, { recursive: true });
 
   // Apply any overrides
   if (overrides) {
