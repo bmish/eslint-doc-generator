@@ -45,9 +45,11 @@ describe('generate (--rule-list-columns)', function () {
 
   it('throws an error for non-existent column', async function () {
     await expect(
-      // @ts-expect-error -- testing non-existent column type
       generate(tempDir, {
-        ruleListColumns: [COLUMN_TYPE.NAME, 'non-existent'],
+        ruleListColumns: [
+          COLUMN_TYPE.NAME,
+          'non-existent',
+        ] as unknown as (typeof COLUMN_TYPE)[keyof typeof COLUMN_TYPE][],
       }),
     ).rejects.toThrow('Invalid ruleListColumns option: non-existent');
   });
