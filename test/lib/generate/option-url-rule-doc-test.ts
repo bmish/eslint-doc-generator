@@ -8,27 +8,23 @@ import {
 } from '../fixture-helper.js';
 
 describe('generate (--url-rule-doc)', function () {
-  describe('basic', function () {
-    let tempDir: string;
+  let tempDir: string;
 
-    beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'option-url-rule-doc', 'basic'),
-      );
-    });
+  beforeEach(function () {
+    tempDir = setupFixture(getFixturePath('standard'));
+  });
 
-    afterEach(function () {
-      cleanupFixture(tempDir);
-    });
+  afterEach(function () {
+    cleanupFixture(tempDir);
+  });
 
-    it('uses the right URLs', async function () {
-      await generate(tempDir, {
-        urlRuleDoc: 'https://example.com/rule-docs/{name}/',
-      });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
+  it('uses the right URLs', async function () {
+    await generate(tempDir, {
+      urlRuleDoc: 'https://example.com/rule-docs/{name}/',
     });
+    expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+    expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
   });
 
   describe('function', function () {

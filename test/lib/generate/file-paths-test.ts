@@ -13,7 +13,7 @@ describe('generate (file paths)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'file-paths', 'missing-rule-doc'),
+        getFixturePath('error-cases', 'missing-rule-doc'),
       );
     });
 
@@ -87,7 +87,7 @@ describe('generate (file paths)', function () {
 
     beforeEach(function () {
       tempDir = setupFixture(
-        getFixturePath('generate', 'file-paths', 'missing-readme'),
+        getFixturePath('error-cases', 'missing-readme'),
       );
     });
 

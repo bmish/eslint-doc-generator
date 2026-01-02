@@ -57,6 +57,10 @@ exports[`generate (file paths) lowercase README file generates the documentation
 exports[`generate (file paths) missing rule doc when initRuleDocs is true creates the rule doc 1`] = `
 "# test/no-foo
 
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+📝 Description of no-foo.
+
 <!-- end auto-generated rule header -->
 "
 `;
@@ -64,17 +68,11 @@ exports[`generate (file paths) missing rule doc when initRuleDocs is true create
 exports[`generate (file paths) missing rule doc when initRuleDocs is true creates the rule doc 2`] = `
 "# test/no-bar
 
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+📝 Description of no-bar.
+
 <!-- end auto-generated rule header -->
-
-## Options
-
-<!-- begin auto-generated rule options list -->
-
-| Name      |
-| :-------- |
-| \`option1\` |
-
-<!-- end auto-generated rule options list -->
 "
 `;
 

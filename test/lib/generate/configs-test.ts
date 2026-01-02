@@ -52,9 +52,7 @@ describe('generate (configs)', function () {
     let tempDir: string;
 
     beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'configs', 'disabled-or-warn'),
-      );
+      tempDir = setupFixture(getFixturePath('standard-configs-complex'));
     });
 
     afterEach(function () {

@@ -8,61 +8,29 @@ import {
 } from '../fixture-helper.js';
 
 describe('generate (configs list)', function () {
-  describe('basic', function () {
-    let tempDir: string;
+  let tempDir: string;
 
-    beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'configs-list', 'basic'),
-      );
-    });
-
-    afterEach(function () {
-      cleanupFixture(tempDir);
-    });
-
-    it('generates the documentation', async function () {
-      await generate(tempDir);
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-    });
+  beforeEach(function () {
+    tempDir = setupFixture(getFixturePath('standard'));
   });
 
-  describe('with --ignore-config', function () {
-    let tempDir: string;
-
-    beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'configs-list', 'with-ignore-config'),
-      );
-    });
-
-    afterEach(function () {
-      cleanupFixture(tempDir);
-    });
-
-    it('generates the documentation', async function () {
-      await generate(tempDir, { ignoreConfig: ['foo'] });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-    });
+  afterEach(function () {
+    cleanupFixture(tempDir);
   });
 
-  describe('with --config-format', function () {
-    let tempDir: string;
+  it('generates the documentation', async function () {
+    await generate(tempDir);
+    expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+  });
 
-    beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'configs-list', 'with-config-format'),
-      );
-    });
+  it('generates the documentation with --ignore-config', async function () {
+    await generate(tempDir, { ignoreConfig: ['style'] });
+    expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+  });
 
-    afterEach(function () {
-      cleanupFixture(tempDir);
-    });
-
-    it('generates the documentation', async function () {
-      await generate(tempDir, { configFormat: 'prefix-name' });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-    });
+  it('generates the documentation with --config-format', async function () {
+    await generate(tempDir, { configFormat: 'prefix-name' });
+    expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
   });
 
   describe('with configs not defined in alphabetical order', function () {

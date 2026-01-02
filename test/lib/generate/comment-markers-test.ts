@@ -8,26 +8,22 @@ import {
 } from '../fixture-helper.js';
 
 describe('generate (comment markers)', function () {
-  describe('with one blank line around comment markers', function () {
-    let tempDir: string;
+  let tempDir: string;
 
-    beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'comment-markers', 'one-blank-line-around-comment-markers'),
-      );
-    });
+  beforeEach(function () {
+    tempDir = setupFixture(getFixturePath('standard'));
+  });
 
-    afterEach(function () {
-      cleanupFixture(tempDir);
-    });
+  afterEach(function () {
+    cleanupFixture(tempDir);
+  });
 
-    it('generates the documentation', async function () {
-      await generate(tempDir);
+  it('generates the documentation with one blank line around comment markers', async function () {
+    await generate(tempDir);
 
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+    expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
 
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-    });
+    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
   });
 
   describe('with no blank lines around comment markers', function () {
