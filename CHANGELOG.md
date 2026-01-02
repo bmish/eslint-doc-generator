@@ -5,18 +5,12 @@
 
 ### ⚠ BREAKING CHANGES
 
-* update default rule doc title and notices to separate rule name and description ([#835](https://github.com/bmish/eslint-doc-generator/issues/835))
-* Add default emoji for `base` config
-* Remove implicit config badge fallback
-* Require Node 20, 22, 24+
+* Add default emoji for `base` config ([#828](https://github.com/bmish/eslint-doc-generator/pull/828))
+* Remove implicit config badge fallback ([#827](https://github.com/bmish/eslint-doc-generator/pull/827))
+* Require Node 20, 22, 24+ ([#794](https://github.com/bmish/eslint-doc-generator/pull/794))
+* Update default rule doc title and notices to separate rule name and description ([#835](https://github.com/bmish/eslint-doc-generator/pull/835))
+* Update dependencies ([#834](https://github.com/bmish/eslint-doc-generator/pull/834))
 
-### Features
-
-* Add default emoji for `base` config ([c3f1fb9](https://github.com/bmish/eslint-doc-generator/commit/c3f1fb9e93c65504a01124275811ccd3c377f75d))
-* Remove implicit config badge fallback ([654667c](https://github.com/bmish/eslint-doc-generator/commit/654667c15f1b20094c750949d7a715b863257092))
-* Require Node 20, 22, 24+ ([af5ab75](https://github.com/bmish/eslint-doc-generator/commit/af5ab75008e08d5ae9f338169c7a28cedb4b446f))
-* update default rule doc title and notices to separate rule name and description ([#835](https://github.com/bmish/eslint-doc-generator/issues/835)) ([3d4b160](https://github.com/bmish/eslint-doc-generator/commit/3d4b160a088a50dd70dd37a2512be9767a4e256b))
-* update dependencies ([#834](https://github.com/bmish/eslint-doc-generator/issues/834)) ([828d6cf](https://github.com/bmish/eslint-doc-generator/commit/828d6cf5f0606624dc3ae6b70c63b4be165be056))
 
 ## [2.4.0](https://github.com/bmish/eslint-doc-generator/compare/v2.3.0...v2.4.0) (2025-12-05)
 
