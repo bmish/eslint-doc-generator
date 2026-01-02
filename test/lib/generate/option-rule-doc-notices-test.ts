@@ -120,6 +120,43 @@ describe('generate (--rule-doc-notices)', function () {
     });
   });
 
+  describe('hasSuggestions only (without fixable) using fixableAndHasSuggestions notice', function () {
+    let fixture: FixtureContext;
+
+    beforeAll(async function () {
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: {
+                  docs: { description: 'Description for no-foo.' },
+                  hasSuggestions: true,
+                },
+                create(context) {}
+              },
+            },
+          };`,
+          'README.md': '## Rules\n',
+          'docs/rules/no-foo.md': '',
+        },
+      });
+    });
+
+    afterAll(async function () {
+      await fixture.cleanup();
+    });
+
+    it('shows only hasSuggestions notice', async function () {
+      await generate(fixture.path, {
+        ruleDocNotices: [NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS],
+      });
+      expect(await fixture.readFile('docs/rules/no-foo.md')).toMatchSnapshot();
+    });
+  });
+
   describe('passing string instead of enum to simulate real-world usage where enum type is not available', function () {
     let fixture: FixtureContext;
 

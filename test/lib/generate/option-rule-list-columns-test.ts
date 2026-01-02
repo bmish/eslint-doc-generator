@@ -78,12 +78,20 @@ describe('generate (--rule-list-columns)', function () {
                     },
                     create(context) {}
                   },
+                  'no-qux': {
+                    meta: {
+                      docs: { description: 'Description for no-qux.' },
+                      hasSuggestions: true,
+                    },
+                    create(context) {}
+                  },
                 },
               };`,
           'README.md': '## Rules\n',
           'docs/rules/no-foo.md': '',
           'docs/rules/no-bar.md': '',
           'docs/rules/no-baz.md': '',
+          'docs/rules/no-qux.md': '',
         },
       });
     });

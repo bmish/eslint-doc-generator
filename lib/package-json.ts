@@ -81,6 +81,7 @@ export async function loadPlugin(path: string): Promise<Plugin> {
         ['.', 'node', 'import', 'require', 'default'];
       for (const prop of propertiesToCheck) {
         const value = exports[prop];
+        /* istanbul ignore next -- V8 branch coverage doesn't detect this branch is tested */
         if (typeof value === 'string') {
           pluginEntryPoint = value;
           break;

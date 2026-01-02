@@ -40,6 +40,7 @@ exports[`generate (--rule-list-columns) consolidated fixableAndHasSuggestions co
 | [no-bar](docs/rules/no-bar.md) | 🔧   |
 | [no-baz](docs/rules/no-baz.md) |      |
 | [no-foo](docs/rules/no-foo.md) | 🔧💡 |
+| [no-qux](docs/rules/no-qux.md) | 💡   |
 
 <!-- end auto-generated rules list -->
 "
