@@ -326,8 +326,8 @@ function getRuleNoticeLines(context: Context, ruleName: string) {
     configsWarn,
     configsOff,
   );
+  let noticeType: keyof typeof notices;
 
-  let noticeType: NOTICE_TYPE;
   for (noticeType in notices) {
     const expected = notices[noticeType];
 
