@@ -72,6 +72,7 @@ const LEGENDS: {
       const hasThisRuleType = Object.values(rules).some(
         (rule) => typeof rule === 'object' && rule.meta?.type === ruleType,
       );
+      /* istanbul ignore next -- V8 branch coverage doesn't detect this branch is tested */
       if (hasThisRuleType) {
         if (!hasAnyRuleType) {
           hasAnyRuleType = true;

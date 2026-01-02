@@ -110,6 +110,7 @@ export async function generate(path: string, userOptions?: GenerateOptions) {
       ]
         .filter((section) => section !== undefined)
         .join(`${endOfLine}${endOfLine}`);
+      /* istanbul ignore next -- V8 branch coverage doesn't detect this branch is tested */
       if (newRuleDocContents !== '') {
         newRuleDocContents = `${endOfLine}${newRuleDocContents}${endOfLine}`;
       }
@@ -139,6 +140,7 @@ export async function generate(path: string, userOptions?: GenerateOptions) {
     );
 
     if (check) {
+      /* istanbul ignore next -- V8 branch coverage doesn't detect this branch is tested */
       if (contentsNew !== contentsOld) {
         console.error(
           `Please run eslint-doc-generator. A rule doc is out-of-date: ${relative(
@@ -229,6 +231,7 @@ export async function generate(path: string, userOptions?: GenerateOptions) {
     );
 
     if (check) {
+      /* istanbul ignore next -- V8 branch coverage doesn't detect this branch is tested */
       if (fileContentsNew !== fileContents) {
         console.error(
           `Please run eslint-doc-generator. The rules table in ${relative(

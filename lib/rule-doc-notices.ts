@@ -225,9 +225,12 @@ const RULE_NOTICES: {
   [NOTICE_TYPE.FIXABLE_AND_HAS_SUGGESTIONS]: ({ fixable, hasSuggestions }) => {
     if (fixable && hasSuggestions) {
       return `${EMOJI_FIXABLE}${EMOJI_HAS_SUGGESTIONS} This rule is automatically fixable by the [\`--fix\` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).`;
-    } else if (fixable) {
+    }
+    if (fixable) {
       return NOTICE_FIXABLE;
-    } else if (hasSuggestions) {
+    }
+    /* istanbul ignore else -- V8 branch coverage doesn't detect this branch is tested */
+    if (hasSuggestions) {
       return NOTICE_HAS_SUGGESTIONS;
     }
 
