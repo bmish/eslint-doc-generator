@@ -99,7 +99,7 @@ const RULE_NOTICES: {
         hasSuggestions: boolean;
         replacedBy: readonly string[] | undefined;
         path: string;
-        type?: `${RULE_TYPE}`;
+        type?: RULE_TYPE;
       }) => string);
 } = {
   // Configs notice varies based on whether the rule is configured in one or more configs.

@@ -23,7 +23,8 @@
     "forceConsistentCasingInFileNames": true,
 
     // Modern module handling
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true
   },
   "include": ["bin/**/*", "lib/**/*", "test/**/*", "vitest.config.ts"]
 }

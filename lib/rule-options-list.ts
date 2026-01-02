@@ -9,16 +9,17 @@ import type { RuleOption } from './rule-options.js';
 import { sanitizeMarkdownTable } from './string.js';
 import type { Context } from './context.js';
 
-export enum COLUMN_TYPE {
+const COLUMN_TYPE = {
   // Alphabetical order.
-  DEFAULT = 'default',
-  DEPRECATED = 'deprecated',
-  DESCRIPTION = 'description',
-  ENUM = 'enum',
-  NAME = 'name',
-  REQUIRED = 'required',
-  TYPE = 'type',
-}
+  DEFAULT: 'default',
+  DEPRECATED: 'deprecated',
+  DESCRIPTION: 'description',
+  ENUM: 'enum',
+  NAME: 'name',
+  REQUIRED: 'required',
+  TYPE: 'type',
+} as const;
+type COLUMN_TYPE = (typeof COLUMN_TYPE)[keyof typeof COLUMN_TYPE];
 
 const HEADERS: {
   [key in COLUMN_TYPE]: string;

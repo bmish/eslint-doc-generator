@@ -20,21 +20,23 @@ export type Plugin = TSESLint.Linter.Plugin;
 /**
  * Where a rule comes from (where it's defined).
  */
-export enum RULE_SOURCE {
-  'self' = 'self', // From this plugin.
-  'eslintCore' = 'eslintCore',
-  'thirdPartyPlugin' = 'thirdPartyPlugin',
-}
+export const RULE_SOURCE = {
+  self: 'self', // From this plugin.
+  eslintCore: 'eslintCore',
+  thirdPartyPlugin: 'thirdPartyPlugin',
+} as const;
+export type RULE_SOURCE = (typeof RULE_SOURCE)[keyof typeof RULE_SOURCE];
 
 export const SEVERITY_ERROR = new Set<RuleSeverity>([2, 'error']);
 export const SEVERITY_WARN = new Set<RuleSeverity>([1, 'warn']);
 export const SEVERITY_OFF = new Set<RuleSeverity>([0, 'off']);
 
-export enum SEVERITY_TYPE {
-  'error' = 'error',
-  'warn' = 'warn',
-  'off' = 'off',
-}
+export const SEVERITY_TYPE = {
+  error: 'error',
+  warn: 'warn',
+  off: 'off',
+} as const;
+export type SEVERITY_TYPE = (typeof SEVERITY_TYPE)[keyof typeof SEVERITY_TYPE];
 
 export const SEVERITY_TYPE_TO_SET: {
   [key in SEVERITY_TYPE]: Set<TSESLint.Linter.RuleLevel>;
@@ -62,59 +64,62 @@ export type ConfigEmojis = readonly { config: string; emoji: string }[];
 /**
  * Rule doc notices.
  */
-export enum NOTICE_TYPE {
-  CONFIGS = 'configs',
-  DEPRECATED = 'deprecated',
-  DESCRIPTION = 'description',
-  FIXABLE = 'fixable',
-  FIXABLE_AND_HAS_SUGGESTIONS = 'fixableAndHasSuggestions', // Consolidated notice for space-saving.
-  HAS_SUGGESTIONS = 'hasSuggestions',
-  OPTIONS = 'options',
-  REQUIRES_TYPE_CHECKING = 'requiresTypeChecking',
-  TYPE = 'type',
-}
+export const NOTICE_TYPE = {
+  CONFIGS: 'configs',
+  DEPRECATED: 'deprecated',
+  DESCRIPTION: 'description',
+  FIXABLE: 'fixable',
+  FIXABLE_AND_HAS_SUGGESTIONS: 'fixableAndHasSuggestions', // Consolidated notice for space-saving.
+  HAS_SUGGESTIONS: 'hasSuggestions',
+  OPTIONS: 'options',
+  REQUIRES_TYPE_CHECKING: 'requiresTypeChecking',
+  TYPE: 'type',
+} as const;
+export type NOTICE_TYPE = (typeof NOTICE_TYPE)[keyof typeof NOTICE_TYPE];
 
 /**
  * Rule list columns.
  */
-export enum COLUMN_TYPE {
-  CONFIGS_ERROR = 'configsError',
-  CONFIGS_OFF = 'configsOff',
-  CONFIGS_WARN = 'configsWarn',
-  DEPRECATED = 'deprecated',
-  DESCRIPTION = 'description',
-  FIXABLE = 'fixable',
-  FIXABLE_AND_HAS_SUGGESTIONS = 'fixableAndHasSuggestions', // Consolidated column for space-saving.
-  HAS_SUGGESTIONS = 'hasSuggestions',
-  NAME = 'name',
-  OPTIONS = 'options',
-  REQUIRES_TYPE_CHECKING = 'requiresTypeChecking',
-  TYPE = 'type',
-}
+export const COLUMN_TYPE = {
+  CONFIGS_ERROR: 'configsError',
+  CONFIGS_OFF: 'configsOff',
+  CONFIGS_WARN: 'configsWarn',
+  DEPRECATED: 'deprecated',
+  DESCRIPTION: 'description',
+  FIXABLE: 'fixable',
+  FIXABLE_AND_HAS_SUGGESTIONS: 'fixableAndHasSuggestions', // Consolidated column for space-saving.
+  HAS_SUGGESTIONS: 'hasSuggestions',
+  NAME: 'name',
+  OPTIONS: 'options',
+  REQUIRES_TYPE_CHECKING: 'requiresTypeChecking',
+  TYPE: 'type',
+} as const;
+export type COLUMN_TYPE = (typeof COLUMN_TYPE)[keyof typeof COLUMN_TYPE];
 
 /**
  * CLI/config file options.
  */
-export enum OPTION_TYPE {
-  CHECK = 'check',
-  CONFIG_EMOJI = 'configEmoji',
-  CONFIG_FORMAT = 'configFormat',
-  IGNORE_CONFIG = 'ignoreConfig',
-  IGNORE_DEPRECATED_RULES = 'ignoreDeprecatedRules',
-  INIT_RULE_DOCS = 'initRuleDocs',
-  PATH_RULE_DOC = 'pathRuleDoc',
-  PATH_RULE_LIST = 'pathRuleList',
-  POSTPROCESS = 'postprocess',
-  RULE_DOC_NOTICES = 'ruleDocNotices',
-  RULE_DOC_SECTION_EXCLUDE = 'ruleDocSectionExclude',
-  RULE_DOC_SECTION_INCLUDE = 'ruleDocSectionInclude',
-  RULE_DOC_SECTION_OPTIONS = 'ruleDocSectionOptions',
-  RULE_DOC_TITLE_FORMAT = 'ruleDocTitleFormat',
-  RULE_LIST_COLUMNS = 'ruleListColumns',
-  RULE_LIST_SPLIT = 'ruleListSplit',
-  URL_CONFIGS = 'urlConfigs',
-  URL_RULE_DOC = 'urlRuleDoc',
-}
+export const OPTION_TYPE = {
+  CHECK: 'check',
+  CONFIG_EMOJI: 'configEmoji',
+  CONFIG_FORMAT: 'configFormat',
+  IGNORE_CONFIG: 'ignoreConfig',
+  IGNORE_DEPRECATED_RULES: 'ignoreDeprecatedRules',
+  INIT_RULE_DOCS: 'initRuleDocs',
+  PATH_RULE_DOC: 'pathRuleDoc',
+  PATH_RULE_LIST: 'pathRuleList',
+  POSTPROCESS: 'postprocess',
+  RULE_DOC_NOTICES: 'ruleDocNotices',
+  RULE_DOC_SECTION_EXCLUDE: 'ruleDocSectionExclude',
+  RULE_DOC_SECTION_INCLUDE: 'ruleDocSectionInclude',
+  RULE_DOC_SECTION_OPTIONS: 'ruleDocSectionOptions',
+  RULE_DOC_TITLE_FORMAT: 'ruleDocTitleFormat',
+  RULE_LIST_COLUMNS: 'ruleListColumns',
+  RULE_LIST_SPLIT: 'ruleListSplit',
+  URL_CONFIGS: 'urlConfigs',
+  URL_RULE_DOC: 'urlRuleDoc',
+} as const;
+export type OPTION_TYPE = (typeof OPTION_TYPE)[keyof typeof OPTION_TYPE];
 
 /**
  * Function for splitting the rule list into multiple sections.
@@ -207,7 +212,7 @@ export type GenerateOptions = {
    * Choices: `configs`, `deprecated`, `description` (off by default), `fixable` (off by default), `fixableAndHasSuggestions`, `hasSuggestions` (off by default), `options` (off by default), `requiresTypeChecking`, `type` (off by default).
    * Default: `['deprecated', 'configs', 'fixableAndHasSuggestions', 'requiresTypeChecking']`.
    */
-  readonly ruleDocNotices?: readonly `${NOTICE_TYPE}`[];
+  readonly ruleDocNotices?: readonly NOTICE_TYPE[];
 
   /** Disallowed sections in each rule doc. Exit with failure if present. */
   readonly ruleDocSectionExclude?: readonly string[];
@@ -227,7 +232,7 @@ export type GenerateOptions = {
    * Choices: `configsError`, `configsOff`, `configsWarn`, `deprecated`, `description`, `fixable`, `fixableAndHasSuggestions` (off by default), `hasSuggestions`, `name`, `options` (off by default), `requiresTypeChecking`, `type` (off by default).
    * Default: `['name', 'description', 'configsError', 'configsWarn', 'configsOff', 'fixable', 'hasSuggestions', 'requiresTypeChecking', 'deprecated']`.
    */
-  readonly ruleListColumns?: readonly `${COLUMN_TYPE}`[];
+  readonly ruleListColumns?: readonly COLUMN_TYPE[];
 
   /**
    * Rule property(s) or function to split the rules list by.
