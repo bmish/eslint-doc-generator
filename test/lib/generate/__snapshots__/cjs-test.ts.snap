@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`generate (cjs) basic generates the documentation 1`] = `
+exports[`generate (cjs) > basic > generates the documentation 1`] = `
 "# eslint-plugin-test
 
 <!-- begin auto-generated rules list -->
@@ -13,7 +13,7 @@ exports[`generate (cjs) basic generates the documentation 1`] = `
 "
 `;
 
-exports[`generate (cjs) basic generates the documentation 2`] = `
+exports[`generate (cjs) > basic > generates the documentation 2`] = `
 "# test/no-foo
 
 📝 Disallow foo.
@@ -22,7 +22,7 @@ exports[`generate (cjs) basic generates the documentation 2`] = `
 "
 `;
 
-exports[`generate (cjs) config that extends another config generates the documentation 1`] = `
+exports[`generate (cjs) > config that extends another config > generates the documentation 1`] = `
 "# eslint-plugin-test
 
 ## Rules
@@ -43,7 +43,7 @@ exports[`generate (cjs) config that extends another config generates the documen
 "
 `;
 
-exports[`generate (cjs) config that extends another config generates the documentation 2`] = `
+exports[`generate (cjs) > config that extends another config > generates the documentation 2`] = `
 "# test/no-foo
 
 📝 Description of no-foo.
@@ -54,7 +54,7 @@ exports[`generate (cjs) config that extends another config generates the documen
 "
 `;
 
-exports[`generate (cjs) config that extends another config generates the documentation 3`] = `
+exports[`generate (cjs) > config that extends another config > generates the documentation 3`] = `
 "# test/no-bar
 
 📝 Description of no-bar.
@@ -65,7 +65,7 @@ exports[`generate (cjs) config that extends another config generates the documen
 "
 `;
 
-exports[`generate (cjs) config that extends another config generates the documentation 4`] = `
+exports[`generate (cjs) > config that extends another config > generates the documentation 4`] = `
 "# test/no-baz
 
 📝 Description of no-baz.
@@ -76,7 +76,7 @@ exports[`generate (cjs) config that extends another config generates the documen
 "
 `;
 
-exports[`generate (cjs) config that extends another config generates the documentation 5`] = `
+exports[`generate (cjs) > config that extends another config > generates the documentation 5`] = `
 "# test/no-biz
 
 📝 Description of no-biz.

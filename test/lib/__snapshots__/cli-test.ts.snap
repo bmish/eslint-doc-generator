@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`cli all CLI options and all config files options merges correctly, with CLI options taking precedence 1`] = `
+exports[`cli > all CLI options and all config files options > merges correctly, with CLI options taking precedence 1`] = `
 [
   ".",
   {
@@ -62,7 +62,7 @@ exports[`cli all CLI options and all config files options merges correctly, with
 ]
 `;
 
-exports[`cli all CLI options, no config file options is called correctly 1`] = `
+exports[`cli > all CLI options, no config file options > is called correctly 1`] = `
 [
   ".",
   {
@@ -109,7 +109,7 @@ exports[`cli all CLI options, no config file options is called correctly 1`] = `
 ]
 `;
 
-exports[`cli all config files options, no CLI options is called correctly 1`] = `
+exports[`cli > all config files options, no CLI options > is called correctly 1`] = `
 [
   ".",
   {
@@ -157,7 +157,7 @@ exports[`cli all config files options, no CLI options is called correctly 1`] = 
 ]
 `;
 
-exports[`cli boolean option - false (explicit) is called correctly 1`] = `
+exports[`cli > boolean option - false (explicit) > is called correctly 1`] = `
 [
   ".",
   {
@@ -174,7 +174,7 @@ exports[`cli boolean option - false (explicit) is called correctly 1`] = `
 ]
 `;
 
-exports[`cli boolean option - true (explicit) is called correctly 1`] = `
+exports[`cli > boolean option - true (explicit) > is called correctly 1`] = `
 [
   ".",
   {
@@ -191,7 +191,7 @@ exports[`cli boolean option - true (explicit) is called correctly 1`] = `
 ]
 `;
 
-exports[`cli boolean option - true (implicit) is called correctly 1`] = `
+exports[`cli > boolean option - true (implicit) > is called correctly 1`] = `
 [
   ".",
   {
@@ -208,7 +208,7 @@ exports[`cli boolean option - true (implicit) is called correctly 1`] = `
 ]
 `;
 
-exports[`cli no options is called correctly 1`] = `
+exports[`cli > no options > is called correctly 1`] = `
 [
   ".",
   {
@@ -224,7 +224,7 @@ exports[`cli no options is called correctly 1`] = `
 ]
 `;
 
-exports[`cli pathRuleList as array in config file and CLI merges correctly 1`] = `
+exports[`cli > pathRuleList as array in config file and CLI > merges correctly 1`] = `
 [
   ".",
   {

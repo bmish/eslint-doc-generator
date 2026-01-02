@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`generate (general) basic updates the documentation 1`] = `
+exports[`generate (general) > basic > updates the documentation 1`] = `
 "# eslint-plugin-test
 Description.
 ## Rules
@@ -23,7 +23,7 @@ Description.
 more content."
 `;
 
-exports[`generate (general) basic updates the documentation 2`] = `
+exports[`generate (general) > basic > updates the documentation 2`] = `
 "# test/no-foo
 
 📝 Description of no-foo.
@@ -40,7 +40,7 @@ optionToDoSomething1 - explanation
 optionToDoSomething2 - explanation"
 `;
 
-exports[`generate (general) basic updates the documentation 3`] = `
+exports[`generate (general) > basic > updates the documentation 3`] = `
 "# test/no-bar
 
 📝 Description of no-bar.
@@ -54,7 +54,7 @@ exports[`generate (general) basic updates the documentation 3`] = `
 details"
 `;
 
-exports[`generate (general) basic updates the documentation 4`] = `
+exports[`generate (general) > basic > updates the documentation 4`] = `
 "# test/no-baz
 
 📝 Description of no-boz.
@@ -64,7 +64,7 @@ exports[`generate (general) basic updates the documentation 4`] = `
 details"
 `;
 
-exports[`generate (general) plugin prefix uses \`plugin.meta.name\` as source for rule prefix 1`] = `
+exports[`generate (general) > plugin prefix > uses \`plugin.meta.name\` as source for rule prefix 1`] = `
 "# eslint-plugin-test
 Description.
 ## Rules
@@ -83,7 +83,7 @@ Description.
 more content."
 `;
 
-exports[`generate (general) plugin prefix uses \`plugin.meta.name\` as source for rule prefix 2`] = `
+exports[`generate (general) > plugin prefix > uses \`plugin.meta.name\` as source for rule prefix 2`] = `
 "# custom/no-foo
 
 📝 Description of no-foo.
@@ -98,7 +98,7 @@ optionToDoSomething1 - explanation
 optionToDoSomething2 - explanation"
 `;
 
-exports[`generate (general) plugin prefix uses \`plugin.meta.name\` as source for rule prefix 3`] = `
+exports[`generate (general) > plugin prefix > uses \`plugin.meta.name\` as source for rule prefix 3`] = `
 "# custom/no-bar
 
 📝 Description of no-bar.
@@ -110,7 +110,7 @@ exports[`generate (general) plugin prefix uses \`plugin.meta.name\` as source fo
 details"
 `;
 
-exports[`generate (general) plugin prefix uses \`plugin.meta.name\` as source for rule prefix 4`] = `
+exports[`generate (general) > plugin prefix > uses \`plugin.meta.name\` as source for rule prefix 4`] = `
 "# custom/no-baz
 
 📝 Description of no-boz.

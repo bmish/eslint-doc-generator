@@ -1,8 +1,8 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`generate (comment markers) README missing rule list markers and no rules section throws an error 1`] = `"README.md is missing rules list markers: <!-- begin auto-generated rules list --><!-- end auto-generated rules list -->"`;
+exports[`generate (comment markers) > README missing rule list markers and no rules section > throws an error 1`] = `[Error: README.md is missing rules list markers: <!-- begin auto-generated rules list --><!-- end auto-generated rules list -->]`;
 
-exports[`generate (comment markers) README missing rule list markers but with rules section adds rule list markers to rule section 1`] = `
+exports[`generate (comment markers) > README missing rule list markers but with rules section > adds rule list markers to rule section 1`] = `
 "# eslint-plugin-test
 
 Foo.
@@ -23,7 +23,7 @@ Old rules list.
 Bar."
 `;
 
-exports[`generate (comment markers) no existing comment markers - minimal doc content generates the documentation 1`] = `
+exports[`generate (comment markers) > no existing comment markers - minimal doc content > generates the documentation 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -37,7 +37,7 @@ exports[`generate (comment markers) no existing comment markers - minimal doc co
 "
 `;
 
-exports[`generate (comment markers) no existing comment markers - minimal doc content generates the documentation 2`] = `
+exports[`generate (comment markers) > no existing comment markers - minimal doc content > generates the documentation 2`] = `
 "# test/no-foo
 
 📝 Description of no-foo.
@@ -48,7 +48,7 @@ exports[`generate (comment markers) no existing comment markers - minimal doc co
 "
 `;
 
-exports[`generate (comment markers) no existing comment markers - rule doc with YAML-formatted metadata (front matter) above title updates the documentation 1`] = `
+exports[`generate (comment markers) > no existing comment markers - rule doc with YAML-formatted metadata (front matter) above title > updates the documentation 1`] = `
 "---
 pageClass: "rule-details"
 sidebarDepth: 0
@@ -68,7 +68,7 @@ Pre-existing notice about the rule being recommended.
 Details."
 `;
 
-exports[`generate (comment markers) no existing comment markers - with no blank lines in existing content generates the documentation 1`] = `
+exports[`generate (comment markers) > no existing comment markers - with no blank lines in existing content > generates the documentation 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -82,7 +82,7 @@ exports[`generate (comment markers) no existing comment markers - with no blank 
 Existing rules section content."
 `;
 
-exports[`generate (comment markers) no existing comment markers - with no blank lines in existing content generates the documentation 2`] = `
+exports[`generate (comment markers) > no existing comment markers - with no blank lines in existing content > generates the documentation 2`] = `
 "# test/no-foo
 
 📝 Description of no-foo.
@@ -93,7 +93,7 @@ exports[`generate (comment markers) no existing comment markers - with no blank 
 Existing rule doc content."
 `;
 
-exports[`generate (comment markers) no existing comment markers - with one blank line around existing content generates the documentation 1`] = `
+exports[`generate (comment markers) > no existing comment markers - with one blank line around existing content > generates the documentation 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -108,7 +108,7 @@ exports[`generate (comment markers) no existing comment markers - with one blank
 Existing rules section content."
 `;
 
-exports[`generate (comment markers) no existing comment markers - with one blank line around existing content generates the documentation 2`] = `
+exports[`generate (comment markers) > no existing comment markers - with one blank line around existing content > generates the documentation 2`] = `
 "# test/no-foo
 
 📝 Description of no-foo.
@@ -120,7 +120,7 @@ exports[`generate (comment markers) no existing comment markers - with one blank
 Existing rule doc content."
 `;
 
-exports[`generate (comment markers) rule doc with YAML-formatted metadata (front matter) above title and comment marker updates the documentation 1`] = `
+exports[`generate (comment markers) > rule doc with YAML-formatted metadata (front matter) above title and comment marker > updates the documentation 1`] = `
 "---
 pageClass: "rule-details"
 sidebarDepth: 0
@@ -139,7 +139,7 @@ since: "v0.12.0"
 Details."
 `;
 
-exports[`generate (comment markers) rule doc with YAML-formatted metadata (front matter) and nothing else updates the documentation 1`] = `
+exports[`generate (comment markers) > rule doc with YAML-formatted metadata (front matter) and nothing else > updates the documentation 1`] = `
 "---
 pageClass: "rule-details"
 sidebarDepth: 0
@@ -157,7 +157,7 @@ since: "v0.12.0"
 "
 `;
 
-exports[`generate (comment markers) rule doc without header marker but pre-existing header updates the documentation 1`] = `
+exports[`generate (comment markers) > rule doc without header marker but pre-existing header > updates the documentation 1`] = `
 "# test/no-foo
 
 📝 Description.
@@ -170,7 +170,7 @@ Pre-existing notice about the rule being recommended.
 Details."
 `;
 
-exports[`generate (comment markers) with no blank lines around comment markers generates the documentation 1`] = `
+exports[`generate (comment markers) > with no blank lines around comment markers > generates the documentation 1`] = `
 "# Rules
 
 No blank line after this.
@@ -186,7 +186,7 @@ No blank line after this.
 No blank line before this."
 `;
 
-exports[`generate (comment markers) with no blank lines around comment markers generates the documentation 2`] = `
+exports[`generate (comment markers) > with no blank lines around comment markers > generates the documentation 2`] = `
 "# test/no-foo
 
 📝 Description of no-foo.
@@ -197,7 +197,7 @@ exports[`generate (comment markers) with no blank lines around comment markers g
 No blank line before this."
 `;
 
-exports[`generate (comment markers) with one blank line around comment markers generates the documentation 1`] = `
+exports[`generate (comment markers) > with one blank line around comment markers > generates the documentation 1`] = `
 "# Rules
 
 One blank line after this.
@@ -215,7 +215,7 @@ One blank line after this.
 One blank line before this."
 `;
 
-exports[`generate (comment markers) with one blank line around comment markers generates the documentation 2`] = `
+exports[`generate (comment markers) > with one blank line around comment markers > generates the documentation 2`] = `
 "# test/no-foo
 
 📝 Description of no-foo.

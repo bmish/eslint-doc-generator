@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getEndOfLine with a ".editorconfig" file generates using the correct end of line when ".editorconfig" exists generates using crlf end of line from ".editorconfig" 1`] = `
+exports[`getEndOfLine > with a ".editorconfig" file > generates using the correct end of line when ".editorconfig" exists > generates using crlf end of line from ".editorconfig" 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -18,7 +18,7 @@ exports[`getEndOfLine with a ".editorconfig" file generates using the correct en
 <!-- end auto-generated rules list -->"
 `;
 
-exports[`getEndOfLine with a ".editorconfig" file generates using the correct end of line when ".editorconfig" exists generates using crlf end of line from ".editorconfig" 2`] = `
+exports[`getEndOfLine > with a ".editorconfig" file > generates using the correct end of line when ".editorconfig" exists > generates using crlf end of line from ".editorconfig" 2`] = `
 "# test/a
 
 💼 This rule is enabled in the following configs: 🅰️ \`a\`, 🅱️ \`B\`, 🌊 \`c\`.
@@ -27,21 +27,21 @@ exports[`getEndOfLine with a ".editorconfig" file generates using the correct en
 "
 `;
 
-exports[`getEndOfLine with a ".editorconfig" file generates using the correct end of line when ".editorconfig" exists generates using crlf end of line from ".editorconfig" 3`] = `
+exports[`getEndOfLine > with a ".editorconfig" file > generates using the correct end of line when ".editorconfig" exists > generates using crlf end of line from ".editorconfig" 3`] = `
 "# test/B
 
 <!-- end auto-generated rule header -->
 "
 `;
 
-exports[`getEndOfLine with a ".editorconfig" file generates using the correct end of line when ".editorconfig" exists generates using crlf end of line from ".editorconfig" 4`] = `
+exports[`getEndOfLine > with a ".editorconfig" file > generates using the correct end of line when ".editorconfig" exists > generates using crlf end of line from ".editorconfig" 4`] = `
 "# test/c
 
 <!-- end auto-generated rule header -->
 "
 `;
 
-exports[`getEndOfLine with a ".editorconfig" file generates using the correct end of line when ".editorconfig" exists generates using lf end of line from ".editorconfig" 1`] = `
+exports[`getEndOfLine > with a ".editorconfig" file > generates using the correct end of line when ".editorconfig" exists > generates using lf end of line from ".editorconfig" 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -59,7 +59,7 @@ exports[`getEndOfLine with a ".editorconfig" file generates using the correct en
 <!-- end auto-generated rules list -->"
 `;
 
-exports[`getEndOfLine with a ".editorconfig" file generates using the correct end of line when ".editorconfig" exists generates using lf end of line from ".editorconfig" 2`] = `
+exports[`getEndOfLine > with a ".editorconfig" file > generates using the correct end of line when ".editorconfig" exists > generates using lf end of line from ".editorconfig" 2`] = `
 "# test/a
 
 💼 This rule is enabled in the following configs: 🅰️ \`a\`, 🅱️ \`B\`, 🌊 \`c\`.
@@ -68,21 +68,21 @@ exports[`getEndOfLine with a ".editorconfig" file generates using the correct en
 "
 `;
 
-exports[`getEndOfLine with a ".editorconfig" file generates using the correct end of line when ".editorconfig" exists generates using lf end of line from ".editorconfig" 3`] = `
+exports[`getEndOfLine > with a ".editorconfig" file > generates using the correct end of line when ".editorconfig" exists > generates using lf end of line from ".editorconfig" 3`] = `
 "# test/B
 
 <!-- end auto-generated rule header -->
 "
 `;
 
-exports[`getEndOfLine with a ".editorconfig" file generates using the correct end of line when ".editorconfig" exists generates using lf end of line from ".editorconfig" 4`] = `
+exports[`getEndOfLine > with a ".editorconfig" file > generates using the correct end of line when ".editorconfig" exists > generates using lf end of line from ".editorconfig" 4`] = `
 "# test/c
 
 <!-- end auto-generated rule header -->
 "
 `;
 
-exports[`getEndOfLine with a ".editorconfig" file generates using the correct end of line when ".editorconfig" exists generates using the end of line from ".editorconfig" while respecting the .md specific end of line setting 1`] = `
+exports[`getEndOfLine > with a ".editorconfig" file > generates using the correct end of line when ".editorconfig" exists > generates using the end of line from ".editorconfig" while respecting the .md specific end of line setting 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -100,7 +100,7 @@ exports[`getEndOfLine with a ".editorconfig" file generates using the correct en
 <!-- end auto-generated rules list -->"
 `;
 
-exports[`getEndOfLine with a ".editorconfig" file generates using the correct end of line when ".editorconfig" exists generates using the end of line from ".editorconfig" while respecting the .md specific end of line setting 2`] = `
+exports[`getEndOfLine > with a ".editorconfig" file > generates using the correct end of line when ".editorconfig" exists > generates using the end of line from ".editorconfig" while respecting the .md specific end of line setting 2`] = `
 "# test/a
 
 💼 This rule is enabled in the following configs: 🅰️ \`a\`, 🅱️ \`B\`, 🌊 \`c\`.
@@ -109,14 +109,14 @@ exports[`getEndOfLine with a ".editorconfig" file generates using the correct en
 "
 `;
 
-exports[`getEndOfLine with a ".editorconfig" file generates using the correct end of line when ".editorconfig" exists generates using the end of line from ".editorconfig" while respecting the .md specific end of line setting 3`] = `
+exports[`getEndOfLine > with a ".editorconfig" file > generates using the correct end of line when ".editorconfig" exists > generates using the end of line from ".editorconfig" while respecting the .md specific end of line setting 3`] = `
 "# test/B
 
 <!-- end auto-generated rule header -->
 "
 `;
 
-exports[`getEndOfLine with a ".editorconfig" file generates using the correct end of line when ".editorconfig" exists generates using the end of line from ".editorconfig" while respecting the .md specific end of line setting 4`] = `
+exports[`getEndOfLine > with a ".editorconfig" file > generates using the correct end of line when ".editorconfig" exists > generates using the end of line from ".editorconfig" while respecting the .md specific end of line setting 4`] = `
 "# test/c
 
 <!-- end auto-generated rule header -->

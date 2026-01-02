@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`generate (--rule-doc-notices) basic shows description before other notices when using default notice ordering 1`] = `
+exports[`generate (--rule-doc-notices) > basic > shows description before other notices when using default notice ordering 1`] = `
 "# test/no-foo
 
 📝 Description for no-foo.
@@ -13,7 +13,7 @@ exports[`generate (--rule-doc-notices) basic shows description before other noti
 "
 `;
 
-exports[`generate (--rule-doc-notices) basic shows the right rule doc notices 1`] = `
+exports[`generate (--rule-doc-notices) > basic > shows the right rule doc notices 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -29,7 +29,7 @@ exports[`generate (--rule-doc-notices) basic shows the right rule doc notices 1`
 "
 `;
 
-exports[`generate (--rule-doc-notices) basic shows the right rule doc notices 2`] = `
+exports[`generate (--rule-doc-notices) > basic > shows the right rule doc notices 2`] = `
 "# test/no-foo
 
 💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
@@ -46,7 +46,7 @@ exports[`generate (--rule-doc-notices) basic shows the right rule doc notices 2`
 "
 `;
 
-exports[`generate (--rule-doc-notices) hasSuggestions only (without fixable) using fixableAndHasSuggestions notice shows only hasSuggestions notice 1`] = `
+exports[`generate (--rule-doc-notices) > hasSuggestions only (without fixable) using fixableAndHasSuggestions notice > shows only hasSuggestions notice 1`] = `
 "# test/no-foo
 
 💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).

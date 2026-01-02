@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`generate (rule descriptions) Rule description needs to be formatted capitalizes the first letter and removes the trailing period from the description 1`] = `
+exports[`generate (rule descriptions) > Rule description needs to be formatted > capitalizes the first letter and removes the trailing period from the description 1`] = `
 "# test/no-foo
 
 📝 Disallow foo.
@@ -9,7 +9,7 @@ exports[`generate (rule descriptions) Rule description needs to be formatted cap
 "
 `;
 
-exports[`generate (rule descriptions) no rules with description generates the documentation 1`] = `
+exports[`generate (rule descriptions) > no rules with description > generates the documentation 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -21,14 +21,14 @@ exports[`generate (rule descriptions) no rules with description generates the do
 "
 `;
 
-exports[`generate (rule descriptions) no rules with description generates the documentation 2`] = `
+exports[`generate (rule descriptions) > no rules with description > generates the documentation 2`] = `
 "# test/no-foo
 
 <!-- end auto-generated rule header -->
 "
 `;
 
-exports[`generate (rule descriptions) one rule missing description generates the documentation 1`] = `
+exports[`generate (rule descriptions) > one rule missing description > generates the documentation 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -41,7 +41,7 @@ exports[`generate (rule descriptions) one rule missing description generates the
 "
 `;
 
-exports[`generate (rule descriptions) one rule missing description generates the documentation 2`] = `
+exports[`generate (rule descriptions) > one rule missing description > generates the documentation 2`] = `
 "# test/no-foo
 
 📝 Description for no-foo.
@@ -50,14 +50,14 @@ exports[`generate (rule descriptions) one rule missing description generates the
 "
 `;
 
-exports[`generate (rule descriptions) one rule missing description generates the documentation 3`] = `
+exports[`generate (rule descriptions) > one rule missing description > generates the documentation 3`] = `
 "# test/no-bar
 
 <!-- end auto-generated rule header -->
 "
 `;
 
-exports[`generate (rule descriptions) rule with long-enough description to require name column wrapping avoidance adds spaces to the name column 1`] = `
+exports[`generate (rule descriptions) > rule with long-enough description to require name column wrapping avoidance > adds spaces to the name column 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -69,7 +69,7 @@ exports[`generate (rule descriptions) rule with long-enough description to requi
 "
 `;
 
-exports[`generate (rule descriptions) rule with long-enough description to require name column wrapping avoidance adds spaces to the name column 2`] = `
+exports[`generate (rule descriptions) > rule with long-enough description to require name column wrapping avoidance > adds spaces to the name column 2`] = `
 "# test/no-foo
 
 📝 Over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars.
@@ -78,7 +78,7 @@ exports[`generate (rule descriptions) rule with long-enough description to requi
 "
 `;
 
-exports[`generate (rule descriptions) rule with long-enough description to require name column wrapping avoidance but rule name too short does not add spaces to name column 1`] = `
+exports[`generate (rule descriptions) > rule with long-enough description to require name column wrapping avoidance but rule name too short > does not add spaces to name column 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -90,7 +90,7 @@ exports[`generate (rule descriptions) rule with long-enough description to requi
 "
 `;
 
-exports[`generate (rule descriptions) rule with long-enough description to require name column wrapping avoidance but rule name too short does not add spaces to name column 2`] = `
+exports[`generate (rule descriptions) > rule with long-enough description to require name column wrapping avoidance but rule name too short > does not add spaces to name column 2`] = `
 "# test/foo
 
 📝 Over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars over 60 chars.
@@ -99,7 +99,7 @@ exports[`generate (rule descriptions) rule with long-enough description to requi
 "
 `;
 
-exports[`generate (rule descriptions) with rule description that needs to be escaped in table generates the documentation 1`] = `
+exports[`generate (rule descriptions) > with rule description that needs to be escaped in table > generates the documentation 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 

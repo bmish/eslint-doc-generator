@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`generate (--rule-list-columns) basic shows the right columns and legend 1`] = `
+exports[`generate (--rule-list-columns) > basic > shows the right columns and legend 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -15,7 +15,7 @@ exports[`generate (--rule-list-columns) basic shows the right columns and legend
 "
 `;
 
-exports[`generate (--rule-list-columns) basic shows the right columns and legend 2`] = `
+exports[`generate (--rule-list-columns) > basic > shows the right columns and legend 2`] = `
 "# test/no-foo
 
 📝 Description for no-foo.
@@ -28,7 +28,7 @@ exports[`generate (--rule-list-columns) basic shows the right columns and legend
 "
 `;
 
-exports[`generate (--rule-list-columns) consolidated fixableAndHasSuggestions column shows the right columns and legend 1`] = `
+exports[`generate (--rule-list-columns) > consolidated fixableAndHasSuggestions column > shows the right columns and legend 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -46,7 +46,7 @@ exports[`generate (--rule-list-columns) consolidated fixableAndHasSuggestions co
 "
 `;
 
-exports[`generate (--rule-list-columns) shows column and notice for requiresTypeChecking updates the documentation 1`] = `
+exports[`generate (--rule-list-columns) > shows column and notice for requiresTypeChecking > updates the documentation 1`] = `
 "<!-- begin auto-generated rules list -->
 
 💼 Configurations enabled in.\\
@@ -61,7 +61,7 @@ exports[`generate (--rule-list-columns) shows column and notice for requiresType
 <!-- end auto-generated rules list -->"
 `;
 
-exports[`generate (--rule-list-columns) shows column and notice for requiresTypeChecking updates the documentation 2`] = `
+exports[`generate (--rule-list-columns) > shows column and notice for requiresTypeChecking > updates the documentation 2`] = `
 "# test/no-foo
 
 📝 Description of no-foo.
@@ -72,7 +72,7 @@ exports[`generate (--rule-list-columns) shows column and notice for requiresType
 "
 `;
 
-exports[`generate (--rule-list-columns) shows column and notice for requiresTypeChecking updates the documentation 3`] = `
+exports[`generate (--rule-list-columns) > shows column and notice for requiresTypeChecking > updates the documentation 3`] = `
 "# test/no-bar
 
 📝 Description of no-bar.

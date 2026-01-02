@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`generate (--url-configs) basic includes the config link 1`] = `
+exports[`generate (--url-configs) > basic > includes the config link 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -17,7 +17,7 @@ exports[`generate (--url-configs) basic includes the config link 1`] = `
 "
 `;
 
-exports[`generate (--url-configs) basic includes the config link 2`] = `
+exports[`generate (--url-configs) > basic > includes the config link 2`] = `
 "# test/no-foo
 
 📝 Description for no-foo.
@@ -28,7 +28,7 @@ exports[`generate (--url-configs) basic includes the config link 2`] = `
 "
 `;
 
-exports[`generate (--url-configs) basic includes the config link 3`] = `
+exports[`generate (--url-configs) > basic > includes the config link 3`] = `
 "# test/no-bar
 
 📝 Description for no-bar.
@@ -39,7 +39,7 @@ exports[`generate (--url-configs) basic includes the config link 3`] = `
 "
 `;
 
-exports[`generate (--url-configs) with only recommended config includes the config link 1`] = `
+exports[`generate (--url-configs) > with only recommended config > includes the config link 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
 
@@ -54,7 +54,7 @@ exports[`generate (--url-configs) with only recommended config includes the conf
 "
 `;
 
-exports[`generate (--url-configs) with only recommended config includes the config link 2`] = `
+exports[`generate (--url-configs) > with only recommended config > includes the config link 2`] = `
 "# test/no-foo
 
 📝 Description for no-foo.
