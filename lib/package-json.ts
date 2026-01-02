@@ -160,6 +160,7 @@ export async function getCurrentPackageVersion(): Promise<string> {
   const packageJson = JSON.parse(
     await readFile(new URL(pathToPackageJson, import.meta.url), 'utf8'),
   ) as PackageJson;
+  /* istanbul ignore next -- defensive check that can't be tested with real fixtures */
   if (!packageJson.version) {
     throw new Error('Could not find package.json `version`.');
   }

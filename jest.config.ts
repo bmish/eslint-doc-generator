@@ -17,10 +17,6 @@ const config: Config = {
   coveragePathIgnorePatterns: [
     '<rootDir>/node_modules/',
     '<rootDir>/test/',
-    // these files are created by the test suite in the in-memory fs,
-    // which test has access to and so counts in coverage by default
-    '<rootDir>/index.js',
-    '<rootDir>/index-foo.js',
   ],
   coverageThreshold: {
     global: {

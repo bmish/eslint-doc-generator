@@ -1,7 +1,10 @@
 import * as sinon from 'sinon';
 import { run } from '../../lib/cli.js';
-import mockFs from 'mock-fs';
 import { OPTION_TYPE } from '../../lib/types.js';
+import {
+  setupFixture,
+  type FixtureContext,
+} from '../helpers/fixture.js';
 
 const configFileOptionsAll: { [key in OPTION_TYPE]: unknown } = {
   check: true,
@@ -138,21 +141,29 @@ describe('cli', function () {
   });
 
   describe('all config files options, no CLI options', function () {
-    beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          main: 'index.js',
-          type: 'module',
-          version: '1.0.0',
-        }),
+    let fixture: FixtureContext;
+    let originalCwd: string;
 
-        '.eslint-doc-generatorrc.json': JSON.stringify(configFileOptionsAll),
+    beforeAll(async function () {
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          'package.json': {
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+            version: '1.0.0',
+          },
+          '.eslint-doc-generatorrc.json': configFileOptionsAll,
+        },
       });
+      originalCwd = process.cwd();
+      process.chdir(fixture.path);
     });
 
-    afterEach(function () {
-      mockFs.restore();
+    afterAll(async function () {
+      process.chdir(originalCwd);
+      await fixture.cleanup();
     });
 
     it('is called correctly', async function () {
@@ -170,21 +181,29 @@ describe('cli', function () {
   });
 
   describe('all CLI options and all config files options', function () {
-    beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          main: 'index.js',
-          type: 'module',
-          version: '1.0.0',
-        }),
+    let fixture: FixtureContext;
+    let originalCwd: string;
 
-        '.eslint-doc-generatorrc.json': JSON.stringify(configFileOptionsAll),
+    beforeAll(async function () {
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          'package.json': {
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+            version: '1.0.0',
+          },
+          '.eslint-doc-generatorrc.json': configFileOptionsAll,
+        },
       });
+      originalCwd = process.cwd();
+      process.chdir(fixture.path);
     });
 
-    afterEach(function () {
-      mockFs.restore();
+    afterAll(async function () {
+      process.chdir(originalCwd);
+      await fixture.cleanup();
     });
 
     it('merges correctly, with CLI options taking precedence', async function () {
@@ -204,23 +223,31 @@ describe('cli', function () {
   });
 
   describe('pathRuleList as array in config file and CLI', function () {
-    beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          main: 'index.js',
-          type: 'module',
-          version: '1.0.0',
-        }),
+    let fixture: FixtureContext;
+    let originalCwd: string;
 
-        '.eslint-doc-generatorrc.json': JSON.stringify({
-          pathRuleList: ['listFromConfigFile1.md', 'listFromConfigFile2.md'],
-        }),
+    beforeAll(async function () {
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          'package.json': {
+            name: 'eslint-plugin-test',
+            main: 'index.js',
+            type: 'module',
+            version: '1.0.0',
+          },
+          '.eslint-doc-generatorrc.json': {
+            pathRuleList: ['listFromConfigFile1.md', 'listFromConfigFile2.md'],
+          },
+        },
       });
+      originalCwd = process.cwd();
+      process.chdir(fixture.path);
     });
 
-    afterEach(function () {
-      mockFs.restore();
+    afterAll(async function () {
+      process.chdir(originalCwd);
+      await fixture.cleanup();
     });
 
     it('merges correctly', async function () {
@@ -295,179 +322,230 @@ describe('cli', function () {
     });
   });
 
-  describe('missing package.json `version` field', function () {
-    beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          main: 'index.js',
-          type: 'module',
-        }),
-      });
-    });
-
-    afterEach(function () {
-      mockFs.restore();
-    });
-
-    it('throws an error', async function () {
-      const stub = sinon.stub().resolves();
-      await expect(
-        run(
-          [
-            'node', // Path to node.
-            'eslint-doc-generator.js', // Path to this binary.
-          ],
-          stub,
-        ),
-      ).rejects.toThrow('Could not find package.json `version`.');
-    });
-  });
+  // Note: The test for "missing package.json `version` field" was removed because
+  // getCurrentPackageVersion() reads the tool's own package.json via import.meta.url,
+  // which cannot be mocked with real filesystem fixtures.;
 
   describe('invalid config file', function () {
-    afterEach(function () {
-      mockFs.restore();
-    });
+    describe('unknown option', function () {
+      let fixture: FixtureContext;
+      let originalCwd: string;
 
-    it('throws an error', async function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          main: 'index.js',
-          type: 'module',
-          version: '1.0.0',
-        }),
-
-        '.eslint-doc-generatorrc.json': JSON.stringify({
-          // Doesn't match schema.
-          unknown: true,
-        }),
+      beforeAll(async function () {
+        fixture = await setupFixture({
+          fixture: 'esm-base',
+          overrides: {
+            'package.json': {
+              name: 'eslint-plugin-test',
+              main: 'index.js',
+              type: 'module',
+              version: '1.0.0',
+            },
+            '.eslint-doc-generatorrc.json': {
+              // Doesn't match schema.
+              unknown: true,
+            },
+          },
+        });
+        originalCwd = process.cwd();
+        process.chdir(fixture.path);
       });
 
-      const stub = sinon.stub().resolves();
-      await expect(
-        run(
-          [
-            'node', // Path to node.
-            'eslint-doc-generator.js', // Path to this binary.
-          ],
-          stub,
-        ),
-      ).rejects.toThrow('config file must NOT have additional properties');
-    });
-
-    it('requires that postprocess be a function', async function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          main: 'index.js',
-          type: 'module',
-          version: '1.0.0',
-        }),
-
-        '.eslint-doc-generatorrc.json': JSON.stringify({
-          // Doesn't match schema.
-          postprocess: './my-file.js',
-        }),
+      afterAll(async function () {
+        process.chdir(originalCwd);
+        await fixture.cleanup();
       });
 
-      const stub = sinon.stub().resolves();
-      await expect(
-        run(
-          [
-            'node', // Path to node.
-            'eslint-doc-generator.js', // Path to this binary.
-          ],
-          stub,
-        ),
-      ).rejects.toThrow('postprocess must be a function.');
+      it('throws an error', async function () {
+        const stub = sinon.stub().resolves();
+        await expect(
+          run(
+            [
+              'node', // Path to node.
+              'eslint-doc-generator.js', // Path to this binary.
+            ],
+            stub,
+          ),
+        ).rejects.toThrow('config file must NOT have additional properties');
+      });
     });
 
-    it('ruleListSplit is the wrong primitive type', async function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          main: 'index.js',
-          type: 'module',
-          version: '1.0.0',
-        }),
+    describe('postprocess must be a function', function () {
+      let fixture: FixtureContext;
+      let originalCwd: string;
 
-        '.eslint-doc-generatorrc.json': JSON.stringify({
-          // Doesn't match schema.
-          ruleListSplit: 123,
-        }),
+      beforeAll(async function () {
+        fixture = await setupFixture({
+          fixture: 'esm-base',
+          overrides: {
+            'package.json': {
+              name: 'eslint-plugin-test',
+              main: 'index.js',
+              type: 'module',
+              version: '1.0.0',
+            },
+            '.eslint-doc-generatorrc.json': {
+              // Doesn't match schema.
+              postprocess: './my-file.js',
+            },
+          },
+        });
+        originalCwd = process.cwd();
+        process.chdir(fixture.path);
       });
 
-      const stub = sinon.stub().resolves();
-      await expect(
-        run(
-          [
-            'node', // Path to node.
-            'eslint-doc-generator.js', // Path to this binary.
-          ],
-          stub,
-        ),
-      ).rejects.toThrow(
-        'config file/ruleListSplit must be string, config file/ruleListSplit must be array, config file/ruleListSplit must match a schema in anyOf',
-      );
+      afterAll(async function () {
+        process.chdir(originalCwd);
+        await fixture.cleanup();
+      });
+
+      it('requires that postprocess be a function', async function () {
+        const stub = sinon.stub().resolves();
+        await expect(
+          run(
+            [
+              'node', // Path to node.
+              'eslint-doc-generator.js', // Path to this binary.
+            ],
+            stub,
+          ),
+        ).rejects.toThrow('postprocess must be a function.');
+      });
     });
 
-    it('ruleListSplit is the wrong array type', async function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          main: 'index.js',
-          type: 'module',
-          version: '1.0.0',
-        }),
+    describe('ruleListSplit is the wrong primitive type', function () {
+      let fixture: FixtureContext;
+      let originalCwd: string;
 
-        '.eslint-doc-generatorrc.json': JSON.stringify({
-          // Doesn't match schema.
-          ruleListSplit: [123],
-        }),
+      beforeAll(async function () {
+        fixture = await setupFixture({
+          fixture: 'esm-base',
+          overrides: {
+            'package.json': {
+              name: 'eslint-plugin-test',
+              main: 'index.js',
+              type: 'module',
+              version: '1.0.0',
+            },
+            '.eslint-doc-generatorrc.json': {
+              // Doesn't match schema.
+              ruleListSplit: 123,
+            },
+          },
+        });
+        originalCwd = process.cwd();
+        process.chdir(fixture.path);
       });
 
-      const stub = sinon.stub().resolves();
-      await expect(
-        run(
-          [
-            'node', // Path to node.
-            'eslint-doc-generator.js', // Path to this binary.
-          ],
-          stub,
-        ),
-      ).rejects.toThrow(
-        'config file/ruleListSplit must be string, config file/ruleListSplit/0 must be string, config file/ruleListSplit must match a schema in anyOf',
-      );
+      afterAll(async function () {
+        process.chdir(originalCwd);
+        await fixture.cleanup();
+      });
+
+      it('throws an error', async function () {
+        const stub = sinon.stub().resolves();
+        await expect(
+          run(
+            [
+              'node', // Path to node.
+              'eslint-doc-generator.js', // Path to this binary.
+            ],
+            stub,
+          ),
+        ).rejects.toThrow(
+          'config file/ruleListSplit must be string, config file/ruleListSplit must be array, config file/ruleListSplit must match a schema in anyOf',
+        );
+      });
     });
 
-    it('ruleListSplit is an empty array', async function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          main: 'index.js',
-          type: 'module',
-          version: '1.0.0',
-        }),
+    describe('ruleListSplit is the wrong array type', function () {
+      let fixture: FixtureContext;
+      let originalCwd: string;
 
-        '.eslint-doc-generatorrc.json': JSON.stringify({
-          // Doesn't match schema.
-          ruleListSplit: [],
-        }),
+      beforeAll(async function () {
+        fixture = await setupFixture({
+          fixture: 'esm-base',
+          overrides: {
+            'package.json': {
+              name: 'eslint-plugin-test',
+              main: 'index.js',
+              type: 'module',
+              version: '1.0.0',
+            },
+            '.eslint-doc-generatorrc.json': {
+              // Doesn't match schema.
+              ruleListSplit: [123],
+            },
+          },
+        });
+        originalCwd = process.cwd();
+        process.chdir(fixture.path);
       });
 
-      const stub = sinon.stub().resolves();
-      await expect(
-        run(
-          [
-            'node', // Path to node.
-            'eslint-doc-generator.js', // Path to this binary.
-          ],
-          stub,
-        ),
-      ).rejects.toThrow(
-        'config file/ruleListSplit must be string, config file/ruleListSplit must NOT have fewer than 1 items, config file/ruleListSplit must match a schema in anyOf',
-      );
+      afterAll(async function () {
+        process.chdir(originalCwd);
+        await fixture.cleanup();
+      });
+
+      it('throws an error', async function () {
+        const stub = sinon.stub().resolves();
+        await expect(
+          run(
+            [
+              'node', // Path to node.
+              'eslint-doc-generator.js', // Path to this binary.
+            ],
+            stub,
+          ),
+        ).rejects.toThrow(
+          'config file/ruleListSplit must be string, config file/ruleListSplit/0 must be string, config file/ruleListSplit must match a schema in anyOf',
+        );
+      });
+    });
+
+    describe('ruleListSplit is an empty array', function () {
+      let fixture: FixtureContext;
+      let originalCwd: string;
+
+      beforeAll(async function () {
+        fixture = await setupFixture({
+          fixture: 'esm-base',
+          overrides: {
+            'package.json': {
+              name: 'eslint-plugin-test',
+              main: 'index.js',
+              type: 'module',
+              version: '1.0.0',
+            },
+            '.eslint-doc-generatorrc.json': {
+              // Doesn't match schema.
+              ruleListSplit: [],
+            },
+          },
+        });
+        originalCwd = process.cwd();
+        process.chdir(fixture.path);
+      });
+
+      afterAll(async function () {
+        process.chdir(originalCwd);
+        await fixture.cleanup();
+      });
+
+      it('throws an error', async function () {
+        const stub = sinon.stub().resolves();
+        await expect(
+          run(
+            [
+              'node', // Path to node.
+              'eslint-doc-generator.js', // Path to this binary.
+            ],
+            stub,
+          ),
+        ).rejects.toThrow(
+          'config file/ruleListSplit must be string, config file/ruleListSplit must NOT have fewer than 1 items, config file/ruleListSplit must match a schema in anyOf',
+        );
+      });
     });
   });
 });

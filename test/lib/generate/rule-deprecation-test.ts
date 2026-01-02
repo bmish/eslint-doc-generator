@@ -1,25 +1,19 @@
 import { generate } from '../../../lib/generator.js';
-import mockFs from 'mock-fs';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { readFileSync } from 'node:fs';
+import {
+  setupFixture,
+  type FixtureContext,
+} from '../../helpers/fixture.js';
 import { jest } from '@jest/globals';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const PATH_NODE_MODULES = resolve(__dirname, '..', '..', '..', 'node_modules');
 
 describe('generate (deprecated rules)', function () {
   describe('several deprecated rules', function () {
-    beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
+    let fixture: FixtureContext;
 
-        'index.js': `
+    beforeAll(async function () {
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          'index.js': `
                   export default {
                     rules: {
                       'no-foo': {
@@ -63,49 +57,43 @@ describe('generate (deprecated rules)', function () {
                     },
                     configs: {}
                   };`,
-
-        'README.md':
-          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-        'docs/rules/no-baz.md': '',
-        'docs/rules/no-biz.md': '',
-        'docs/rules/no-boz.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+          'docs/rules/no-foo.md': '',
+          'docs/rules/no-bar.md': '',
+          'docs/rules/no-baz.md': '',
+          'docs/rules/no-biz.md': '',
+          'docs/rules/no-boz.md': '',
+        },
       });
     });
 
-    afterEach(function () {
-      mockFs.restore();
+    afterAll(async function () {
+      await fixture.cleanup();
       jest.resetModules();
     });
 
     it('updates the documentation', async function () {
-      await generate('.');
+      await generate(fixture.path);
 
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(await fixture.readFile('README.md')).toMatchSnapshot();
 
-      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-baz.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-biz.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-boz.md', 'utf8')).toMatchSnapshot();
+      expect(await fixture.readFile('docs/rules/no-foo.md')).toMatchSnapshot();
+      expect(await fixture.readFile('docs/rules/no-bar.md')).toMatchSnapshot();
+      expect(await fixture.readFile('docs/rules/no-baz.md')).toMatchSnapshot();
+      expect(await fixture.readFile('docs/rules/no-biz.md')).toMatchSnapshot();
+      expect(await fixture.readFile('docs/rules/no-boz.md')).toMatchSnapshot();
     });
   });
 
   describe('with nested rule names', function () {
-    beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
+    let fixture: FixtureContext;
 
-        'index.js': `
+    beforeAll(async function () {
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          'index.js': `
               export default {
                 rules: {
                   'category/no-foo': {
@@ -127,47 +115,41 @@ describe('generate (deprecated rules)', function () {
                 },
                 configs: {}
               };`,
-
-        'README.md':
-          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
-
-        'docs/rules/category/no-foo.md': '',
-        'docs/rules/category/no-bar.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+          'docs/rules/category/no-foo.md': '',
+          'docs/rules/category/no-bar.md': '',
+        },
       });
     });
 
-    afterEach(function () {
-      mockFs.restore();
+    afterAll(async function () {
+      await fixture.cleanup();
       jest.resetModules();
     });
 
     it('has the correct links, especially replacement rule link', async function () {
-      await generate('.');
+      await generate(fixture.path);
 
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(await fixture.readFile('README.md')).toMatchSnapshot();
 
       expect(
-        readFileSync('docs/rules/category/no-foo.md', 'utf8'),
+        await fixture.readFile('docs/rules/category/no-foo.md'),
       ).toMatchSnapshot();
       expect(
-        readFileSync('docs/rules/category/no-bar.md', 'utf8'),
+        await fixture.readFile('docs/rules/category/no-bar.md'),
       ).toMatchSnapshot();
     });
   });
 
   describe('with --path-rule-doc', function () {
-    beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
+    let fixture: FixtureContext;
 
-        'index.js': `
+    beforeAll(async function () {
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          'index.js': `
           export default {
             rules: {
               'category/no-foo': {
@@ -189,47 +171,41 @@ describe('generate (deprecated rules)', function () {
             },
             configs: {}
           };`,
-
-        'README.md':
-          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
-
-        'docs/category/no-foo/README.md': '',
-        'docs/category/no-bar/README.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+          'docs/category/no-foo/README.md': '',
+          'docs/category/no-bar/README.md': '',
+        },
       });
     });
 
-    afterEach(function () {
-      mockFs.restore();
+    afterAll(async function () {
+      await fixture.cleanup();
       jest.resetModules();
     });
 
     it('has the correct links, especially replacement rule link', async function () {
-      await generate('.', { pathRuleDoc: 'docs/{name}/README.md' });
+      await generate(fixture.path, { pathRuleDoc: 'docs/{name}/README.md' });
 
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(await fixture.readFile('README.md')).toMatchSnapshot();
 
       expect(
-        readFileSync('docs/category/no-foo/README.md', 'utf8'),
+        await fixture.readFile('docs/category/no-foo/README.md'),
       ).toMatchSnapshot();
       expect(
-        readFileSync('docs/category/no-bar/README.md', 'utf8'),
+        await fixture.readFile('docs/category/no-bar/README.md'),
       ).toMatchSnapshot();
     });
   });
 
   describe('using prefix ahead of replacement rule name', function () {
-    beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
+    let fixture: FixtureContext;
 
-        'index.js': `
+    beforeAll(async function () {
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          'index.js': `
           export default {
             rules: {
               'no-foo': {
@@ -247,43 +223,37 @@ describe('generate (deprecated rules)', function () {
             },
             configs: {}
           };`,
-
-        'README.md':
-          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
-
-        'docs/rules/no-foo.md': '',
-        'docs/rules/no-bar.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+          'docs/rules/no-foo.md': '',
+          'docs/rules/no-bar.md': '',
+        },
       });
     });
 
-    afterEach(function () {
-      mockFs.restore();
+    afterAll(async function () {
+      await fixture.cleanup();
       jest.resetModules();
     });
 
     it('uses correct replacement rule link', async function () {
-      await generate('.');
+      await generate(fixture.path);
 
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(await fixture.readFile('README.md')).toMatchSnapshot();
 
-      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-bar.md', 'utf8')).toMatchSnapshot();
+      expect(await fixture.readFile('docs/rules/no-foo.md')).toMatchSnapshot();
+      expect(await fixture.readFile('docs/rules/no-bar.md')).toMatchSnapshot();
     });
   });
 
   describe('with no rule doc but --ignore-deprecated-rules', function () {
-    beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
+    let fixture: FixtureContext;
 
-        'index.js': `
+    beforeAll(async function () {
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          'index.js': `
               export default {
                 rules: {
                   'no-foo': {
@@ -293,37 +263,32 @@ describe('generate (deprecated rules)', function () {
                 },
                 configs: {}
               };`,
-
-        'README.md':
-          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+        },
       });
     });
 
-    afterEach(function () {
-      mockFs.restore();
+    afterAll(async function () {
+      await fixture.cleanup();
       jest.resetModules();
     });
 
     it('omits the rule from the README and does not try to update its non-existent rule doc', async function () {
-      await generate('.', { ignoreDeprecatedRules: true });
+      await generate(fixture.path, { ignoreDeprecatedRules: true });
 
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
+      expect(await fixture.readFile('README.md')).toMatchSnapshot();
     });
   });
 
   describe('replaced by ESLint core rule', function () {
-    beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
+    let fixture: FixtureContext;
 
-        'index.js': `
+    beforeAll(async function () {
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          'index.js': `
           export default {
             rules: {
               'no-foo': {
@@ -336,40 +301,34 @@ describe('generate (deprecated rules)', function () {
               },
             },
           };`,
-
-        'README.md':
-          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+          'docs/rules/no-foo.md': '',
+        },
       });
     });
 
-    afterEach(function () {
-      mockFs.restore();
+    afterAll(async function () {
+      await fixture.cleanup();
       jest.resetModules();
     });
 
     it('uses correct replacement rule link', async function () {
-      await generate('.');
+      await generate(fixture.path);
 
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      expect(await fixture.readFile('README.md')).toMatchSnapshot();
+      expect(await fixture.readFile('docs/rules/no-foo.md')).toMatchSnapshot();
     });
   });
 
   describe('replaced by third-party plugin rule', function () {
-    beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
+    let fixture: FixtureContext;
 
-        'index.js': `
+    beforeAll(async function () {
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          'index.js': `
           export default {
             rules: {
               'no-foo': {
@@ -382,40 +341,34 @@ describe('generate (deprecated rules)', function () {
               },
             },
           };`,
-
-        'README.md':
-          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+          'docs/rules/no-foo.md': '',
+        },
       });
     });
 
-    afterEach(function () {
-      mockFs.restore();
+    afterAll(async function () {
+      await fixture.cleanup();
       jest.resetModules();
     });
 
     it('uses correct replacement rule link', async function () {
-      await generate('.');
+      await generate(fixture.path);
 
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      expect(await fixture.readFile('README.md')).toMatchSnapshot();
+      expect(await fixture.readFile('docs/rules/no-foo.md')).toMatchSnapshot();
     });
   });
 
   describe('replaced by third-party plugin rule with same rule name as one of our rules', function () {
-    beforeEach(function () {
-      mockFs({
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
+    let fixture: FixtureContext;
 
-        'index.js': `
+    beforeAll(async function () {
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          'index.js': `
           export default {
             rules: {
               'no-foo': {
@@ -428,27 +381,23 @@ describe('generate (deprecated rules)', function () {
               },
             },
           };`,
-
-        'README.md':
-          '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
-
-        'docs/rules/no-foo.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+          'docs/rules/no-foo.md': '',
+        },
       });
     });
 
-    afterEach(function () {
-      mockFs.restore();
+    afterAll(async function () {
+      await fixture.cleanup();
       jest.resetModules();
     });
 
     it('uses correct replacement rule link', async function () {
-      await generate('.');
+      await generate(fixture.path);
 
-      expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-      expect(readFileSync('docs/rules/no-foo.md', 'utf8')).toMatchSnapshot();
+      expect(await fixture.readFile('README.md')).toMatchSnapshot();
+      expect(await fixture.readFile('docs/rules/no-foo.md')).toMatchSnapshot();
     });
   });
 });
