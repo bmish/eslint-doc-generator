@@ -3,7 +3,7 @@ import { join, resolve } from 'node:path';
 import {
   readFileSync,
   mkdtempSync,
-  cpSync,
+  cpSync, // eslint-disable-line n/no-unsupported-features/node-builtins -- cpSync is available in Node 20+
   rmSync,
   writeFileSync,
 } from 'node:fs';
@@ -261,7 +261,7 @@ describe('generate (package.json)', function () {
             exports: './index.js',
             type: 'module',
           },
-          null,
+          undefined,
           2,
         ),
       );

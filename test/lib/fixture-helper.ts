@@ -1,4 +1,4 @@
-import { mkdtempSync, cpSync, rmSync } from 'node:fs';
+import { mkdtempSync, cpSync, rmSync } from 'node:fs'; // eslint-disable-line n/no-unsupported-features/node-builtins -- cpSync is available in Node 20+
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
