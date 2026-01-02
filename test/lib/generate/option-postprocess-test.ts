@@ -8,30 +8,26 @@ import {
 } from '../fixture-helper.js';
 
 describe('generate (postprocess option)', function () {
-  describe('basic', function () {
-    let tempDir: string;
+  let tempDir: string;
 
-    beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'option-postprocess', 'basic'),
-      );
-    });
+  beforeEach(function () {
+    tempDir = setupFixture(getFixturePath('standard'));
+  });
 
-    afterEach(function () {
-      cleanupFixture(tempDir);
-    });
+  afterEach(function () {
+    cleanupFixture(tempDir);
+  });
 
-    it('calls the postprocessor', async function () {
-      await generate(tempDir, {
-        postprocess: (content, path) =>
-          [
-            content,
-            '',
-            `Located at ${relative(tempDir, path).replaceAll('\\', '/')}`, // Always use forward slashes in the path so the snapshot is right even when testing on Windows.
-          ].join('\n'),
-      });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+  it('calls the postprocessor', async function () {
+    await generate(tempDir, {
+      postprocess: (content, path) =>
+        [
+          content,
+          '',
+          `Located at ${relative(tempDir, path).replaceAll('\\', '/')}`, // Always use forward slashes in the path so the snapshot is right even when testing on Windows.
+        ].join('\n'),
     });
+    expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
   });
 });

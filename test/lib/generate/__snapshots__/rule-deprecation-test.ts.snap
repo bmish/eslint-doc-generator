@@ -69,70 +69,75 @@ exports[`generate (deprecated rules) replaced by third-party plugin rule with sa
 "
 `;
 
-exports[`generate (deprecated rules) several deprecated rules updates the documentation 1`] = `
-"<!-- begin auto-generated rules list -->
+exports[`generate (deprecated rules) updates the documentation 1`] = `
+"# eslint-plugin-test
+Description.
+## Rules
+<!-- begin auto-generated rules list -->
 
+💼 Configurations enabled in.\\
+✅ Set in the \`recommended\` configuration.\\
 ❌ Deprecated.
 
-| Name                           | Description  | ❌  |
-| :----------------------------- | :----------- | :- |
-| [no-bar](docs/rules/no-bar.md) | Description. | ❌  |
-| [no-baz](docs/rules/no-baz.md) | Description. | ❌  |
-| [no-biz](docs/rules/no-biz.md) | Description. |    |
-| [no-boz](docs/rules/no-boz.md) | Description. | ❌  |
-| [no-foo](docs/rules/no-foo.md) | Description. | ❌  |
+| Name                           | Description            | 💼 | ❌  |
+| :----------------------------- | :--------------------- | :- | :- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | ✅  |    |
+| [no-baz](docs/rules/no-baz.md) | Description of no-baz. |    | ❌  |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  | ❌  |
+| [no-qux](docs/rules/no-qux.md) | Description of no-qux. |    |    |
 
-<!-- end auto-generated rules list -->"
+<!-- end auto-generated rules list -->
+more content.
+
+"
 `;
 
-exports[`generate (deprecated rules) several deprecated rules updates the documentation 2`] = `
+exports[`generate (deprecated rules) updates the documentation 2`] = `
 "# test/no-foo
 
 ❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](no-bar.md).
 
-📝 Description.
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+📝 Description of no-foo.
 
 <!-- end auto-generated rule header -->
+## Rule details
+details
+## Options
+optionToDoSomething1 - explanation
+optionToDoSomething2 - explanation
 "
 `;
 
-exports[`generate (deprecated rules) several deprecated rules updates the documentation 3`] = `
+exports[`generate (deprecated rules) updates the documentation 3`] = `
 "# test/no-bar
 
-❌ This rule is deprecated.
+💼 This rule is enabled in the ✅ \`recommended\` config.
 
-📝 Description.
+📝 Description of no-bar.
 
 <!-- end auto-generated rule header -->
 "
 `;
 
-exports[`generate (deprecated rules) several deprecated rules updates the documentation 4`] = `
+exports[`generate (deprecated rules) updates the documentation 4`] = `
 "# test/no-baz
 
-❌ This rule is deprecated.
+❌ This rule is deprecated. It was replaced by [\`test/no-bar\`](no-bar.md), [\`test/no-qux\`](no-qux.md).
 
-📝 Description.
+📝 Description of no-baz.
 
 <!-- end auto-generated rule header -->
+## Rule details
+details
 "
 `;
 
-exports[`generate (deprecated rules) several deprecated rules updates the documentation 5`] = `
-"# test/no-biz
+exports[`generate (deprecated rules) updates the documentation 5`] = `
+"# test/no-qux
 
-📝 Description.
-
-<!-- end auto-generated rule header -->
-"
-`;
-
-exports[`generate (deprecated rules) several deprecated rules updates the documentation 6`] = `
-"# test/no-boz
-
-❌ This rule is deprecated. It was replaced by [\`test/no-baz\`](no-baz.md), [\`test/no-biz\`](no-biz.md).
-
-📝 Description.
+📝 Description of no-qux.
 
 <!-- end auto-generated rule header -->
 "

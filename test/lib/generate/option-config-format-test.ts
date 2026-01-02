@@ -8,69 +8,37 @@ import {
 } from '../fixture-helper.js';
 
 describe('generate (--config-format)', function () {
-  describe('name', function () {
-    let tempDir: string;
+  let tempDir: string;
 
-    beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'option-config-format', 'name'),
-      );
-    });
-
-    afterEach(function () {
-      cleanupFixture(tempDir);
-    });
-
-    it('uses the right format', async function () {
-      await generate(tempDir, {
-        configFormat: 'name',
-      });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-    });
+  beforeEach(function () {
+    tempDir = setupFixture(getFixturePath('standard'));
   });
 
-  describe('plugin-colon-prefix-name', function () {
-    let tempDir: string;
-
-    beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'option-config-format', 'plugin-colon-prefix-name'),
-      );
-    });
-
-    afterEach(function () {
-      cleanupFixture(tempDir);
-    });
-
-    it('uses the right format', async function () {
-      await generate(tempDir, {
-        configFormat: 'plugin-colon-prefix-name',
-      });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-    });
+  afterEach(function () {
+    cleanupFixture(tempDir);
   });
 
-  describe('prefix-name', function () {
-    let tempDir: string;
-
-    beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'option-config-format', 'prefix-name'),
-      );
+  it('uses the name format', async function () {
+    await generate(tempDir, {
+      configFormat: 'name',
     });
+    expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+  });
 
-    afterEach(function () {
-      cleanupFixture(tempDir);
+  it('uses the plugin-colon-prefix-name format', async function () {
+    await generate(tempDir, {
+      configFormat: 'plugin-colon-prefix-name',
     });
+    expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+  });
 
-    it('uses the right format', async function () {
-      await generate(tempDir, {
-        configFormat: 'prefix-name',
-      });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+  it('uses the prefix-name format', async function () {
+    await generate(tempDir, {
+      configFormat: 'prefix-name',
     });
+    expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
   });
 });

@@ -289,7 +289,8 @@ exports[`generate (configs) with --ignore-config hides the ignored config 1`] = 
 | :----------------------------- | :---------------------- | :- |
 | [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅  |
 
-<!-- end auto-generated rules list -->"
+<!-- end auto-generated rules list -->
+"
 `;
 
 exports[`generate (configs) with --ignore-config hides the ignored config 2`] = `
@@ -339,5 +340,6 @@ exports[`generate (configs) with external rules in config ignores external rules
 | :----------------------------- | :---------------------- | :- |
 | [no-foo](docs/rules/no-foo.md) | Description for no-foo. | ✅  |
 
-<!-- end auto-generated rules list -->"
+<!-- end auto-generated rules list -->
+"
 `;

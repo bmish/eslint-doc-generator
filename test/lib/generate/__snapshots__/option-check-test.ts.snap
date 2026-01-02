@@ -1,48 +1,54 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`generate (--check) basic prints the issues, exits with failure, and does not write changes 1`] = `
+exports[`generate (--check) prints the issues, exits with failure, and does not write changes 1`] = `
 [
   "- Expected
 + Received
 
-  # test/no-foo
-
-- 📝 Description for no-foo.
+- # test/no-foo
 -
-- <!-- end auto-generated rule header -->
+- 📝 Description of no-foo.
 -
+  <!-- end auto-generated rule header -->
 ",
 ]
 `;
 
-exports[`generate (--check) basic prints the issues, exits with failure, and does not write changes 2`] = `
+exports[`generate (--check) prints the issues, exits with failure, and does not write changes 2`] = `
 [
   "- Expected
 + Received
 
+  # eslint-plugin-test
+  Description.
   ## Rules
   <!-- begin auto-generated rules list -->
 -
-- | Name                           | Description             |
-- | :----------------------------- | :---------------------- |
-- | [no-foo](docs/rules/no-foo.md) | Description for no-foo. |
+- | Name                           | Description            |
+- | :----------------------------- | :--------------------- |
+- | [no-foo](docs/rules/no-foo.md) | Description of no-foo. |
 -
++ ...
   <!-- end auto-generated rules list -->
+  more content.
 
 ",
 ]
 `;
 
-exports[`generate (--check) basic prints the issues, exits with failure, and does not write changes 3`] = `
-"## Rules
+exports[`generate (--check) prints the issues, exits with failure, and does not write changes 3`] = `
+"# eslint-plugin-test
+Description.
+## Rules
 <!-- begin auto-generated rules list -->
+...
 <!-- end auto-generated rules list -->
+more content.
 
 "
 `;
 
-exports[`generate (--check) basic prints the issues, exits with failure, and does not write changes 4`] = `
-"# test/no-foo
-
+exports[`generate (--check) prints the issues, exits with failure, and does not write changes 4`] = `
+"<!-- end auto-generated rule header -->
 "
 `;

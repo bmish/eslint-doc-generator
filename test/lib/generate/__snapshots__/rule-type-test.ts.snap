@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`generate (rule type) rule with type, type column enabled displays the type 1`] = `
-"## Rules
+exports[`generate (rule type) displays the type when type column is enabled 1`] = `
+"# eslint-plugin-test
+Description.
+## Rules
 <!-- begin auto-generated rules list -->
 
 🗂️ The type of rule.\\
@@ -18,47 +20,108 @@ exports[`generate (rule type) rule with type, type column enabled displays the t
 | [no-foo](docs/rules/no-foo.md) | ❗   |
 
 <!-- end auto-generated rules list -->
+more content.
 
 "
 `;
 
-exports[`generate (rule type) rule with type, type column enabled displays the type 2`] = `
+exports[`generate (rule type) displays the type when type column is enabled 2`] = `
 "# test/no-foo
 
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+📝 Description of no-foo.
+
 <!-- end auto-generated rule header -->
+## Rule details
+details
+## Options
+optionToDoSomething1 - explanation
+optionToDoSomething2 - explanation
 "
 `;
 
-exports[`generate (rule type) rule with type, type column enabled displays the type 3`] = `
+exports[`generate (rule type) displays the type when type column is enabled 3`] = `
 "# test/no-bar
 
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+📝 Description of no-bar.
+
 <!-- end auto-generated rule header -->
 "
 `;
 
-exports[`generate (rule type) rule with type, type column enabled displays the type 4`] = `
+exports[`generate (rule type) displays the type when type column is enabled 4`] = `
 "# test/no-biz
 
+📝 Description of no-biz.
+
 <!-- end auto-generated rule header -->
 "
 `;
 
-exports[`generate (rule type) rule with type, type column enabled displays the type 5`] = `
+exports[`generate (rule type) displays the type when type column is enabled 5`] = `
 "# test/no-boz
 
+📝 Description of no-boz.
+
 <!-- end auto-generated rule header -->
 "
 `;
 
-exports[`generate (rule type) rule with type, type column enabled displays the type 6`] = `
+exports[`generate (rule type) displays the type when type column is enabled 6`] = `
 "# test/no-buz
 
+📝 Description of no-buz.
+
 <!-- end auto-generated rule header -->
 "
 `;
 
-exports[`generate (rule type) rule with type, type column enabled, but only an unknown type hides the type column and notice 1`] = `
-"## Rules
+exports[`generate (rule type) hides the type column when not enabled 1`] = `
+"# eslint-plugin-test
+Description.
+## Rules
+<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description            | 💼 |
+| :----------------------------- | :--------------------- | :- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | ✅  |
+| [no-biz](docs/rules/no-biz.md) | Description of no-biz. |    |
+| [no-boz](docs/rules/no-boz.md) | Description of no-boz. |    |
+| [no-buz](docs/rules/no-buz.md) | Description of no-buz. |    |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
+
+<!-- end auto-generated rules list -->
+more content.
+
+"
+`;
+
+exports[`generate (rule type) hides the type column when not enabled 2`] = `
+"# test/no-foo
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+📝 Description of no-foo.
+
+<!-- end auto-generated rule header -->
+## Rule details
+details
+## Options
+optionToDoSomething1 - explanation
+optionToDoSomething2 - explanation
+"
+`;
+
+exports[`generate (rule type) hides the type column when only unknown types exist 1`] = `
+"# eslint-plugin-test
+Description.
+## Rules
 <!-- begin auto-generated rules list -->
 
 | Name                           |
@@ -66,33 +129,21 @@ exports[`generate (rule type) rule with type, type column enabled, but only an u
 | [no-foo](docs/rules/no-foo.md) |
 
 <!-- end auto-generated rules list -->
+more content.
 
 "
 `;
 
-exports[`generate (rule type) rule with type, type column enabled, but only an unknown type hides the type column and notice 2`] = `
+exports[`generate (rule type) hides the type column when only unknown types exist 2`] = `
 "# test/no-foo
 
-<!-- end auto-generated rule header -->
-"
-`;
-
-exports[`generate (rule type) rule with type, type column not enabled hides the type column 1`] = `
-"## Rules
-<!-- begin auto-generated rules list -->
-
-| Name                           |
-| :----------------------------- |
-| [no-foo](docs/rules/no-foo.md) |
-
-<!-- end auto-generated rules list -->
-
-"
-`;
-
-exports[`generate (rule type) rule with type, type column not enabled hides the type column 2`] = `
-"# test/no-foo
+📝 Description.
 
 <!-- end auto-generated rule header -->
+## Rule details
+details
+## Options
+optionToDoSomething1 - explanation
+optionToDoSomething2 - explanation
 "
 `;

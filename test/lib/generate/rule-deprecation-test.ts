@@ -8,30 +8,25 @@ import {
 } from '../fixture-helper.js';
 
 describe('generate (deprecated rules)', function () {
-  describe('several deprecated rules', function () {
-    let tempDir: string;
+  let tempDir: string;
 
-    beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'rule-deprecation', 'several-deprecated-rules'),
-      );
-    });
+  beforeEach(function () {
+    tempDir = setupFixture(getFixturePath('standard-deprecated'));
+  });
 
-    afterEach(function () {
-      cleanupFixture(tempDir);
-    });
+  afterEach(function () {
+    cleanupFixture(tempDir);
+  });
 
-    it('updates the documentation', async function () {
-      await generate(tempDir);
+  it('updates the documentation', async function () {
+    await generate(tempDir);
 
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+    expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
 
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-baz.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-biz.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-boz.md'), 'utf8')).toMatchSnapshot();
-    });
+    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+    expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
+    expect(readFileSync(join(tempDir, 'docs/rules/no-baz.md'), 'utf8')).toMatchSnapshot();
+    expect(readFileSync(join(tempDir, 'docs/rules/no-qux.md'), 'utf8')).toMatchSnapshot();
   });
 
   describe('with nested rule names', function () {

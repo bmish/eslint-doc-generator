@@ -9,118 +9,58 @@ import {
 } from '../fixture-helper.js';
 
 describe('generate (--rule-list-columns)', function () {
-  describe('basic', function () {
-    let tempDir: string;
+  let tempDir: string;
 
-    beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-columns', 'basic'),
-      );
-    });
-
-    afterEach(function () {
-      cleanupFixture(tempDir);
-    });
-
-    it('shows the right columns and legend', async function () {
-      await generate(tempDir, {
-        ruleListColumns: [
-          COLUMN_TYPE.HAS_SUGGESTIONS,
-          COLUMN_TYPE.FIXABLE,
-          COLUMN_TYPE.NAME,
-        ],
-      });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-    });
+  beforeEach(function () {
+    tempDir = setupFixture(getFixturePath('standard'));
   });
 
-  describe('consolidated fixableAndHasSuggestions column', function () {
-    let tempDir: string;
-
-    beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-columns', 'consolidated-fixable-and-has-suggestions'),
-      );
-    });
-
-    afterEach(function () {
-      cleanupFixture(tempDir);
-    });
-
-    it('shows the right columns and legend', async function () {
-      await generate(tempDir, {
-        ruleListColumns: [
-          COLUMN_TYPE.NAME,
-          COLUMN_TYPE.FIXABLE_AND_HAS_SUGGESTIONS,
-        ],
-      });
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-    });
+  afterEach(function () {
+    cleanupFixture(tempDir);
   });
 
-  describe('non-existent column', function () {
-    let tempDir: string;
-
-    beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-columns', 'non-existent-column'),
-      );
+  it('shows the right columns and legend', async function () {
+    await generate(tempDir, {
+      ruleListColumns: [
+        COLUMN_TYPE.HAS_SUGGESTIONS,
+        COLUMN_TYPE.FIXABLE,
+        COLUMN_TYPE.NAME,
+      ],
     });
-
-    afterEach(function () {
-      cleanupFixture(tempDir);
-    });
-
-    it('throws an error', async function () {
-      await expect(
-        // @ts-expect-error -- testing non-existent column type
-        generate(tempDir, { ruleListColumns: [COLUMN_TYPE.NAME, 'non-existent'] }),
-      ).rejects.toThrow('Invalid ruleListColumns option: non-existent');
-    });
+    expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
   });
 
-  describe('duplicate column', function () {
-    let tempDir: string;
-
-    beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-columns', 'duplicate-column'),
-      );
+  it('shows consolidated fixableAndHasSuggestions column', async function () {
+    await generate(tempDir, {
+      ruleListColumns: [
+        COLUMN_TYPE.NAME,
+        COLUMN_TYPE.FIXABLE_AND_HAS_SUGGESTIONS,
+      ],
     });
-
-    afterEach(function () {
-      cleanupFixture(tempDir);
-    });
-
-    it('throws an error', async function () {
-      await expect(
-        generate(tempDir, {
-          ruleListColumns: [COLUMN_TYPE.NAME, COLUMN_TYPE.NAME],
-        }),
-      ).rejects.toThrow('Duplicate value detected in ruleListColumns option.');
-    });
+    expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
   });
 
-  describe('shows column and notice for requiresTypeChecking', function () {
-    let tempDir: string;
+  it('throws an error for non-existent column', async function () {
+    await expect(
+      // @ts-expect-error -- testing non-existent column type
+      generate(tempDir, { ruleListColumns: [COLUMN_TYPE.NAME, 'non-existent'] }),
+    ).rejects.toThrow('Invalid ruleListColumns option: non-existent');
+  });
 
-    beforeEach(function () {
-      tempDir = setupFixture(
-        getFixturePath('generate', 'option-rule-list-columns', 'requires-type-checking'),
-      );
-    });
+  it('throws an error for duplicate column', async function () {
+    await expect(
+      generate(tempDir, {
+        ruleListColumns: [COLUMN_TYPE.NAME, COLUMN_TYPE.NAME],
+      }),
+    ).rejects.toThrow('Duplicate value detected in ruleListColumns option.');
+  });
 
-    afterEach(function () {
-      cleanupFixture(tempDir);
-    });
+  it('shows column and notice for requiresTypeChecking', async function () {
+    await generate(tempDir);
 
-    it('updates the documentation', async function () {
-      await generate(tempDir);
-
-      expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
-      expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
-    });
+    expect(readFileSync(join(tempDir, 'README.md'), 'utf8')).toMatchSnapshot();
+    expect(readFileSync(join(tempDir, 'docs/rules/no-foo.md'), 'utf8')).toMatchSnapshot();
+    expect(readFileSync(join(tempDir, 'docs/rules/no-bar.md'), 'utf8')).toMatchSnapshot();
   });
 });

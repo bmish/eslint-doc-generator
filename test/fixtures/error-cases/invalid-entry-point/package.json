@@ -1,0 +1,6 @@
+{
+  "name": "eslint-plugin-test",
+  "type": "module",
+  "exports": "./nonexistent.js"
+}
+
