@@ -12,7 +12,7 @@ import { COLUMN_TYPE, SEVERITY_TYPE } from './types.js';
 import { getConfigsThatSetARule } from './plugin-configs.js';
 import { hasOptions } from './rule-options.js';
 import type { RuleNamesAndRules } from './types.js';
-import { Context } from './context.js';
+import type { Context } from './context.js';
 
 /**
  * An object containing the column header for each column (as a string or function to generate the string).

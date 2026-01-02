@@ -1,7 +1,8 @@
 import { join, sep, relative, dirname } from 'node:path';
-import { PathRuleDocFunction, RULE_SOURCE } from './types.js';
+import { RULE_SOURCE } from './types.js';
+import type { PathRuleDocFunction } from './types.js';
 import { getPluginRoot } from './package-json.js';
-import { Context } from './context.js';
+import type { Context } from './context.js';
 
 export function replaceRulePlaceholder(
   pathOrPathFunc: string | PathRuleDocFunction,

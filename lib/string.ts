@@ -1,4 +1,4 @@
-import { Context } from './context.js';
+import type { Context } from './context.js';
 
 export function toSentenceCase(str: string) {
   return str.replace(/^\w/u, function (txt) {

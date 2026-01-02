@@ -1,4 +1,4 @@
-import { Context } from './context.js';
+import type { Context } from './context.js';
 
 export const CONFIG_FORMATS = [
   'name',

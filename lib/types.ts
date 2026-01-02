@@ -1,6 +1,6 @@
 import type { RuleDocTitleFormat } from './rule-doc-title-format.js';
 import type { TSESLint } from '@typescript-eslint/utils';
-import { ConfigFormat } from './config-format.js';
+import type { ConfigFormat } from './config-format.js';
 
 // Standard ESLint types.
 

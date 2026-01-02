@@ -4,9 +4,10 @@ import {
 } from './comment-markers.js';
 import { markdownTable } from 'markdown-table';
 import type { RuleModule } from './types.js';
-import { RuleOption, getAllNamedOptions } from './rule-options.js';
+import { getAllNamedOptions } from './rule-options.js';
+import type { RuleOption } from './rule-options.js';
 import { sanitizeMarkdownTable } from './string.js';
-import { Context } from './context.js';
+import type { Context } from './context.js';
 
 export enum COLUMN_TYPE {
   // Alphabetical order.
