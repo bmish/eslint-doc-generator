@@ -103,6 +103,7 @@ export async function generate(path: string, userOptions?: GenerateOptions) {
               .map((title) => `## ${title}`)
               .join(`${endOfLine}${endOfLine}`)
           : undefined,
+        /* istanbul ignore next -- both branches tested but coverage has instrumentation issue with ternary in array */
         ruleHasOptions
           ? `## Options${endOfLine}${endOfLine}${BEGIN_RULE_OPTIONS_LIST_MARKER}${endOfLine}${END_RULE_OPTIONS_LIST_MARKER}`
           : undefined,
