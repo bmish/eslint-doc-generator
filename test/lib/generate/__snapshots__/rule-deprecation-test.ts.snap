@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`generate (deprecated rules) replaced by ESLint core rule uses correct replacement rule link 1`] = `
 "<!-- begin auto-generated rules list -->

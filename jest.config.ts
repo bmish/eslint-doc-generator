@@ -14,6 +14,9 @@ const config: Config = {
     '^(\\.{1,2}/.*)\\.js$': '$1',
     '#(.*)': '<rootDir>/node_modules/$1',
   },
+  testEnvironmentOptions: {
+    globalsCleanup: 'off',
+  },
   coveragePathIgnorePatterns: [
     '<rootDir>/node_modules/',
     '<rootDir>/test/',

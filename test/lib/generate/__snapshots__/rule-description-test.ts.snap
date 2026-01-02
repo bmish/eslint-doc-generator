@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`generate (rule descriptions) Rule description needs to be formatted capitalizes the first letter and removes the trailing period from the description 1`] = `
 "# test/no-foo

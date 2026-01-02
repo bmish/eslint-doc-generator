@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`getEndOfLine with a ".editorconfig" file generates using the correct end of line when ".editorconfig" exists generates using crlf end of line from ".editorconfig" 1`] = `
 "## Rules
