@@ -2,7 +2,6 @@
   "compilerOptions": {
     "allowJs": false,
     "strict": true,
-    "baseUrl": ".",
     "declaration": true,
     "lib": ["ES2023"],
     "module": "ESNext",
@@ -24,7 +23,10 @@
 
     // Modern module handling
     "verbatimModuleSyntax": true,
-    "erasableSyntaxOnly": true
+    "erasableSyntaxOnly": true,
+
+    // Build performance
+    "skipLibCheck": true
   },
   "include": ["bin/**/*", "lib/**/*", "test/**/*", "vitest.config.ts"]
 }
