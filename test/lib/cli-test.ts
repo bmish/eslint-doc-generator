@@ -155,13 +155,13 @@ describe('cli', function () {
             type: 'module',
             version: '1.0.0',
           },
-          null,
+          undefined,
           2,
         ),
       );
       writeFileSync(
         join(tempDir, '.eslint-doc-generatorrc.json'),
-        JSON.stringify(configFileOptionsAll, null, 2),
+        JSON.stringify(configFileOptionsAll, undefined, 2),
       );
       process.chdir(tempDir);
     });
@@ -201,13 +201,13 @@ describe('cli', function () {
             type: 'module',
             version: '1.0.0',
           },
-          null,
+          undefined,
           2,
         ),
       );
       writeFileSync(
         join(tempDir, '.eslint-doc-generatorrc.json'),
-        JSON.stringify(configFileOptionsAll, null, 2),
+        JSON.stringify(configFileOptionsAll, undefined, 2),
       );
       process.chdir(tempDir);
     });
@@ -249,7 +249,7 @@ describe('cli', function () {
             type: 'module',
             version: '1.0.0',
           },
-          null,
+          undefined,
           2,
         ),
       );
@@ -259,7 +259,7 @@ describe('cli', function () {
           {
             pathRuleList: ['listFromConfigFile1.md', 'listFromConfigFile2.md'],
           },
-          null,
+          undefined,
           2,
         ),
       );
@@ -363,7 +363,7 @@ describe('cli', function () {
             main: 'index.js',
             type: 'module',
           },
-          null,
+          undefined,
           2,
         ),
       );
@@ -412,7 +412,7 @@ describe('cli', function () {
             type: 'module',
             version: '1.0.0',
           },
-          null,
+          undefined,
           2,
         ),
       );
@@ -423,7 +423,7 @@ describe('cli', function () {
             // Doesn't match schema.
             unknown: true,
           },
-          null,
+          undefined,
           2,
         ),
       );
@@ -453,7 +453,7 @@ describe('cli', function () {
             type: 'module',
             version: '1.0.0',
           },
-          null,
+          undefined,
           2,
         ),
       );
@@ -464,7 +464,7 @@ describe('cli', function () {
             // Doesn't match schema.
             postprocess: './my-file.js',
           },
-          null,
+          undefined,
           2,
         ),
       );
@@ -497,7 +497,7 @@ describe('cli', function () {
             type: 'module',
             version: '1.0.0',
           },
-          null,
+          undefined,
           2,
         ),
       );
@@ -508,7 +508,7 @@ describe('cli', function () {
             // Doesn't match schema.
             ruleListSplit: 123,
           },
-          null,
+          undefined,
           2,
         ),
       );
@@ -543,7 +543,7 @@ describe('cli', function () {
             type: 'module',
             version: '1.0.0',
           },
-          null,
+          undefined,
           2,
         ),
       );
@@ -554,7 +554,7 @@ describe('cli', function () {
             // Doesn't match schema.
             ruleListSplit: [123],
           },
-          null,
+          undefined,
           2,
         ),
       );
@@ -589,7 +589,7 @@ describe('cli', function () {
             type: 'module',
             version: '1.0.0',
           },
-          null,
+          undefined,
           2,
         ),
       );
@@ -600,7 +600,7 @@ describe('cli', function () {
             // Doesn't match schema.
             ruleListSplit: [],
           },
-          null,
+          undefined,
           2,
         ),
       );

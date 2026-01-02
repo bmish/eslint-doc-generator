@@ -1,2 +1,3 @@
 ## Rule details
+
 details

@@ -1,3 +1,3 @@
 ## Options
-optionToDoSomething
 
+optionToDoSomething
