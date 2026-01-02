@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/bmish/eslint-doc-generator/compare/v3.0.0...v3.0.1) (2026-01-02)
+
+
+### Bug Fixes
+
+* Rule doc notice for description should come first ([#839](https://github.com/bmish/eslint-doc-generator/issues/839)) ([bd4fccd](https://github.com/bmish/eslint-doc-generator/commit/bd4fccd9084b3bae164e5a1bb62472f43cb162a0))
+
 ## [3.0.0](https://github.com/bmish/eslint-doc-generator/compare/v2.4.0...v3.0.0) (2026-01-01)
 
 
