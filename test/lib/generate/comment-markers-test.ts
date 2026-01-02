@@ -1,8 +1,5 @@
 import { generate } from '../../../lib/generator.js';
-import {
-  setupFixture,
-  type FixtureContext,
-} from '../../helpers/fixture.js';
+import { setupFixture, type FixtureContext } from '../../helpers/fixture.js';
 import { outdent } from 'outdent';
 
 describe('generate (comment markers)', function () {
@@ -334,7 +331,9 @@ describe('generate (comment markers)', function () {
     });
 
     it('throws an error', async function () {
-      await expect(generate(fixture.path)).rejects.toThrowErrorMatchingSnapshot();
+      await expect(
+        generate(fixture.path),
+      ).rejects.toThrowErrorMatchingSnapshot();
     });
   });
 

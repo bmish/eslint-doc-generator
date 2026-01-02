@@ -1,8 +1,5 @@
 import { generate } from '../../../lib/generator.js';
-import {
-  setupFixture,
-  type FixtureContext,
-} from '../../helpers/fixture.js';
+import { setupFixture, type FixtureContext } from '../../helpers/fixture.js';
 import { NOTICE_TYPE } from '../../../lib/types.js';
 
 describe('generate (--rule-doc-notices)', function () {

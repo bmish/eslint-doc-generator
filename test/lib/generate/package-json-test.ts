@@ -1,8 +1,5 @@
 import { generate } from '../../../lib/generator.js';
-import {
-  setupFixture,
-  type FixtureContext,
-} from '../../helpers/fixture.js';
+import { setupFixture, type FixtureContext } from '../../helpers/fixture.js';
 import { rm } from 'node:fs/promises';
 import { join } from 'node:path';
 
@@ -26,7 +23,9 @@ describe('generate (package.json)', function () {
     });
 
     it('throws an error', async function () {
-      await expect(generate(fixture.path)).rejects.toThrowErrorMatchingSnapshot();
+      await expect(
+        generate(fixture.path),
+      ).rejects.toThrowErrorMatchingSnapshot();
     });
   });
 
@@ -51,7 +50,9 @@ describe('generate (package.json)', function () {
     });
 
     it('throws an error', async function () {
-      await expect(generate(fixture.path)).rejects.toThrowErrorMatchingSnapshot();
+      await expect(
+        generate(fixture.path),
+      ).rejects.toThrowErrorMatchingSnapshot();
     });
   });
 
@@ -192,7 +193,9 @@ describe('generate (package.json)', function () {
     });
 
     it('throws an error', async function () {
-      await expect(generate(fixture.path)).rejects.toThrowErrorMatchingSnapshot();
+      await expect(
+        generate(fixture.path),
+      ).rejects.toThrowErrorMatchingSnapshot();
     });
   });
 

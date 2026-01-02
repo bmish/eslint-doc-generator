@@ -1,8 +1,6 @@
 import { generate } from '../../../lib/generator.js';
-import {
-  setupFixture,
-  type FixtureContext,
-} from '../../helpers/fixture.js';
+import { setupFixture, type FixtureContext } from '../../helpers/fixture.js';
+
 describe('generate (--config-format)', function () {
   describe('name', function () {
     let fixture: FixtureContext;

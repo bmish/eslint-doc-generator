@@ -33,7 +33,7 @@ export async function setupFixture(
   const sourceDir = join(FIXTURES_DIR, fixture);
 
   // Create a unique temp directory
-  const tempDir = await mkdtemp(join(tmpdir(), `eslint-doc-generator-test-`));
+  const tempDir = await mkdtemp(join(tmpdir(), 'eslint-doc-generator-test-'));
 
   // Copy the fixture to temp directory
   await cp(sourceDir, tempDir, { recursive: true });

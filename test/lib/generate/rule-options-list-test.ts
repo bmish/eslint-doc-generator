@@ -1,8 +1,5 @@
 import { generate } from '../../../lib/generator.js';
-import {
-  setupFixture,
-  type FixtureContext,
-} from '../../helpers/fixture.js';
+import { setupFixture, type FixtureContext } from '../../helpers/fixture.js';
 import * as sinon from 'sinon';
 
 describe('generate (rule options list)', function () {

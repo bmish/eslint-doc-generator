@@ -1,8 +1,6 @@
 import { generate } from '../../../lib/generator.js';
-import {
-  setupFixture,
-  type FixtureContext,
-} from '../../helpers/fixture.js';
+import { setupFixture, type FixtureContext } from '../../helpers/fixture.js';
+
 describe('generate (--rule-doc-title-format)', function () {
   describe('desc-parens-prefix-name', function () {
     let fixture: FixtureContext;

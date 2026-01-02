@@ -1,9 +1,7 @@
 import { generate } from '../../../lib/generator.js';
 import { join } from 'node:path';
-import {
-  setupFixture,
-  type FixtureContext,
-} from '../../helpers/fixture.js';
+import { setupFixture, type FixtureContext } from '../../helpers/fixture.js';
+
 describe('generate (file paths)', function () {
   describe('missing rule doc', function () {
     let fixture: FixtureContext;
@@ -82,8 +80,12 @@ describe('generate (file paths)', function () {
     describe('when initRuleDocs is true', () => {
       it('creates the rule doc', async function () {
         await generate(fixture.path, { initRuleDocs: true });
-        expect(await fixture.readFile('docs/rules/no-foo.md')).toMatchSnapshot();
-        expect(await fixture.readFile('docs/rules/no-bar.md')).toMatchSnapshot(); // Should add options section.
+        expect(
+          await fixture.readFile('docs/rules/no-foo.md'),
+        ).toMatchSnapshot();
+        expect(
+          await fixture.readFile('docs/rules/no-bar.md'),
+        ).toMatchSnapshot(); // Should add options section.
       });
     });
   });
@@ -156,7 +158,9 @@ describe('generate (file paths)', function () {
     });
 
     it('throws an error', async function () {
-      await expect(generate(fixture.path, { initRuleDocs: true })).rejects.toThrow(
+      await expect(
+        generate(fixture.path, { initRuleDocs: true }),
+      ).rejects.toThrow(
         '--init-rule-docs was enabled, but no rule doc file needed to be created.',
       );
     });
@@ -266,7 +270,9 @@ describe('generate (file paths)', function () {
         pathRuleList: join('rules', 'list.md'),
       });
       expect(await fixture.readFile('rules/list.md')).toMatchSnapshot();
-      expect(await fixture.readFile('rules/no-foo/no-foo.md')).toMatchSnapshot();
+      expect(
+        await fixture.readFile('rules/no-foo/no-foo.md'),
+      ).toMatchSnapshot();
     });
   });
 
@@ -299,7 +305,9 @@ describe('generate (file paths)', function () {
         pathRuleDoc: (ruleName) => join('rules', ruleName, `${ruleName}.md`),
       });
       expect(await fixture.readFile('README.md')).toMatchSnapshot();
-      expect(await fixture.readFile('rules/no-foo/no-foo.md')).toMatchSnapshot();
+      expect(
+        await fixture.readFile('rules/no-foo/no-foo.md'),
+      ).toMatchSnapshot();
     });
   });
 

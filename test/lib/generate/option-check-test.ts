@@ -1,9 +1,6 @@
 import { generate } from '../../../lib/generator.js';
 import { join } from 'node:path';
-import {
-  setupFixture,
-  type FixtureContext,
-} from '../../helpers/fixture.js';
+import { setupFixture, type FixtureContext } from '../../helpers/fixture.js';
 import * as sinon from 'sinon';
 
 describe('generate (--check)', function () {

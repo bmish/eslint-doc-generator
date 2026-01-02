@@ -1,8 +1,6 @@
 import { generate } from '../../../lib/generator.js';
-import {
-  setupFixture,
-  type FixtureContext,
-} from '../../helpers/fixture.js';
+import { setupFixture, type FixtureContext } from '../../helpers/fixture.js';
+
 describe('generate (rule metadata)', function () {
   describe('deprecated function-style rule', function () {
     let fixture: FixtureContext;

@@ -14,10 +14,7 @@ const config: Config = {
     '^(\\.{1,2}/.*)\\.js$': '$1',
     '#(.*)': '<rootDir>/node_modules/$1',
   },
-  coveragePathIgnorePatterns: [
-    '<rootDir>/node_modules/',
-    '<rootDir>/test/',
-  ],
+  coveragePathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/test/'],
   coverageThreshold: {
     global: {
       branches: 100,

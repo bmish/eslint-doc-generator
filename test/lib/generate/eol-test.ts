@@ -1,10 +1,7 @@
 import { generate } from '../../../lib/generator.js';
 import { getEndOfLine } from '../../../lib/eol.js';
 import { EOL } from 'node:os';
-import {
-  setupFixture,
-  type FixtureContext,
-} from '../../helpers/fixture.js';
+import { setupFixture, type FixtureContext } from '../../helpers/fixture.js';
 
 describe('getEndOfLine', function () {
   describe('with a ".editorconfig" file', function () {
@@ -100,7 +97,8 @@ describe('getEndOfLine', function () {
             'docs/rules/a.md': '',
             'docs/rules/B.md': '',
             'docs/rules/c.md': '',
-            'README.md': '## Rules\n<!-- begin auto-generated rules list -->\n<!-- end auto-generated rules list -->',
+            'README.md':
+              '## Rules\n<!-- begin auto-generated rules list -->\n<!-- end auto-generated rules list -->',
             '.editorconfig': `
                   root = true
 
@@ -142,7 +140,8 @@ describe('getEndOfLine', function () {
             'docs/rules/a.md': '',
             'docs/rules/B.md': '',
             'docs/rules/c.md': '',
-            'README.md': '## Rules\r\n<!-- begin auto-generated rules list -->\r\n<!-- end auto-generated rules list -->',
+            'README.md':
+              '## Rules\r\n<!-- begin auto-generated rules list -->\r\n<!-- end auto-generated rules list -->',
             '.editorconfig': `
                   root = true
 
@@ -184,7 +183,8 @@ describe('getEndOfLine', function () {
             'docs/rules/a.md': '',
             'docs/rules/B.md': '',
             'docs/rules/c.md': '',
-            'README.md': '## Rules\r\n<!-- begin auto-generated rules list -->\r\n<!-- end auto-generated rules list -->',
+            'README.md':
+              '## Rules\r\n<!-- begin auto-generated rules list -->\r\n<!-- end auto-generated rules list -->',
             '.editorconfig': `
                   root = true
 

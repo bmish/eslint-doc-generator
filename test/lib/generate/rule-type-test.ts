@@ -1,8 +1,5 @@
 import { generate } from '../../../lib/generator.js';
-import {
-  setupFixture,
-  type FixtureContext,
-} from '../../helpers/fixture.js';
+import { setupFixture, type FixtureContext } from '../../helpers/fixture.js';
 import { COLUMN_TYPE } from '../../../lib/types.js';
 
 describe('generate (rule type)', function () {

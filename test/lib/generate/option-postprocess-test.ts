@@ -1,9 +1,7 @@
 import { generate } from '../../../lib/generator.js';
 import { relative } from 'node:path';
-import {
-  setupFixture,
-  type FixtureContext,
-} from '../../helpers/fixture.js';
+import { setupFixture, type FixtureContext } from '../../helpers/fixture.js';
+
 describe('generate (postprocess option)', function () {
   describe('basic', function () {
     let fixture: FixtureContext;

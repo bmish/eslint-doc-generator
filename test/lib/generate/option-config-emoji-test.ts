@@ -1,8 +1,5 @@
 import { generate } from '../../../lib/generator.js';
-import {
-  setupFixture,
-  type FixtureContext,
-} from '../../helpers/fixture.js';
+import { setupFixture, type FixtureContext } from '../../helpers/fixture.js';
 import { EMOJI_CONFIG_ERROR } from '../../../lib/emojis.js';
 
 describe('generate (--config-emoji)', function () {
@@ -250,7 +247,9 @@ describe('generate (--config-emoji)', function () {
 
     it('throws an error', async function () {
       await expect(
-        generate(fixture.path, { configEmoji: [['config-without-default-emoji']] }),
+        generate(fixture.path, {
+          configEmoji: [['config-without-default-emoji']],
+        }),
       ).rejects.toThrow(
         'Invalid configEmoji option: config-without-default-emoji. Expected format: config,emoji',
       );
@@ -320,7 +319,9 @@ describe('generate (--config-emoji)', function () {
 
     it('throws an error', async function () {
       await expect(
-        generate(fixture.path, { configEmoji: [['config-does-not-exist', '🔥']] }),
+        generate(fixture.path, {
+          configEmoji: [['config-does-not-exist', '🔥']],
+        }),
       ).rejects.toThrow(
         'Invalid configEmoji option: config-does-not-exist config not found.',
       );
@@ -356,7 +357,9 @@ describe('generate (--config-emoji)', function () {
 
     it('throws an error', async function () {
       await expect(
-        generate(fixture.path, { configEmoji: [['recommended', EMOJI_CONFIG_ERROR]] }),
+        generate(fixture.path, {
+          configEmoji: [['recommended', EMOJI_CONFIG_ERROR]],
+        }),
       ).rejects.toThrow(`Cannot specify reserved emoji ${EMOJI_CONFIG_ERROR}.`);
     });
   });

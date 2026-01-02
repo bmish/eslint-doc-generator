@@ -1,9 +1,7 @@
 import { generate } from '../../../lib/generator.js';
 import { outdent } from 'outdent';
-import {
-  setupFixture,
-  type FixtureContext,
-} from '../../helpers/fixture.js';
+import { setupFixture, type FixtureContext } from '../../helpers/fixture.js';
+
 describe('generate (general)', function () {
   describe('basic', function () {
     let fixture: FixtureContext;

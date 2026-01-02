@@ -1,8 +1,5 @@
 import { generate } from '../../../lib/generator.js';
-import {
-  setupFixture,
-  type FixtureContext,
-} from '../../helpers/fixture.js';
+import { setupFixture, type FixtureContext } from '../../helpers/fixture.js';
 import { COLUMN_TYPE } from '../../../lib/types.js';
 
 describe('generate (--rule-list-columns)', function () {
@@ -132,7 +129,9 @@ describe('generate (--rule-list-columns)', function () {
     it('throws an error', async function () {
       await expect(
         // @ts-expect-error -- testing non-existent column type
-        generate(fixture.path, { ruleListColumns: [COLUMN_TYPE.NAME, 'non-existent'] }),
+        generate(fixture.path, {
+          ruleListColumns: [COLUMN_TYPE.NAME, 'non-existent'],
+        }),
       ).rejects.toThrow('Invalid ruleListColumns option: non-existent');
     });
   });
