@@ -1,3 +1,4 @@
+import { join } from 'node:path';
 import { END_RULE_HEADER_MARKER } from './comment-markers.js';
 import {
   EMOJI_DEPRECATED,
@@ -9,6 +10,7 @@ import {
   EMOJI_OPTIONS,
 } from './emojis.js';
 import { findConfigEmoji, getConfigsForRule } from './plugin-configs.js';
+import { getPluginRoot } from './package-json.js';
 import { RuleModule, SEVERITY_TYPE, NOTICE_TYPE } from './types.js';
 import { RULE_TYPE, RULE_TYPE_MESSAGES_NOTICES } from './rule-type.js';
 import { RuleDocTitleFormat } from './rule-doc-title-format.js';
@@ -168,9 +170,13 @@ const RULE_NOTICES: {
 
   // Deprecated notice has optional "replaced by" rules list.
   [NOTICE_TYPE.DEPRECATED]: ({ context, replacedBy, ruleName }) => {
-    const { options } = context;
+    const { options, path } = context;
     const { pathRuleDoc } = options;
-    const pathCurrentPage = replaceRulePlaceholder(pathRuleDoc, ruleName);
+    // pathCurrentPage must be an absolute path for relative() to work correctly in getLinkToRule.
+    const pathCurrentPage = join(
+      getPluginRoot(path),
+      replaceRulePlaceholder(pathRuleDoc, ruleName),
+    );
 
     const replacementRuleList = (replacedBy ?? []).map(
       (replacementRuleName) => {

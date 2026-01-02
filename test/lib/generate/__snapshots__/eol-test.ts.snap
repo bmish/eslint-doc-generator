@@ -15,8 +15,7 @@ exports[`getEndOfLine with a ".editorconfig" file generates using the correct en
 | [B](docs/rules/B.md) |            |
 | [c](docs/rules/c.md) |            |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`getEndOfLine with a ".editorconfig" file generates using the correct end of line when ".editorconfig" exists generates using crlf end of line from ".editorconfig" 2`] = `
@@ -57,8 +56,7 @@ exports[`getEndOfLine with a ".editorconfig" file generates using the correct en
 | [B](docs/rules/B.md) |            |
 | [c](docs/rules/c.md) |            |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`getEndOfLine with a ".editorconfig" file generates using the correct end of line when ".editorconfig" exists generates using lf end of line from ".editorconfig" 2`] = `
@@ -99,8 +97,7 @@ exports[`getEndOfLine with a ".editorconfig" file generates using the correct en
 | [B](docs/rules/B.md) |            |
 | [c](docs/rules/c.md) |            |
 
-<!-- end auto-generated rules list -->
-"
+<!-- end auto-generated rules list -->"
 `;
 
 exports[`getEndOfLine with a ".editorconfig" file generates using the correct end of line when ".editorconfig" exists generates using the end of line from ".editorconfig" while respecting the .md specific end of line setting 2`] = `

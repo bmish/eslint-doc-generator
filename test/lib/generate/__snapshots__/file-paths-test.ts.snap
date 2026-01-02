@@ -17,7 +17,7 @@ exports[`generate (file paths) custom path to rule docs and rules list generates
 "
 `;
 
-exports[`generate (file paths) custom path to rule docs and rules list generates the documentation using a function for pathRuleDoc 1`] = `
+exports[`generate (file paths) custom path to rule docs using function generates the documentation using a function for pathRuleDoc 1`] = `
 "<!-- begin auto-generated rules list -->
 
 | Name                             |
@@ -27,7 +27,7 @@ exports[`generate (file paths) custom path to rule docs and rules list generates
 <!-- end auto-generated rules list -->"
 `;
 
-exports[`generate (file paths) custom path to rule docs and rules list generates the documentation using a function for pathRuleDoc 2`] = `
+exports[`generate (file paths) custom path to rule docs using function generates the documentation using a function for pathRuleDoc 2`] = `
 "# test/no-foo
 
 <!-- end auto-generated rule header -->
@@ -45,23 +45,28 @@ exports[`generate (file paths) empty array of rule lists (happens when CLI optio
 `;
 
 exports[`generate (file paths) lowercase README file generates the documentation 1`] = `
-"<!-- begin auto-generated rules list -->
+"# eslint-plugin-test
+
+## Rules
+
+<!-- begin auto-generated rules list -->
 
 | Name                           |
 | :----------------------------- |
 | [no-foo](docs/rules/no-foo.md) |
 
-<!-- end auto-generated rules list -->"
+<!-- end auto-generated rules list -->
+"
 `;
 
-exports[`generate (file paths) missing rule doc when initRuleDocs is true creates the rule doc 1`] = `
+exports[`generate (file paths) missing rule doc with initRuleDocs when initRuleDocs is true creates the rule doc 1`] = `
 "# test/no-foo
 
 <!-- end auto-generated rule header -->
 "
 `;
 
-exports[`generate (file paths) missing rule doc when initRuleDocs is true creates the rule doc 2`] = `
+exports[`generate (file paths) missing rule doc with initRuleDocs when initRuleDocs is true creates the rule doc 2`] = `
 "# test/no-bar
 
 <!-- end auto-generated rule header -->
@@ -82,8 +87,6 @@ exports[`generate (file paths) missing rule doc, initRuleDocs is true, and with 
 "# test/no-foo
 
 <!-- end auto-generated rule header -->
-
-## Examples
 "
 `;
 

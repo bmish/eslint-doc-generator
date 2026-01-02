@@ -1,51 +1,60 @@
 import { generate } from '../../../lib/generator.js';
-import mockFs from 'mock-fs';
-import { jest } from '@jest/globals';
-import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
-import { readFileSync } from 'node:fs';
 import { getEndOfLine } from '../../../lib/eol.js';
 import { EOL } from 'node:os';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const PATH_NODE_MODULES = resolve(__dirname, '..', '..', '..', 'node_modules');
+import { setupFixture, type FixtureContext } from '../../helpers/fixture.js';
 
 describe('getEndOfLine', function () {
   describe('with a ".editorconfig" file', function () {
     describe('returns the correct end of line when ".editorconfig" exists', function () {
-      afterEach(function () {
-        mockFs.restore();
-        jest.resetModules();
+      let fixture: FixtureContext;
+      let originalCwd: string;
+
+      beforeEach(function () {
+        originalCwd = process.cwd();
+      });
+
+      afterEach(async function () {
+        process.chdir(originalCwd);
+        await fixture.cleanup();
       });
 
       it('returns lf end of line when ".editorconfig" is configured with lf', async function () {
-        mockFs({
-          '.editorconfig': `
+        fixture = await setupFixture({
+          fixture: 'esm-base',
+          overrides: {
+            '.editorconfig': `
                   root = true
 
                   [*]
                   end_of_line = lf`,
+          },
         });
+        process.chdir(fixture.path);
 
         expect(await getEndOfLine()).toStrictEqual('\n');
       });
 
       it('returns crlf end of line when ".editorconfig" is configured with crlf', async function () {
-        mockFs({
-          '.editorconfig': `
+        fixture = await setupFixture({
+          fixture: 'esm-base',
+          overrides: {
+            '.editorconfig': `
                 root = true
 
                 [*]
                 end_of_line = crlf`,
+          },
         });
+        process.chdir(fixture.path);
 
         expect(await getEndOfLine()).toStrictEqual('\r\n');
       });
 
       it('respects the .md specific end of line settings when ".editorconfig" is configured', async function () {
-        mockFs({
-          '.editorconfig': `
+        fixture = await setupFixture({
+          fixture: 'esm-base',
+          overrides: {
+            '.editorconfig': `
                   root = true
 
                   [*]
@@ -53,21 +62,26 @@ describe('getEndOfLine', function () {
 
                   [*.md]
                   end_of_line = crlf`,
+          },
         });
+        process.chdir(fixture.path);
 
         expect(await getEndOfLine()).toStrictEqual('\r\n');
       });
     });
 
     describe('generates using the correct end of line when ".editorconfig" exists', function () {
-      const pluginFsMock = {
-        'package.json': JSON.stringify({
-          name: 'eslint-plugin-test',
-          exports: 'index.js',
-          type: 'module',
-        }),
+      let fixture: FixtureContext;
 
-        'index.js': `
+      afterEach(async function () {
+        await fixture.cleanup();
+      });
+
+      it('generates using lf end of line from ".editorconfig"', async function () {
+        fixture = await setupFixture({
+          fixture: 'esm-base',
+          overrides: {
+            'index.js': `
           export default {
             rules: {
               'c': { meta: { docs: {} }, create(context) {} },
@@ -80,72 +94,98 @@ describe('getEndOfLine', function () {
               'B': { rules: { 'test/a': 'error', } },
             }
           };`,
-
-        'docs/rules/a.md': '',
-        'docs/rules/B.md': '',
-        'docs/rules/c.md': '',
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
-      };
-
-      afterEach(function () {
-        mockFs.restore();
-        jest.resetModules();
-      });
-
-      it('generates using lf end of line from ".editorconfig"', async function () {
-        mockFs({
-          ...pluginFsMock,
-          'README.md': '## Rules\n',
-          '.editorconfig': `
+            'docs/rules/a.md': '',
+            'docs/rules/B.md': '',
+            'docs/rules/c.md': '',
+            'README.md':
+              '## Rules\n<!-- begin auto-generated rules list -->\n<!-- end auto-generated rules list -->',
+            '.editorconfig': `
                   root = true
 
                   [*]
                   end_of_line = lf`,
+          },
         });
-        await generate('.', {
+
+        await generate(fixture.path, {
           configEmoji: [
             ['a', '🅰️'],
             ['B', '🅱️'],
             ['c', '🌊'],
           ],
         });
-        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-        expect(readFileSync('docs/rules/a.md', 'utf8')).toMatchSnapshot();
-        expect(readFileSync('docs/rules/B.md', 'utf8')).toMatchSnapshot();
-        expect(readFileSync('docs/rules/c.md', 'utf8')).toMatchSnapshot();
+        expect(await fixture.readFile('README.md')).toMatchSnapshot();
+        expect(await fixture.readFile('docs/rules/a.md')).toMatchSnapshot();
+        expect(await fixture.readFile('docs/rules/B.md')).toMatchSnapshot();
+        expect(await fixture.readFile('docs/rules/c.md')).toMatchSnapshot();
       });
 
       it('generates using crlf end of line from ".editorconfig"', async function () {
-        mockFs({
-          ...pluginFsMock,
-          'README.md': '## Rules\r\n',
-          '.editorconfig': `
+        fixture = await setupFixture({
+          fixture: 'esm-base',
+          overrides: {
+            'index.js': `
+          export default {
+            rules: {
+              'c': { meta: { docs: {} }, create(context) {} },
+              'a': { meta: { docs: {} }, create(context) {} },
+              'B': { meta: { docs: {} }, create(context) {} },
+            },
+            configs: {
+              'c': { rules: { 'test/a': 'error', } },
+              'a': { rules: { 'test/a': 'error', } },
+              'B': { rules: { 'test/a': 'error', } },
+            }
+          };`,
+            'docs/rules/a.md': '',
+            'docs/rules/B.md': '',
+            'docs/rules/c.md': '',
+            'README.md':
+              '## Rules\r\n<!-- begin auto-generated rules list -->\r\n<!-- end auto-generated rules list -->',
+            '.editorconfig': `
                   root = true
 
                   [*]
                   end_of_line = crlf`,
+          },
         });
 
-        await generate('.', {
+        await generate(fixture.path, {
           configEmoji: [
             ['a', '🅰️'],
             ['B', '🅱️'],
             ['c', '🌊'],
           ],
         });
-        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-        expect(readFileSync('docs/rules/a.md', 'utf8')).toMatchSnapshot();
-        expect(readFileSync('docs/rules/B.md', 'utf8')).toMatchSnapshot();
-        expect(readFileSync('docs/rules/c.md', 'utf8')).toMatchSnapshot();
+        expect(await fixture.readFile('README.md')).toMatchSnapshot();
+        expect(await fixture.readFile('docs/rules/a.md')).toMatchSnapshot();
+        expect(await fixture.readFile('docs/rules/B.md')).toMatchSnapshot();
+        expect(await fixture.readFile('docs/rules/c.md')).toMatchSnapshot();
       });
 
       it('generates using the end of line from ".editorconfig" while respecting the .md specific end of line setting', async function () {
-        mockFs({
-          ...pluginFsMock,
-          'README.md': '## Rules\r\n',
-          '.editorconfig': `
+        fixture = await setupFixture({
+          fixture: 'esm-base',
+          overrides: {
+            'index.js': `
+          export default {
+            rules: {
+              'c': { meta: { docs: {} }, create(context) {} },
+              'a': { meta: { docs: {} }, create(context) {} },
+              'B': { meta: { docs: {} }, create(context) {} },
+            },
+            configs: {
+              'c': { rules: { 'test/a': 'error', } },
+              'a': { rules: { 'test/a': 'error', } },
+              'B': { rules: { 'test/a': 'error', } },
+            }
+          };`,
+            'docs/rules/a.md': '',
+            'docs/rules/B.md': '',
+            'docs/rules/c.md': '',
+            'README.md':
+              '## Rules\r\n<!-- begin auto-generated rules list -->\r\n<!-- end auto-generated rules list -->',
+            '.editorconfig': `
                   root = true
 
                   [*]
@@ -153,75 +193,106 @@ describe('getEndOfLine', function () {
 
                   [*.md]
                   end_of_line = crlf`,
+          },
         });
-        await generate('.', {
+
+        await generate(fixture.path, {
           configEmoji: [
             ['a', '🅰️'],
             ['B', '🅱️'],
             ['c', '🌊'],
           ],
         });
-        expect(readFileSync('README.md', 'utf8')).toMatchSnapshot();
-        expect(readFileSync('docs/rules/a.md', 'utf8')).toMatchSnapshot();
-        expect(readFileSync('docs/rules/B.md', 'utf8')).toMatchSnapshot();
-        expect(readFileSync('docs/rules/c.md', 'utf8')).toMatchSnapshot();
+        expect(await fixture.readFile('README.md')).toMatchSnapshot();
+        expect(await fixture.readFile('docs/rules/a.md')).toMatchSnapshot();
+        expect(await fixture.readFile('docs/rules/B.md')).toMatchSnapshot();
+        expect(await fixture.readFile('docs/rules/c.md')).toMatchSnapshot();
       });
     });
   });
 
   describe('with a Prettier config', function () {
-    afterEach(function () {
-      mockFs.restore();
-      jest.resetModules();
+    let fixture: FixtureContext;
+    let originalCwd: string;
+
+    beforeEach(function () {
+      originalCwd = process.cwd();
+    });
+
+    afterEach(async function () {
+      process.chdir(originalCwd);
+      await fixture.cleanup();
     });
 
     it('returns lf end of line when ".prettierrc.json" is configured with lf', async function () {
-      mockFs({
-        '.prettierrc.json': `
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          '.prettierrc.json': `
                   {
                     "$schema": "https://json.schemastore.org/prettierrc",
                     "endOfLine": "lf"
                   }`,
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
+        },
       });
+      process.chdir(fixture.path);
 
       expect(await getEndOfLine()).toStrictEqual('\n');
     });
 
     it('returns crlf end of line when ".prettierrc.json" is configured with crlf', async function () {
-      mockFs({
-        '.prettierrc.json': `
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          '.prettierrc.json': `
                   {
                     "$schema": "https://json.schemastore.org/prettierrc",
                     "endOfLine": "crlf"
                   }`,
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
+        },
       });
+      process.chdir(fixture.path);
 
       expect(await getEndOfLine()).toStrictEqual('\r\n');
     });
 
     it('returns lf when ".prettierrc.json" is not configured with the "endOfLine" option', async function () {
-      mockFs({
-        '.prettierrc.json': `
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          '.prettierrc.json': `
                   {
                     "$schema": "https://json.schemastore.org/prettierrc"
                   }`,
-
-        // Needed for some of the test infrastructure to work.
-        node_modules: mockFs.load(PATH_NODE_MODULES),
+        },
       });
+      process.chdir(fixture.path);
 
       expect(await getEndOfLine()).toStrictEqual('\n');
     });
   });
 
   describe('fallback', function () {
+    let fixture: FixtureContext;
+    let originalCwd: string;
+
+    beforeEach(function () {
+      originalCwd = process.cwd();
+    });
+
+    afterEach(async function () {
+      process.chdir(originalCwd);
+      await fixture.cleanup();
+    });
+
     it('handles fallback to to `EOL` from `node:os` when config files do not exist', async function () {
+      // Run from a fixture directory that has no editorconfig or prettier config
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        // No config files - just the base fixture
+      });
+      process.chdir(fixture.path);
+
       expect(await getEndOfLine()).toStrictEqual(EOL);
     });
   });
