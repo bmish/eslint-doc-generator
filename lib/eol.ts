@@ -30,6 +30,7 @@ async function getEndOfLineFromEditorConfig(): Promise<
 async function getEndOfLineFromPrettierConfig(): Promise<
   '\n' | '\r\n' | undefined
 > {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-imports -- prettier is an optional peer dependency, must be dynamically imported
   let prettier: typeof import('prettier') | undefined;
   try {
     prettier = await import('prettier');

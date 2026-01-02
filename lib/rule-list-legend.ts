@@ -11,7 +11,7 @@ import { findConfigEmoji, getConfigsThatSetARule } from './plugin-configs.js';
 import { COLUMN_TYPE, SEVERITY_TYPE } from './types.js';
 import { RULE_TYPE_MESSAGES_LEGEND, RULE_TYPES } from './rule-type.js';
 import { configNameToDisplay } from './config-format.js';
-import { Context } from './context.js';
+import type { Context } from './context.js';
 
 export const SEVERITY_TYPE_TO_WORD: {
   [key in SEVERITY_TYPE]: string;

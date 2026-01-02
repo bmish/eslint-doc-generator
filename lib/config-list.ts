@@ -6,7 +6,7 @@ import { markdownTable } from 'markdown-table';
 import type { Config } from './types.js';
 import { configNameToDisplay } from './config-format.js';
 import { sanitizeMarkdownTable } from './string.js';
-import { Context } from './context.js';
+import type { Context } from './context.js';
 
 /**
  * Check potential locations for the config description.

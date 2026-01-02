@@ -11,9 +11,11 @@ import {
 } from './emojis.js';
 import { findConfigEmoji, getConfigsForRule } from './plugin-configs.js';
 import { getPluginRoot } from './package-json.js';
-import { RuleModule, SEVERITY_TYPE, NOTICE_TYPE } from './types.js';
-import { RULE_TYPE, RULE_TYPE_MESSAGES_NOTICES } from './rule-type.js';
-import { RuleDocTitleFormat } from './rule-doc-title-format.js';
+import { SEVERITY_TYPE, NOTICE_TYPE } from './types.js';
+import type { RuleModule } from './types.js';
+import type { RULE_TYPE } from './rule-type.js';
+import { RULE_TYPE_MESSAGES_NOTICES } from './rule-type.js';
+import type { RuleDocTitleFormat } from './rule-doc-title-format.js';
 import { hasOptions } from './rule-options.js';
 import { getLinkToRule, replaceRulePlaceholder } from './rule-link.js';
 import {
@@ -22,7 +24,7 @@ import {
   addTrailingPeriod,
 } from './string.js';
 import { configNameToDisplay } from './config-format.js';
-import { Context } from './context.js';
+import type { Context } from './context.js';
 
 function severityToTerminology(severity: SEVERITY_TYPE) {
   switch (severity) {
@@ -355,6 +357,7 @@ function getRuleNoticeLines(context: Context, ruleName: string) {
       continue;
     }
 
+    const description = rule.meta?.docs?.description;
     lines.push(
       typeof ruleNoticeStrOrFn === 'function'
         ? ruleNoticeStrOrFn({
@@ -363,7 +366,7 @@ function getRuleNoticeLines(context: Context, ruleName: string) {
             configsError,
             configsWarn,
             configsOff,
-            description: rule.meta?.docs?.description,
+            ...(description !== undefined && { description }),
             fixable: Boolean(rule.meta?.fixable),
             hasSuggestions: Boolean(rule.meta?.hasSuggestions),
             // eslint-disable-next-line @typescript-eslint/no-deprecated

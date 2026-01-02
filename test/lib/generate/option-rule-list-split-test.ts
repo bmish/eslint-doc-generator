@@ -718,7 +718,11 @@ describe('generate (--rule-list-split)', function () {
       await expect(
         generate(fixture.path, {
           ruleListSplit: (rules) => {
-            return [{ title: 'Foo', rules: [rules[0], rules[0]] }];
+            const [firstRule] = rules;
+            if (!firstRule) {
+              throw new Error('Expected at least one rule');
+            }
+            return [{ title: 'Foo', rules: [firstRule, firstRule] }];
           },
         }),
       ).rejects.toThrow(

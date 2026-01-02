@@ -1,4 +1,4 @@
-import { Context } from './context.js';
+import type { Context } from './context.js';
 import { SEVERITY_TYPE_TO_SET } from './types.js';
 import type { SEVERITY_TYPE } from './types.js';
 
@@ -56,6 +56,9 @@ export function getConfigsForRule(
 
   for (const configName in configsToRulesWithoutIgnored) {
     const rules = configsToRules[configName];
+    if (!rules) {
+      continue;
+    }
     const value = rules[`${pluginPrefix}/${ruleName}`];
     const isSet =
       ((typeof value === 'string' || typeof value === 'number') &&

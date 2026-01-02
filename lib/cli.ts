@@ -4,12 +4,8 @@ import { OPTION_DEFAULTS } from './options.js';
 import { cosmiconfig } from 'cosmiconfig';
 import Ajv from 'ajv';
 import merge from 'deepmerge';
-import {
-  COLUMN_TYPE,
-  NOTICE_TYPE,
-  GenerateOptions,
-  OPTION_TYPE,
-} from './types.js';
+import { COLUMN_TYPE, NOTICE_TYPE, OPTION_TYPE } from './types.js';
+import type { GenerateOptions } from './types.js';
 import { getCurrentPackageVersion } from './package-json.js';
 import { boolean, isBooleanable } from './boolean.js';
 import { CONFIG_FORMATS } from './config-format.js';

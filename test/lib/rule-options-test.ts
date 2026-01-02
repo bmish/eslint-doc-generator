@@ -48,32 +48,20 @@ describe('rule options', function () {
           {
             "default": false,
             "deprecated": true,
-            "description": undefined,
-            "enum": undefined,
             "name": "optionToDoSomething1",
-            "required": false,
             "type": "Boolean",
           },
           {
-            "default": undefined,
-            "deprecated": undefined,
-            "description": undefined,
             "enum": [
               "always",
               "never",
             ],
             "name": "optionToDoSomething2",
-            "required": false,
             "type": "String",
           },
           {
-            "default": undefined,
-            "deprecated": undefined,
-            "description": undefined,
-            "enum": undefined,
             "name": "optionToDoSomething3",
             "required": true,
-            "type": undefined,
           },
         ]
       `);
@@ -97,11 +85,7 @@ describe('rule options', function () {
         [
           {
             "default": false,
-            "deprecated": undefined,
-            "description": undefined,
-            "enum": undefined,
             "name": "optionToDoSomething",
-            "required": false,
             "type": "Boolean",
           },
         ]
@@ -136,20 +120,12 @@ describe('rule options', function () {
         [
           {
             "default": false,
-            "deprecated": undefined,
-            "description": undefined,
-            "enum": undefined,
             "name": "optionToDoSomething1",
-            "required": false,
             "type": "Boolean",
           },
           {
             "default": false,
-            "deprecated": undefined,
-            "description": undefined,
-            "enum": undefined,
             "name": "optionToDoSomething2",
-            "required": false,
             "type": "Boolean",
           },
         ]
@@ -177,11 +153,7 @@ describe('rule options', function () {
         [
           {
             "default": false,
-            "deprecated": undefined,
-            "description": undefined,
-            "enum": undefined,
             "name": "optionToDoSomething",
-            "required": false,
             "type": "Boolean",
           },
         ]
@@ -209,11 +181,7 @@ describe('rule options', function () {
         [
           {
             "default": false,
-            "deprecated": undefined,
-            "description": undefined,
-            "enum": undefined,
             "name": "optionToDoSomething",
-            "required": false,
             "type": "Boolean",
           },
         ]
@@ -249,30 +217,16 @@ describe('rule options', function () {
       ).toMatchInlineSnapshot(`
         [
           {
-            "default": undefined,
-            "deprecated": undefined,
-            "description": undefined,
-            "enum": undefined,
             "name": "optionToDoSomething1",
-            "required": false,
             "type": "Object[]",
           },
           {
-            "default": undefined,
-            "deprecated": undefined,
-            "description": undefined,
-            "enum": undefined,
             "name": "optionToDoSomething2",
-            "required": false,
             "type": "Array",
           },
           {
             "default": false,
-            "deprecated": undefined,
-            "description": undefined,
-            "enum": undefined,
             "name": "optionToDoSomething2",
-            "required": false,
             "type": "Boolean",
           },
         ]
@@ -304,30 +258,15 @@ describe('rule options', function () {
       ).toMatchInlineSnapshot(`
         [
           {
-            "default": undefined,
-            "deprecated": undefined,
-            "description": undefined,
-            "enum": undefined,
             "name": "optionToDoSomething1",
-            "required": false,
             "type": "(Boolean, String)[]",
           },
           {
-            "default": undefined,
-            "deprecated": undefined,
-            "description": undefined,
-            "enum": undefined,
             "name": "optionToDoSomething2",
-            "required": false,
             "type": "Boolean, String",
           },
           {
-            "default": undefined,
-            "deprecated": undefined,
-            "description": undefined,
-            "enum": undefined,
             "name": "optionToDoSomething3",
-            "required": false,
             "type": "Boolean",
           },
         ]

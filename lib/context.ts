@@ -1,8 +1,9 @@
 import { mockPlugin } from './mock-plugin.js';
 import { getEndOfLine } from './eol.js';
-import { getResolvedOptions, ResolvedGenerateOptions } from './options.js';
+import { getResolvedOptions } from './options.js';
+import type { ResolvedGenerateOptions } from './options.js';
 import { getPluginName, loadPlugin } from './package-json.js';
-import { ConfigsToRules, GenerateOptions, Plugin } from './types.js';
+import type { ConfigsToRules, GenerateOptions, Plugin } from './types.js';
 import { getPluginPrefix } from './plugin-prefix.js';
 import { resolveConfigsToRules } from './plugin-config-resolution.js';
 

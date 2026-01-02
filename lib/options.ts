@@ -1,13 +1,8 @@
 import { join } from 'node:path';
-import { ConfigFormat } from './config-format.js';
-import { RuleDocTitleFormat } from './rule-doc-title-format.js';
-import {
-  COLUMN_TYPE,
-  GenerateOptions,
-  NOTICE_TYPE,
-  OPTION_TYPE,
-  Plugin,
-} from './types.js';
+import type { ConfigFormat } from './config-format.js';
+import type { RuleDocTitleFormat } from './rule-doc-title-format.js';
+import { COLUMN_TYPE, NOTICE_TYPE, OPTION_TYPE } from './types.js';
+import type { GenerateOptions, Plugin } from './types.js';
 import {
   parseConfigEmojiOptions,
   parseRuleDocNoticesOption,

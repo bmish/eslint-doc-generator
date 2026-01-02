@@ -1,14 +1,10 @@
 {
   "compilerOptions": {
     "allowJs": false,
-    "allowSyntheticDefaultImports": true,
     "strict": true,
     "baseUrl": ".",
     "declaration": true,
-    "experimentalDecorators": true,
-    "lib": [
-      "ES2023"
-    ],
+    "lib": ["ES2023"],
     "module": "ESNext",
     "moduleResolution": "bundler",
     "noEmitOnError": true,
@@ -18,15 +14,16 @@
     "noUnusedParameters": true,
     "outDir": "dist",
     "target": "es2023",
-    "types": [
-      "node",
-      "vitest/globals"
-    ],
+    "types": ["node", "vitest/globals"],
+
+    // Modern strict options
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // Modern module handling
+    "verbatimModuleSyntax": true
   },
-  "include": [
-    "bin/**/*",
-    "lib/**/*",
-    "test/**/*",
-    "vitest.config.ts"
-  ]
+  "include": ["bin/**/*", "lib/**/*", "test/**/*", "vitest.config.ts"]
 }

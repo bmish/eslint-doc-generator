@@ -1,4 +1,4 @@
-import { Plugin } from './types.js';
+import type { Plugin } from './types.js';
 
 export const mockPlugin: Plugin = {
   rules: {},

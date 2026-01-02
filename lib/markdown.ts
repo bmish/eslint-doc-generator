@@ -1,6 +1,6 @@
 // General helpers for dealing with markdown files / content.
 
-import { Context } from './context.js';
+import type { Context } from './context.js';
 
 /**
  * Replace the header of a doc up to and including the specified marker.

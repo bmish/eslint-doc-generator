@@ -41,33 +41,45 @@ export function getAllNamedOptions(
   }
 
   const options: RuleOption[] = [];
-  traverse(jsonSchema, (js: JSONSchema4) => {
+  // Cast needed because json-schema-traverse types don't account for exactOptionalPropertyTypes
+  traverse(jsonSchema as Parameters<typeof traverse>[0], (js: JSONSchema4) => {
     if (js.properties) {
-      options.push(
-        ...Object.entries(js.properties).map(([key, value]) => ({
+      for (const [key, value] of Object.entries(js.properties)) {
+        const type =
+          value.type === 'array' &&
+          !Array.isArray(value.items) &&
+          value.items?.type
+            ? `${
+                Array.isArray(value.items.type) && value.items.type.length > 1
+                  ? `(${typeToString(value.items.type)})`
+                  : typeToString(value.items.type)
+              }[]`
+            : value.type
+              ? typeToString(value.type)
+              : undefined;
+
+        const required =
+          typeof value.required === 'boolean'
+            ? value.required
+            : Array.isArray(js.required) && js.required.includes(key);
+
+        // Property exists on future JSONSchema version but we can let it be used anyway.
+        const deprecated =
+          'deprecated' in value ? Boolean(value['deprecated']) : false;
+
+        const option: RuleOption = {
           name: key,
-          type:
-            value.type === 'array' &&
-            !Array.isArray(value.items) &&
-            value.items?.type
-              ? `${
-                  Array.isArray(value.items.type) && value.items.type.length > 1
-                    ? `(${typeToString(value.items.type)})`
-                    : typeToString(value.items.type)
-                }[]`
-              : value.type
-                ? typeToString(value.type)
-                : undefined,
-          description: value.description,
-          default: value.default,
-          enum: value.enum,
-          required:
-            typeof value.required === 'boolean'
-              ? value.required
-              : Array.isArray(js.required) && js.required.includes(key),
-          deprecated: value.deprecated, // eslint-disable-line @typescript-eslint/no-unsafe-assignment -- property exists on future JSONSchema version but we can let it be used anyway.
-        })),
-      );
+          ...(type !== undefined && { type }),
+          ...(value.description !== undefined && {
+            description: value.description,
+          }),
+          ...(value.default !== undefined && { default: value.default }),
+          ...(value.enum !== undefined && { enum: value.enum }),
+          ...(required && { required }),
+          ...(deprecated && { deprecated }),
+        };
+        options.push(option);
+      }
     }
   });
   return options;
