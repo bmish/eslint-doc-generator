@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.0.2](https://github.com/bmish/eslint-doc-generator/compare/v3.0.1...v3.0.2) (2026-01-02)
+
+
+### Bug Fixes
+
+* Enable TypeScript option `erasableSyntaxOnly` ([ec3b08e](https://github.com/bmish/eslint-doc-generator/commit/ec3b08e762c426e894e307a73081b519580f68a5))
+* Modernize TypeScript config ([ddf74e3](https://github.com/bmish/eslint-doc-generator/commit/ddf74e3eb0604d11abb4a72f046967fa2ade9d49))
+* Remove mock-fs due to Jest 30 incompatibility ([#841](https://github.com/bmish/eslint-doc-generator/issues/841)) ([bf79a57](https://github.com/bmish/eslint-doc-generator/commit/bf79a5710dc5eeacc47e5c2a7155f4cdda5f3933))
+* Replace jest with vitest ([#844](https://github.com/bmish/eslint-doc-generator/issues/844)) ([af24353](https://github.com/bmish/eslint-doc-generator/commit/af243532edd03ca97824c26a04854d14fc7e06a1))
+* Upgrade to Jest 30 ([8e6ecff](https://github.com/bmish/eslint-doc-generator/commit/8e6ecff8689da52d55943282cd2a6cf84b31cefc))
+* Use tsgo instead of tsc for faster type-checking ([#847](https://github.com/bmish/eslint-doc-generator/issues/847)) ([3ae507b](https://github.com/bmish/eslint-doc-generator/commit/3ae507b22cb0e2f9de183a359e4216d617774439))
+
 ## [3.0.1](https://github.com/bmish/eslint-doc-generator/compare/v3.0.0...v3.0.1) (2026-01-02)
 
 
