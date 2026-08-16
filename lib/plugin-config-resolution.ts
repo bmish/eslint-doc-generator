@@ -32,6 +32,10 @@ async function resolvePotentiallyFlatConfigs(
 
   if (Array.isArray(potentiallyFlatConfigs)) {
     for (const config of potentiallyFlatConfigs) {
+      if (isFileScopedFlatConfig(config)) {
+        continue;
+      }
+
       Object.assign(rules, await resolvePotentiallyFlatConfigs(config));
     }
   } else {
@@ -39,6 +43,14 @@ async function resolvePotentiallyFlatConfigs(
   }
 
   return rules;
+}
+
+function isFileScopedFlatConfig(
+  config: TSESLint.Linter.ConfigType,
+): config is FlatConfig.Config {
+  return (
+    !Array.isArray(config) && 'files' in config && config.files !== undefined
+  );
 }
 
 /**

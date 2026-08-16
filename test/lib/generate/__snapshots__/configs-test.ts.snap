@@ -36,6 +36,30 @@ exports[`generate (configs) > config as flat config > updates the documentation 
 "
 `;
 
+exports[`generate (configs) > config as flat config with file-scoped overrides > does not treat file-scoped overrides as global config severity 1`] = `
+"<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description            | 💼 |
+| :----------------------------- | :--------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (configs) > config as flat config with file-scoped overrides > does not treat file-scoped overrides as global config severity 2`] = `
+"# test/no-foo
+
+📝 Description of no-foo.
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
 exports[`generate (configs) > config with overrides > generates the documentation 1`] = `
 "## Rules
 <!-- begin auto-generated rules list -->
