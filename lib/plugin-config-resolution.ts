@@ -28,28 +28,36 @@ export async function resolveConfigsToRules(
 async function resolvePotentiallyFlatConfigs(
   potentiallyFlatConfigs: TSESLint.Linter.ConfigType,
 ): Promise<Rules> {
-  const rules: Rules = {};
+  const scopedRules: Rules = {};
+  const unscopedRules: Rules = {};
 
-  if (Array.isArray(potentiallyFlatConfigs)) {
-    for (const config of potentiallyFlatConfigs) {
-      if (isFileScopedFlatConfig(config)) {
-        continue;
+  async function mergeConfigs(
+    configs: TSESLint.Linter.ConfigType,
+  ): Promise<void> {
+    if (Array.isArray(configs)) {
+      for (const config of configs) {
+        await mergeConfigs(config);
       }
-
-      Object.assign(rules, await resolvePotentiallyFlatConfigs(config));
+    } else {
+      Object.assign(
+        isScopedFlatConfig(configs) ? scopedRules : unscopedRules,
+        await resolveConfigRules(configs),
+      );
     }
-  } else {
-    Object.assign(rules, await resolveConfigRules(potentiallyFlatConfigs));
   }
 
-  return rules;
+  await mergeConfigs(potentiallyFlatConfigs);
+
+  return { ...scopedRules, ...unscopedRules };
 }
 
-function isFileScopedFlatConfig(
+function isScopedFlatConfig(
   config: TSESLint.Linter.ConfigType,
 ): config is FlatConfig.Config {
   return (
-    !Array.isArray(config) && 'files' in config && config.files !== undefined
+    !Array.isArray(config) &&
+    (('files' in config && config.files !== undefined) ||
+      ('ignores' in config && config.ignores !== undefined))
   );
 }
 

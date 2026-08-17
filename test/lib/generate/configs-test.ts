@@ -529,4 +529,56 @@ describe('generate (configs)', () => {
       expect(await fixture.readFile('docs/rules/no-foo.md')).toMatchSnapshot();
     });
   });
+
+  describe('config as flat config with only scoped entries', () => {
+    let fixture: FixtureContext;
+
+    beforeAll(async () => {
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: { docs: { description: 'Description of no-foo.' }, },
+                create(context) {},
+              },
+            },
+            configs: {
+              recommended: [
+                {
+                  files: ['**/*.js'],
+                  rules: {
+                    'test/no-foo': 'warn',
+                  }
+                },
+                {
+                  ignores: ['**/*.test.js'],
+                  rules: {
+                    'test/no-foo': 'error',
+                  }
+                }
+              ]
+            }
+          };`,
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+          'docs/rules/no-foo.md': '',
+        },
+      });
+    });
+
+    afterAll(async () => {
+      await fixture.cleanup();
+    });
+
+    it('uses the last scoped severity', async () => {
+      await generate(fixture.path);
+
+      expect(await fixture.readFile('README.md')).toMatchSnapshot();
+
+      expect(await fixture.readFile('docs/rules/no-foo.md')).toMatchSnapshot();
+    });
+  });
 });
