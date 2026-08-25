@@ -1,5 +1,53 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`generate (configs) > config as a nested flat config array > flattens nested arrays before separating scoped from unscoped 1`] = `
+"<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description            | 💼 |
+| :----------------------------- | :--------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (configs) > config as a nested flat config array > flattens nested arrays before separating scoped from unscoped 2`] = `
+"# test/no-foo
+
+📝 Description of no-foo.
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) > config as a single scoped flat config object > keeps a rule that is only configured by a scoped object 1`] = `
+"<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description            | 💼 |
+| :----------------------------- | :--------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (configs) > config as a single scoped flat config object > keeps a rule that is only configured by a scoped object 2`] = `
+"# test/no-foo
+
+📝 Description of no-foo.
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
 exports[`generate (configs) > config as flat config > updates the documentation 1`] = `
 "<!-- begin auto-generated rules list -->
 
@@ -29,6 +77,115 @@ exports[`generate (configs) > config as flat config > updates the documentation 
 "# test/no-bar
 
 📝 Description of no-bar.
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) > config as flat config mixing scoped and unscoped rules > prefers the unscoped severity per rule and keeps scoped-only rules 1`] = `
+"<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+⚠️ Configurations set to warn in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description            | 💼 | ⚠️ |
+| :----------------------------- | :--------------------- | :- | :- |
+| [no-bar](docs/rules/no-bar.md) | Description of no-bar. | ✅  |    |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. |    | ✅  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (configs) > config as flat config mixing scoped and unscoped rules > prefers the unscoped severity per rule and keeps scoped-only rules 2`] = `
+"# test/no-foo
+
+📝 Description of no-foo.
+
+⚠️ This rule _warns_ in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) > config as flat config mixing scoped and unscoped rules > prefers the unscoped severity per rule and keeps scoped-only rules 3`] = `
+"# test/no-bar
+
+📝 Description of no-bar.
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) > config as flat config with an ignores-scoped override > does not treat an ignores-scoped override as global config severity 1`] = `
+"<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description            | 💼 |
+| :----------------------------- | :--------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (configs) > config as flat config with an ignores-scoped override > does not treat an ignores-scoped override as global config severity 2`] = `
+"# test/no-foo
+
+📝 Description of no-foo.
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) > config as flat config with file-scoped overrides > does not treat file-scoped overrides as global config severity 1`] = `
+"<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description            | 💼 |
+| :----------------------------- | :--------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (configs) > config as flat config with file-scoped overrides > does not treat file-scoped overrides as global config severity 2`] = `
+"# test/no-foo
+
+📝 Description of no-foo.
+
+💼 This rule is enabled in the ✅ \`recommended\` config.
+
+<!-- end auto-generated rule header -->
+"
+`;
+
+exports[`generate (configs) > config as flat config with only scoped entries > uses the last scoped severity 1`] = `
+"<!-- begin auto-generated rules list -->
+
+💼 Configurations enabled in.\\
+✅ Set in the \`recommended\` configuration.
+
+| Name                           | Description            | 💼 |
+| :----------------------------- | :--------------------- | :- |
+| [no-foo](docs/rules/no-foo.md) | Description of no-foo. | ✅  |
+
+<!-- end auto-generated rules list -->"
+`;
+
+exports[`generate (configs) > config as flat config with only scoped entries > uses the last scoped severity 2`] = `
+"# test/no-foo
+
+📝 Description of no-foo.
 
 💼 This rule is enabled in the ✅ \`recommended\` config.
 

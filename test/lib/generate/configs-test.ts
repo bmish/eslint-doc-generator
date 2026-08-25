@@ -478,4 +478,314 @@ describe('generate (configs)', () => {
       expect(await fixture.readFile('docs/rules/no-bar.md')).toMatchSnapshot();
     });
   });
+
+  describe('config as flat config with file-scoped overrides', () => {
+    let fixture: FixtureContext;
+
+    beforeAll(async () => {
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: { docs: { description: 'Description of no-foo.' }, },
+                create(context) {},
+              },
+            },
+            configs: {
+              recommended: [
+                {
+                  rules: {
+                    'test/no-foo': 'error',
+                  }
+                },
+                {
+                  files: ['**/*.js'],
+                  rules: {
+                    'test/no-foo': 'off',
+                  }
+                }
+              ]
+            }
+          };`,
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+          'docs/rules/no-foo.md': '',
+        },
+      });
+    });
+
+    afterAll(async () => {
+      await fixture.cleanup();
+    });
+
+    it('does not treat file-scoped overrides as global config severity', async () => {
+      await generate(fixture.path);
+
+      expect(await fixture.readFile('README.md')).toMatchSnapshot();
+
+      expect(await fixture.readFile('docs/rules/no-foo.md')).toMatchSnapshot();
+    });
+  });
+
+  describe('config as flat config with only scoped entries', () => {
+    let fixture: FixtureContext;
+
+    beforeAll(async () => {
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: { docs: { description: 'Description of no-foo.' }, },
+                create(context) {},
+              },
+            },
+            configs: {
+              recommended: [
+                {
+                  files: ['**/*.js'],
+                  rules: {
+                    'test/no-foo': 'warn',
+                  }
+                },
+                {
+                  ignores: ['**/*.test.js'],
+                  rules: {
+                    'test/no-foo': 'error',
+                  }
+                }
+              ]
+            }
+          };`,
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+          'docs/rules/no-foo.md': '',
+        },
+      });
+    });
+
+    afterAll(async () => {
+      await fixture.cleanup();
+    });
+
+    it('uses the last scoped severity', async () => {
+      await generate(fixture.path);
+
+      expect(await fixture.readFile('README.md')).toMatchSnapshot();
+
+      expect(await fixture.readFile('docs/rules/no-foo.md')).toMatchSnapshot();
+    });
+  });
+
+  describe('config as flat config with an ignores-scoped override', () => {
+    let fixture: FixtureContext;
+
+    beforeAll(async () => {
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: { docs: { description: 'Description of no-foo.' }, },
+                create(context) {},
+              },
+            },
+            configs: {
+              recommended: [
+                {
+                  rules: {
+                    'test/no-foo': 'error',
+                  }
+                },
+                {
+                  ignores: ['**/*.js'],
+                  rules: {
+                    'test/no-foo': 'off',
+                  }
+                }
+              ]
+            }
+          };`,
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+          'docs/rules/no-foo.md': '',
+        },
+      });
+    });
+
+    afterAll(async () => {
+      await fixture.cleanup();
+    });
+
+    it('does not treat an ignores-scoped override as global config severity', async () => {
+      await generate(fixture.path);
+
+      expect(await fixture.readFile('README.md')).toMatchSnapshot();
+
+      expect(await fixture.readFile('docs/rules/no-foo.md')).toMatchSnapshot();
+    });
+  });
+
+  describe('config as flat config mixing scoped and unscoped rules', () => {
+    let fixture: FixtureContext;
+
+    beforeAll(async () => {
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: { docs: { description: 'Description of no-foo.' }, },
+                create(context) {},
+              },
+              'no-bar': {
+                meta: { docs: { description: 'Description of no-bar.' }, },
+                create(context) {},
+              },
+            },
+            configs: {
+              recommended: [
+                {
+                  files: ['**/*.js'],
+                  rules: {
+                    'test/no-foo': 'error',
+                    'test/no-bar': 'error',
+                  }
+                },
+                {
+                  rules: {
+                    'test/no-foo': 'warn',
+                  }
+                }
+              ]
+            }
+          };`,
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+          'docs/rules/no-foo.md': '',
+          'docs/rules/no-bar.md': '',
+        },
+      });
+    });
+
+    afterAll(async () => {
+      await fixture.cleanup();
+    });
+
+    it('prefers the unscoped severity per rule and keeps scoped-only rules', async () => {
+      await generate(fixture.path);
+
+      expect(await fixture.readFile('README.md')).toMatchSnapshot();
+
+      expect(await fixture.readFile('docs/rules/no-foo.md')).toMatchSnapshot();
+
+      expect(await fixture.readFile('docs/rules/no-bar.md')).toMatchSnapshot();
+    });
+  });
+
+  describe('config as a single scoped flat config object', () => {
+    let fixture: FixtureContext;
+
+    beforeAll(async () => {
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: { docs: { description: 'Description of no-foo.' }, },
+                create(context) {},
+              },
+            },
+            configs: {
+              recommended: {
+                files: ['**/*.ts'],
+                rules: {
+                  'test/no-foo': 'error',
+                }
+              }
+            }
+          };`,
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+          'docs/rules/no-foo.md': '',
+        },
+      });
+    });
+
+    afterAll(async () => {
+      await fixture.cleanup();
+    });
+
+    it('keeps a rule that is only configured by a scoped object', async () => {
+      await generate(fixture.path);
+
+      expect(await fixture.readFile('README.md')).toMatchSnapshot();
+
+      expect(await fixture.readFile('docs/rules/no-foo.md')).toMatchSnapshot();
+    });
+  });
+
+  describe('config as a nested flat config array', () => {
+    let fixture: FixtureContext;
+
+    beforeAll(async () => {
+      fixture = await setupFixture({
+        fixture: 'esm-base',
+        overrides: {
+          'index.js': `
+          export default {
+            rules: {
+              'no-foo': {
+                meta: { docs: { description: 'Description of no-foo.' }, },
+                create(context) {},
+              },
+            },
+            configs: {
+              recommended: [
+                {
+                  rules: {
+                    'test/no-foo': 'error',
+                  }
+                },
+                [
+                  {
+                    files: ['**/*.js'],
+                    rules: {
+                      'test/no-foo': 'off',
+                    }
+                  }
+                ]
+              ]
+            }
+          };`,
+          'README.md':
+            '<!-- begin auto-generated rules list --><!-- end auto-generated rules list -->',
+          'docs/rules/no-foo.md': '',
+        },
+      });
+    });
+
+    afterAll(async () => {
+      await fixture.cleanup();
+    });
+
+    it('flattens nested arrays before separating scoped from unscoped', async () => {
+      await generate(fixture.path);
+
+      expect(await fixture.readFile('README.md')).toMatchSnapshot();
+
+      expect(await fixture.readFile('docs/rules/no-foo.md')).toMatchSnapshot();
+    });
+  });
 });
