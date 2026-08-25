@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.7.1](https://github.com/eslint-community/eslint-doc-generator/compare/v3.7.0...v3.7.1) (2026-08-25)
+
+
+### Bug Fixes
+
+* don't document globally enabled rules as disabled by file-scoped overrides ([#1021](https://github.com/eslint-community/eslint-doc-generator/issues/1021)) ([8bf5706](https://github.com/eslint-community/eslint-doc-generator/commit/8bf5706b3a9a95561d4f22bcad00abca693efef1))
+
 ## [3.7.0](https://github.com/eslint-community/eslint-doc-generator/compare/v3.6.0...v3.7.0) (2026-07-18)
 
 
